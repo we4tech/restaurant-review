@@ -1,0 +1,10 @@
+<div class="grid_4 grid_box">
+  <h4><%= label %></h4>
+  <% users.each do |user| %>
+    <% if user.image %>
+      <div class="item">
+        <%= image_tag(user.image.public_filename(:very_small), :title => user.login) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

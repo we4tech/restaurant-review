@@ -1,0 +1,30 @@
+<% if !restaurants.empty? %>
+  <div class="grid_4 site_simple_box">
+    <h4>Top restaurants!</h4>
+    <div class="space_5"></div>
+
+    <% restaurants.each_with_index do |restaurant, index| %>
+      <% images = restaurant.images %>
+      <div class="grid_4">
+        <% if !images.empty? %>
+          <%= link_to(image_tag(images.first.public_filename(:small)), images.first.public_filename(:large), :class => 'grid_1') %>
+        <% else %>
+          <img src="#" alt="N/A" height="40" width="40" class="grid_1"/>
+        <% end %>
+        <div class="push_1">
+          <h6>
+            <%= link_to restaurant.name, restaurant_url(restaurant) %>
+          </h6>
+
+          <div class="site_list_item_rating"><%= render_restaurant_review_stats(restaurant) %></div>
+        </div>
+      </div>
+      <div class="space_5 clear"></div>
+      <% if index + 1 != restaurants.length %>
+        <div class="break"></div>
+        <div class="space_5 clear"></div>
+      <% end %>
+    <% end %>
+    
+  </div>
+<% end %>

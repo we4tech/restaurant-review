@@ -1,0 +1,38 @@
+<div class="reviews">
+  <% reviews = restaurant.reviews %>
+
+  <% if !reviews.empty? %>
+    <%
+       total_reviews_count = restaurant.reviews.count
+       loved_count = restaurant.reviews.loved.count
+       loved_percentage = (100 / total_reviews_count) * loved_count
+    %>
+    <h4>
+      Total <%= total_reviews_count %> people reviewed. (<%= loved_percentage %>% loved &amp; <%= 100 - loved_percentage %>% hated!)
+    </h4>
+    <div class="break"></div>
+    <div class="clear space_10"></div>
+    
+    <% reviews.each do |review| %>
+      <div class="grid_1">
+        <% if review.user.image %>
+          <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px'), "#" %>
+        <% end %>
+      </div>
+      <div class="review grid_6">
+        <% if !review.comment.blank? %>
+          <span class="content">"<%= review.comment %>" - </span>
+        <% end %>
+
+        <span class="reviewer">
+          <%= link_to review.user.name, '#' %> <%= review.loved == 1 ? 'loved' : 'hated' %> this place!
+        </span>
+        <span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">updated <%= distance_of_time_in_words(review.updated_at, Time.now) %> ago.</span>
+      </div>
+      <div class="clear space_5"></div>
+    <% end %>
+  <% else %>
+    <h4>No review added yet!</h4>
+  <% end %>
+</div>
+<div class="clear"></div>

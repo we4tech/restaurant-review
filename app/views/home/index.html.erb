@@ -1,0 +1,9 @@
+<div class="grid_8" id="site_center_list">
+  <% @restaurants.each do |restaurant| %>
+    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant} %>
+  <% end %>
+</div>
+
+<div class="grid_4" id="site_center_boxes">
+  <%= render_most_lovable_places(5) %>
+</div>

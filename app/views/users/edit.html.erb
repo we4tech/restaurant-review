@@ -1,0 +1,16 @@
+<h2>Edit user profile</h2>
+<div class="break"></div>
+<div class="space_5"></div>
+<h4>Upload your avatar</h4>
+<% if @user.image %>
+  <%= image_tag(@user.image.public_filename(:large)) %>
+<% end %>
+<%= error_messages_for :image %>
+<% form_for Image.new, :html => {:multipart => true} do |f| %>
+  <input type="hidden" name="user_id" value="<%= current_user.id %>"/>
+
+  <%= f.file_field :uploaded_data %>
+  <%= f.submit 'upload' %>
+<% end %>
+
+<div class="space_5"></div>

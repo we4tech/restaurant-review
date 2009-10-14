@@ -1,0 +1,22 @@
+<div id="site_top">
+  <div class="grid_6" id="site_logo">
+    <h1>Restaurant</h1>
+    <h4>review now!</h4>
+  </div>
+
+  <div class="site_message" style="display: <%= flash[:notice] ? 'block' : 'none' %>" onclick="this.style.display = 'none'">
+    <%= flash[:notice] %>
+  </div>
+
+  <div class="grid_6" id="site_top_navigation">
+    <%= link_to 'home', root_url %> | 
+    <% if not logged_in? %>
+      <%= link_to 'login', login_url %> |
+      <%= link_to 'register', signup_url %>
+    <% else %>
+      <%= link_to 'add restaurant', new_restaurant_url %> |
+      <%= link_to 'edit profile', edit_user_url(current_user) %> |
+      <%= link_to 'logout', logout_url %>
+    <% end %>
+  </div>
+</div>

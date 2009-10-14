@@ -1,0 +1,27 @@
+<div class="site_list_item">
+  <% if !restaurant.images.empty? %>
+    <div class="grid_1">
+      <%= image_tag(restaurant.images.first.public_filename(:small)) %>
+    </div>
+  <% else %>
+    <div style='width: 80px; height: 80px; border: 1px solid #ccc; text-align: center; line-height: 80px;' class="grid_2">N/A</div>
+  <% end %>
+
+  <div class="push_2">
+    <h4>
+      <%= link_to restaurant.name, restaurant_url(:id => restaurant.id) %>
+    </h4>
+
+    <div class="site_list_item_rating">
+      <%= render_restaurant_review_stats(restaurant) %>
+      <% if restaurant.author?(current_user) %>
+        | <%= link_to 'edit', edit_restaurant_url(restaurant) %>
+      <% end %>
+    </div>
+    <div class="summary">
+      <% words = restaurant.description.split(/\s/) %>
+      <%= words[0..20].join(' ') %><% if words.length > 20 %>...<% end %>
+      <%= link_to 'more', restaurant_url(:id => restaurant.id) %>
+    </div>
+  </div>
+</div>
