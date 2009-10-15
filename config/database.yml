@@ -16,7 +16,9 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: mysql
+  database: dietrichyw_restaurant_review_production
   pool: 5
   timeout: 5000
+  username: restaurant
+  password: review
