@@ -1,16 +1,38 @@
-<h2>Edit user profile</h2>
-<div class="break"></div>
-<div class="space_5"></div>
 <h4>Upload your avatar</h4>
-<% if @user.image %>
-  <%= image_tag(@user.image.public_filename(:large)) %>
-<% end %>
-<%= error_messages_for :image %>
-<% form_for Image.new, :html => {:multipart => true} do |f| %>
-  <input type="hidden" name="user_id" value="<%= current_user.id %>"/>
+<div class="break"></div>
+<div class="space_10"></div>
+<div class="highlight">
+  <div class="grid_1">
+    <% if @user.image %>
+      <%= image_tag(@user.image.public_filename(:small)) %>
+    <% end %>
+  </div>
+  <%= error_messages_for :image %>
+  <% form_for Image.new, :html => {:multipart => true} do |f| %>
+    <input type="hidden" name="user_id" value="<%= current_user.id %>"/>
 
-  <%= f.file_field :uploaded_data %>
-  <%= f.submit 'upload' %>
-<% end %>
-
+    <%= f.file_field :uploaded_data %>
+    <%= f.submit 'upload' %>
+  <% end %>
+  <div class="clear"></div>
+</div>
+<div class="clear"></div>
 <div class="space_5"></div>
+
+<h4>Active share with friends!</h4>
+<div class="break"></div>
+<div class="space_10"></div>
+<div class="">
+  <div class="grid_3">
+    <fb:login-button length="long" size="large"></fb:login-button>
+    <fb:profile-pic uid="loggedinuser" size="square" facebook-logo="true"></fb:profile-pic>
+    <fb:name uid="loggedinuser" useyou="false" linked="true"></fb:profile-pic>
+  </div>
+  <div class="grid_4 highlight">
+    You can connect your restaurant review account with your facebook account. so whenever you review or add new restaurant we will automatially add them on your facebook profile!
+  </div>
+</div>
+
+
+
+<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script><script type="text/javascript">FB.init("be437507fb7096f8faf2d9d9cda1607f");</script>
