@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'cap_symblink')
+require File.join(File.dirname(__FILE__), 'other_tasks')
 
 set :application, "restaurant-review"
 set :repository,  "git://github.com/we4tech/restaurant-review.git"
