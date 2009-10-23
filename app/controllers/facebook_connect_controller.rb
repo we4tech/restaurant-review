@@ -8,33 +8,37 @@ class FacebookConnectController < ApplicationController
 
   # TODO: Add flag on restaurant object, marking this was shared on FB
   def publish_story
-    story_type = params[:story]
-    facebook_session = build_facebook_session
-    status = false
+    if current_user.facebook_sid.to_i > 0 && current_user.facebook_uid.to_i > 0
+      story_type = params[:story]
+      facebook_session = build_facebook_session
+      status = false
 
-    case story_type
-    when 'new_restaurant'
-      restaurant = Restaurant.find(params[:id].to_i)
-      status = publish_story_of_restaurant(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
-    when 'updated_restaurant'
-      restaurant = Restaurant.find(params[:id].to_i)
-      status = publish_story_of_restaurant(RESTAURANT_UPDATED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
-    when 'new_image'
-      image = Image.find(params[:id].to_i)
-      restaurant = Restaurant.find(params[:restaurant_id].to_i)
-      status = publish_story_on_image_added(IMAGE_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant, image)
-    when 'new_review'
-      review = Review.find(params[:id].to_i)
-      status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
-    when 'updated_review'
-      review = Review.find(params[:id].to_i)
-      status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
-    end
+      case story_type
+      when 'new_restaurant'
+        restaurant = Restaurant.find(params[:id].to_i)
+        status = publish_story_of_restaurant(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
+      when 'updated_restaurant'
+        restaurant = Restaurant.find(params[:id].to_i)
+        status = publish_story_of_restaurant(RESTAURANT_UPDATED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
+      when 'new_image'
+        image = Image.find(params[:id].to_i)
+        restaurant = Restaurant.find(params[:restaurant_id].to_i)
+        status = publish_story_on_image_added(IMAGE_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant, image)
+      when 'new_review'
+        review = Review.find(params[:id].to_i)
+        status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
+      when 'updated_review'
+        review = Review.find(params[:id].to_i)
+        status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
+      end
 
-    if status
-      flash[:notice] = 'Successfully, shared with your facebook friends!'
+      if status
+        flash[:notice] = 'Successfully, shared with your facebook friends!'
+      else
+        flash[:notice] = 'Failed to share with your facebook friends!, please review your configuration!'
+      end
     else
-      flash[:notice] = 'Failed to share with your facebook friends!, please review your configuration!'
+      flash[:notice] = 'No active facebook session found.'
     end
 
     if params[:next_to]
@@ -85,7 +89,7 @@ class FacebookConnectController < ApplicationController
         :images => [
           :src => p_image.public_filename(:small),
           :href => restaurant_url(p_restaurant)
-        ]}, nil, p_restaurant.description)
+        ]}, nil, p_restaurant.description, 2)
   end
 
   def publish_story_of_restaurant(p_bundle_id, p_facebook_session, p_restaurant)
@@ -111,10 +115,14 @@ class FacebookConnectController < ApplicationController
     sid = current_user.facebook_sid
     uid = current_user.facebook_uid
     if sid.to_i > 0 && uid.to_i > 0
-      session.secure_with!(sid, uid)
-      return session
-    else
-      return nil
+      begin
+        session.secure_with!(sid, uid)
+      rescue
+        current_user.update_attributes(:facebook_sid => 0, :facebook_uid => 0)
+        return nil
+      end
     end
+
+    return session
   end
 end
