@@ -69,6 +69,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def facebook_connect
+    raise params.inspect
+  end
+
+  def update_facebook_connect_status
+    facebook_user_id = params[:uid]
+    facebook_session_id = params[:sid]
+    status = current_user.update_attributes(
+        :facebook_uid => facebook_user_id,
+        :facebook_sid => facebook_session_id
+    )
+
+    render :text => "Update status - #{status.inspect}"
+  end
+
 protected
   def find_user
     @user = User.find(params[:id])

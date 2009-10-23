@@ -33,17 +33,21 @@ ActionController::Routing::Routes.draw do |map|
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
   map.root :controller => "home"
 
+  map.resources :users, :member => { :suspend => :put, :unsuspend => :put, :purge => :delete }
+  map.resource :session
+  map.resources :restaurants
+  map.resources :images
+  map.resources :reviews
+
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.activate "/activate/:activation_code", :controller => "users", :action => "activate", :activation_code => nil
 
-  map.resources :users, :member => { :suspend => :put, :unsuspend => :put, :purge => :delete }
-  map.resource :session
-  map.resources :restaurants
-  map.resources :images
-  map.resources :reviews
+  map.facebook_connect '/facebook/connect', :controller => 'users', :action => 'facebook_connect'
+  map.facebook_connect_update '/facebook/connect/update', :controller => 'users', :action => 'update_facebook_connect_status'
+  map.facebook_publish '/facebook/publish/:story/:id', :controller => 'facebook_connect', :action => 'publish_story'
 
   # See how all your routes lay out with "rake routes"
 

@@ -1,0 +1,46 @@
+<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
+
+<script type="text/javascript">
+  App.Facebook = {
+    UID: null,
+    SID: null,
+    API: null,
+    SESSION: null
+  }
+
+  App.Facebook.Events = {
+    onloggedin: function(pUid) {
+      if (pUid) {
+        var api = App.Facebook.API = FB.Facebook.apiClient;
+        var session = App.Facebook.SESSION = api.get_session();
+        var uid = App.Facebook.UID = pUid;
+
+        if ($('#info_before').length > 0) {
+          $('#info_before, #facebook_connect_button').hide();
+          $('#info_after, #facebook_profile_box').show();
+          $.get('<%= facebook_connect_update_url %>', {'uid': uid, 'sid': session.session_key});
+        }
+
+        FB.Connect.showPermissionDialog('publish_stream');
+      }
+    },
+
+    onloggedout: function() {
+      if ($('#info_before').length > 0) {
+        $('#info_before, #facebook_connect_button').show();
+        $('#info_after, #facebook_profile_box').hide();
+        $.get('<%= facebook_connect_update_url %>', {'uid': '', 'sid': ''});
+      }
+    }
+  }
+</script>
+
+<script type="text/javascript">
+  FB.init("be437507fb7096f8faf2d9d9cda1607f", null, {
+    'ifUserConnected': App.Facebook.Events.onloggedin,
+    'ifUserNotConnected': App.Facebook.Events.onloggedout
+  });
+
+  // FB.ensureInit(function () {});
+
+</script>

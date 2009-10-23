@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :name, :password, :password_confirmation
+  attr_accessible :login, :email, :name, :password, :password_confirmation, :facebook_sid, :facebook_uid
 
   has_many :restaurants
   has_many :images
@@ -73,6 +73,11 @@ class User < ActiveRecord::Base
         :order => 'count(reviews.id) DESC',
         :limit => p_limit
     )
+  end
+
+  def share_on_facebook?
+    reloaded_me = self.reload
+    return reloaded_me.facebook_sid.to_i > 0 && reloaded_me.facebook_uid.to_i > 0
   end
 
   protected

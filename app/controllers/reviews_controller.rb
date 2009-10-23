@@ -6,22 +6,31 @@ class ReviewsController < ApplicationController
 
     if @review.save
       flash[:notice] = 'Successfully added your review!'
+      if current_user.share_on_facebook?
+        redirect_to facebook_publish_url('new_review', @review.id, :next_to => restaurant_url(@review.restaurant_id))
+      else
+        redirect_to :back
+      end
     else
       flash[:notice] = 'Failed to add your review!'
+      redirect_to :back
     end
-
-    redirect_to :back
   end
 
   def update
     @review = Review.find(params[:id].to_i)
     if @review.update_attributes(params[:review])
+      @review.update_attribute(:user_id, current_user.id)
       flash[:notice] = 'Successfully updated your review!'
+      if current_user.share_on_facebook?
+        redirect_to facebook_publish_url('updated_review', @review.id, :next_to => restaurant_url(@review.restaurant_id))
+      else
+        redirect_to :back
+      end
     else
       flash[:notice] = 'Failed to update your review!'
+      redirect_to :back
     end
-
-    redirect_to :back
   end
 
 end

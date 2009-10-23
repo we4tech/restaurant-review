@@ -24,15 +24,28 @@
 <div class="space_10"></div>
 <div class="">
   <div class="grid_3">
-    <fb:login-button length="long" size="large"></fb:login-button>
-    <fb:profile-pic uid="loggedinuser" size="square" facebook-logo="true"></fb:profile-pic>
-    <fb:name uid="loggedinuser" useyou="false" linked="true"></fb:profile-pic>
+    <div id="facebook_connect_button" style="display: none">
+      <br/><br/>
+      <fb:login-button length="long" size="large" onlogin='App.Facebook.Events.onloggedin'></fb:login-button>
+    </div>
+    <div id="facebook_profile_box" style="display: none">
+      <fb:profile-pic uid="loggedinuser" size="normal" facebook-logo="true"></fb:profile-pic><br/>
+    </div>
+
   </div>
-  <div class="grid_4 highlight">
-    You can connect your restaurant review account with your facebook account. so whenever you review or add new restaurant we will automatially add them on your facebook profile!
+  <div class="grid_4 highlight" id="info_before" style="display: none">
+    You can integrate our service with your facebook account.
+    so whenever you review or add new restaurant we will automatically share them with your facebook
+    friends!
+  </div>
+  <div class="grid_4 highlight" id="info_after" style="display: none">
+    hi, <fb:name uid="loggedinuser" useyou="false" linked="true"></fb:profile-pic>
+    thanks for integrating our service with your facebook account.
+    now we will automatically share your review or restaurant information with your facebook friends.<br/><br/>
+    if you want to turn off this feature please follow the link - 
+    <fb:login-button length="short" size="small" autologoutlink="true" onlogin='App.Facebook.Events.onlogin'></fb:login-button>
   </div>
 </div>
 
 
-
-<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script><script type="text/javascript">FB.init("be437507fb7096f8faf2d9d9cda1607f");</script>
+<%= render :partial => 'users/parts/facebook_app_script' %>

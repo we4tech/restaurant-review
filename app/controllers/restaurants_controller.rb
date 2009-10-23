@@ -9,7 +9,11 @@ class RestaurantsController < ApplicationController
     @restaurant.user = current_user
     if @restaurant.save
       flash[:notice] = 'Successfully saved new restaurant!'
-      redirect_to edit_restaurant_url(:id => @restaurant.id)
+      if current_user.share_on_facebook?
+        redirect_to facebook_publish_url('new_restaurant', @restaurant.id, :next_to => edit_restaurant_url(@restaurant))
+      else
+        redirect_to edit_restaurant_url(@restaurant)
+      end
     else
       flash[:notice] = 'Failed to store new restaurant!'
     end
@@ -32,12 +36,18 @@ class RestaurantsController < ApplicationController
   def update
     restaurant = Restaurant.find(params[:id].to_i)
     if restaurant.update_attributes(params[:restaurant])
-      flash[:notice] = 'Saved your updates!'
+      restaurant.update_attribute(:user_id, current_user.id)
+      if current_user.share_on_facebook?
+        flash[:notice] = 'Saved and shared your updates!'
+        redirect_to facebook_publish_url('updated_restaurant', restaurant.id, :next_to => edit_restaurant_url(restaurant))
+      else
+        flash[:notice] = 'Saved your updates!'
+        redirect_to edit_restaurant_url(restaurant)
+      end
     else
       flash[:notice] = 'Failed to store your updated!'
+      redirect_to edit_restaurant_url(restaurant)
     end
-
-    redirect_to edit_restaurant_url(restaurant)
   end
 
   def destroy

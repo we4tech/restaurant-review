@@ -195,6 +195,7 @@ h1, h2, h3, h4, h5, h6 {
 .image_gallery .gallery_links a img {
   border: 1px solid #ccc;
   padding: 2px;
+  height: 30px;
 }
 
 .restaurant_details .review_tools {
