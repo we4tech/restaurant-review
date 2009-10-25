@@ -1,4 +1,4 @@
-<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US" type="text/javascript"></script>
+<%= fb_connect_javascript_tag %>
 
 <script type="text/javascript">
   App.Facebook = {
@@ -35,12 +35,6 @@
   }
 </script>
 
-<script type="text/javascript">
-  FB.init("be437507fb7096f8faf2d9d9cda1607f", null, {
+<%= init_fb_connect(:app_settings => "{
     'ifUserConnected': App.Facebook.Events.onloggedin,
-    'ifUserNotConnected': App.Facebook.Events.onloggedout
-  });
-
-  // FB.ensureInit(function () {});
-
-</script>
+    'ifUserNotConnected': App.Facebook.Events.onloggedout}") %>

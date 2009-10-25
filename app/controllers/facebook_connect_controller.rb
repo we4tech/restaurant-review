@@ -51,22 +51,28 @@ class FacebookConnectController < ApplicationController
   private
   def publish_story_of_review(p_bundle_id, p_facebook_session, p_review)
     restaurant = p_review.reload.restaurant
-    attachements = {}
+    first_image = nil
     if restaurant.images && !restaurant.images.empty?
       first_image = restaurant.images.first
-      attachements = {
-        :images => [
-          :src => first_image.public_filename(:small),
-          :href => restaurant_url(restaurant)
-        ]}
+      first_image = {
+        :type => 'image',
+        :src => "#{root_url[0..root_url.length - 2]}#{first_image.public_filename(:large)}",
+        :href => restaurant_url(restaurant)
+      }
     end
 
-    p_facebook_session.publish_user_action(p_bundle_id, {
-        :restaurant_url => restaurant_url(restaurant.id),
-        :restaurant_name => restaurant.name,
-        :restaurant_review => restaurant_review(p_review),
-        :restaurant_stat => restaurant_review_stat(p_review),
-        :restaurants_url => root_url}.merge(attachements), nil, p_review.comment)
+    user = p_facebook_session.user
+    FacebookerPublisher::deliver_publish_stream(
+        user, user, {
+        :attachment =>  {
+          :name => "#{restaurant_review(p_review)} and reviewed '#{restaurant.name}'",
+          :href => restaurant_url(restaurant),
+          :caption => restaurant_review_stat(p_review),
+          :description => p_review.comment,
+          :media => [first_image].compact},
+        :action_links => {
+            'text' => 'add your review!',
+            'href' => restaurant_url(restaurant)}});
   end
 
   def restaurant_review_stat(p_review)
@@ -74,7 +80,7 @@ class FacebookConnectController < ApplicationController
     loved_count = p_review.restaurant.reviews.loved.count
     loved_percentage = (100 / total_reviews_count) * loved_count
 
-    "#{total_reviews_count} reviews, #{loved_percentage}% loved &amp; #{100 - loved_percentage}% hated!"
+    "#{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_percentage}% loved & #{100 - loved_percentage}% hated!"
   end
 
   def restaurant_review(p_review)
@@ -82,32 +88,51 @@ class FacebookConnectController < ApplicationController
   end
 
   def publish_story_on_image_added(p_bundle_id, p_facebook_session, p_restaurant, p_image)
-    p_facebook_session.publish_user_action(p_bundle_id, {
-        :restaurant_url => restaurant_url(p_restaurant.id),
-        :restaurant_name => p_restaurant.name,
-        :restaurants_url => root_url,
-        :images => [
-          :src => p_image.public_filename(:small),
-          :href => restaurant_url(p_restaurant)
-        ]}, nil, p_restaurant.description, 2)
+    user = p_facebook_session.user
+    FacebookerPublisher::deliver_publish_stream(
+        user, user, {
+        :attachment =>  {
+          :name => "uploaded a new image of '#{p_restaurant.name}'",
+          :href => restaurant_url(p_restaurant),
+          :description => p_restaurant.description,
+          :media => [{
+            :type => 'image',
+            :src => "#{root_url[0..root_url.length - 2]}#{p_image.public_filename(:large)}",
+            :href => restaurant_url(p_restaurant)
+          }]},
+        :action_links => {
+            'text' => 'add your review!',
+            'href' => restaurant_url(p_restaurant)}});
   end
 
   def publish_story_of_restaurant(p_bundle_id, p_facebook_session, p_restaurant)
-    image_attachements = {}
+    images = []
     if p_restaurant.images && !p_restaurant.images.empty?
-      images = []
+      url_base = root_url[0..root_url.length - 2]
       p_restaurant.images.each do |image|
-        images << {'src' => image.public_filename(:small),
-                   'href' => restaurant_url(p_restaurant.id)}
+        images << {
+          :type => 'image',
+          :src => "#{url_base}#{image.public_filename(:large)}",
+          :href => restaurant_url(p_restaurant)
+        }
       end
-      image_attachements[:images] = images
     end
 
-    p_facebook_session.publish_user_action(p_bundle_id, {
-        :restaurant_url => restaurant_url(p_restaurant.id),
-        :restaurant_name => p_restaurant.name,
-        :restaurants_url => root_url}.merge(image_attachements), nil, p_restaurant.description)
+    verb = 'added'
+    verb = 'updated' if p_bundle_id == RESTAURANT_UPDATED_TEMPLATE_BUNDLE_ID
 
+    user = p_facebook_session.user
+    FacebookerPublisher::deliver_publish_stream(
+        user, user, {
+        :attachment =>  {
+          :name => "#{verb} '#{p_restaurant.name}'",
+          :href => restaurant_url(p_restaurant),
+          :caption => "Address: #{p_restaurant.address}",
+          :description => p_restaurant.description,
+          :media => images},
+        :action_links => {
+            'text' => 'add your review!',
+            'href' => restaurant_url(p_restaurant)}});
   end
 
   def build_facebook_session
