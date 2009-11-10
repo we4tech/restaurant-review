@@ -4,10 +4,15 @@
     <div class="space_5"></div>
 
     <% restaurants.each_with_index do |restaurant, index| %>
-      <% images = restaurant.images %>
+      <%
+         images = restaurant.images
+         if images.empty?
+           images = restaurant.other_images
+         end
+      %>
       <div class="grid_4">
         <% if !images.empty? %>
-          <%= link_to(image_tag(images.first.public_filename(:small)), images.first.public_filename(:large), :class => 'grid_1') %>
+          <%= link_to(image_tag(images.rand.public_filename(:small)), images.first.public_filename(:large), :class => 'grid_1') %>
         <% else %>
           <img src="#" alt="N/A" height="40" width="40" class="grid_1"/>
         <% end %>

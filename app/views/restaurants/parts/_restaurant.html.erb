@@ -1,7 +1,13 @@
+<%
+   images = restaurant.images
+   if images.empty?
+     images = restaurant.other_images
+   end
+%>
 <div class="site_list_item">
-  <% if !restaurant.images.empty? %>
+  <% if !images.empty? %>
     <div class="grid_1">
-      <%= image_tag(restaurant.images.first.public_filename(:small)) %>
+      <%= image_tag(images.rand.public_filename(:small)) %>
     </div>
   <% else %>
     <div style='width: 80px; height: 80px; border: 1px solid #ccc; text-align: center; line-height: 80px;' class="grid_2">N/A</div>
