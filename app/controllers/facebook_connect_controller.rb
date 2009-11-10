@@ -89,10 +89,15 @@ class FacebookConnectController < ApplicationController
 
   def publish_story_on_image_added(p_bundle_id, p_facebook_session, p_restaurant, p_image)
     user = p_facebook_session.user
+    message = 'uploaded a new image of'
+    if p_restaurant.user_id != p_image.user_id
+      message = 'contributed by uploading a new image of'
+    end
+
     FacebookerPublisher::deliver_publish_stream(
         user, user, {
         :attachment =>  {
-          :name => "uploaded a new image of '#{p_restaurant.name}'",
+          :name => "#{message} '#{p_restaurant.name}'",
           :href => restaurant_url(p_restaurant),
           :description => p_restaurant.description,
           :media => [{

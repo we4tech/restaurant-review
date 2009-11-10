@@ -3,6 +3,8 @@ class Restaurant < ActiveRecord::Base
   belongs_to :user
   has_many :related_images, :order => 'created_at DESC', :dependent => :destroy
   has_many :images, :through => :related_images, :dependent => :destroy
+  has_many :contributed_images, :order => 'created_at DESC', :dependent => :destroy
+  has_many :other_images, :through => :contributed_images, :source => :image, :dependent => :destroy
   has_many :reviews
 
   named_scope :recent, :order => 'created_at DESC'

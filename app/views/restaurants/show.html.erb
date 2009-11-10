@@ -28,6 +28,12 @@
       </p>
     </div>
 
+    <% if current_user %>
+      <%= render :partial => 'contributed_images/parts/add'%>
+    <% end %>
+
+    <%= render :partial => 'contributed_images/parts/image_gallery' %>
+
     <div class="clear space_10"></div>
     <%= render :partial => 'reviews/parts/restaurant_review', :locals => {:restaurant => @restaurant} %>
 

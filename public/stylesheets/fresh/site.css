@@ -237,9 +237,9 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #ccc;
   padding: 2px;
   text-align: center;
-  height: 82px;
 }
 .image_preview .image img {
+  height: 40px;
 }
 .image_preview .image .tools {
   background: #fff;
@@ -254,4 +254,28 @@ h1, h2, h3, h4, h5, h6 {
   background: lightYellow;
   padding: 2px;
   font-style: italic;
+}
+
+.contributed_image_form form {
+  background: #f0f0f0;
+  padding: 5px;
+}
+
+.contributed_image_form h6 {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.contributed_image_gallery .image {
+  float: left;
+  margin-right: 8px;
+}
+
+.contributed_image_gallery .image img {
+  height: 40px;
+}
+
+.contributed_image_gallery .image .contributor {
+  font-size: 10px;
+  text-align: center;
 }

@@ -1,0 +1,12 @@
+<div class="clear"></div>
+<div class="space_10"></div>
+<div class="contributed_image_form">
+  <h6>Contribute by uploading your related picture</h6>
+  <% form_for Image.new, :html => {:multipart => true} do |f| %>
+    <input type="hidden" name="restaurant_id" value="<%= @restaurant.id %>"/>
+    <input type="hidden" name="return_to" value="<%= restaurant_url(@restaurant) %>">
+
+    <%= f.file_field :uploaded_data %>
+    <%= f.submit 'upload' %>
+  <% end %>
+</div>

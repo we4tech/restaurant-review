@@ -1,0 +1,2 @@
+class ContributedImagesController < ApplicationController
+end
