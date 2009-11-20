@@ -1,7 +1,9 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <title>Restaurant review</title>
+  <title>
+    Restaurant review <%= @site_title ? "&raquo; #{@site_title}" : '' %>
+  </title>
 
   <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css', 'fresh/text.css', 'fresh/site.css' %>
   <%= stylesheet_link_tag 'ext/prettyPhoto.css' %>
@@ -9,34 +11,63 @@
   <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application' %>
   <%= javascript_include_tag 'jquery.prettyPhoto.js' %>
 
+  <meta NAME="Keywords" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+  <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+
+  <meta NAME="Robots" content="index,follow"/>
+  <meta NAME="Description" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+
 </head>
 <body>
-  <div class="container_12">
-    <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
-    <div class="clear"></div>
+<div class="navigation">
+  <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
+</div>
+<div class="clear"></div>
 
-    <div id="site_center">
-      <%= yield %>
+<div class="container_12 site_body">
+  <div id="site_top">
+    <div class="grid_11" id="site_logo">
+      <div class="site_icon grid_1">
+        <%= image_tag 'fresh/icon.gif', :height => '200px' %>
+      </div>
+      <div class="site_icon_info grid_9 push_1">
+        why don't you review your favorite restaurant <b>NOW!</b>
+        let your friends know which place you have been recently.
+        also let them know whether you <span class="icon_loved">loved it</span>
+        or <span class="icon_hated">hated</span> so much!.
+      </div>
     </div>
 
-    <div class="clear space_10"></div>
-    <div class="clear space_10"></div>
-    <div id="site_bottom" class="">
-      <div class="space_5 grid_10"></div>
-      <div class="space_5 grid_10"></div>
-
-      <%= render_top_contributors(10) %>
-      <%= render_top_reviewers(10) %>
-
-      <div class="grid_4 align_right">
-        <ul id="site_bottom_navigation">
-          <li><a href="http://hasan.we4tech.com">Contact</a></li>
-          <li><a href="http://github.com/we4tech/restaurant-review/">Fork on github!</a></li>
-        </ul>
-      </div>
-
-      <div class="clear"></div>
+    <div class="site_message" style="display: <%= flash[:notice] ? 'block' : 'none' %>" onclick="this.style.display = 'none'">
+      <%= flash[:notice] %>
     </div>
   </div>
+  <div class="clear"></div>
+
+  <div class="site_center_head">
+  </div>
+  <div id="site_center">
+    <%= yield %>
+    <div class="clear"></div>
+    <br/>
+  </div>
+
+  <div id="site_bottom" class="">
+    <div class="space_5 grid_10"></div>
+    <div class="space_5 grid_10"></div>
+
+    <%= render_top_contributors(10) %>
+    <%= render_top_reviewers(10) %>
+
+    <div class="grid_4 align_right">
+      <ul id="site_bottom_navigation">
+        <li><a href="http://hasan.we4tech.com">Contact</a></li>
+        <li><a href="http://github.com/we4tech/restaurant-review/">Fork on github!</a></li>
+      </ul>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+</div>
 </body>
 </html>

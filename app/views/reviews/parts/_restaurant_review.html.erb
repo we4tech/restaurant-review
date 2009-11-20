@@ -7,16 +7,19 @@
        loved_count = restaurant.reviews.loved.count
        loved_percentage = (100 / total_reviews_count) * loved_count
     %>
-    <h4>
-      Total <%= total_reviews_count %> people reviewed. (<%= loved_percentage %>% loved &amp; <%= 100 - loved_percentage %>% hated!)
-    </h4>
+    <div>
+      <b>Review statistics - </b>
+      <span class="stat_item icon_review"><%= total_reviews_count %> review<%= total_reviews_count > 1 ? 's' : '' %></span>
+      <span class="stat_item icon_loved"><%= loved_count %> love<%= loved_count > 1 ? 's' : '' %></span>
+      <span class="stat_item icon_hated"><%= total_reviews_count - loved_count %> hate<%= (total_reviews_count - loved_count) > 1 ? 's' : '' %></span>
+    </div>
     <div class="break"></div>
     <div class="clear space_10"></div>
     
     <% reviews.each do |review| %>
-      <div class="grid_1">
+      <div>
         <% if review.user.image %>
-          <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px'), "#" %>
+          <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px'), "#", :class => 'image_small' %>
         <% end %>
       </div>
       <div class="review grid_6">

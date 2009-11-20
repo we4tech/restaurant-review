@@ -1,6 +1,6 @@
 <% if !restaurants.empty? %>
   <div class="grid_4 site_simple_box">
-    <h4>Top restaurants!</h4>
+    <h4>Mostly loved places!</h4>
     <div class="space_5"></div>
 
     <% restaurants.each_with_index do |restaurant, index| %>
@@ -10,15 +10,15 @@
            images = restaurant.other_images
          end
       %>
-      <div class="grid_4">
+      <div class="grid_4 item">
         <% if !images.empty? %>
-          <%= link_to(image_tag(images.rand.public_filename(:small)), images.first.public_filename(:large), :class => 'grid_1') %>
+          <%= link_to(image_tag(images.rand.public_filename(:small)), images.first.public_filename(:large), :class => 'image_small') %>
         <% else %>
-          <img src="#" alt="N/A" height="40" width="40" class="grid_1"/>
+          <img src="#" alt="N/A" height="30" />
         <% end %>
         <div class="push_1">
           <h6>
-            <%= link_to restaurant.name, restaurant_url(restaurant) %>
+            <%= link_to restaurant.name, restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
           </h6>
 
           <div class="site_list_item_rating"><%= render_restaurant_review_stats(restaurant) %></div>

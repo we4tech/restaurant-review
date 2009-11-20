@@ -1,15 +1,10 @@
 <div id="site_top">
-  <div class="grid_6" id="site_logo">
-    <h1>Restaurant</h1>
-    <h4>review now! (v-<%= APP_VERSION %>)</h4>
+  <div class="grid_2 site_quote">
+    passionate food lovers community!
   </div>
 
-  <div class="site_message" style="display: <%= flash[:notice] ? 'block' : 'none' %>" onclick="this.style.display = 'none'">
-    <%= flash[:notice] %>
-  </div>
-
-  <div class="grid_6" id="site_top_navigation">
-    <%= link_to 'home', root_url %> | 
+  <div id="site_top_navigation">
+    <%= link_to 'home', root_url %> |
     <% if not logged_in? %>
       <%= link_to 'login', login_url %> |
       <%= link_to 'register', signup_url %>

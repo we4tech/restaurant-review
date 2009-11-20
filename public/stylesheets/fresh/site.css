@@ -1,6 +1,9 @@
 body {
   font-family: verdana;
   font-size: 15px;
+  background: #BAD6FD;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -42,7 +45,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Top style starts */
 #site_top {
-  margin-top: 30px;
+  
+}
+
+#site_logo {
+  padding: 10px;
 }
 
 #site_logo h1 {
@@ -64,9 +71,10 @@ h1, h2, h3, h4, h5, h6 {
 
 #site_top_navigation {
   text-align: right;
-  margin-top: 10px;
   font-size: 10px;
   color: gray;
+  padding: 10px;
+  border-bottom: 4px solid #fff;
 }
 
 #site_top_navigation a {
@@ -83,17 +91,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site_list_item {
-  border: 1px solid #ccc;
-  padding: 5px;
+  border-bottom: 1px solid #ccc;
+  padding: 15px 15px 15px 0;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .site_list_item h4 {
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 10px;
+  margin-bottom: 5px;
+}
+
+.site_list_item .summary {
+  font-size: 10px;
+  margin-top: 10px;
 }
 
 .site_list_item_rating {
   margin: 0;
-  background: lightYellow;
   display: inline;
   font-weight: bold;
   font-size: 10px;
@@ -112,13 +129,29 @@ h1, h2, h3, h4, h5, h6 {
 
 /* right style starts */
 .site_simple_box {
-  border: 1px solid #ccc;
-  padding: 5px;
 }
 .site_simple_box h4 {
   margin: 0;
   padding: 0;
-  border-bottom: 1px dashed #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.site_simple_box h6 {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.site_simple_box .site_list_item_rating {
+  font-size: 8px;
+}
+
+.site_simple_box .item {
+  margin: 5px;
+}
+
+.site_simple_box .break {
+  border: 0;
+  border-bottom: 1px solid #eee!important;
 }
 
 .tag_cloud {
@@ -278,4 +311,73 @@ h1, h2, h3, h4, h5, h6 {
 .contributed_image_gallery .image .contributor {
   font-size: 10px;
   text-align: center;
+}
+.stat_item {
+  padding: 0px 5px 5px 5px;
+  margin-right: 3px;
+}
+
+.icon_review {
+  background: url(/images/fresh/review.png) no-repeat;
+  padding-left: 20px;
+}
+
+.icon_loved {
+  background: url(/images/fresh/loved.png) no-repeat;
+  padding-left: 20px;
+}
+
+.icon_hated {
+  background: url(/images/fresh/hated.png) no-repeat;
+  padding-left: 20px;
+}
+
+.image_small img {
+  width: 30px;
+  float: left;
+  border: 1px solid #ccc;
+  padding: 2px;
+  margin-right: 5px;
+  margin-left: -2px;
+}
+
+#site_center_list {
+  
+}
+
+.restaurant_details {
+  ;
+}
+
+.site_icon_info {
+  margin-top: 25px;
+  font-size: 20px;
+}
+
+.site_body {
+
+}
+
+.site_center_head {
+  background: url(/images/fresh/body-box-head.gif) no-repeat;
+  height: 100px;
+  margin-top: -60px;
+}
+
+#site_center {
+  background: #fff;
+  margin-top: -60px;
+}
+
+.navigation {
+  background: #000;
+}
+
+.site_quote {
+  color: #ccc;
+  margin-top: 8px;
+  font-style:italic;
+}
+
+.site_item_even {
 }

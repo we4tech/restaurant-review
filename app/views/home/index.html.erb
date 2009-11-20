@@ -1,6 +1,8 @@
 <div class="grid_8" id="site_center_list">
-  <% @restaurants.each do |restaurant| %>
-    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant} %>
+  <h4>Recently added restaurants!</h4>
+  <div class="break space_5"></div>
+  <% @restaurants.each_with_index do |restaurant, index| %>
+    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :index => index} %>
   <% end %>
 </div>
 

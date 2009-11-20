@@ -5,7 +5,7 @@
   <%= f.hidden_field :id, :value => @restaurant.id %>
   <%= render :partial => 'restaurants/parts/form', :locals => {:f => f} %>
   <%= f.submit 'update' %> |
-  <%= link_to 'show', restaurant_url(@restaurant) %>
+  <%= link_to 'show', restaurant_long_url(:name => @restaurant.name.parameterize.to_s, :id => @restaurant.id) %>
   <% if @restaurant.author?(current_user) %>
     | <%= link_to 'delete', restaurant_url(@restaurant), :method => :delete, :confirm => 'do you really want to remove this entry?' %>
   <% end %>

@@ -21,6 +21,7 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find(params[:id].to_i)
+    @site_title = @restaurant.name
   end
 
   def edit

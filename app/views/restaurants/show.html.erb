@@ -1,15 +1,13 @@
 <div id="site_center">
-  <div class="grid_8">
+  <div class="grid_8 restaurant_details">
     <div class="breadcrumbs">
-      <%= link_to 'Restaurants', root_url %> &raquo; <%= link_to @restaurant.name, restaurant_url(:id => @restaurant.id) %>
+      <%= link_to 'Restaurants', root_url %> &raquo; <%= link_to @restaurant.name, restaurant_long_url(:name => @restaurant.name.parameterize.to_s, :id => @restaurant.id) %>
     </div>
     <div class="break space_5"></div>
 
     <div class="restaurant_details">
       <h3>
-        <%= @restaurant.name %>
         <span class="review_tools">
-          [<a href="#">love it!</a> / <a href='#'>hate it!</a>]
           <% if @restaurant.author?(current_user) %>
             (<%= link_to 'edit', edit_restaurant_url(:id => @restaurant.id) %>)
           <% end %>
@@ -27,6 +25,7 @@
         <%= @restaurant.description %>
       </p>
     </div>
+    <div class="clear"></div>
 
     <% if current_user %>
       <%= render :partial => 'contributed_images/parts/add'%>

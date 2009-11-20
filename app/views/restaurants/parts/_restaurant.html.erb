@@ -3,19 +3,18 @@
    if images.empty?
      images = restaurant.other_images
    end
+   index = index || 0
 %>
 <div class="site_list_item">
   <% if !images.empty? %>
     <div class="grid_1">
       <%= image_tag(images.rand.public_filename(:small)) %>
     </div>
-  <% else %>
-    <div style='width: 80px; height: 80px; border: 1px solid #ccc; text-align: center; line-height: 80px;' class="grid_2">N/A</div>
   <% end %>
 
-  <div class="push_2">
+  <div class="grid_6">
     <h4>
-      <%= link_to restaurant.name, restaurant_url(:id => restaurant.id) %>
+      <%= link_to restaurant.name, restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
     </h4>
 
     <div class="site_list_item_rating">
@@ -27,7 +26,7 @@
     <div class="summary">
       <% words = restaurant.description.split(/\s/) %>
       <%= words[0..20].join(' ') %><% if words.length > 20 %>...<% end %>
-      <%= link_to 'more', restaurant_url(:id => restaurant.id) %>
+      <%= link_to 'more', restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
     </div>
   </div>
   <div class="clear"></div>
