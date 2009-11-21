@@ -52,8 +52,11 @@ class FacebookConnectController < ApplicationController
   def publish_story_of_review(p_bundle_id, p_facebook_session, p_review)
     restaurant = p_review.reload.restaurant
     first_image = nil
-    if restaurant.images && !restaurant.images.empty?
-      first_image = restaurant.images.first
+    images = restaurant.images
+    images = restaurant.other_images if images.empty?
+
+    if images && !images.empty?
+      first_image = images.first
       first_image = {
         :type => 'image',
         :src => "#{root_url[0..root_url.length - 2]}#{first_image.public_filename(:large)}",
@@ -111,10 +114,11 @@ class FacebookConnectController < ApplicationController
   end
 
   def publish_story_of_restaurant(p_bundle_id, p_facebook_session, p_restaurant)
-    images = []
-    if p_restaurant.images && !p_restaurant.images.empty?
+    images = p_restaurant.images
+    images = p_restaurant.other_images if images.empty?
+    if !images.empty?
       url_base = root_url[0..root_url.length - 2]
-      p_restaurant.images.each do |image|
+      images.each do |image|
         images << {
           :type => 'image',
           :src => "#{url_base}#{image.public_filename(:large)}",
