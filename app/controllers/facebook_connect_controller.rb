@@ -56,7 +56,7 @@ class FacebookConnectController < ApplicationController
     images = restaurant.other_images if images.empty?
 
     if images && !images.empty?
-      first_image = images.first
+      first_image = images.rand
       first_image = {
         :type => 'image',
         :src => "#{root_url[0..root_url.length - 2]}#{first_image.public_filename(:large)}",
