@@ -9,11 +9,10 @@ body {
 a {
   color: #0066cc!important;
   text-decoration: none!important;
-  border-bottom: 1px solid transparent;
 }
 
 a:hover {
-  border-bottom: 1px solid red; 
+  color: red!important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -166,15 +165,17 @@ h1, h2, h3, h4, h5, h6 {
 
 /* bottom style starts */
 #site_bottom {
-  background: #000;
+  background: #3B3630 url(/images/fresh/bottom_bg.gif) repeat-x;
   color: #fff;
+  width: 98.6%;
+  margin-top: 30px;
+  padding: 10px;
 }
 
 .grid_box {
   
 }
 .grid_box .item img {
-  width: 40px;
   height: 40px;
   padding: 2px;
   border: 1px solid #ccc;
@@ -361,7 +362,11 @@ h1, h2, h3, h4, h5, h6 {
 .site_center_head {
   background: url(/images/fresh/body-box-head.gif) no-repeat;
   height: 100px;
-  margin-top: -60px;
+}
+
+.site_center_tail {
+  background: url(/images/fresh/body-box-tail.gif) no-repeat bottom left;
+  height: 100px;
 }
 
 #site_center {
@@ -380,4 +385,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site_item_even {
+}
+
+.restaurant_address address {
+  padding: 8px 5px 8px 34px;
+  background: lightYellow url(/images/fresh/address.png) no-repeat center left;
 }

@@ -28,7 +28,7 @@
   <div id="site_top">
     <div class="grid_11" id="site_logo">
       <div class="site_icon grid_1">
-        <%= image_tag 'fresh/icon.gif', :height => '200px' %>
+        <%= image_tag 'fresh/icon.gif' %>
       </div>
       <div class="site_icon_info grid_9 push_1">
         why don't you review your favorite restaurant <b>NOW!</b>
@@ -49,10 +49,14 @@
   <div id="site_center">
     <%= yield %>
     <div class="clear"></div>
-    <br/>
   </div>
+  <div class="site_center_tail">
+  </div>
+</div>
 
-  <div id="site_bottom" class="">
+<div class="clear"></div>
+<div id="site_bottom">
+  <div class="container_12">
     <div class="space_5 grid_10"></div>
     <div class="space_5 grid_10"></div>
 

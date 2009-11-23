@@ -17,4 +17,4 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 
 # google map API key
-MAP_API_KEY = 'ABQIAAAAFNm78CTt6Ba6XsBkWZHE3hT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQBk7Ik9OByw0__E5OOj_CoemfuNQ'
+MAP_API_KEY = 'ABQIAAAAFNm78CTt6Ba6XsBkWZHE3hRXwWGis4ehQYwFPWsPJASMY_J0qBTSdP47_yO6GocUwBOmC-5rdxE2Bw'

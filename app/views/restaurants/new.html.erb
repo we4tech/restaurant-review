@@ -1,7 +1,10 @@
-<h1>Create new restaurant</h1>
-<div class="break"></div>
+<div class="grid_12">
+  <h1>Create new restaurant</h1>
+  <div class="break"></div>
 
-<% form_for @restaurant do |f| %>
-  <%= render :partial => 'restaurants/parts/form', :locals => {:f => f} %>
-  <%= f.submit 'create' %>
-<% end %>
+  <% form_for @restaurant do |f| %>
+    <%= render :partial => 'restaurants/parts/form', :locals => {:f => f} %>
+    <%= f.submit 'create' %>
+  <% end %>
+
+</div>

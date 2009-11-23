@@ -1,62 +1,64 @@
-<h1><%= link_to @restaurant.name, restaurant_url(@restaurant) %> &raquo; Edit</h1>
-<div class="break"></div>
-
-<% form_for @restaurant do |f| %>
-  <%= f.hidden_field :id, :value => @restaurant.id %>
-  <%= render :partial => 'restaurants/parts/form', :locals => {:f => f} %>
-  <%= f.submit 'update' %> |
-  <%= link_to 'show', restaurant_long_url(:name => @restaurant.name.parameterize.to_s, :id => @restaurant.id) %>
-  <% if @restaurant.author?(current_user) %>
-    | <%= link_to 'delete', restaurant_url(@restaurant), :method => :delete, :confirm => 'do you really want to remove this entry?' %>
-  <% end %>
-<% end %>
-
-<div class="clear space_10"></div>
-<div class="edit_image_gallery">
-  <h3>Attach related images</h3>
+<div class="grid_12">
+  <h1><%= link_to @restaurant.name, restaurant_url(@restaurant) %> &raquo; Edit</h1>
   <div class="break"></div>
-  <div class="space_5 break"></div>
-  <% form_for Image.new, :html => {:multipart => true} do |f| %>
-    <input type="hidden" name="restaurant_id" value="<%= @restaurant.id %>"/>
-    
-    <%= f.file_field :uploaded_data %>
-    <%= f.submit 'upload' %>
-  <% end %>
-  <div class="break"></div>
-  <div class="space_10"></div>
 
-  <% if !@restaurant.images.empty? %>
-    <div class="image_preview">
-      <% @restaurant.images.each do |image| %>
-        <div class="image grid_1">
-          <%= image_tag image.public_filename(:small), :alt => 'N/A', :width => '60px' %>
-          <div class="tools">
-            <%= link_to 'delete', image_url(image), :method => :delete, :confirm => 'do you want to delete this image?' %>
+  <% form_for @restaurant do |f| %>
+    <%= f.hidden_field :id, :value => @restaurant.id %>
+    <%= render :partial => 'restaurants/parts/form', :locals => {:f => f} %>
+    <%= f.submit 'update' %> |
+    <%= link_to 'show', restaurant_long_url(:name => @restaurant.name.parameterize.to_s, :id => @restaurant.id) %>
+    <% if @restaurant.author?(current_user) %>
+      | <%= link_to 'delete', restaurant_url(@restaurant), :method => :delete, :confirm => 'do you really want to remove this entry?' %>
+    <% end %>
+  <% end %>
+
+  <div class="clear space_10"></div>
+  <div class="edit_image_gallery">
+    <h3>Attach related images</h3>
+    <div class="break"></div>
+    <div class="space_5 break"></div>
+    <% form_for Image.new, :html => {:multipart => true} do |f| %>
+      <input type="hidden" name="restaurant_id" value="<%= @restaurant.id %>"/>
+
+      <%= f.file_field :uploaded_data %>
+      <%= f.submit 'upload' %>
+    <% end %>
+    <div class="break"></div>
+    <div class="space_10"></div>
+
+    <% if !@restaurant.images.empty? %>
+      <div class="image_preview">
+        <% @restaurant.images.each do |image| %>
+          <div class="image grid_1">
+            <%= image_tag image.public_filename(:small), :alt => 'N/A', :width => '60px' %>
+            <div class="tools">
+              <%= link_to 'delete', image_url(image), :method => :delete, :confirm => 'do you want to delete this image?' %>
+            </div>
           </div>
-        </div>
-      <% end %>
-      <div class="clear"></div>
-    </div>
-  <% else %>
-    No image added!
-  <% end %>
+        <% end %>
+        <div class="clear"></div>
+      </div>
+    <% else %>
+      No image added!
+    <% end %>
 
-  <div class="space_10"></div>
-  <h3>User contributed images</h3>
-  <div class="break"></div>
+    <div class="space_10"></div>
+    <h3>User contributed images</h3>
+    <div class="break"></div>
 
-  <% if !@restaurant.other_images.empty? %>
-    <div class="image_preview">
-      <% @restaurant.other_images.each do |image| %>
-        <div class="image grid_1">
-          <%= image_tag image.public_filename(:small), :alt => 'N/A', :width => '60px' %>
-          <div class="tools">
-            <%= link_to 'delete', image_url(image, :restaurant_id => @restaurant.id), :method => :delete, :confirm => 'do you want to delete this image?' %>
+    <% if !@restaurant.other_images.empty? %>
+      <div class="image_preview">
+        <% @restaurant.other_images.each do |image| %>
+          <div class="image grid_1">
+            <%= image_tag image.public_filename(:small), :alt => 'N/A', :width => '60px' %>
+            <div class="tools">
+              <%= link_to 'delete', image_url(image, :restaurant_id => @restaurant.id), :method => :delete, :confirm => 'do you want to delete this image?' %>
+            </div>
           </div>
-        </div>
-      <% end %>
-      <div class="clear"></div>
-    </div>
-  <% end %>
+        <% end %>
+        <div class="clear"></div>
+      </div>
+    <% end %>
 
+  </div>
 </div>
