@@ -362,6 +362,7 @@ h1, h2, h3, h4, h5, h6 {
 .site_center_head {
   background: url(/images/fresh/body-box-head.gif) no-repeat;
   height: 100px;
+  margin-top: -17px;
 }
 
 .site_center_tail {
