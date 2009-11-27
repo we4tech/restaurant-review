@@ -46,6 +46,8 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.activate "/activate/:activation_code", :controller => "users", :action => "activate", :activation_code => nil
   map.restaurant_long '/restaurants/:name/:id', :controller => 'restaurants', :action => 'show'
+  map.most_loved_places '/at_most_loved_places', :controller => 'home', :action => 'most_loved_places'
+  map.recently_reviewed_places '/at_recently_reviewed_places', :controller => 'home', :action => 'recently_reviewed_places'
 
   map.facebook_connect '/facebook/connect', :controller => 'users', :action => 'facebook_connect'
   map.facebook_connect_update '/facebook/connect/update', :controller => 'users', :action => 'update_facebook_connect_status'

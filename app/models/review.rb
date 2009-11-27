@@ -6,4 +6,5 @@ class Review < ActiveRecord::Base
 
   named_scope :restaurant, lambda{|restaurant_id| {:conditions => {:restaurant_id => restaurant_id}}}
   named_scope :loved, :conditions => {:loved => 1}
+  named_scope :recent, :order => 'created_at DESC'
 end
