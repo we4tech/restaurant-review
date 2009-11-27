@@ -43,8 +43,10 @@ class Restaurant < ActiveRecord::Base
     limit = determine_row_limit_option(p_limit)
 
     reviews = Review.recent.find(:all, {
+        :joins => [:restaurant],
         :include => [:restaurant],
         :order => 'reviews.created_at',
+        :group => 'restaurant_id',
         :offset => p_offset,
         :limit => limit})
     reviews.collect{|r| r.restaurant}
@@ -52,6 +54,10 @@ class Restaurant < ActiveRecord::Base
 
   def self.count_recently_reviewed
     Review.count
+  end
+
+  def last_review
+    reviews.find(:first, :order => 'id DESC')
   end
 
   private

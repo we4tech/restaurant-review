@@ -1,0 +1,32 @@
+<% if !restaurants.empty? %>
+  <div class="site_simple_box">
+    <h4><%= title %></h4>
+    <div class="space_5"></div>
+
+    <% restaurants.each_with_index do |restaurant, index| %>
+      <% review = restaurant.last_review %>
+      <div>
+        <% if review.user.image %>
+          <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px', :alt => 'n/a'), "#", :class => 'image_small' %>
+        <% end %>
+      </div>
+      
+      <div class="review grid_3">
+        <% if !review.comment.blank? %>
+          <span class="content">"<%= truncate(review.comment, :length => 100) %>" - </span>
+        <% end %>
+
+        <span class="reviewer icon_<%= review.loved == 1 ? 'loved' : 'hated' %>">
+          <%= link_to review.user.login, '#' %> <%= review.loved == 1 ? 'loved' : 'hated' %> <%= link_to restaurant.name, restaurant_long_url(restaurant.name.parameterize.to_s, restaurant.id)%>!
+        </span>
+      </div>
+      <div class="clear space_5"></div>
+      <div class="break"></div>
+      <div class="clear space_5"></div>
+    <% end %>
+    <div class="break"></div>
+    <div class="small">
+      <%= link_to 'more places &raquo;', more_link %>
+    </div>
+  </div>
+<% end %>

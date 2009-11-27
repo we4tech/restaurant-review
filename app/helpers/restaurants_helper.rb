@@ -25,7 +25,7 @@ module RestaurantsHelper
   end
 
   def render_recently_added_places(p_limit = 5)
-    render :partial => 'restaurants/parts/lovable_places', :locals => {
+    render :partial => 'restaurants/parts/recently_added_places', :locals => {
         :title => 'Recently reviewed places!',
         :more_link => recently_reviewed_places_url,
         :restaurants => Restaurant.recently_reviewed(p_limit)}
