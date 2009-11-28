@@ -1,12 +1,17 @@
 <% images = @restaurant.images %>
 <% if !images.empty? %>
   <div class="image_gallery">
-    <%= link_to(image_tag(images.first.public_filename(:large), :class => 'large_image'), images.first.public_filename(:very_large), :rel => 'prettyPhoto[gallery]') %>
+    <%= link_to(image_tag(images.first.public_filename(:large),
+                          :class => 'large_image'), images.first.public_filename(:very_large),
+                          :title => images.first.caption,
+                          :rel => 'prettyPhoto[gallery]') %>
     <% rest_images = images[1..images.length] %>
     <% if !rest_images.empty? %>
       <div class="gallery_links">
         <% rest_images.each do |image| %>
-          <%= link_to(image_tag(image.public_filename(:small)), image.public_filename(:very_large), :rel => 'prettyPhoto[gallery]') %>
+          <%= link_to(image_tag(image.public_filename(:small)), image.public_filename(:very_large),
+                      :rel => 'prettyPhoto[gallery]',
+                      :title => image.caption) %>
         <% end %>
       </div>
     <% end %>

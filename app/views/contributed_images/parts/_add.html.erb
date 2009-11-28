@@ -7,6 +7,11 @@
     <input type="hidden" name="return_to" value="<%= restaurant_url(@restaurant) %>">
 
     <%= f.file_field :uploaded_data %>
+
+    <% caption_default_text = 'Write image caption....' %>
+    <%= f.text_field :caption,
+                     :onclick => "$(this).val() == '#{caption_default_text}' ? $(this).val('') : ''", 
+                     :onblur => "$(this).val().length == 0 ? $(this).val('#{caption_default_text}') : ''" %>
     <%= f.submit 'upload' %>
   <% end %>
 </div>

@@ -21,8 +21,11 @@
       <input type="hidden" name="restaurant_id" value="<%= @restaurant.id %>"/>
 
       <%= f.file_field :uploaded_data %>
+      <%= f.text_field :caption %>
       <%= f.submit 'upload' %>
     <% end %>
+    <div class="clear"></div>
+    <div class="space_10"></div>
     <div class="break"></div>
     <div class="space_10"></div>
 

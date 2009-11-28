@@ -40,6 +40,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 5px;
   position: fixed;
   left: 40%;
+  z-index: 100;
 }
 
 /* Top style starts */
@@ -357,7 +358,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .site_icon_info {
   margin-top: 25px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .site_icon_info {
@@ -404,4 +405,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .small {
   font-size: 80%;
+}
+
+.facebook_connect_control {
+  display: inline;
+}
+.facebook_connect_control form {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+.facebook_connect_control form div {
+  display: inline;
 }

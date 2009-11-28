@@ -1,6 +1,7 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
+
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
@@ -31,6 +32,9 @@ class User < ActiveRecord::Base
   has_many :reviews
   has_one  :related_image
   has_one  :image, :through => :related_image
+
+  FACEBOOK_CONNECT_ENABLED = 1
+  FACEBOOK_CONNECT_DISABLED = 0
 
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
@@ -77,7 +81,14 @@ class User < ActiveRecord::Base
 
   def share_on_facebook?
     reloaded_me = self.reload
-    return reloaded_me.facebook_sid.to_i > 0 && reloaded_me.facebook_uid.to_i > 0
+    return reloaded_me.facebook_connect_enabled == User::FACEBOOK_CONNECT_ENABLED && 
+           reloaded_me.facebook_sid.to_i > 0 &&
+           reloaded_me.facebook_uid.to_i > 0
+  end
+
+  def facebook_session_exists?
+    reloaded_me = self.reload
+    reloaded_me.facebook_sid.to_i > 0 && reloaded_me.facebook_uid.to_i > 0
   end
 
   protected

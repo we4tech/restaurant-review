@@ -52,6 +52,7 @@ ActionController::Routing::Routes.draw do |map|
   map.facebook_connect '/facebook/connect', :controller => 'users', :action => 'facebook_connect'
   map.facebook_connect_update '/facebook/connect/update', :controller => 'users', :action => 'update_facebook_connect_status'
   map.facebook_publish '/facebook/publish/:story/:id', :controller => 'facebook_connect', :action => 'publish_story'
+  map.facebook_account_status_update '/user/facebook_account/update_status', :controller => 'users', :action => 'update_facebook_connect_account_status'
 
   # See how all your routes lay out with "rake routes"
 

@@ -85,6 +85,15 @@ class UsersController < ApplicationController
     render :text => "Update status - #{status.inspect}"
   end
 
+  def update_facebook_connect_account_status
+    status = params[:status].to_i
+    status = User::FACEBOOK_CONNECT_ENABLED if status > User::FACEBOOK_CONNECT_ENABLED
+    current_user.update_attribute(:facebook_connect_enabled, status)
+
+    flash[:notice] = "#{status == User::FACEBOOK_CONNECT_ENABLED ? 'enabled' : 'disabled'} your facebook sharing."
+    redirect_to :back
+  end
+
 protected
   def find_user
     @user = User.find(params[:id])

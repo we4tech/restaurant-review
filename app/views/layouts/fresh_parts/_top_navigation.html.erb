@@ -4,12 +4,31 @@
   </div>
 
   <div id="site_top_navigation">
-    <%= link_to 'home', root_url %> |
+    <span> <%= link_to 'home', root_url %>| </span>
     <% if not logged_in? %>
       <%= link_to 'login', login_url %> |
       <%= link_to 'register', signup_url %>
     <% else %>
       <%= link_to 'add restaurant', new_restaurant_url %> |
+      <% if current_user.facebook_session_exists? %>
+        <span class='facebook_connect_control'>
+          <% form_tag facebook_account_status_update_url, :id => 'facebook_connect_control_form' do %>
+          <% if current_user.facebook_connect_enabled? %>
+            <input id='facebook_share_checkbox'
+                   type='checkbox' value="1"
+                   checked="checked"
+                   name='status'
+                   onclick="$('#facebook_connect_control_form').submit()" />
+          <% else %>
+            <input id='facebook_share_checkbox'
+                   type='checkbox' value="1"
+                   name='status'
+                   onclick="$('#facebook_connect_control_form').submit()" />
+          <% end %>
+          <label for="facebook_share_checkbox">share on facebook</label>
+          <% end %>
+        </span> |
+      <% end %>
       <%= link_to 'edit profile', edit_user_url(current_user) %> |
       <%= link_to 'logout', logout_url %>
     <% end %>
