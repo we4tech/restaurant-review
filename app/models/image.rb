@@ -16,6 +16,8 @@ class Image < ActiveRecord::Base
                   }
   validates_as_attachment
 
+  named_scope :recent, :order => 'created_at DESC'
+
   def author?(p_user)
     p_user && p_user.id == self.user.id
   end

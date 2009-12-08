@@ -4,6 +4,7 @@ class HomeController < ApplicationController
   def index
     @title = 'Recently added restaurants!'
     @restaurants = Restaurant.recent.paginate(:page => params[:page])
+    # pending module - :render_recently_added_pictures
     @left_modules = [:render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = []
   end

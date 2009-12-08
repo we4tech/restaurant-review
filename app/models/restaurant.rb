@@ -45,11 +45,28 @@ class Restaurant < ActiveRecord::Base
     reviews = Review.recent.find(:all, {
         :joins => [:restaurant],
         :include => [:restaurant],
-        :order => 'reviews.created_at',
+        :order => 'reviews.created_at DESC',
         :group => 'restaurant_id',
         :offset => p_offset,
         :limit => limit})
     reviews.collect{|r| r.restaurant}
+  end
+
+  def self.recently_added_pictures(p_limit = 5, p_offset = 0)
+    limit = determine_row_limit_option(p_limit)
+
+    images = Image.recent.find(:all, {
+        :conditions => 'parent_id IS NULL',
+        :order => 'images.created_at DESC',
+        :offset => p_offset,
+        :limit => limit})
+
+    restaurants = images.collect do |image|
+      image.contributed_images.first.restaurant if image.contributed_images.first
+      image.related_images.first.restaurant if image.related_images.first
+    end
+
+    restaurants.compact
   end
 
   def self.count_recently_reviewed

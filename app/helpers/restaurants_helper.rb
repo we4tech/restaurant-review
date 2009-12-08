@@ -30,4 +30,11 @@ module RestaurantsHelper
         :more_link => recently_reviewed_places_url,
         :restaurants => Restaurant.recently_reviewed(p_limit)}
   end
+
+  def render_recently_added_pictures(p_limit = 5)
+    render :partial => 'restaurants/parts/recently_added_pictures', :locals => {
+        :title => 'Recently added pictures!',
+        :more_link => recently_reviewed_places_url,
+        :restaurants => Restaurant.recently_added_pictures(p_limit)}
+  end
 end

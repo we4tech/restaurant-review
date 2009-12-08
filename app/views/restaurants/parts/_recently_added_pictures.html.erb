@@ -1,0 +1,27 @@
+<% if !restaurants.empty? %>
+  <div class="site_simple_box">
+    <h4><%= title %></h4>
+    <div class="space_5"></div>
+
+    <% restaurants.each_with_index do |restaurant, index| %>
+      <%
+         related_image = restaurant.related_images.last
+         contributed_image = restaurant.contributed_images.last
+         last_related_image = [related_image, contributed_image].compact.sort_by{|a| a.created_at}.reverse.last
+      %>
+      <div class='item'>
+        <h6>
+          <%= link_to restaurant.name, restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
+        </h6>
+        <div class='images'>
+          <%= h last_related_image.image.inspect %>
+          <%= image_tag(last_related_image.image.public_filename(:small), :alt => '') %>
+        </div>
+      </div>
+    <% end %>
+    <div class="break"></div>
+    <div class="small">
+      <%= link_to 'more places &raquo;', more_link %>
+    </div>
+  </div>
+<% end %>
