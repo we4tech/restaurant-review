@@ -27,4 +27,4 @@ config.action_controller.asset_host = "http://asset%d.welltreat.us"
 # Enable threaded mode
 # config.threadsafe!
 
-MAP_API_KEY = 'ABQIAAAAFNm78CTt6Ba6XsBkWZHE3hR9SkUWGRiW5OxKBGdjTAeQC3abIBQP1SG_Wrsz7COIvQ2alIwrBcqEpQ'
+MAP_API_KEY = 'ABQIAAAAFNm78CTt6Ba6XsBkWZHE3hQJ1P_wMECDecVRk5GZ-2b28we_rhTU3P-5VoseZAtTkUwgI6Dz1x_jVA'
