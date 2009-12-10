@@ -73,18 +73,19 @@
   </div>
 </div>
 
+
+<%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application', :cache => 'all' %>
+<%= javascript_include_tag 'jquery.prettyPhoto.js' %>
+
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 </script>
 <script type="text/javascript">
 try {
-var pageTracker = _gat._getTracker("UA-12005883-1");
+var pageTracker = _gat._getTracker("UA-12009085-1");
+pageTracker._setDomainName(".welltreat.us");
 pageTracker._trackPageview();
 } catch(err) {}</script>
-
-<%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application', :cache => 'all' %>
-<%= javascript_include_tag 'jquery.prettyPhoto.js' %>
-
 </body>
 </html>
