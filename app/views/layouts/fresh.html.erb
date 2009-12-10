@@ -8,9 +8,6 @@
   <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css', 'fresh/text.css', 'fresh/site.css' %>
   <%= stylesheet_link_tag 'ext/prettyPhoto.css' %>
 
-  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application' %>
-  <%= javascript_include_tag 'jquery.prettyPhoto.js' %>
-
   <meta NAME="Keywords" content="Bangladeshi restaurant, cafe & eat out place review site"/>
   <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
 
@@ -75,5 +72,19 @@
     <div class="clear"></div>
   </div>
 </div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-12005883-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application', :cache => 'all' %>
+<%= javascript_include_tag 'jquery.prettyPhoto.js' %>
+
 </body>
 </html>
