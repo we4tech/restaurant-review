@@ -47,6 +47,7 @@ lib/facebooker.rb
 lib/facebooker/adapters/adapter_base.rb
 lib/facebooker/adapters/bebo_adapter.rb
 lib/facebooker/adapters/facebook_adapter.rb
+lib/facebooker/attachment.rb
 lib/facebooker/admin.rb
 lib/facebooker/application.rb
 lib/facebooker/batch_request.rb
@@ -108,6 +109,7 @@ lib/facebooker/service/net_http_service.rb
 lib/facebooker/service/typhoeus_service.rb
 lib/facebooker/service/typhoeus_multi_service.rb
 lib/facebooker/session.rb
+lib/facebooker/stream_post.rb
 lib/facebooker/version.rb
 lib/net/http_multipart_post.rb
 lib/rack/facebook.rb
@@ -118,8 +120,8 @@ setup.rb
 templates/layout.erb
 test/facebooker/adapters_test.rb
 test/facebooker/admin_test.rb
-test/facebooker/application.rb
 test/facebooker/application_test.rb
+test/facebooker/attachment_test.rb
 test/facebooker/batch_request_test.rb
 test/facebooker/data_test.rb
 test/facebooker/logging_test.rb

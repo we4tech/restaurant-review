@@ -57,7 +57,7 @@ class ControllerWhichRequiresFacebookAuthentication < NoisyController
     render :text=>url_for(options)
   end
   
-   def named_route_test
+  def named_route_test
     render :text=>comments_url()
   end
   
@@ -965,7 +965,7 @@ class RailsHelperTest < Test::Unit::TestCase
     assert_equal("<fb:request-form-submit />",@h.fb_request_form_submit)  
   end   
 
-	def test_fb_request_form_submit_with_uid
+  def test_fb_request_form_submit_with_uid
     assert_equal("<fb:request-form-submit uid=\"123456789\" />",@h.fb_request_form_submit({:uid => "123456789"}))
   end
 
@@ -1079,7 +1079,7 @@ class RailsHelperTest < Test::Unit::TestCase
   
   def test_init_fb_connect_with_features_and_options_js_jquery
     assert @h.init_fb_connect("XFBML", :js => :jquery).match(/XFBML.*/)
-    assert @h.init_fb_connect("XFBML", :js => :jquery).match(/\$\(document\).ready\(/)
+    assert @h.init_fb_connect("XFBML", :js => :jquery).match(/\jQuery\(document\).ready\(/)
   end
 
   def test_init_fb_connect_without_options_app_settings
@@ -1099,6 +1099,10 @@ class RailsHelperTest < Test::Unit::TestCase
     assert_equal @h.fb_logout_link("Logout","My URL"),"<a href=\"#\" onclick=\"FB.Connect.logoutAndRedirect(&quot;My URL&quot;);; return false;\">Logout</a>"
   end
 
+  def test_fb_bookmark_link
+    assert_equal @h.fb_bookmark_link("Bookmark","My URL"),"<a href=\"#\" onclick=\"FB.Connect.showBookmarkDialog(&quot;My URL&quot;);; return false;\">Bookmark</a>"
+  end
+
   def test_fb_user_action_with_literal_callback
     action = Facebooker::Rails::Publisher::UserAction.new
     assert_equal "FB.Connect.showFeedDialog(null, null, null, null, null, FB.RequireConnect.promptConnect, function() {alert('hi')}, \"prompt\", #{{"value" => "message"}.to_json});",
@@ -1110,7 +1114,17 @@ class RailsHelperTest < Test::Unit::TestCase
     assert_equal "FB.Connect.showFeedDialog(null, null, null, null, null, FB.RequireConnect.promptConnect, null, \"prompt\", #{{"value" => "message"}.to_json});",
                  @h.fb_user_action(action,"message","prompt")
   end
-
+  
+  def test_fb_connect_stream_publish
+    stream_post = Facebooker::StreamPost.new
+    attachment = Facebooker::Attachment.new
+    attachment.name="name"
+    stream_post.message = "message"
+    stream_post.target="12451752"
+    stream_post.attachment = attachment
+    
+    assert_equal "FB.Connect.streamPublish(\"message\", {\"name\": \"name\"}, [], \"12451752\", null, null, false, null);",@h.fb_connect_stream_publish(stream_post)
+  end
 
   def test_fb_connect_javascript_tag
     silence_warnings do
@@ -1373,8 +1387,8 @@ class RailsUrlHelperExtensionsTest < Test::Unit::TestCase
     @prompt = "Are you sure?"
     @default_title = "Please Confirm"
     @title = "Confirm Request"
-    @style = {:color => 'black', :background => 'white'}
-    @verbose_style = "{background: 'white', color: 'black'}"
+    @style = {:color => 'black'}
+    @verbose_style = "{color: 'black'}"
     @default_okay = "Okay"
     @default_cancel = "Cancel"
     @default_style = "" #"'width','200px'"
