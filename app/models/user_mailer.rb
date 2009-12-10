@@ -3,14 +3,14 @@ class UserMailer < ActionMailer::Base
     setup_email(user)
     @subject    += 'Please activate your new account'
   
-    @body[:url]  = "http://dietrichyw.facebook.joyent.us/activate/#{user.activation_code}"
+    @body[:url]  = "http://www.welltreat.us/activate/#{user.activation_code}"
   
   end
   
   def activation(user)
     setup_email(user)
     @subject    += 'Your account has been activated!'
-    @body[:url]  = "http://dietrichyw.facebook.joyent.us/"
+    @body[:url]  = "http://www.welltreat.us/"
   end
   
   protected
