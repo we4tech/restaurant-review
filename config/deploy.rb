@@ -8,9 +8,9 @@ set :scm, :git
 
 set :use_sudo, false
 
-role :web, "welltreat.us", :user => 'restaurantreview'                          # Your HTTP server, Apache/etc
-role :app, "welltreat.us", :user => 'restaurantreview'                          # This may be the same as your `Web` server
-role :db,  "welltreat.us", :user => 'restaurantreview', :primary => true # This is where Rails migrations will run
+role :web, "welltreat.us:2212", :user => 'restaurantreview'                          # Your HTTP server, Apache/etc
+role :app, "welltreat.us:2212", :user => 'restaurantreview'                          # This may be the same as your `Web` server
+role :db,  "welltreat.us:2212", :user => 'restaurantreview', :primary => true # This is where Rails migrations will run
 
 set :deploy_to, "/home/restaurantreview/"
 

@@ -30,13 +30,15 @@ Capistrano::Configuration.instance.load do
     desc 'Update symblinks'
     task :symlink, :except => { :no_release => true } do
       run "ln -nfs #{shared_path}/uploaded_images #{release_path}/public/uploaded_images"
+      run "rm #{release_path}/tmp -rf"
+      run "ln -nfs #{shared_path}/tmp #{release_path}/tmp"
     end
   end
 
   namespace :configuration do
     desc 'Create database configuration'
     task :mongrel do
-      run "cd #{current_path} && /usr/local/bin/mongrel_rails cluster::configure -c #{current_path} -e production -p 10170 -N 5"
+      run "cd #{current_path} && /usr/local/bin/mongrel_rails cluster::configure -c #{current_path} -e production -p 8000 -N 5"
     end
   end
 
