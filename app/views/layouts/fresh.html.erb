@@ -5,10 +5,10 @@
     Restaurant review <%= @site_title ? "&raquo; #{@site_title}" : '' %>
   </title>
 
-  <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css', 'fresh/text.css', 'fresh/site.css' %>
+  <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css', 'fresh/text.css', 'fresh/site.css', :cache => 'all.css' %>
   <%= stylesheet_link_tag 'ext/prettyPhoto.css' %>
 
-  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application' %>
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application', :cache => 'all.js' %>
   <%= javascript_include_tag 'jquery.prettyPhoto.js' %>
 
   <meta NAME="Keywords" content="Bangladeshi restaurant, cafe & eat out place review site"/>
