@@ -19,7 +19,7 @@ test:
 
 production:
   adapter: mysql
-  database: dietrichyw_restaurant_review_production
+  database: restaurant_review_production
   pool: 5
   timeout: 5000
   username: restaurant

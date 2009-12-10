@@ -8,11 +8,11 @@ set :scm, :git
 
 set :use_sudo, false
 
-role :web, "fbwoguje.joyent.us", :user => 'dietrichyw'                          # Your HTTP server, Apache/etc
-role :app, "fbwoguje.joyent.us", :user => 'dietrichyw'                          # This may be the same as your `Web` server
-role :db,  "fbwoguje.joyent.us", :user => 'dietrichyw', :primary => true # This is where Rails migrations will run
+role :web, "welltreat.us", :user => 'restaurantreview'                          # Your HTTP server, Apache/etc
+role :app, "welltreat.us", :user => 'restaurantreview'                          # This may be the same as your `Web` server
+role :db,  "welltreat.us", :user => 'restaurantreview', :primary => true # This is where Rails migrations will run
 
-set :deploy_to, "/users/home/dietrichyw/var/apps/#{application}"
+set :deploy_to, "/home/restaurantreview/"
 
 # If you are using Passenger mod_rails uncomment this:
 # if you're still using the script/reapear helper you will need
