@@ -28,3 +28,12 @@ config.action_controller.asset_host = "http://asset%d.welltreat.us"
 # config.threadsafe!
 
 MAP_API_KEY = 'ABQIAAAAFNm78CTt6Ba6XsBkWZHE3hQJ1P_wMECDecVRk5GZ-2b28we_rhTU3P-5VoseZAtTkUwgI6Dz1x_jVA'
+
+ActionMailer::Base.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 587,
+    :domain => "welltreat.us",
+    :user_name => "support@welltreat.us",
+    :password => "h3110w0r1d",
+    :authentication => :plain
+} 
