@@ -16,6 +16,7 @@ class RestaurantsController < ApplicationController
       end
     else
       flash[:notice] = 'Failed to store new restaurant!'
+      render :action => :new
     end
   end
 
@@ -47,7 +48,8 @@ class RestaurantsController < ApplicationController
       end
     else
       flash[:notice] = 'Failed to store your updated!'
-      redirect_to edit_restaurant_url(restaurant)
+      @restaurant = restaurant
+      render :action => :edit
     end
   end
 

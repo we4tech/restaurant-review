@@ -7,6 +7,8 @@ class Restaurant < ActiveRecord::Base
   has_many :other_images, :through => :contributed_images, :source => :image, :dependent => :destroy
   has_many :reviews
 
+  validates_presence_of :name, :description, :address
+
   named_scope :recent, :order => 'created_at DESC'
 
   cattr_reader :per_page

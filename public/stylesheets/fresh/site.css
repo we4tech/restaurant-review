@@ -419,3 +419,17 @@ h1, h2, h3, h4, h5, h6 {
 .facebook_connect_control form div {
   display: inline;
 }
+
+.fieldWithErrors {
+  display: inline;
+}
+
+.fieldWithErrors input {
+  border: 2px solid red;  
+}
+
+.formError {
+  color: crimson;
+  padding: 2px;
+  display: inline;
+}

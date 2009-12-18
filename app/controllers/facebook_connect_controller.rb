@@ -71,7 +71,7 @@ class FacebookConnectController < ApplicationController
           :name => "#{restaurant_review(p_review)} and reviewed '#{restaurant.name}'",
           :href => restaurant_url(restaurant),
           :caption => restaurant_review_stat(p_review),
-          :description => p_review.comment,
+          :description => remove_html_entities(p_review.comment),
           :media => [first_image].compact},
         :action_links => {
             'text' => 'add your review!',
@@ -102,7 +102,7 @@ class FacebookConnectController < ApplicationController
         :attachment =>  {
           :name => "#{message} '#{p_restaurant.name}'",
           :href => restaurant_url(p_restaurant),
-          :description => p_restaurant.description,
+          :description => remove_html_entities(p_restaurant.description),
           :media => [{
             :type => 'image',
             :src => "#{root_url[0..root_url.length - 2]}#{p_image.public_filename(:large)}",
@@ -136,8 +136,8 @@ class FacebookConnectController < ApplicationController
         :attachment =>  {
           :name => "#{verb} '#{p_restaurant.name}'",
           :href => restaurant_url(p_restaurant),
-          :caption => "Address: #{p_restaurant.address}",
-          :description => p_restaurant.description,
+          :caption => "Address: #{p_restaurant.address || 'no where!!'}",
+          :description => remove_html_entities(p_restaurant.description),
           :media => images},
         :action_links => {
             'text' => 'add your review!',
@@ -158,5 +158,9 @@ class FacebookConnectController < ApplicationController
     end
 
     return session
+  end
+
+  def remove_html_entities(p_str)
+    (p_str || '').gsub(/<[\/\w\d\s="\/\/\.:'@#;\-]+>/, '')
   end
 end
