@@ -20,8 +20,8 @@
           </div>
         <% else %>
           <div>
-            <%= link_to image_tag('/chola',
-                        :height => '20px', :alt => 'n/a'), "#",
+            <%= link_to image_tag('fresh/user.png',
+                        :alt => 'n/a'), "#",
                         :title => "#{review.user.login}" %><br/>
             <%= link_to review.user.login, '#' %>
           </div>

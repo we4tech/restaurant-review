@@ -13,8 +13,6 @@
       <div class="item">
         <% if !images.empty? %>
           <%= link_to(image_tag(images.rand.public_filename(:small), :alt => ''), images.first.public_filename(:large), :class => 'image_small') %>
-        <% else %>
-          <img src="#" alt="N/A" height="30" />
         <% end %>
         <div class="push_1">
           <h6>
