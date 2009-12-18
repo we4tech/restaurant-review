@@ -68,7 +68,7 @@ class FacebookConnectController < ApplicationController
     FacebookerPublisher::deliver_publish_stream(
         user, user, {
         :attachment =>  {
-          :name => "#{restaurant_review(p_review)} and reviewed '#{restaurant.name}'",
+          :name => "#{restaurant_review(p_review)} '#{restaurant.name}'",
           :href => restaurant_url(restaurant),
           :caption => restaurant_review_stat(p_review),
           :description => remove_html_entities(p_review.comment),
@@ -87,7 +87,13 @@ class FacebookConnectController < ApplicationController
   end
 
   def restaurant_review(p_review)
-    p_review.loved == 1 ? '&hearts; loved' : 'hated'
+    if p_review.loved?
+      '&hearts; loved and reviewed this place!'
+    elsif p_review.hated?
+      'hated and reviewed this place! '
+    elsif p_review.wanna_go?
+      'wanna go to '
+    end
   end
 
   def publish_story_on_image_added(p_bundle_id, p_facebook_session, p_restaurant, p_image)
