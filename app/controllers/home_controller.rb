@@ -48,4 +48,26 @@ class HomeController < ApplicationController
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
+
+  def who_havent_been_there_before
+    restaurant = Restaurant.find(params[:id].to_i)
+
+    offset = params[:page].to_i
+    offset = 1 if offset == 0
+
+    @reviews = WillPaginate::Collection.create(offset, Restaurant::per_page) do |pager|
+      result = restaurant.reviews.wanna_go.all(
+          :offset => (offset - 1), :limit => Restaurant::per_page, :include => [:user])
+      pager.replace(result)
+
+      unless pager.total_entries
+        pager.total_entries = restaurant.reviews.wanna_go.count
+      end
+    end
+
+    @title = "Who else wanna visit this place!"
+    @left_modules = [:render_most_lovable_places, :render_recently_added_places]
+    @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_url(restaurant)]]
+    @restaurant = restaurant
+  end
 end

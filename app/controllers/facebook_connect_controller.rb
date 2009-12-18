@@ -83,7 +83,7 @@ class FacebookConnectController < ApplicationController
     loved_count = p_review.restaurant.reviews.loved.count
     loved_percentage = (100 / total_reviews_count) * loved_count
 
-    "#{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_percentage}% loved & #{100 - loved_percentage}% hated!"
+    "#{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}!"
   end
 
   def restaurant_review(p_review)

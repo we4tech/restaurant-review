@@ -62,7 +62,9 @@
       <img src="http://maps.google.com/maps/api/staticmap?center=<%= @restaurant.lat %>,<%= @restaurant.lng %>&zoom=14&size=280x300&sensor=false&markers=color:green|label:R|<%= @restaurant.lat %>,<%= @restaurant.lng %>&key=<%= MAP_API_KEY %>" alt="" width="299px"/>
       <address><%= @restaurant.address %></address>
     </div>
-    <div class="clear space_10"></div>
+    <div class="clear"></div>
+
+    <%= render_who_wanna_go_there(@restaurant) %>
 
     <%= render_most_lovable_places(5) %>
   </div>

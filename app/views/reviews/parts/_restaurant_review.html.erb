@@ -27,7 +27,15 @@
         <% end %>
 
         <span class="reviewer">
-          <%= link_to review.user.name, '#' %> <%= review.loved == 1 ? 'loved' : 'hated' %> this place!
+          <%= link_to review.user.login, '#' %>
+          <% if review.loved? %>
+            loved
+          <% elsif review.hated? %>
+            hated
+          <% elsif review.wanna_go? %>
+            wanna go to
+          <% end %>
+          this place!
         </span>
         <span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">updated <%= distance_of_time_in_words(review.updated_at, Time.now) %> ago.</span>
       </div>

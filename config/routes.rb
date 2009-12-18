@@ -48,6 +48,7 @@ ActionController::Routing::Routes.draw do |map|
   map.restaurant_long '/restaurants/:name/:id', :controller => 'restaurants', :action => 'show'
   map.most_loved_places '/at_most_loved_places', :controller => 'home', :action => 'most_loved_places'
   map.recently_reviewed_places '/at_recently_reviewed_places', :controller => 'home', :action => 'recently_reviewed_places'
+  map.who_wanna_go_place '/at/:name/and_see_who_havent_been_there_before/:id', :controller => 'home', :action => 'who_havent_been_there_before'
 
   map.facebook_connect '/facebook/connect', :controller => 'users', :action => 'facebook_connect'
   map.facebook_connect_update '/facebook/connect/update', :controller => 'users', :action => 'update_facebook_connect_status'

@@ -37,4 +37,13 @@ module RestaurantsHelper
         :more_link => recently_reviewed_places_url,
         :restaurants => Restaurant.recently_added_pictures(p_limit)}
   end
+
+  def render_who_wanna_go_there(p_restaurant, p_limit = 5)
+    wanna_go_reviews = p_restaurant.reviews.wanna_go.all(:limit => p_limit, :include => [:user])
+    render :partial => 'restaurants/parts/who_wanna_go_there', :locals => {
+        :title => 'Who wanna visit here!',
+        :reviews => wanna_go_reviews,
+        :more_link => who_wanna_go_place_url(:id => p_restaurant.id, :name => p_restaurant.name.parameterize.to_s)
+    }
+  end
 end

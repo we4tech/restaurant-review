@@ -433,3 +433,19 @@ h1, h2, h3, h4, h5, h6 {
   padding: 2px;
   display: inline;
 }
+
+.user_list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user_list li {
+  float: left;
+  width: 70px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  padding: 5px;
+  margin-top: 10px;
+}
