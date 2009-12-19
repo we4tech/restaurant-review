@@ -18,8 +18,16 @@
           <span class="content">"<%= truncate(review.comment, :length => 100) %>" - </span>
         <% end %>
 
-        <span class="reviewer icon_<%= review.loved == 1 ? 'loved' : 'hated' %>">
-          <%= link_to review.user.login, '#' %> <%= review.loved == 1 ? 'loved' : 'hated' %> <%= link_to restaurant.name, restaurant_long_url(restaurant.name.parameterize.to_s, restaurant.id)%>!
+        <span class="reviewer icon_<%= review.loved? ? 'loved' : '' %>">
+          <%= link_to review.user.login, '#' %>
+          <% if review.loved? %>
+            loved
+          <% elsif review.hated? %>
+            disliked
+          <% elsif review.wanna_go? %>
+            wanna go to
+          <% end %>
+          <%= link_to restaurant.name, restaurant_long_url(restaurant.name.parameterize.to_s, restaurant.id)%>
         </span>
       </div>
       <div class="clear space_5"></div>
