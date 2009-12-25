@@ -15,6 +15,7 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+config.action_mailer.default_url_options = {:host => 'servicedev1.net'}
 
 # google map API key
 MAP_API_KEY = 'ABQIAAAAFNm78CTt6Ba6XsBkWZHE3hRXwWGis4ehQYwFPWsPJASMY_J0qBTSdP47_yO6GocUwBOmC-5rdxE2Bw'

@@ -13,7 +13,10 @@
   <%= check_box_tag 'remember_me', '1', @remember_me %></p>
   -->
 
-  <p><%= submit_tag 'Log in' %></p>
+  <p>
+    <%= submit_tag 'Log in' %> |
+    <%= link_to 'Did you forget your password?', reset_password_url %>
+  </p>
   <% end -%>
   
 </div>

@@ -94,6 +94,69 @@ class UsersController < ApplicationController
     redirect_to :back
   end
 
+  def reset_password
+  end
+
+  def process_reset_password
+    email = params[:email]
+    user = User.find_by_email(email)
+    if user
+      user.generate_remember_token
+      UserMailer.deliver_reset_password(user)
+      flash[:notice] = "Please check your '#{email}' email inbox."
+      redirect_to login_url
+    else
+      flash[:notice] = "No account associated with '#{email}', please try again."
+      redirect_to reset_password_url
+    end
+  end
+
+  def change_password
+    @token = params[:token].to_s
+    @user = User.find_by_remember_token(@token)
+
+    if @user.nil?
+      flash[:notice] = 'Invalid password change request.'
+      redirect_to login_url
+    elsif Time.now > @user.remember_token_expires_at
+      flash[:notice] = 'You password change request has been expired.'
+      redirect_to login_url
+    end
+  end
+
+  def save_new_password
+    @token = params[:token]
+    @user = User.find_by_remember_token(@token)
+
+    if @user && Time.now <= @user.remember_token_expires_at
+      password = params[:password]
+      confirm_password = params[:confirm_password]
+
+      if !(password.blank? && confirm_password.blank?) && password == confirm_password
+        saved = @user.update_attributes(
+            :password => password,
+            :password_confirmation => confirm_password,
+            :remember_token => nil,
+            :remember_token_expires_at => nil
+        )
+
+        if saved
+          flash[:notice] = 'Great!, it\'s done. now you can login :)_)'
+          redirect_to login_url
+        else
+          flash[:notice] = 'Invalid password, please write 6 or more chars long password'
+          render :action => :change_password
+        end
+      else
+        flash[:notice] = 'Invalid password, password does not match.'
+        render :action => :change_password
+      end
+    else
+      flash[:notice] = 'Your password reset request has expired, please try again.'
+      redirect_to login_url
+    end
+  end
+
 protected
   def find_user
     @user = User.find(params[:id])
