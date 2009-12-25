@@ -45,6 +45,11 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.activate "/activate/:activation_code", :controller => "users", :action => "activate", :activation_code => nil
+  map.reset_password "/user/reset_password", :controller => "users", :action => "reset_password"
+  map.process_reset_password "/user/process/reset_password/", :controller => "users", :action => "process_reset_password"
+  map.change_password "/user/change_password/:token", :controller => "users", :action => "change_password", :token => nil
+  map.save_new_password "/user/save_new_password/", :controller => "users", :action => "save_new_password"
+
   map.restaurant_long '/restaurants/:name/:id', :controller => 'restaurants', :action => 'show'
   map.most_loved_places '/at_most_loved_places', :controller => 'home', :action => 'most_loved_places'
   map.recently_reviewed_places '/at_recently_reviewed_places', :controller => 'home', :action => 'recently_reviewed_places'

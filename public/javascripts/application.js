@@ -62,3 +62,45 @@ App.MapWidget = {
     }
   }
 }
+
+
+App.UI = {
+
+  detectFieldWithDefaultValue: function(pDefaultText, pClass, pPasswordField) {
+    var defaultText = pDefaultText;
+    var lClass = pClass == null ? 'fieldWithDefaultValue' : pClass;
+
+    $('input.' + lClass).each(function() {
+
+      if (pPasswordField) {
+        $(this)[0].type = 'text';
+      }
+
+      if ($(this).val() != defaultText) {
+        $(this).val(defaultText);
+      }
+      
+      $(this).bind('focus', function() {
+        var $self = $(this);
+        if ($self.val() == defaultText) {
+          $self.val('');
+          $self.removeClass('fieldWithDefaultValue').addClass('fieldSelected');
+          if (pPasswordField) {
+            $self[0].type = 'password';
+          }
+        }
+      });
+
+      $(this).bind('blur', function() {
+        var $self = $(this);
+        if ($self.val() == '') {
+          $self.val(defaultText);
+          $self.removeClass('fieldSelected').addClass('fieldWithDefaultValue');
+          if (pPasswordField) {
+            $self[0].type = 'text';
+          }
+        }
+      });
+    });
+  }
+}
