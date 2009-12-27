@@ -3,6 +3,11 @@
 <%= f.error_message_on :name %>
 <br/>
 
+<label>description</label><br/>
+<%= f.text_area :description %>
+<%= f.error_message_on :description %>
+<br/>
+
 <label>address</label><br/>
 
 <div class="grid_6">
@@ -17,21 +22,18 @@
     <%= f.hidden_field :lng %>
   </div>
 </div>
-
 <div class="clear"></div>
-<label>description</label><br/>
-<%= f.text_area :description %>
-<%= f.error_message_on :description %>
-<br/>
+
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script type="text/javascript">
+  new nicEditor({buttonList : ['bold','italic','underline','left','center','right','ol','ul','fontFormat','indent','outdent','link','unlink','image','upload','xhtml']}).panelInstance('restaurant_description');
+</script>
 
 <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= MAP_API_KEY %>&hl=en"></script>
 <script type="text/javascript">
   App.MapWidget.initMap($('#google_map_canvas'), function(pPlacemark) {
-    $('#restaurant_address').val(pPlacemark.address);      
+    $('#restaurant_address').val(pPlacemark.address);
     $('#restaurant_lat').val(pPlacemark.Point.coordinates[1]);
-    $('#restaurant_lng').val(pPlacemark.Point.coordinates[0]);      
+    $('#restaurant_lng').val(pPlacemark.Point.coordinates[0]);
   });
 </script>
-
-<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
-<script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
