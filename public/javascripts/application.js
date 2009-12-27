@@ -18,6 +18,7 @@ App.MapWidget = {
 
       var map = App.MapWidget.mMap;
       map.setUIToDefault();
+      map.enableGoogleBar();
 
       var center = null;
 
@@ -56,6 +57,29 @@ App.MapWidget = {
       });
 
       map.addOverlay(marker);
+
+      GEvent.addListener(map, 'addoverlay', function(pOverlay) {
+        if (pOverlay instanceof GMarker) {
+          var place = pOverlay.getLatLng();
+          marker.setLatLng(place);
+
+          pOverlay.closeInfoWindow();
+
+          var address = null;
+          marker.openInfoWindowHtml("Retrieving address...");
+          if (App.MapWidget.mGeoCoder == null) {
+            App.MapWidget.mGeoCoder = new GClientGeocoder();
+          }
+
+          App.MapWidget.mGeoCoder.getLocations(place, function(response) {
+            if (response || response.Status.code == 200) {
+              var placemark = response.Placemark[0];
+              marker.openInfoWindowHtml('Restaurant is located @' + placemark.address);
+              pCallback(placemark);
+            }
+          });
+        }
+      });
 
       App.MapWidget.MAP_INIT = true;
       $pMapWidgetElement.appear();
