@@ -1,0 +1,29 @@
+<div class="grid_12">
+  <h4><%= link_to 'Administration panel', admin_url %> &raquo; Manage topics</h4>
+  <div class="break"></div>
+
+  <%= link_to 'Create topic', new_topic_url %>
+  <div class="clear"></div>
+  <div class="break"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topics'>
+    <% if !@topics.empty? %>
+      <% @topics.each do |topic| %>
+        <div class='admin_topic'>
+          <b>#<%= topic.id %> Topic: <%= topic.label %> (<%= topic.name %>)</b>
+          [
+          <%= link_to 'edit', edit_topic_url(:id => topic.id) %> |
+          <%= link_to 'delete', topic_url(:id => topic.id), :method => :delete, :confirm => 'Do you really want to remove this topic?' %>
+          ]
+        </div>
+      <% end %>
+    <% else %>
+      No topic was created!
+    <% end %>
+
+    <div class='pagination'>
+      <%= will_paginate @topics %>
+    </div>
+  </div>
+</div>

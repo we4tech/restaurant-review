@@ -34,11 +34,12 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "home"
 
   map.resources :users, :member => { :suspend => :put, :unsuspend => :put, :purge => :delete }
-  map.resource :session
+  map.resource  :session
   map.resources :restaurants
   map.resources :images
   map.resources :reviews
   map.resources :contributed_images
+  map.resources :topics
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
@@ -59,6 +60,8 @@ ActionController::Routing::Routes.draw do |map|
   map.facebook_connect_update '/facebook/connect/update', :controller => 'users', :action => 'update_facebook_connect_status'
   map.facebook_publish '/facebook/publish/:story/:id', :controller => 'facebook_connect', :action => 'publish_story'
   map.facebook_account_status_update '/user/facebook_account/update_status', :controller => 'users', :action => 'update_facebook_connect_account_status'
+
+  map.admin '/dashboard', :subdomain => 'admin', :controller => 'admin', :action => 'index'
 
   # See how all your routes lay out with "rake routes"
 

@@ -23,7 +23,7 @@
 			callback: function(){} /* Called when prettyPhoto is closed */
 		}, settings);
 		
-		// Fallback to a supported theme for IE6
+		// Fallback to a supported themes for IE6
 		if($.browser.msie && $.browser.version == 6){
 			settings.theme = "light_square";
 		}
@@ -130,7 +130,7 @@
 				$ppt = $('.ppt');
 			}
 			
-			$pp_pic_holder.attr('class','pp_pic_holder ' + settings.theme); // Set the proper theme
+			$pp_pic_holder.attr('class','pp_pic_holder ' + settings.theme); // Set the proper themes
 
 			isSet = ($(images).size() > 0) ?  true : false; // Find out if it's a set
 

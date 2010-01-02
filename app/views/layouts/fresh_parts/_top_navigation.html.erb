@@ -29,6 +29,11 @@
           <% end %>
         </span> |
       <% end %>
+
+      <% if current_user.admin? %>
+        <%= link_to 'admin', admin_url %> |
+      <% end %>
+      
       <%= link_to 'edit profile', edit_user_url(current_user) %> |
       <%= link_to 'logout', logout_url %>
     <% end %>
