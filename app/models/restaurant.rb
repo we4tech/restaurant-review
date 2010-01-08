@@ -47,7 +47,6 @@ class Restaurant < ActiveRecord::Base
 
     reviews = Review.recent.find(:all, {
         :include => [:restaurant],
-        :order => 'reviews.created_at DESC',
         :offset => p_offset,
         :limit => limit})
     reviews.collect{|r| r.restaurant}
