@@ -16,31 +16,7 @@
     <div class="clear space_10"></div>
     
     <% reviews.each do |review| %>
-      <div>
-        <% if review.user.image %>
-          <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px'), "#", :class => 'image_small' %>
-        <% else %>
-          <%= link_to image_tag('fresh/user.png', :width => '40px'), '#', :class => 'image_small' %>
-        <% end %>
-      </div>
-      <div class="review grid_6">
-        <% if !review.comment.blank? %>
-          <span class="content"><%= simple_format h(review.comment) %> - </span>
-        <% end %>
-
-        <span class="reviewer">
-          <%= link_to review.user.login, '#' %>
-          <% if review.loved? %>
-            loved
-          <% elsif review.hated? %>
-            hated
-          <% elsif review.wanna_go? %>
-            wanna go to
-          <% end %>
-          this place!
-        </span>
-        <span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">updated <%= distance_of_time_in_words(review.updated_at, Time.now) %> ago.</span>
-      </div>
+      <%= render :partial => 'reviews/parts/review', :locals => {:review => review} %>
       <div class="clear space_5"></div>
     <% end %>
   <% else %>

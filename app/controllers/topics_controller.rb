@@ -67,7 +67,7 @@ class TopicsController < ApplicationController
     end
 
     def authorize
-      if !current_user.admin?
+      if !current_user || !current_user.admin?
         flash[:notice] = 'You are not authorized to access this url.'
         redirect_to root_url
       end

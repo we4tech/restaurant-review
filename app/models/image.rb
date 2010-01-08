@@ -1,6 +1,7 @@
 class Image < ActiveRecord::Base
 
   belongs_to :user
+  belongs_to :topic
   has_many :related_images, :dependent => :destroy
   has_many :contributed_images, :dependent => :destroy
 

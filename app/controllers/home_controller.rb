@@ -44,6 +44,7 @@ class HomeController < ApplicationController
     end
 
     @title = 'Recently reviewed places!'
+    @display_last_review = true
     @left_modules = [:render_most_lovable_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index

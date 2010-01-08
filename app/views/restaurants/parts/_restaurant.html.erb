@@ -28,6 +28,21 @@
       <%= words[0..20].join(' ') %><% if words.length > 20 %>...<% end %>
       <%= link_to 'more', restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
     </div>
+
+    <% if @display_last_review %>
+      <% last_review = restaurant.last_review %>
+      <% if last_review %>
+        <div class='review_quote'>
+          <%= render :partial => 'reviews/parts/review',
+                     :locals => {:review => last_review, :tag_name => 'span', :grid_class => ''} %>
+          <div class="clear"></div>
+          <div class="space_5"></div>
+          <div class="break"></div>
+          <div class="space_5"></div>
+          <%= link_to 'check rest of the reviews...', restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
+        </div>
+      <% end %>
+    <% end %>
   </div>
   <div class="clear"></div>
 </div>

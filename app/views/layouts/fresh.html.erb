@@ -40,8 +40,11 @@
       </div>
     </div>
 
-    <div class="site_message" style="display: <%= flash[:notice] ? 'block' : 'none' %>" onclick="this.style.display = 'none'">
-      <%= flash[:notice] %>
+    <%
+       flash_message = flash[:notice] || flash[:error] || flash[:success]
+    %>
+    <div class="site_message" style="display: <%= flash_message ? 'block' : 'none' %>" onclick="this.style.display = 'none'">
+      <%= flash_message %>
     </div>
   </div>
   <div class="clear"></div>

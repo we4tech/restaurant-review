@@ -32,6 +32,18 @@ class SessionsController < ApplicationController
     end
   end
 
+  def login_as
+    if current_user && current_user.admin? && params[:user]
+      self.current_user = User.find_by_login(params[:user])
+      handle_remember_cookie!(false)
+      flash[:notice] = "You have logged in as - #{params[:user]}"
+    else
+      flash[:notice] = "You are not authorized to preform this action."
+    end
+
+    redirect_to root_url
+  end
+
   def destroy
     logout_killing_session!
     flash[:notice] = "You have been logged out."

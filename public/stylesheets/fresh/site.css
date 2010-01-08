@@ -457,3 +457,10 @@ h1, h2, h3, h4, h5, h6 {
 .fieldSelected {
   color: #000;
 }
+
+.review_quote {
+  background: lightYellow;
+  padding: 5px;
+  font-size: 10px;
+  margin-top: 10px;
+}

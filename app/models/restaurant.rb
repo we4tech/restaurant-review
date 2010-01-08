@@ -1,6 +1,7 @@
 class Restaurant < ActiveRecord::Base
 
   belongs_to :user
+  belongs_to :topic
   has_many :related_images, :order => 'created_at DESC', :dependent => :destroy
   has_many :images, :through => :related_images, :dependent => :destroy
   has_many :contributed_images, :order => 'created_at DESC', :dependent => :destroy
@@ -45,10 +46,8 @@ class Restaurant < ActiveRecord::Base
     limit = determine_row_limit_option(p_limit)
 
     reviews = Review.recent.find(:all, {
-        :joins => [:restaurant],
         :include => [:restaurant],
         :order => 'reviews.created_at DESC',
-        :group => 'restaurant_id',
         :offset => p_offset,
         :limit => limit})
     reviews.collect{|r| r.restaurant}

@@ -7,6 +7,8 @@ class RestaurantsController < ApplicationController
   def create
     @restaurant = Restaurant.new(params[:restaurant])
     @restaurant.user = current_user
+    @restaurant.topic_id = @topic.id
+
     if @restaurant.save
       flash[:notice] = 'Successfully saved new restaurant!'
       if current_user.share_on_facebook?
@@ -38,7 +40,9 @@ class RestaurantsController < ApplicationController
   def update
     restaurant = Restaurant.find(params[:id].to_i)
     if restaurant.update_attributes(params[:restaurant])
-      restaurant.update_attribute(:user_id, current_user.id)
+      restaurant.update_attributes(
+          :user_id => current_user.id,
+          :topic_id => @topic.id)
       if current_user.share_on_facebook?
         flash[:notice] = 'Saved and shared your updates!'
         redirect_to facebook_publish_url('updated_restaurant', restaurant.id, :next_to => edit_restaurant_url(restaurant))

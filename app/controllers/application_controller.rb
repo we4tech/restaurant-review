@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
+  include ApplicationHelper
   
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -13,5 +14,7 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   filter_parameter_logging :fb_sig_friends, :password
+
+  before_filter :detect_topic_or_forward_to_default_one
   
 end

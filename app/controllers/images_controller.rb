@@ -58,6 +58,7 @@ class ImagesController < ApplicationController
     class_name.create({
       :image_id => @image_file.id,
       :model => Restaurant.name,
+      :topic_id => @topic.id,
       :group => @group
     }.merge({field_name => object_id}))
 
@@ -68,6 +69,7 @@ class ImagesController < ApplicationController
     group = nil
     image_file = Image.new(params[:image])
     image_file.user = current_user
+    image_file.topic_id = @topic.id
     if params[:image]
       group = params[:image][:group]
     end

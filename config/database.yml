@@ -2,7 +2,7 @@
 #   gem install sqlite3-ruby (not necessary on OS X Leopard)
 development:
   adapter: mysql
-  database: dietrichyw_restaurant_review_development
+  database: welltreatus
   pool: 5
   timeout: 5000
   username: root

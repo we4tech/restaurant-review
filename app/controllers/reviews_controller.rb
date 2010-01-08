@@ -3,6 +3,7 @@ class ReviewsController < ApplicationController
   def create
     @review = Review.new(params[:review])
     @review.user_id = current_user.id
+    @review.topic_id = @topic.id
 
     if @review.save
       flash[:notice] = 'Successfully added your review!'
@@ -20,7 +21,7 @@ class ReviewsController < ApplicationController
   def update
     @review = Review.find(params[:id].to_i)
     if @review.update_attributes(params[:review])
-      @review.update_attribute(:user_id, current_user.id)
+      @review.update_attributes(:user_id => current_user.id, :topic_id => @topic.id)
       flash[:notice] = 'Successfully updated your review!'
       if current_user.share_on_facebook?
         redirect_to facebook_publish_url('updated_review', @review.id, :next_to => restaurant_url(@review.restaurant_id))
