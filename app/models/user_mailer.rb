@@ -19,6 +19,15 @@ class UserMailer < ActionMailer::Base
     @body[:url] = change_password_url(user.remember_token)
   end
 
+  def comment_notification(review_comment)
+    setup_email(review_comment.review.user)
+    @subject += "#{review_comment.user.login} commented on your review at '#{review_comment.restaurant.name}'"
+    @body[:review_comment] = review_comment
+    @body[:url] = restaurant_long_url(
+        :name => review_comment.restaurant.name.parameterize.to_s,
+        :id => review_comment.restaurant.id)
+  end
+
   protected
     def setup_email(user)
       @recipients  = "#{user.email}"
