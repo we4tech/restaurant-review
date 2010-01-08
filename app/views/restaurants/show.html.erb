@@ -43,9 +43,11 @@
         <%= render :partial => 'reviews/parts/form', :locals => {:restaurant => @restaurant} %>
       <% else %>
         <div class='highlight'>
-        You have reviewed this place before!,
-        do you think this place is no longer cOoL ?? why don't you change it right here!
-        say your strong opinion :)_)
+          You have reviewed this place before!,
+          do you think this place is no longer cOoL ?? why don't you change it right here!
+          say your strong opinion :)_) <br/> - 
+
+          <a href='javascript: void(0)' onclick="$('#edit_review_<%= user_review.id %>').show()">edit your existing review!</a>
         </div>
         <%= render :partial => 'reviews/parts/edit_form', :locals => {:review => user_review} %>
       <% end %>

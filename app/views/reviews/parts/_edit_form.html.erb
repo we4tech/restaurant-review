@@ -1,7 +1,8 @@
-<% form_for review, :url => review_url(:id => review.id), :html => {:method => :put} do |f| %>
-  <h4>Edit your review!</h4>
-  <%= render :partial => 'reviews/parts/fields', :locals => {:f => f} %>
-  <%= f.hidden_field :restaurant_id, :value => review.restaurant.id %>
+<% form_for review, :url => review_url(:id => review.id), :html => {:method => :put, :style => 'display: none'} do |f| %>
+  <div class="">
+    <%= render :partial => 'reviews/parts/fields', :locals => {:f => f} %>
+    <%= f.hidden_field :restaurant_id, :value => review.restaurant.id %>
 
-  <%= f.submit 'update your review!' %>
+    <%= f.submit 'update your review!' %>
+  </div>
 <% end %>
