@@ -1,5 +1,7 @@
 class ReviewCommentsController < ApplicationController
 
+  before_filter :login_required
+
   def create
     @review_comment = ReviewComment.new(params[:review_comment])
     @review = Review.find(@review_comment.review_id)

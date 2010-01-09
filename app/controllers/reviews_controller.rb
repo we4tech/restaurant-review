@@ -1,5 +1,7 @@
 class ReviewsController < ApplicationController
 
+  before_filter :login_required 
+
   def create
     @review = Review.new(params[:review])
     @review.user_id = current_user.id

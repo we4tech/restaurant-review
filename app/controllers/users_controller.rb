@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
-  
-  # Protect these actions behind an admin login
+
+  before_filter :login_required, :only => [
+      :edit, :update_facebook_connect_status,
+      :update_facebook_connect_account_status,
+      :suspend, :unsuspend, :destroy, :purge
+  ]
+
+# Protect these actions behind an admin login
   # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
   before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge]
   
