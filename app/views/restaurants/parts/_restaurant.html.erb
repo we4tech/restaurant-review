@@ -4,6 +4,7 @@
      images = restaurant.other_images
    end
    index = index || 0
+   grid_class = grid_class || 'grid_6'
 %>
 <div class="site_list_item">
   <% if !images.empty? %>
@@ -12,7 +13,7 @@
     </div>
   <% end %>
 
-  <div class="grid_6">
+  <div class="<%= grid_class %>">
     <h4>
       <%= link_to restaurant.name, restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
     </h4>

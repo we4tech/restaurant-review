@@ -34,7 +34,7 @@
         <h4>Recently added restaurants</h4>
         <div class="break"></div>
         <% @restaurants.each do |restaurant| %>
-          <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant} %>
+          <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :grid_class => 'grid_4'} %>
         <% end %>
         <div class="date">
           <%= page_entries_info @restaurants %>
