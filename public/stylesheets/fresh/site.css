@@ -254,7 +254,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 10px;
 }
 
-.reviews .review .date {
+.date {
   font-size: 10px;
   font-style: italic;
   color: #aaa;
@@ -295,6 +295,7 @@ h1, h2, h3, h4, h5, h6 {
   background: lightYellow;
   padding: 2px;
   font-style: italic;
+  font-weight: bold;
 }
 
 .contributed_image_form form {
@@ -492,4 +493,14 @@ h1, h2, h3, h4, h5, h6 {
 .edit_review textarea, .new_review textarea {
   width: 100%;
   height: 200px;
+}
+
+.user_profile_brief {
+  background: lightyellow;
+  padding: 5px;
+}
+
+.user_profile_brief h4 {
+  border-bottom: 1px dashed #ccc;
+  margin-bottom: 5px;
 }

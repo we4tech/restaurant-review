@@ -163,6 +163,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @user = User.find(params[:id].to_i)
+    @left_modules = [:render_most_lovable_places, :render_recently_added_places]
+    @reviews = @user.reviews.recent.paginate(:page => params[:rrp], :per_page => 10)
+    @review_comments = @user.review_comments.recent.paginate(:page => params[:rrcp], :per_page => 10)
+    @restaurants = @user.restaurants.recent.paginate(:page => params[:rp], :per_page => 10)
+  end
+
 protected
   def find_user
     @user = User.find(params[:id])

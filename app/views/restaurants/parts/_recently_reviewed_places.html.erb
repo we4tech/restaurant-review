@@ -6,9 +6,9 @@
     <% reviews.each_with_index do |review, index| %>
       <div>
         <% if review.user.image %>
-          <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px', :alt => 'n/a'), "#", :class => 'image_small' %>
+          <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px', :alt => 'n/a'), user_url(review.user), :class => 'image_small' %>
         <% else %>
-          <%= link_to(image_tag('fresh/user.png'), '', :class => 'image_small') %>
+          <%= link_to(image_tag('fresh/user.png'), user_url(review.user), :class => 'image_small') %>
         <% end %>
       </div>
 
@@ -18,7 +18,7 @@
         <% end %>
 
         <span class="reviewer icon_<%= review.loved? ? 'loved' : '' %>">
-          <%= link_to review.user.login, '#' %>
+          <%= link_to review.user.login, user_url(review.user) %>
           <% if review.loved? %>
             loved
           <% elsif review.hated? %>
@@ -33,7 +33,6 @@
       <div class="break"></div>
       <div class="clear space_5"></div>
     <% end %>
-    <div class="break"></div>
     <div class="small">
       <%= link_to 'more places &raquo;', more_link %>
     </div>

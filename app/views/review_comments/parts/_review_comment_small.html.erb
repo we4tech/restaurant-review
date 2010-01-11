@@ -1,0 +1,13 @@
+<a name="review-<%= review_comment.id %>"></a>
+<span class="reviewer">
+  <% if review_comment.loved? %>
+    <span class="highlight">liked</span> and
+  <% elsif review_comment.hated? %>
+    <span class="highlight">disliked</span> and
+  <% end %>
+
+  commented a review of <%= link_to review_comment.restaurant.name, restaurant_long_url(:id => review_comment.restaurant.id, :name => review_comment.restaurant.name.parameterize.to_s)%>
+</span>
+<span class="date" title="<%= review_comment.updated_at.strftime('%d %b %Y') %>">
+  - added <%= distance_of_time_in_words(review_comment.updated_at, Time.now) %> ago.
+</span>

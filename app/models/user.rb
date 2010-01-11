@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   has_many :restaurants
   has_many :images
   has_many :reviews
+  has_many :review_comments
   has_one  :related_image
   has_one  :image, :through => :related_image
 

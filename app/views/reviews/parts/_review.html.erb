@@ -1,12 +1,13 @@
 <%
    tag_name = tag_name || 'div'
    grid_class = grid_class || 'grid_6'
+   hide_comment = hide_comment || false
 %>
 <<%= tag_name %>>
   <% if review.user.image %>
-    <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px', :alt => 'N/A'), "#", :class => 'image_small' %>
+    <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px', :alt => 'N/A'), user_url(:id => review.user.id), :class => 'image_small' %>
   <% else %>
-    <%= link_to image_tag('fresh/user.png', :width => '40px', :alt => 'N/A'), '#', :class => 'image_small' %>
+    <%= link_to image_tag('fresh/user.png', :width => '40px', :alt => 'N/A'), user_url(:id => review.user.id), :class => 'image_small' %>
   <% end %>
 </<%= tag_name %>>
 <<%= tag_name %> class="review <%= grid_class %>">
@@ -33,6 +34,9 @@
           rel='<%= review.id %>'
           id="add_comment_link_<%= review.id %>">add your comment!</a>]
     <% end %>
+    <% if hide_comment && review.review_comments.count > 0 %>
+      <a href='javascript:void(0)'>show comments</a>
+    <% end %>
   </span>
   <div class="clear"></div>
   <div class="space_10"></div>
@@ -41,12 +45,12 @@
 
   <% comments = review.review_comments %>
   <% if !comments.empty? %>
-    <div class='review_comments'>
+    <div class='review_comments' style="display:<%= hide_comment ? 'none' : 'block' %>">
       <% comments.each do |comment| %>
         <div class='review_comment'>
           <span class='review_comment_author'>
             <% if comment.user.image %>
-              <%= link_to "#{image_tag(comment.user.image.public_filename(:very_small), :width => '40px', :alt => 'N/A')} #{comment.user.login}", "#" %>
+              <%= link_to "#{image_tag(comment.user.image.public_filename(:very_small), :width => '40px', :alt => 'N/A')} #{comment.user.login}", user_url(:id => comment.user.id)%>
             <% end %> -
           </span>
           <em><%= h(comment.content) %></em> 
