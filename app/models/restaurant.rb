@@ -77,6 +77,12 @@ class Restaurant < ActiveRecord::Base
     reviews.find(:first, :order => 'id DESC')
   end
 
+  def reviewed?(p_user)
+    if p_user
+      reviews.count(:conditions => {:user_id => p_user.id}) > 0
+    end
+  end
+
   private
   def self.determine_row_limit_option(p_limit)
     if p_limit == -1

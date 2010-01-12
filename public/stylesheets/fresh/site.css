@@ -504,3 +504,11 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px dashed #ccc;
   margin-bottom: 5px;
 }
+
+.link_emp {
+  color: red!important;
+}
+
+.link_emp:hover {
+  color: #000!important;
+}
