@@ -66,6 +66,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.admin '/dashboard', :subdomain => 'admin', :controller => 'admin', :action => 'index'
 
+  map.user_long '/users/:login/:id', :controller => 'users', :action => 'show'
+
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.

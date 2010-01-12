@@ -20,7 +20,7 @@
       <div class="clear"></div>
       <div class="bookmark_tools">
         <%= distance_of_time_in_words(@restaurant.created_at, Time.now) %>
-        ago added by <%= link_to @restaurant.user.login, user_url(@restaurant.user.id) %>.
+        ago added by <%= link_to @restaurant.user.login, user_long_url(:id => @restaurant.user.id, :login => @restaurant.user.login) %>.
 
         <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech"><img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech"></script>
       </div>
