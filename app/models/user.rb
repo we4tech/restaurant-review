@@ -31,6 +31,8 @@ class User < ActiveRecord::Base
   has_many :images
   has_many :reviews
   has_many :review_comments
+  has_many :stuff_events
+  has_many :subscribed_restaurants, :source => :restaurant, :through => :stuff_events
   has_one  :related_image
   has_one  :image, :through => :related_image
 

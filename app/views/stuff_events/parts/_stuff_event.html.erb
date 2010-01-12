@@ -1,0 +1,47 @@
+<%
+   grid_class = grid_class || 'grid_6'
+%>
+<div class="updates_item">
+  <div class="small">
+    <% if stuff_event.user.image %>
+      <%= link_to image_tag(stuff_event.user.image.public_filename(:very_small), :width => '40px', :alt => 'N/A'), user_long_url(:id => stuff_event.user.id, :login => stuff_event.user.login), :class => 'image_small' %>
+    <% else %>
+      <%= link_to image_tag('fresh/user.png', :width => '40px', :alt => 'N/A'), user_long_url(:id => stuff_event.user.id, :login => stuff_event.user.login), :class => 'image_small' %>
+    <% end %>
+  </div>
+  <div class="grid_6">
+    <%= stuff_event.user.login %>
+    <% if stuff_event.event_type == StuffEvent::TYPE_REVIEW %>
+      reviewed on
+      <%= link_to stuff_event.restaurant.name,
+                  restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id) %>
+
+    <% elsif stuff_event.event_type == StuffEvent::TYPE_REVIEW_COMMENT %>
+      commented on
+      <%= link_to "#{stuff_event.review.user.login.camelize}'s review",
+                  "#{restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id)}#review-#{stuff_event.review.id}" %> at
+      <%= link_to stuff_event.restaurant.name,
+                  restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id) %>
+
+    <% elsif stuff_event.event_type == StuffEvent::TYPE_RESTAURANT %>
+      created
+      <%= link_to stuff_event.restaurant.name,
+                  restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id) %>
+      <%= @topic.name %>
+
+    <% end %> <span class="date"> - <%= distance_of_time_in_words(Time.now, stuff_event.created_at) %> ago</span>
+  </div>
+  <div class="clear"></div>
+  <div class="space_5"></div>
+  <div class="break"></div>
+  <div class="space_5"></div>
+
+</div>

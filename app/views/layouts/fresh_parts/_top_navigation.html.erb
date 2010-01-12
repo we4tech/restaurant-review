@@ -10,6 +10,7 @@
       <%= link_to 'register', signup_url %>
     <% else %>
       <%= link_to 'add restaurant', new_restaurant_url %> |
+      <%= link_to 'updates', updates_url %> |
       <%= link_to 'my page', user_long_url(:login => current_user.login, :id => current_user.id) %> |
       <% if current_user.facebook_session_exists? %>
         <span class='facebook_connect_control'>

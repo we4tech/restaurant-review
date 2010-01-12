@@ -4,6 +4,22 @@ class ReviewObserver < ActiveRecord::Observer
     if review.restaurant.user.email_comment_notification
       UserMailer.deliver_review_notification(review)
     end
+
+    StuffEvent.create(
+        :topic_id => review.topic_id,
+        :restaurant_id => review.restaurant_id,
+        :review_id => review.id,
+        :user_id => review.user_id,
+        :event_type => StuffEvent::TYPE_REVIEW)
+  end
+
+  def after_update(review)
+    StuffEvent.create(
+        :topic_id => review.topic_id,
+        :restaurant_id => review.restaurant_id,
+        :review_id => review.id,
+        :user_id => review.user_id,
+        :event_type => StuffEvent::TYPE_REVIEW_UPDATE)
   end
 
 end

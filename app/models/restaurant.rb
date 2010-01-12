@@ -7,6 +7,8 @@ class Restaurant < ActiveRecord::Base
   has_many :contributed_images, :order => 'created_at DESC', :dependent => :destroy
   has_many :other_images, :through => :contributed_images, :source => :image, :dependent => :destroy
   has_many :reviews
+  has_many :stuff_events
+  has_many :subscribers, :source => :user, :through => :stuff_events
 
   validates_presence_of :name, :description, :address
 

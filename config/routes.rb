@@ -67,6 +67,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin '/dashboard', :subdomain => 'admin', :controller => 'admin', :action => 'index'
 
   map.user_long '/users/:login/:id', :controller => 'users', :action => 'show'
+  map.updates '/activities', :controller => 'stuff_events', :action => 'show'
 
   # See how all your routes lay out with "rake routes"
 
