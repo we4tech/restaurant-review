@@ -28,6 +28,15 @@ class UserMailer < ActionMailer::Base
         :id => review_comment.restaurant.id)
   end
 
+  def review_notification(review)
+    setup_email(review.restaurant.user)
+    @subject += "#{review.user.login} has reviewed your restaurant '#{review.restaurant.name}'"
+    @body[:review] = review
+    @body[:url] = restaurant_long_url(
+        :name => review.restaurant.name.parameterize.to_s,
+        :id => review.restaurant.id)
+  end
+
   protected
     def setup_email(user)
       @recipients  = "#{user.email}"
