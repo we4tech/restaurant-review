@@ -169,6 +169,7 @@ class UsersController < ApplicationController
     @reviews = @user.reviews.recent.paginate(:page => params[:rrp], :per_page => 10)
     @review_comments = @user.review_comments.recent.paginate(:page => params[:rrcp], :per_page => 10)
     @restaurants = @user.restaurants.recent.paginate(:page => params[:rp], :per_page => 10)
+    @site_title = "#{@user.login.camelize}'s profile"
   end
 
 protected
