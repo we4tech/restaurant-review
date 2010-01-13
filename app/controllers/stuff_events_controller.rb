@@ -1,10 +1,14 @@
 class StuffEventsController < ApplicationController
 
   before_filter :login_required
+  before_filter :log_new_feature_visiting_status
+  after_filter  :log_last_visiting_time
 
   def show
     @site_title = 'Activities from others'
     @subscribed_restaurants = current_user.subscribed_restaurants.find(:all, :group => 'restaurants.id')
+    @user_log = current_user.user_logs.by_topic(@topic.id).first
+
     @stuff_events = StuffEvent.paginate(
         :include => [:restaurant, :review, :review_comment],
         :conditions => [

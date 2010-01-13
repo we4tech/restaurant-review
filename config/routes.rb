@@ -64,7 +64,7 @@ ActionController::Routing::Routes.draw do |map|
   map.facebook_publish '/facebook/publish/:story/:id', :controller => 'facebook_connect', :action => 'publish_story'
   map.facebook_account_status_update '/user/facebook_account/update_status', :controller => 'users', :action => 'update_facebook_connect_account_status'
 
-  map.admin '/dashboard', :subdomain => 'admin', :controller => 'admin', :action => 'index'
+  map.admin '/dashboard', :controller => 'admin', :action => 'index'
 
   map.user_long '/users/:login/:id', :controller => 'users', :action => 'show'
   map.updates '/activities', :controller => 'stuff_events', :action => 'show'

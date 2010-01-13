@@ -1,0 +1,26 @@
+<% if defined?(NEW_FEATURES) %>
+  <% NEW_FEATURES.each do |feature_name, feature| %>
+    <% if !(@dont_show_new_features || []).include?(feature_name) %>
+      <div class='feature'
+           style="display: none"
+           id='<%= feature_id = "feature_#{feature_name}" %>'
+           onclick="$('#<%= feature[:element_id]%>').btOff();"
+           title="<%= feature[:element_id]%>">
+        <%= feature[:message] %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <script type="text/javascript" defer="defer">
+    $('.feature').each(function() {
+      var $self = $(this);
+      $('#' + $self.attr('title')).bt({
+        trigger: 'none',
+        contentSelector: "$('#" + $self.attr('id') + "')",
+        width: 400
+      });
+
+      $('#' + $self.attr('title')).btOn();
+    });
+  </script>
+<% end %>

@@ -5,11 +5,11 @@
     Restaurant review <%= @site_title ? "&raquo; #{@site_title}" : '' %>
   </title>
 
-  <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css', 'fresh/text.css', 'fresh/site.css', :cache => 'all.css' %>
-  <%= stylesheet_link_tag 'ext/prettyPhoto.css' %>
+  <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css', 'fresh/text.css', 'fresh/site.css', :cache => 'cache_all.css' %>
+  <%= stylesheet_link_tag 'ext/prettyPhoto.css', 'ext/jquery.bt.css', :cache => 'cache_supporting.js' %>
 
-  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application', :cache => 'all.js' %>
-  <%= javascript_include_tag 'jquery.prettyPhoto.js' %>
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application', :cache => 'cache_all.js' %>
+  <%= javascript_include_tag 'jquery.prettyPhoto.js', 'jquery.bt.min.js', :cache => 'cache_supporting.js' %>
 
   <meta NAME="Keywords" content="Bangladeshi restaurant, cafe & eat out place review site"/>
   <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
@@ -95,6 +95,8 @@ pageTracker._trackPageview();
   var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
   document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
 </script>
+
+<%= render :partial => 'home/parts/new_features_notification' %>
 
 <script type="text/javascript" charset="utf-8">
   var feedback_widget_options = {};

@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   has_many :review_comments
   has_many :stuff_events
   has_many :subscribed_restaurants, :source => :restaurant, :through => :stuff_events
+  has_many :user_logs
   has_one  :related_image
   has_one  :image, :through => :related_image
 
@@ -102,6 +103,19 @@ class User < ActiveRecord::Base
       :remember_token => encrypt("#{Time.now.to_f * rand}"),
       :remember_token_expires_at => (Time.now + 1.hour)
     )
+  end
+
+  def count_updates_since_i_last_visited(p_topic)
+    user_log = self.user_logs.by_topic(p_topic.id).first
+    if user_log
+      count = StuffEvent.count(:conditions => [
+          'restaurant_id IN (?) AND user_id != ? AND created_at > ?',
+          subscribed_restaurants.collect{|r| r.id}, self.id, user_log.updated_at
+      ])
+      count
+    else
+      0
+    end
   end
 
   protected

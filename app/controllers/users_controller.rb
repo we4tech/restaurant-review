@@ -5,6 +5,7 @@ class UsersController < ApplicationController
       :update_facebook_connect_account_status,
       :suspend, :unsuspend, :destroy, :purge
   ]
+  before_filter :log_new_feature_visiting_status
 
 # Protect these actions behind an admin login
   # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]

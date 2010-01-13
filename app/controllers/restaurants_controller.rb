@@ -1,6 +1,7 @@
 class RestaurantsController < ApplicationController
 
   before_filter :login_required, :except => [:show]
+  before_filter :log_new_feature_visiting_status
 
   def new
     @restaurant = Restaurant.new

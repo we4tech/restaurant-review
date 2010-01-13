@@ -18,11 +18,15 @@ class SessionsController < ApplicationController
       handle_remember_cookie! new_cookie_flag
 
       if user.image
-        redirect_back_or_default('/')
         flash[:notice] = "Logged in successfully"
+        redirect_back_or_default('/')
       else
-        redirect_to edit_user_url(user)
         flash[:notice] = "Logged in successfully, please upload your display picture (avatar)!"
+        redirect_to edit_user_url(user)
+      end
+
+      if !current_user.user_logs.by_topic(@topic.id).first
+        log_last_visiting_time
       end
     else
       note_failed_signin

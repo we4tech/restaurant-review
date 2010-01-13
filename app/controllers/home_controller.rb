@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
+
   layout 'fresh'
+
+  before_filter :log_new_feature_visiting_status 
 
   def index
     @title = 'Recently added restaurants!'
