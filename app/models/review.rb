@@ -16,6 +16,7 @@ class Review < ActiveRecord::Base
   named_scope :hated, :conditions => {:loved => HATED}
   named_scope :wanna_go, :conditions => {:loved => WANNA_GO}
   named_scope :recent, :order => 'created_at DESC'
+  named_scope :by_topic, lambda{|topic_id| {:conditions => {:topic_id => topic_id}}}
 
   def loved?
     self.loved == LOVED

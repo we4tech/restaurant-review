@@ -5,6 +5,7 @@ class RestaurantsController < ApplicationController
 
   def new
     @restaurant = Restaurant.new
+    @form_fields = @topic.form_attribute.fields
   end
 
   def create
@@ -20,7 +21,8 @@ class RestaurantsController < ApplicationController
         redirect_to edit_restaurant_url(@restaurant)
       end
     else
-      flash[:notice] = 'Failed to store new restaurant!'
+      @form_fields = @topic.form_attribute.fields
+      flash[:notice] = "Failed to store new #{@topic.name.humanize} information!"
       render :action => :new
     end
   end
@@ -73,6 +75,10 @@ class RestaurantsController < ApplicationController
     end
 
     redirect_to root_url
+  end
+
+  def update_record
+    redirect_to edit_restaurant_url(:id => current_user.restaurants.by_topic(@topic.id).first.id)
   end
 
 end

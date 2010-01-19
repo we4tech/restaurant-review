@@ -512,3 +512,41 @@ h1, h2, h3, h4, h5, h6 {
 .link_emp:hover {
   color: #000!important;
 }
+
+.errorExplanation {
+  background: lightYellow;
+  padding: 5px;
+}
+
+.errorExplanation p {
+  font-style: italic;
+  color: red;
+}
+
+.text_field {
+  width: 500px;
+  font-size: 20px;
+  font-family: fantasy;
+  padding: 5px;
+}
+
+.checkbox {
+  padding: 5px;
+}
+
+.combobox {
+  font-size: 20px;
+  font-family: fantasy;
+  padding: 5px;
+}
+
+.text_area {
+  width: 500px;
+}
+
+.submit {
+  font-family: fantasy;
+  font-size: 20px;
+  padding: 5px;
+  
+}

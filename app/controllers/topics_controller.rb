@@ -1,6 +1,7 @@
 class TopicsController < ApplicationController
 
   before_filter :authorize, :except => []
+  before_filter :log_new_feature_visiting_status
   @@themes = []
 
   def index
@@ -19,7 +20,8 @@ class TopicsController < ApplicationController
 
   def update
     @topic = Topic.find(params[:id].to_i)
-    if @topic.update_attributes(params[:topic])
+    @site_labels = params[:site_labels]
+    if @topic.update_attributes(params[:topic].merge(:site_labels => @site_labels))
       flash[:notice] = "Updated topic - '#{@topic.name}'"
       redirect_to topics_url
     else
@@ -30,6 +32,13 @@ class TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(params[:topic])
+    @site_labels = params[:site_labels]
+    @topic.site_labels = @site_labels
+    @topic.form_attribute = FormAttribute.new
+    @topic.form_attribute.fields = [
+            {'field' => 'name', 'type' => 'text_field', 'required' => true, 'index' => 0},
+            {'field' => 'description', 'type' => 'text_area', 'required' => true, 'index' => 1},
+            {'field' => 'address', 'type' => 'text_field', 'required' => true, 'index' => 2}]
     if @topic.save
       flash[:notice] = "Created new topic - '#{@topic.name}'"
       redirect_to topics_url

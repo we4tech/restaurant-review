@@ -1,0 +1,15 @@
+<div class="site_simple_box">
+  <h4>Review on more topics!</h4>
+  <div class="space_5"></div>
+
+  <ul>
+    <% topics.each do |topic| %>
+      <li>
+        <%= link_to topic.name.humanize.pluralize, root_url(:subdomain => topic.name.gsub('_', '.')) %>
+      </li>
+    <% end %>
+  </ul>
+  
+  <div class="break"></div>
+  
+</div>

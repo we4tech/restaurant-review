@@ -14,6 +14,10 @@ module ApplicationHelper
     if !@topic
       flash[:notice] = "Invalid domain name - '#{topic_hint}'"
       redirect_to root_url(:subdomain => false)
+    else
+      if logged_in? && @topic.form_attribute.record_insert_type == FormAttribute::SINGLE_RECORD
+        @record_already_added = current_user.restaurants.by_topic(@topic.id).length > 0
+      end
     end
   end
 end

@@ -18,6 +18,7 @@ class Image < ActiveRecord::Base
   validates_as_attachment
 
   named_scope :recent, :order => 'created_at DESC'
+  named_scope :by_topic, lambda{|topic_id| {:conditions => {:topic_id => topic_id}}}
 
   def author?(p_user)
     p_user && p_user.id == self.user.id

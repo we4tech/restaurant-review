@@ -4,7 +4,7 @@ module RestaurantsHelper
     render :partial => 'restaurants/parts/lovable_places', :locals => {
         :title => 'Most loved places!',
         :more_link => most_loved_places_url,
-        :restaurants => Restaurant.most_loved(p_limit)}
+        :restaurants => Restaurant.most_loved(@topic, p_limit)}
   end
 
   def render_restaurant_review_stats(p_restaurant, p_short = true)
@@ -28,7 +28,7 @@ module RestaurantsHelper
     render :partial => 'restaurants/parts/recently_reviewed_places', :locals => {
         :title => 'Recently reviewed places!',
         :more_link => recently_reviewed_places_url,
-        :reviews => Review.recent.all(:include => [:restaurant], :limit => p_limit)}
+        :reviews => Review.by_topic(@topic.id).recent.all(:include => [:restaurant], :limit => p_limit)}
   end
 
   def render_recently_added_pictures(p_limit = 5)
@@ -39,7 +39,7 @@ module RestaurantsHelper
   end
 
   def render_who_wanna_go_there(p_restaurant, p_limit = 5)
-    wanna_go_reviews = p_restaurant.reviews.wanna_go.all(:limit => p_limit, :include => [:user])
+    wanna_go_reviews = p_restaurant.reviews.by_topic(@topic.id).wanna_go.all(:limit => p_limit, :include => [:user])
     render :partial => 'restaurants/parts/who_wanna_go_there', :locals => {
         :title => 'Who wanna visit here!',
         :reviews => wanna_go_reviews,

@@ -42,6 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contributed_images
   map.resources :topics
   map.resources :review_comments
+  map.resources :form_attributes
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
@@ -68,6 +69,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.user_long '/users/:login/:id', :controller => 'users', :action => 'show'
   map.updates '/activities', :controller => 'stuff_events', :action => 'show'
+
+  map.form_attribute_by_topic 'form_attributes/of/:topic_id', :controller => 'form_attributes', :action => 'edit'
+  map.update_your_record '/user/update_record', :controller => 'restaurants', :action => 'update_record'
 
   # See how all your routes lay out with "rake routes"
 

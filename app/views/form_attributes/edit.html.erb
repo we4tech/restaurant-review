@@ -1,0 +1,41 @@
+<div class="grid_12">
+  <h4><%= link_to 'Administration panel', admin_url %> &raquo; Edit topic (<%= @form_attribute.topic.name.humanize %>)</h4>
+  <div class="break"></div>
+  <%= link_to 'Manage topics', topics_url %>
+  <div class="clear"></div>
+  <div class="break"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topic_new'>
+    <% form_for @form_attribute do |f| %>
+      <div class="space_10"></div>
+      How many records are allowed from the user ?
+      <%= f.select :record_insert_type, @record_options %>
+      <div class="space_10"></div>
+      <div class='fields' id='site_labels'>
+        <% @form_attribute.fields.each do |field| %>
+          <%= render :partial => 'form_attributes/parts/field', :locals => {:field => field} %>
+        <% end %>
+      </div>
+
+      <div class="clear"></div>
+      <div class="grid_6 align_right" >
+        <a href='javascript: void(0)'
+           onclick="$('#site_labels').html($('#site_labels').html() + $('#sample_fields').html());">(+add more..)</a>
+      </div>
+
+      <div class="clear"></div>
+      <div class="space_5"></div>
+      <div class="break"></div>
+      <div class="space_5"></div>
+
+      <label class="grid_6 align_right">
+        <%= f.submit 'Save' %>
+      </label>
+    <% end %>  
+  </div>
+
+  <div id="sample_fields" style="display: none">
+    <%= render :partial => 'form_attributes/parts/field' %>
+  </div>
+</div>

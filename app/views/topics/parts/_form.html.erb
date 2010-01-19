@@ -1,3 +1,8 @@
+<label class="grid_2">Default topic?</label>
+<%= f.check_box :default %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
 <label class="grid_2">Topic name</label>
 <%= f.text_field :name %>
 <%= f.error_message_on :name %>
@@ -10,10 +15,70 @@
 <div class="clear"></div>
 <div class="space_5"></div>
 
-<label class="grid_2">Default topic?</label>
-<%= f.check_box :default %>
+<label class="grid_2">Site title Prefix</label>
+<%= f.text_field :site_title %>
+<%= f.error_message_on :site_title %>
 <div class="clear"></div>
 <div class="space_5"></div>
 
 <label class="grid_2">Theme</label>
 <%= f.select :theme, @themes %>
+<div class="clear"></div>
+
+
+<label class='grid_2'>Site labels</label><br/>
+<div class='labels' id='site_labels'>
+
+  <% if @topic.new_record? || @topic.site_labels.nil? %>
+    <% 2.times do |label| %>
+      <div class='label' id="label_<%= label %>">
+        <div class="grid_2">
+          label <%= label %>
+        </div>
+        <div class='label grid_6'>
+          <input type='text' name="site_labels[][old]"/>
+          <input type='text' name="site_labels[][new]"/>
+        </div>
+      </div>
+      <br clear="all"/>
+    <% end %>
+  <% else %>
+    <% @topic.site_labels.each_with_index do |label, index| %>
+      <div class='label' id="label_<%= index %>">
+        <div class="grid_2">
+          label <%= index + 1 %>
+        </div>
+        <div class='label grid_6'>
+          <input type='text' name="site_labels[][old]" value="<%= label['old']%>" />
+          <input type='text' name="site_labels[][new]" value="<%= label['new']%>" />
+          <a href='javascript:void(0)'
+             onclick="$('#label_<%= index %>').remove(); $('#label_<%= index %>_br').remove()">(x)</a>
+        </div>
+      </div>
+      <br clear="all" id="label_<%= index %>_br"/>
+    <% end %>
+  <% end %>
+</div>
+
+<div class="clear"></div>
+<div class="grid_6 align_right" >
+  <a href='javascript: void(0)'
+     onclick="$('#site_labels').html($('#site_labels').html() + $('#sample_fields').html());">(+add more..)</a>
+</div>
+
+<div id="sample_fields" style="display: none">
+  <div class='label'>
+    <div class="grid_2">
+      label (new)
+    </div>
+    <div class='label grid_6'>
+      <input type='text' name="site_labels[][old]"/>
+      <input type='text' name="site_labels[][new]"/>
+    </div>
+  </div>
+  <br clear="all"/>
+</div>
+
+<%= f.error_message_on :site_labels %>
+<div class="clear"></div>
+<div class="space_5"></div>

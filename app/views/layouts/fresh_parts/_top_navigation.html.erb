@@ -1,17 +1,21 @@
 <div id="site_top">
   <div class="grid_2 site_quote">
-    passionate food lovers community!
+    <%= tt('passionate food lovers community!') %>
   </div>
 
   <div id="site_top_navigation">
     <span> <%= link_to 'home', root_url %>| </span>
     <% if not logged_in? %>
-      <%= link_to 'login', login_url %> |
-      <%= link_to 'register', signup_url %>
+      <%= link_to tt('login'), login_url %> |
+      <%= link_to tt('register'), signup_url %>
     <% else %>
-      <%= link_to 'add restaurant', new_restaurant_url %> |
+      <% if !@record_already_added %>
+        <%= link_to tt('add restaurant'), new_restaurant_url %> |
+      <% else %>
+        <%= link_to tt('update your record'), update_your_record_url %> |
+      <% end %>
       <%= render_activities_link %> |
-      <%= link_to 'my page', user_long_url(:login => current_user.login, :id => current_user.id) %> |
+      <%= link_to tt('my page'), user_long_url(:login => current_user.login, :id => current_user.id) %> |
       <% if current_user.facebook_session_exists? %>
         <span class='facebook_connect_control'>
           <% form_tag facebook_account_status_update_url, :id => 'facebook_connect_control_form' do %>
@@ -36,7 +40,7 @@
         <%= link_to 'admin', admin_url %> |
       <% end %>
       
-      <%= link_to 'edit profile', edit_user_url(current_user) %> |
+      <%= link_to 'edit account', edit_user_url(current_user) %> |
       <%= link_to 'logout', logout_url %>
     <% end %>
   </div>

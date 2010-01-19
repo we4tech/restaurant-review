@@ -7,20 +7,19 @@ class User < ActiveRecord::Base
   include Authentication::ByCookieToken
   include Authorization::AasmRoles
 
-  validates_presence_of     :login
-  validates_length_of       :login,    :within => 3..40
-  validates_uniqueness_of   :login
-  validates_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message
+  validates_presence_of :login
+  validates_length_of :login,    :within => 3..40
+  validates_uniqueness_of :login
+  validates_format_of :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message
 
-  validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
-  validates_length_of       :name,     :maximum => 100
+  validates_format_of :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
+  validates_length_of :name,     :maximum => 100
 
-  validates_presence_of     :email
-  validates_length_of       :email,    :within => 6..100 #r@a.wk
-  validates_uniqueness_of   :email
-  validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
+  validates_presence_of :email
+  validates_length_of :email,    :within => 6..100 #r@a.wk
+  validates_uniqueness_of :email
+  validates_format_of :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -34,8 +33,8 @@ class User < ActiveRecord::Base
   has_many :stuff_events
   has_many :subscribed_restaurants, :source => :restaurant, :through => :stuff_events
   has_many :user_logs
-  has_one  :related_image
-  has_one  :image, :through => :related_image
+  has_one :related_image
+  has_one :image, :through => :related_image
 
   FACEBOOK_CONNECT_ENABLED = 1
   FACEBOOK_CONNECT_DISABLED = 0
@@ -65,7 +64,7 @@ class User < ActiveRecord::Base
     User.find(
         :all,
         :select => 'DISTINCT users.*',
-        :joins => :restaurants, 
+        :joins => :restaurants,
         :group => 'restaurants.id',
         :order => 'count(restaurants.id) DESC',
         :limit => p_limit
@@ -75,7 +74,7 @@ class User < ActiveRecord::Base
   def self.top_reviewers(p_limit = 10)
     User.find(
         :all,
-        :select => 'DISTINCT users.*',  
+        :select => 'DISTINCT users.*',
         :joins => :reviews,
         :group => 'reviews.id',
         :order => 'count(reviews.id) DESC',
@@ -85,9 +84,9 @@ class User < ActiveRecord::Base
 
   def share_on_facebook?
     reloaded_me = self.reload
-    return reloaded_me.facebook_connect_enabled == User::FACEBOOK_CONNECT_ENABLED && 
-           reloaded_me.facebook_sid.to_i > 0 &&
-           reloaded_me.facebook_uid.to_i > 0
+    return reloaded_me.facebook_connect_enabled == User::FACEBOOK_CONNECT_ENABLED &&
+        reloaded_me.facebook_sid.to_i > 0 &&
+        reloaded_me.facebook_uid.to_i > 0
   end
 
   def facebook_session_exists?
@@ -100,8 +99,8 @@ class User < ActiveRecord::Base
     write_attribute :remember_token_expires_at, (Time.now + 1.hour)
 
     self.update_attributes(
-      :remember_token => encrypt("#{Time.now.to_f * rand}"),
-      :remember_token_expires_at => (Time.now + 1.hour)
+        :remember_token => encrypt("#{Time.now.to_f * rand}"),
+        :remember_token_expires_at => (Time.now + 1.hour)
     )
   end
 
@@ -117,12 +116,11 @@ class User < ActiveRecord::Base
       0
     end
   end
-
+  
   protected
-    
     def make_activation_code
-        self.deleted_at = nil
-        self.activation_code = self.class.make_token
+      self.deleted_at = nil
+      self.activation_code = self.class.make_token
     end
 
 

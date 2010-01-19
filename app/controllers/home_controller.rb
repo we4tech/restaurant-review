@@ -6,9 +6,10 @@ class HomeController < ApplicationController
 
   def index
     @title = 'Recently added restaurants!'
-    @restaurants = Restaurant.recent.paginate(:page => params[:page])
+    @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => params[:page])
+    
     # pending module - :render_recently_added_pictures
-    @left_modules = [:render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_topic_box, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = []
   end
 
@@ -17,7 +18,7 @@ class HomeController < ApplicationController
     offset = 1 if offset == 0
 
     @restaurants = WillPaginate::Collection.create(offset, Restaurant::per_page) do |pager|
-      result = Restaurant.most_loved(Restaurant::NO_LIMIT, offset)
+      result = Restaurant.most_loved(@topic, Restaurant::NO_LIMIT, offset - 1)
       pager.replace(result)
 
       unless pager.total_entries
@@ -27,7 +28,7 @@ class HomeController < ApplicationController
     end
 
     @title = 'Most loved places!'
-    @left_modules = [:render_recently_added_places]
+    @left_modules = [:render_topic_box, :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -37,7 +38,7 @@ class HomeController < ApplicationController
     offset = 1 if offset == 0
 
     @restaurants = WillPaginate::Collection.create(offset, Restaurant::per_page) do |pager|
-      result = Restaurant.recently_reviewed(Restaurant::NO_LIMIT, offset)
+      result = Restaurant.recently_reviewed(@topic, Restaurant::NO_LIMIT, offset - 1)
       pager.replace(result)
 
       unless pager.total_entries
@@ -48,7 +49,7 @@ class HomeController < ApplicationController
 
     @title = 'Recently reviewed places!'
     @display_last_review = true
-    @left_modules = [:render_most_lovable_places]
+    @left_modules = [:render_topic_box, :render_most_lovable_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -70,7 +71,7 @@ class HomeController < ApplicationController
     end
 
     @title = "Who else wanna visit this place!"
-    @left_modules = [:render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_topic_box, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_url(restaurant)]]
     @restaurant = restaurant
   end
