@@ -44,8 +44,8 @@ class Restaurant < ActiveRecord::Base
     reviews.collect{|r| r.restaurant}
   end
 
-  def self.count_most_loved
-    Review.loved.count
+  def self.count_most_loved(p_topic)
+    Review.by_topic(p_topic.id).loved.count
   end
 
   def self.recently_reviewed(p_topic, p_limit = 5, p_offset = 0)
@@ -75,8 +75,8 @@ class Restaurant < ActiveRecord::Base
     restaurants.compact
   end
 
-  def self.count_recently_reviewed
-    Review.count
+  def self.count_recently_reviewed(p_topic)
+    Review.by_topic(p_topic).count
   end
 
   def last_review
@@ -122,7 +122,7 @@ class Restaurant < ActiveRecord::Base
     end
 
     def ensure_record_insert_limit_doesnt_exceeds(form_attributes)
-      if form_attributes.record_insert_type == FormAttribute::SINGLE_RECORD
+      if new_record? && form_attributes.record_insert_type == FormAttribute::SINGLE_RECORD
         existing_record = Restaurant.find(:first, :conditions => {
             :topic_id => self.topic_id,
             :user_id => self.user_id})
@@ -131,6 +131,5 @@ class Restaurant < ActiveRecord::Base
         end
       end
     end
-
 
 end

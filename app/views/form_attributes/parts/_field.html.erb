@@ -2,7 +2,7 @@
    field = field || false
 %>
 <div class='field' id="<%= field_id = "field_#{rand}".gsub('.', '') %>">
-  <div class='label grid_9'>
+  <div class='label grid_10'>
     <input type='text' name="site_fields[][index]" size="1" value="<%= field ? field['index'] : 0 %>"/>
     <select name="site_fields[][type]">
       <% @field_types.each do |field_type| %>
@@ -33,6 +33,13 @@
       <input type='checkbox' name="site_fields[][required]" value="1" />
     <% end %>
     required?
+
+    <% if field && field['display'] %>
+      <input type='checkbox' name="site_fields[][display]" value="1" checked="checked"/>
+    <% else %>
+      <input type='checkbox' name="site_fields[][display]" value="1" />
+    <% end %>
+    display?
 
     <a href='javascript: void(0)'
        onclick="$('#<%= field_id %>, #<%= field_id %>_br').remove()">(X)</a>

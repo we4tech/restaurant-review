@@ -11,11 +11,40 @@
     <div class="break space_5"></div>
 
     <div class="restaurant_details">
-      <h3><%= link_to @restaurant.name, restaurant_long_url(:name => @restaurant.name.parameterize.to_s, :id => @restaurant.id) %></h3>
+      <h3><%= link_to @restaurant.name,
+                      restaurant_long_url(
+                          :name => @restaurant.name.parameterize.to_s,
+                          :id => @restaurant.id) %></h3>
       <p>
         <%= render :partial => 'images/parts/image_gallery' %>
         <%= simple_format @restaurant.description %>
       </p>
+
+      <div class='properties'>
+        <% @form_fields.each do |field| %>
+          <%
+             field_label = field['label']
+             field_name = field['field']
+             field_type = field['type']
+             display = field['display']
+             field_value = @restaurant.send(field_name)
+          %>
+          <% if field_value && display %>
+            <div class="grid_2">
+              <strong><%= tt(field_label, :group => :view) %></strong>
+            </div>
+            <div class="grid_4">
+              <% if field_type == 'checkbox' %>
+                <%= field_value == true ? 'yes' : 'no' %>
+              <% else %>
+                <%= h field_value %>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="clear"></div>
+      <div class="space_10"></div>
 
       <div class="clear"></div>
       <div class="bookmark_tools">
@@ -29,7 +58,7 @@
     </div>
     <div class="clear"></div>
 
-    <% if current_user %>
+    <% if current_user && @allow_contributed_image_upload %>
       <%= render :partial => 'contributed_images/parts/add'%>
     <% end %>
 

@@ -51,6 +51,10 @@
         <div class='label grid_6'>
           <input type='text' name="site_labels[][old]" value="<%= label['old']%>" />
           <input type='text' name="site_labels[][new]" value="<%= label['new']%>" />
+          <select name='site_labels[][group]'>
+            <option value="" <%= label['group'].nil? ? "selected='selected'" : '' %>>Global scope</option>
+            <option value="view" <%= label['group'] == 'view' ? "selected='selected'" : '' %>>View</option>
+          </select>
           <a href='javascript:void(0)'
              onclick="$('#label_<%= index %>').remove(); $('#label_<%= index %>_br').remove()">(x)</a>
         </div>

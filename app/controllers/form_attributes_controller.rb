@@ -46,14 +46,17 @@ class FormAttributesController < ApplicationController
 
     if @form_attribute.update_attributes(
         :fields => fields,
-        :record_insert_type => params['form_attribute']['record_insert_type'].to_i)
+        :record_insert_type => params['form_attribute']['record_insert_type'].to_i,
+        :allow_image_upload => params['form_attribute']['allow_image_upload'].to_i,
+        :allow_contributed_image_upload => params['form_attribute']['allow_contributed_image_upload'].to_i
+        )
       flash[:notice] = 'Form attributes are updated!'
     else
       flash[:notice] = "Failed to store form attribute!"
     end
 
     if !duplicate_form_field_found
-      redirect_to topics_url
+      redirect_to edit_form_attribute_url(@form_attribute.id)
     else
       flash[:notice] = "Duplicate field '#{duplicate_form_field_found}' found!"
       redirect_to :back

@@ -6,9 +6,13 @@ class RestaurantsController < ApplicationController
   def new
     @restaurant = Restaurant.new
     @form_fields = @topic.form_attribute.fields
+    @allow_image_upload = @topic.form_attribute.allow_image_upload
+    @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
   end
 
   def create
+    @allow_image_upload = @topic.form_attribute.allow_image_upload
+    @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
     @restaurant = Restaurant.new(params[:restaurant])
     @restaurant.user = current_user
     @restaurant.topic_id = @topic.id
@@ -30,9 +34,15 @@ class RestaurantsController < ApplicationController
   def show
     @restaurant = Restaurant.find(params[:id].to_i)
     @site_title = @restaurant.name
+    @form_fields = @topic.form_attribute.fields
+    @allow_image_upload = @topic.form_attribute.allow_image_upload
+    @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
   end
 
   def edit
+    @form_fields = @topic.form_attribute.fields
+    @allow_image_upload = @topic.form_attribute.allow_image_upload
+    @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
     restaurant = Restaurant.find(params[:id].to_i)
     if restaurant.author?(current_user)
       @restaurant = restaurant
@@ -56,6 +66,7 @@ class RestaurantsController < ApplicationController
         redirect_to edit_restaurant_url(restaurant)
       end
     else
+      @form_fields = @topic.form_attribute.fields
       flash[:notice] = 'Failed to store your updated!'
       @restaurant = restaurant
       render :action => :edit

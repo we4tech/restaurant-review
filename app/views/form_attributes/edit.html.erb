@@ -12,6 +12,12 @@
       How many records are allowed from the user ?
       <%= f.select :record_insert_type, @record_options %>
       <div class="space_10"></div>
+      <%= f.check_box :allow_image_upload %>
+      Do you want to allow user to upload image?
+      <div class="space_10"></div>
+      <%= f.check_box :allow_contributed_image_upload %>
+      Do you want to let visitor upload image?
+      <div class="space_10"></div>
       <div class='fields' id='site_labels'>
         <% @form_attribute.fields.each do |field| %>
           <%= render :partial => 'form_attributes/parts/field', :locals => {:field => field} %>

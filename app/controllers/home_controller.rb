@@ -23,7 +23,7 @@ class HomeController < ApplicationController
 
       unless pager.total_entries
         # the pager didn't manage to guess the total count, do it manually
-        pager.total_entries = Restaurant.count_most_loved
+        pager.total_entries = Restaurant.count_most_loved(@topic)
       end
     end
 
@@ -43,7 +43,7 @@ class HomeController < ApplicationController
 
       unless pager.total_entries
         # the pager didn't manage to guess the total count, do it manually
-        pager.total_entries = Restaurant.count_recently_reviewed
+        pager.total_entries = Restaurant.count_recently_reviewed(@topic)
       end
     end
 
@@ -61,12 +61,12 @@ class HomeController < ApplicationController
     offset = 1 if offset == 0
 
     @reviews = WillPaginate::Collection.create(offset, Restaurant::per_page) do |pager|
-      result = restaurant.reviews.wanna_go.all(
+      result = restaurant.reviews.by_topic(@topic.id).wanna_go.all(
           :offset => (offset - 1), :limit => Restaurant::per_page, :include => [:user])
       pager.replace(result)
 
       unless pager.total_entries
-        pager.total_entries = restaurant.reviews.wanna_go.count
+        pager.total_entries = restaurant.reviews.by_topic(@topic.id).wanna_go.count
       end
     end
 

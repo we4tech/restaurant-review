@@ -21,16 +21,16 @@ class Topic < ActiveRecord::Base
     Topic.find_by_default(true)
   end
 
-  def translate_label(p_text)
+  def translate_label(p_text, p_options = {})
     caches = Topic::CACHES["key_#{self.id}"]
     if caches.nil?
       map = (self.site_labels || {})
-      caches = {}; map.each{|label| caches[label['old']] = label['new']}
+      caches = {}; map.each{|label| caches["#{label['old']}#{label['group']}"] = label['new']}
 
       Topic::CACHES["key_#{self.id}"] = caches
     end
 
-    caches[p_text]
+    caches["#{p_text}#{p_options[:group]}"]
   end
 
   private

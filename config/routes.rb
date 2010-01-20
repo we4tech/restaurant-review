@@ -67,7 +67,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.admin '/dashboard', :controller => 'admin', :action => 'index'
 
-  map.user_long '/users/:login/:id', :controller => 'users', :action => 'show'
+  map.user_long '/users/:login/:id', :controller => 'users', :action => 'show',
+                :requirements => {:login => /[\w\d\.\-]+/}
   map.updates '/activities', :controller => 'stuff_events', :action => 'show'
 
   map.form_attribute_by_topic 'form_attributes/of/:topic_id', :controller => 'form_attributes', :action => 'edit'
