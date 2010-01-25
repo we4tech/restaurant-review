@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
   include ApplicationHelper
+  include UrlOverrideHelper
+
+  #include ExceptionNotifiable
+  
   
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details

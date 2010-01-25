@@ -89,9 +89,13 @@
 
   <div class="grid_4" id="site_center_boxes">
     <div class="site_simple_box restaurant_address">
-      <h4>Address</h4>
-      <div class="space_5"></div>
-      <img src="http://maps.google.com/maps/api/staticmap?center=<%= @restaurant.lat %>,<%= @restaurant.lng %>&zoom=14&size=280x300&sensor=false&markers=color:green|label:R|<%= @restaurant.lat %>,<%= @restaurant.lng %>&key=<%= MAP_API_KEY %>" alt="" width="299px"/>
+      <h4>
+        Address
+      </h4>
+      <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
+        <div class="space_5"></div>
+        <img src="http://maps.google.com/maps/api/staticmap?center=<%= @restaurant.lat %>,<%= @restaurant.lng %>&zoom=14&size=280x300&sensor=false&markers=color:green|label:R|<%= @restaurant.lat %>,<%= @restaurant.lng %>&key=<%= MAP_API_KEY %>" alt="" width="299px"/>
+      <% end %>
       <address><%= @restaurant.address %></address>
     </div>
     <div class="clear"></div>

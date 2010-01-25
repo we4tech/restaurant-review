@@ -167,9 +167,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id].to_i)
     @left_modules = [:render_most_lovable_places, :render_recently_added_places]
-    @reviews = @user.reviews.recent.paginate(:page => params[:rrp], :per_page => 10)
-    @review_comments = @user.review_comments.recent.paginate(:page => params[:rrcp], :per_page => 10)
-    @restaurants = @user.restaurants.recent.paginate(:page => params[:rp], :per_page => 10)
+    @reviews = @user.reviews.by_topic(@topic.id).recent.paginate(:page => params[:rrp], :per_page => 10)
+    @review_comments = @user.review_comments.by_topic(@topic.id).recent.paginate(:page => params[:rrcp], :per_page => 10)
+    @restaurants = @user.restaurants.by_topic(@topic.id).recent.paginate(:page => params[:rp], :per_page => 10)
     @site_title = "#{@user.login.camelize}'s profile"
   end
 

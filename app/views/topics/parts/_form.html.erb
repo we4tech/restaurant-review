@@ -21,6 +21,18 @@
 <div class="clear"></div>
 <div class="space_5"></div>
 
+<label class="grid_2">Site icon</label>
+<%= f.text_field :banner_image_path %>
+<%= f.error_message_on :banner_image_path %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
+<label class="grid_2">Site description</label>
+<%= f.text_area :description, :rows => 5, :class => 'grid_7', :style => 'margin-left: 0;' %>
+<%= f.error_message_on :description %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
 <label class="grid_2">Theme</label>
 <%= f.select :theme, @themes %>
 <div class="clear"></div>

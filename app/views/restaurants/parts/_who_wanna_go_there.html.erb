@@ -1,6 +1,6 @@
 <% if !reviews.empty? %>
   <div class="site_simple_box">
-    <h4><%= title %></h4>
+    <h4><%= tt(title) %></h4>
     <div class="space_10"></div>
 
     <% reviews.each_with_index do |review, index| %>
@@ -17,7 +17,7 @@
     <% end %>
     <div class="clear"></div>
     <div class="small">
-      <%= link_to 'see all interested people &raquo;', more_link %>
+      <%= link_to "#{tt('see all interested people')} &raquo;", more_link %>
     </div>
     <br/>
   </div>

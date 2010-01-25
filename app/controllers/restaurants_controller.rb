@@ -4,10 +4,15 @@ class RestaurantsController < ApplicationController
   before_filter :log_new_feature_visiting_status
 
   def new
-    @restaurant = Restaurant.new
-    @form_fields = @topic.form_attribute.fields
-    @allow_image_upload = @topic.form_attribute.allow_image_upload
-    @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+    if topic_imposed_limit_allows?
+      @restaurant = Restaurant.new
+      @form_fields = @topic.form_attribute.fields
+      @allow_image_upload = @topic.form_attribute.allow_image_upload
+      @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+    else
+      flash[:notice] = 'You can\'t have more than one record.'
+      redirect_to root_url
+    end
   end
 
   def create
@@ -91,5 +96,11 @@ class RestaurantsController < ApplicationController
   def update_record
     redirect_to edit_restaurant_url(:id => current_user.restaurants.by_topic(@topic.id).first.id)
   end
+
+  private
+    def topic_imposed_limit_allows?
+      form_attribute = @topic.form_attribute
+      form_attribute && form_attribute.allows_more_entry?(current_user)
+    end
 
 end

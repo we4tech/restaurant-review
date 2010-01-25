@@ -17,15 +17,16 @@
   <% end %>
 
   <span class="reviewer">
-    <%= link_to review.user.login, '#' %>
+    <%= link_to review.user.login, user_long_url(
+        :id => review.user.id, :login => review.user.login) %>
     <% if review.loved? %>
-      loved
+      <%= tt('loved') %>
     <% elsif review.hated? %>
-      hated
+      <%= tt('hated') %>
     <% elsif review.wanna_go? %>
-      wanna go to
+      <%= tt('wanna go to') %>
     <% end %>
-    this place!
+    <%= tt('this place!') %>
   </span>
   <span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">
     updated <%= distance_of_time_in_words(review.updated_at, Time.now) %> ago.
@@ -58,9 +59,9 @@
             - 
             <%= distance_of_time_in_words(comment.updated_at, Time.now) %> ago.
             <% if comment.loved? %>
-              [<span class='icon_loved'>liked</span>]
+              [<span class='icon_loved'><%= tt('liked') %></span>]
             <% else %>
-              [<span class='icon_hated'>disliked</span>]
+              [<span class='icon_hated'><%= tt('disliked') %></span>]
             <% end %>
 
             <% if comment.can_delete? %>

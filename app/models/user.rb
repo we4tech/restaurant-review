@@ -60,24 +60,26 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
 
-  def self.top_contributors(p_limit = 10)
+  def self.top_contributors(p_topic, p_limit = 10)
     User.find(
         :all,
         :select => 'DISTINCT users.*',
         :joins => :restaurants,
         :group => 'restaurants.id',
         :order => 'count(restaurants.id) DESC',
+        :conditions => ['restaurants.topic_id = ?', p_topic.id],
         :limit => p_limit
     )
   end
 
-  def self.top_reviewers(p_limit = 10)
+  def self.top_reviewers(p_topic, p_limit = 10)
     User.find(
         :all,
         :select => 'DISTINCT users.*',
         :joins => :reviews,
         :group => 'reviews.id',
         :order => 'count(reviews.id) DESC',
+        :conditions => ['reviews.topic_id = ?', p_topic.id],
         :limit => p_limit
     )
   end

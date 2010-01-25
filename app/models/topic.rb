@@ -13,6 +13,7 @@ class Topic < ActiveRecord::Base
 
   validates_presence_of :name, :label
   after_save :set_default
+  after_save :clear_cache
 
   named_scope :recent, :order => 'created_at DESC'
   @@per_page = 20
@@ -34,6 +35,10 @@ class Topic < ActiveRecord::Base
   end
 
   private
+    def clear_cache
+      Topic::CACHES["key_#{self.id}"] = nil
+    end
+
     def set_default
       if read_attribute(:default)
         Topic.update_all('`default` = 0', ['id <> ?', read_attribute(:id)])

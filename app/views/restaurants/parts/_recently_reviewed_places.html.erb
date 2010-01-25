@@ -1,6 +1,6 @@
 <% if !reviews.empty? %>
   <div class="site_simple_box">
-    <h4><%= title %></h4>
+    <h4><%= tt(title) %></h4>
     <div class="space_5"></div>
 
     <% reviews.each_with_index do |review, index| %>
@@ -20,13 +20,15 @@
         <span class="reviewer icon_<%= review.loved? ? 'loved' : '' %>">
           <%= link_to review.user.login, user_url(review.user) %>
           <% if review.loved? %>
-            loved
+            <%= tt('loved') %>
           <% elsif review.hated? %>
-            disliked
+            <%= tt('disliked') %>
           <% elsif review.wanna_go? %>
-            wanna go to
+            <%= tt('wanna go to') %>
           <% end %>
-          <%= link_to review.restaurant.name, restaurant_long_url(review.restaurant.name.parameterize.to_s, review.restaurant.id)%>
+          <%= link_to review.restaurant.name, restaurant_long_url(
+              :name => review.restaurant.name.parameterize.to_s, 
+              :id => review.restaurant.id)%>
         </span>
       </div>
       <div class="clear space_5"></div>
@@ -34,7 +36,7 @@
       <div class="clear space_5"></div>
     <% end %>
     <div class="small">
-      <%= link_to 'more places &raquo;', more_link %>
+      <%= link_to "#{tt('more places')} &raquo;", more_link %>
     </div>
   </div>
 <% end %>

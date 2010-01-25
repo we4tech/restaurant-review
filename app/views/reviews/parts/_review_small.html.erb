@@ -1,11 +1,11 @@
 <a name="review-<%= review.id %>"></a>
 <span class="reviewer">
   <% if review.loved? %>
-    <span class="highlight">loved</span> and reviewed
+    <span class="highlight"><%= tt('loved') %></span> and reviewed
   <% elsif review.hated? %>
-    <span class="highlight">hated</span> and reviewed
+    <span class="highlight"><%= tt('hated') %></span> and reviewed
   <% elsif review.wanna_go? %>
-    <span class="highlight">wanna go to</span>
+    <span class="highlight"><%= tt('wanna go to') %></span>
   <% end %>
   <%= link_to review.restaurant.name, restaurant_long_url(:id => review.restaurant.id, :name => review.restaurant.name.parameterize.to_s) if review.restaurant %>
 </span>

@@ -30,13 +30,10 @@
   <div id="site_top">
     <div class="grid_11" id="site_logo">
       <div class="site_icon grid_1">
-        <%= link_to image_tag('fresh/icon.png'), root_url %>
+        <%= link_to image_tag(@topic.banner_image_path), root_url %>
       </div>
       <div class="site_icon_info grid_8 push_2">
-        why don't you review your favorite restaurant <b>NOW!</b>
-        let your friends know which place you have been to recently.
-        also let them know whether you <span class="icon_loved">loved it</span>
-        or <span class="icon_hated">hated</span> so much!.
+        <%= @topic.description %>
       </div>
     </div>
 

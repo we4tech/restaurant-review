@@ -91,12 +91,12 @@ module UsersHelper
   end
 
   def render_top_contributors(p_limit = 10)
-    users = User.top_contributors(p_limit)
+    users = User.top_contributors(@topic, p_limit)
     render :partial => 'users/parts/top_contributors', :locals => {:users => users, :label => 'Top contributors'}
   end
 
   def render_top_reviewers(p_limit = 10)
-    users = User.top_reviewers(p_limit)
+    users = User.top_reviewers(@topic, p_limit)
     render :partial => 'users/parts/top_contributors', :locals => {:users => users, :label => 'Top reviewers'}
   end
 

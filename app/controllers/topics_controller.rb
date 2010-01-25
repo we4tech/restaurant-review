@@ -23,7 +23,7 @@ class TopicsController < ApplicationController
     @site_labels = params[:site_labels]
     if @topic.update_attributes(params[:topic].merge(:site_labels => @site_labels))
       flash[:notice] = "Updated topic - '#{@topic.name}'"
-      redirect_to topics_url
+      redirect_to edit_topic_url(:id => @topic.id)
     else
       @themes = detect_themes
       render :action => :edit

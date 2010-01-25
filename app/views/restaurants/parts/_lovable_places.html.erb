@@ -1,6 +1,6 @@
 <% if !restaurants.empty? %>
   <div class="site_simple_box">
-    <h4><%= title %></h4>
+    <h4><%= tt(title) %></h4>
     <div class="space_5"></div>
 
     <% restaurants.each_with_index do |restaurant, index| %>
@@ -30,7 +30,7 @@
     <% end %>
     <div class="break"></div>
     <div class="small">
-      <%= link_to 'more places &raquo;', more_link %>
+      <%= link_to "#{tt('more places')} &raquo;", more_link %>
     </div>
   </div>
 <% end %>

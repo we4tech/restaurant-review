@@ -1,17 +1,17 @@
 <div class="break"></div>
 
-<label>Weee!!</label>
+<label><%= tt('Weee!!') %></label>
 <span class="group_buttons">
   <%= f.radio_button :loved, 1, :checked => true %>
-  <label for="review_loved_1">i love</label>
+  <label for="review_loved_1"><%= tt('i love') %></label>
 </span>
 /
 <span class="group_buttons"><%= f.radio_button :loved, 0 %>
-  <label for="review_loved_0">i hate</label>
+  <label for="review_loved_0"><%= tt('i hate') %></label>
 </span>
 /
 <span class="group_buttons"><%= f.radio_button :loved, 2 %>
-  <label for="review_loved_2">i wanna go to</label>
+  <label for="review_loved_2"><%= tt('i wanna go to') %></label>
 </span>
-this place.<br/>
+<%= tt('this place.') %><br/>
 <%= f.text_area :comment, :cols => 25, :rows => 6 %>
