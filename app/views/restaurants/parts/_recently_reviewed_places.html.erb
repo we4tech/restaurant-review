@@ -18,7 +18,9 @@
         <% end %>
 
         <span class="reviewer icon_<%= review.loved? ? 'loved' : '' %>">
-          <%= link_to review.user.login, user_url(review.user) %>
+          <%= link_to review.user.login,
+                      user_long_url(:login => review.user.login,
+                                    :id => review.user.id) %>
           <% if review.loved? %>
             <%= tt('loved') %>
           <% elsif review.hated? %>
