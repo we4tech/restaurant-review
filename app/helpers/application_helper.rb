@@ -5,7 +5,9 @@ module ApplicationHelper
     topic_hint = (request.subdomains || []).join("_")
     if topic_hint.empty? || topic_hint == 'www'
       topic = Topic.default
-      redirect_to root_url(:subdomain => topic.name)
+      path_prefix = (request.path || '')
+      path_prefix = path_prefix[1..path_prefix.length]
+      redirect_to "#{root_url(:subdomain => topic.name.gsub('_', '.'))}#{path_prefix}"
       return
     else
       @topic = Topic.find_by_name(topic_hint)
@@ -18,6 +20,13 @@ module ApplicationHelper
       if logged_in? && @topic.form_attribute.record_insert_type == FormAttribute::SINGLE_RECORD
         @record_already_added = current_user.restaurants.by_topic(@topic.id).length > 0
       end
+    end
+  end
+
+  def load_module_preferences
+    @modules_pref = {}
+    @topic.modules.each do |module_pref|
+      @modules_pref[module_pref['name'].to_sym] = module_pref
     end
   end
 end

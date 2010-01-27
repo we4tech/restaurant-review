@@ -74,6 +74,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.form_attribute_by_topic 'form_attributes/of/:topic_id', :controller => 'form_attributes', :action => 'edit'
   map.update_your_record '/user/update_record', :controller => 'restaurants', :action => 'update_record'
+  map.edit_topic_modules '/topics/:id/modules', :controller => 'topics', :action => 'edit_modules'
+  map.update_topic_modules '/topics/:id/modules/save', :controller => 'topics', :action => 'update_modules'
+  map.tag_details '/tags/:label/:tag', :controller => 'home', :action => 'tag_details'
 
   # See how all your routes lay out with "rake routes"
 

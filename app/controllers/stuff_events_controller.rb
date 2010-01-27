@@ -18,7 +18,12 @@ class StuffEventsController < ApplicationController
         :order => 'created_at DESC',
         :page => params[:page])
 
-    @left_modules = [:render_most_lovable_places, :render_recently_added_places]
+    load_module_preferences
+    @left_modules = [
+        :render_topic_box,
+        :render_tagcloud,
+        :render_most_lovable_places,
+        :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
   end
 end

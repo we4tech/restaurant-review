@@ -1,0 +1,63 @@
+<div class="grid_12">
+  <h4>
+    <%= link_to 'Administration panel', admin_url %> &raquo;
+    <%= link_to @topic.name.humanize, topic_url(@topic.id) %> &raquo;
+    Update modules
+  </h4>
+  <div class="break"></div>
+
+  <%= link_to 'Manage topics', topics_url %>
+  <div class="clear"></div>
+  <div class="break"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topic_new'>
+    <% form_for @topic, :url => update_topic_modules_url do |f| %>
+      <% @topic.modules.each do |m| %>
+        <%
+           order = m['order']
+           name = m['name']
+           label = m['label']
+           selected_bind_column = m['bind_column']
+           enabled = m['enabled']
+           limit = m['limit'].to_i
+        %>
+        <div class='label' id="label_<%= name %>">
+          <div class="grid_3">
+            <input size="2" type='text' name="modules[][order]" value="<%= order %>" align="middle"/>
+            <input type='text' name="modules[][label]" value="<%= label %>" style="width: 170px"/>
+          </div>
+          <div class='label grid_8'>
+            <select name='modules[][name]'>
+              <% @module_names.each do |module_name| %>
+                <option value="<%= module_name %>"<%= module_name == name ? ' selected="selected"' : '' %>>
+                  <%= module_name.humanize.capitalize %>
+                </option>
+              <% end %>
+            </select>
+            <input type='checkbox' name="modules[][enabled]"
+                   value="1" <%= enabled ? 'checked="checked"' : ''%>/>
+            <input type='text' size="4" name="modules[][limit]"
+                   value="<%= limit %>" style="text-align: right;"/>
+
+            <select name="modules[][bind_column]">
+              <% @bind_columns.each do |bind_column| %>
+                <option value="<%= bind_column %>"<%= bind_column == selected_bind_column ? ' selected="selected"' : '' %>><%= bind_column %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="clear"></div>
+      <% end %>
+
+      <div class="clear"></div>
+      <div class="space_5"></div>
+      <div class="break"></div>
+      <div class="space_5"></div>
+
+      <label class="grid_6 align_right">
+        <%= f.submit 'Update modules configuration' %>
+      </label>
+    <% end %>
+  </div>
+</div>

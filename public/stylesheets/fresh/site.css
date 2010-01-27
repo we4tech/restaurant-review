@@ -548,5 +548,28 @@ h1, h2, h3, h4, h5, h6 {
   font-family: fantasy;
   font-size: 20px;
   padding: 5px;
-  
+}
+
+.tag_size_1 {
+  font-size: 10px;
+}
+
+.tag_size_2 {
+  font-size: 15px;
+}
+
+.tag_size_3 {
+  font-size: 20px;
+}
+
+.tag_size_4 {
+  font-size: 25px;
+}
+.tag_size_5 {
+  font-size: 30px;
+}
+
+.tagcloud .tag {
+  float: left;
+  margin: 5px;
 }

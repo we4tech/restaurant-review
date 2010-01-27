@@ -9,7 +9,13 @@ class HomeController < ApplicationController
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => params[:page])
     
     # pending module - :render_recently_added_pictures
-    @left_modules = [:render_topic_box, :render_most_lovable_places, :render_recently_added_places]
+    load_module_preferences
+
+    @left_modules = [
+        :render_topic_box, 
+        :render_tagcloud,
+        :render_most_lovable_places,
+        :render_recently_added_places]
     @breadcrumbs = []
   end
 
@@ -27,8 +33,10 @@ class HomeController < ApplicationController
       end
     end
 
+    load_module_preferences
+    
     @title = 'Most loved places!'
-    @left_modules = [:render_topic_box, :render_recently_added_places]
+    @left_modules = [:render_topic_box, :render_tagcloud, :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -47,9 +55,11 @@ class HomeController < ApplicationController
       end
     end
 
+    load_module_preferences
+    
     @title = 'Recently reviewed places!'
     @display_last_review = true
-    @left_modules = [:render_topic_box, :render_most_lovable_places]
+    @left_modules = [:render_topic_box, :render_tagcloud, :render_most_lovable_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -70,9 +80,46 @@ class HomeController < ApplicationController
       end
     end
 
+    load_module_preferences
+    
     @title = "Who else wanna visit this place!"
-    @left_modules = [:render_topic_box, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_topic_box, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_url(restaurant)]]
     @restaurant = restaurant
+  end
+
+  def tag_details
+    label = params[:label]
+    label = label.gsub('-', ' ').downcase
+    tag = params[:tag]
+
+    selected_module = nil
+    @topic.modules.each do |m|
+      if m['label'].downcase.parameterize.gsub('-', ' ') == label
+        selected_module = m
+      end
+    end
+
+    if selected_module
+      field = selected_module['bind_column']
+      @restaurants = Restaurant.paginate(
+          :conditions => {
+              field => tag,
+              :topic_id => @topic.id
+          },
+          :order => 'created_at DESC',
+          :page => params[:page]
+      )
+
+      load_module_preferences
+
+      @title = "#{selected_module['label']} » #{tag}"
+      @left_modules = [:render_topic_box, :render_tagcloud, :render_recently_added_places]
+      @breadcrumbs = [['All', root_url]]
+      render :action => :index
+    else
+      flash[:notice] = "Invalid tag label - #{label}"
+      redirect_to :back
+    end
   end
 end

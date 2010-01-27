@@ -1,6 +1,6 @@
 <% if !reviews.empty? %>
   <div class="site_simple_box">
-    <h4><%= tt(title) %></h4>
+    <h4><%= tt(config['label']) %></h4>
     <div class="space_5"></div>
 
     <% reviews.each_with_index do |review, index| %>

@@ -1,0 +1,6 @@
+<% (@left_modules || []).each do |module_name| %>
+  <% if @modules_pref[module_name]['enabled'] %>
+    <%= send(module_name.to_s, @modules_pref[module_name]) %>
+    <div class="space_10"></div>
+  <% end %>
+<% end %>

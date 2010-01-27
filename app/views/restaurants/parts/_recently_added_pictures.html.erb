@@ -14,7 +14,6 @@
           <%= link_to restaurant.name, restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
         </h6>
         <div class='images'>
-          <%= h last_related_image.image.inspect %>
           <%= image_tag(last_related_image.image.public_filename(:small), :alt => '') %>
         </div>
       </div>

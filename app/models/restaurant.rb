@@ -21,6 +21,8 @@ class Restaurant < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 20
 
+  attr_accessor :hit_count
+
   NO_LIMIT = -1
 
   def author?(p_user)
@@ -87,6 +89,14 @@ class Restaurant < ActiveRecord::Base
     if p_user
       reviews.count(:conditions => {:user_id => p_user.id}) > 0
     end
+  end
+
+  def self.find_tags_of(p_column, p_topic)
+    self.find(:all,
+              :select => "restaurants.#{p_column.to_s}, count(#{p_column.to_s}) as hit_count",
+              :conditions => ["#{p_column.to_s} <> '' AND topic_id = ?", p_topic.id],
+              :order => 'hit_count DESC',
+              :group => p_column)
   end
 
   private

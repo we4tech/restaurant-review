@@ -1,0 +1,44 @@
+<%
+   label = config['label']
+%>
+<div class="site_simple_box">
+
+  <h4><%= tt(label) %></h4>
+  <div class="space_5"></div>
+
+  <% if !tags.empty? %>
+    <%
+       max_font_size = 5;
+
+       max_hit_count = tags.max{|a, b|
+         a.read_attribute(:hit_count).to_i <=> b.read_attribute(:hit_count).to_i
+       }.read_attribute(:hit_count).to_i
+
+       min_hit_count = tags.min{|a, b|
+         a.read_attribute(:hit_count).to_i <=> b.read_attribute(:hit_count).to_i
+       }.read_attribute(:hit_count).to_i
+    %>
+    <div class='tagcloud'>
+      <% tags.shuffle.each do |tag| %>
+        <%
+           # Take from WIKI
+           hit_count = tag.read_attribute(:hit_count).to_i
+           font_size = 1
+           if hit_count > min_hit_count
+             font_size = (max_font_size * (hit_count - min_hit_count)) / (max_hit_count - min_hit_count)
+           end
+        %>
+        <div class='tag'>
+          <%= link_to "#{tag.send(column)}",
+                      tag_details_url(:label => label.parameterize,
+                                      :tag => URI.escape(tag.send(column))),
+                      :title => "Total hit - #{hit_count}",
+                      :class => "tag_size_#{font_size}" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="clear"></div>
+    
+  <% end %>
+</div>

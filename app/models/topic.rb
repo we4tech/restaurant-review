@@ -3,6 +3,7 @@ class Topic < ActiveRecord::Base
   CACHES = {}
 
   serialize :site_labels
+  serialize :modules
 
   has_many :contributed_images
   has_many :images

@@ -42,6 +42,13 @@ class RestaurantsController < ApplicationController
     @form_fields = @topic.form_attribute.fields
     @allow_image_upload = @topic.form_attribute.allow_image_upload
     @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+
+    load_module_preferences
+    @left_modules = [
+        :render_tagcloud,
+        :render_most_lovable_places,
+        :render_recently_added_places,
+        :render_topic_box]
   end
 
   def edit

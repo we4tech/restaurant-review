@@ -40,6 +40,7 @@
                 <%= h field_value %>
               <% end %>
             </div>
+            <div class="clear"></div>
           <% end %>
         <% end %>
       </div>
@@ -73,8 +74,8 @@
         <%= render :partial => 'reviews/parts/form', :locals => {:restaurant => @restaurant} %>
       <% else %>
         <div class='highlight'>
-          You have reviewed this place before!,
-          do you think this place is no longer cOoL ?? why don't you change it right here!
+          You have reviewed <%= tt('this place') %> before!,
+          do you think <%= tt('this place') %> is no longer cOoL ?? why don't you change it right here!
           say your strong opinion :)_) <br/> - 
 
           <a href='javascript: void(0)' onclick="$('#edit_review_<%= user_review.id %>').show()">edit your existing review!</a>
@@ -102,6 +103,6 @@
 
     <%= render_who_wanna_go_there(@restaurant) %>
 
-    <%= render_most_lovable_places(10) %>
+    <%= render :partial => 'layouts/fresh_parts/modules' %>
   </div>
 </div>

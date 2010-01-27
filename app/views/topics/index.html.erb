@@ -14,8 +14,9 @@
           <b>#<%= topic.id %> Topic: <%= topic.label %> (<%= topic.name %>)</b>
           [
           <%= link_to 'edit', edit_topic_url(:id => topic.id) %> |
-          <%= link_to 'delete', topic_url(:id => topic.id), :method => :delete, :confirm => 'Do you really want to remove this topic?' %> |
-          <%= link_to 'form attributes', form_attribute_by_topic_url(:topic_id => topic.id) %>
+          <%= link_to 'form attributes', form_attribute_by_topic_url(:topic_id => topic.id) %> |
+          <%= link_to 'modules', edit_topic_modules_url(:id => topic.id) %> |
+          <%= link_to 'delete', topic_url(:id => topic.id), :method => :delete, :confirm => 'Do you really want to remove this topic?' %>
           ]
         </div>
       <% end %>

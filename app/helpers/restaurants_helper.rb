@@ -1,9 +1,9 @@
 module RestaurantsHelper
 
-  def render_most_lovable_places(p_limit = 5)
+  def render_most_lovable_places(p_config, p_limit = 5)
     render :partial => 'restaurants/parts/lovable_places', :locals => {
-        :title => 'Most loved places!',
         :more_link => most_loved_places_url,
+        :config => p_config,
         :restaurants => Restaurant.most_loved(@topic, p_limit)}
   end
 
@@ -24,9 +24,9 @@ module RestaurantsHelper
     end
   end
 
-  def render_recently_added_places(p_limit = 10)
+  def render_recently_added_places(p_config, p_limit = 10)
     render :partial => 'restaurants/parts/recently_reviewed_places', :locals => {
-        :title => 'Recently reviewed places!',
+        :config => p_config,
         :more_link => recently_reviewed_places_url,
         :reviews => Review.by_topic(@topic.id).recent.all(:include => [:restaurant], :limit => p_limit)}
   end
@@ -44,6 +44,16 @@ module RestaurantsHelper
         :title => 'Who wanna visit here!',
         :reviews => wanna_go_reviews,
         :more_link => who_wanna_go_place_url(:id => p_restaurant.id, :name => p_restaurant.name.parameterize.to_s)
+    }
+  end
+
+  def render_tagcloud(p_config)
+    bind_column = p_config['bind_column'].to_sym
+    tags = Restaurant.find_tags_of(bind_column, @topic)
+    render :partial => 'restaurants/parts/tagcloud', :locals => {
+        :config => p_config,
+        :tags => tags,
+        :column => bind_column
     }
   end
 end

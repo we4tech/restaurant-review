@@ -14,16 +14,24 @@
           <div>
             <%= link_to image_tag(review.user.image.public_filename(:small),
                         :height => '40px',
-                        :alt => 'n/a'), "#",
+                        :alt => 'n/a'),
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login),
                         :title => "#{review.user.login}" %><br/>
-            <%= link_to review.user.login, '#' %>
+            <%= link_to review.user.login,
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login) %>
           </div>
         <% else %>
           <div>
             <%= link_to image_tag('fresh/user.png',
-                        :alt => 'n/a'), "#",
+                        :alt => 'n/a'),
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login),
                         :title => "#{review.user.login}" %><br/>
-            <%= link_to review.user.login, '#' %>
+            <%= link_to review.user.login,
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login) %>
           </div>
         <% end %>
       </li>
@@ -36,8 +44,5 @@
 </div>
 
 <div class="grid_4" id="site_center_boxes">
-  <% (@left_modules || []).each do |module_name| %>
-    <%= eval(module_name.to_s) %>
-    <div class="space_10"></div>
-  <% end %>
+  <%= render :partial => 'layouts/fresh_parts/modules' %>
 </div>
