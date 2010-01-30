@@ -52,7 +52,7 @@
                       :name => stuff_event.restaurant.name.parameterize.to_s,
                       :id => stuff_event.restaurant.id) %>
       <%= @topic.name %>
-    <% end %> <span class="date"> - <%= distance_of_time_in_words(Time.now, stuff_event.created_at) %> ago</span>
+    <% end %> <acronym class="date" title="<%= stuff_event.created_at %>"> - <%= distance_of_time_in_words(Time.now, stuff_event.created_at) %> ago</acronym>
   </div>
   <div class="clear"></div>
 </div>

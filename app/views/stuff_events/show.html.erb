@@ -2,7 +2,12 @@
   <h4>
     <% @breadcrumbs.each do |link| %>
       <%= link_to link.first, link.last %> &raquo;
-    <% end %>Activites on my participated restaurants
+    <% end %>
+    <% if current_user %>
+      <%= tt('Activities on my participated restaurants') %>
+    <% else %>
+      <%= tt('On going activities') %>
+    <% end %>
   </h4>
   <div class="break space_5"></div>
   <% @stuff_events.each do |stuff_event| %>
