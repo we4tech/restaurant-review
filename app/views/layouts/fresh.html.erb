@@ -20,7 +20,7 @@
   <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif" />
 
 </head>
-<body>
+<body<%= @edit_mode ? ' onbeforeunload="return false"' : '' %>>
 <div class="navigation">
   <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
 </div>
@@ -76,33 +76,36 @@
   </div>
 </div>
 
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-12009085-1");
-pageTracker._setDomainName(".welltreat.us");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+<% if params[:no_script].nil? %>
+  <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+  try {
+  var pageTracker = _gat._getTracker("UA-12009085-1");
+  pageTracker._setDomainName(".welltreat.us");
+  pageTracker._trackPageview();
+  } catch(err) {}</script>
 
-<script type="text/javascript" charset="utf-8">
-  var is_ssl = ("https:" == document.location.protocol);
-  var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
-  document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
+  <script type="text/javascript" charset="utf-8">
+    var is_ssl = ("https:" == document.location.protocol);
+    var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
+    document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+<% end %>
 
 <%= render :partial => 'home/parts/new_features_notification' %>
-
-<script type="text/javascript" charset="utf-8">
-  var feedback_widget_options = {};
-  feedback_widget_options.display = "overlay";
-  feedback_widget_options.company = "welltreatus";
-  feedback_widget_options.placement = "left";
-  feedback_widget_options.color = "#222";
-  feedback_widget_options.style = "idea";
-  var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
-</script>
+<% if params[:no_script].nil? %>
+  <script type="text/javascript" charset="utf-8">
+    var feedback_widget_options = {};
+    feedback_widget_options.display = "overlay";
+    feedback_widget_options.company = "welltreatus";
+    feedback_widget_options.placement = "left";
+    feedback_widget_options.color = "#222";
+    feedback_widget_options.style = "idea";
+    var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+  </script>
+<% end %>
 </body>
 </html>

@@ -9,6 +9,7 @@ class RestaurantsController < ApplicationController
       @form_fields = @topic.form_attribute.fields
       @allow_image_upload = @topic.form_attribute.allow_image_upload
       @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+      @edit_mode = true
     else
       flash[:notice] = 'You can\'t have more than one record.'
       redirect_to root_url
@@ -31,6 +32,7 @@ class RestaurantsController < ApplicationController
       end
     else
       @form_fields = @topic.form_attribute.fields
+      @edit_mode = true
       flash[:notice] = "Failed to store new #{@topic.name.humanize} information!"
       render :action => :new
     end
@@ -55,6 +57,7 @@ class RestaurantsController < ApplicationController
     @form_fields = @topic.form_attribute.fields
     @allow_image_upload = @topic.form_attribute.allow_image_upload
     @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+    @edit_mode = true
     restaurant = Restaurant.find(params[:id].to_i)
     if restaurant.author?(current_user)
       @restaurant = restaurant
@@ -81,6 +84,7 @@ class RestaurantsController < ApplicationController
       @form_fields = @topic.form_attribute.fields
       flash[:notice] = 'Failed to store your updated!'
       @restaurant = restaurant
+      @edit_mode = true
       render :action => :edit
     end
   end
