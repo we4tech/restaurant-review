@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
 
       if user.image
         flash[:notice] = "Logged in successfully"
-        redirect_back_or_default('/')
+        redirect_back_or_default(updates_url)
       else
         flash[:notice] = "Logged in successfully, please upload your display picture (avatar)!"
         redirect_to edit_user_url(user)

@@ -10,14 +10,19 @@
     <% end %>
   </h4>
   <div class="break space_5"></div>
-  <% @stuff_events.each do |stuff_event| %>
-    <%= render :partial => 'stuff_events/parts/stuff_event', :locals => {:stuff_event => stuff_event} %>
-  <% end %>
 
-  <div class='pagination'>
-    <span class="date"><%= page_entries_info @stuff_events %></span>
-    <%= will_paginate @stuff_events %>
-  </div>
+  <% if !@stuff_events.empty? %>
+    <% @stuff_events.each do |stuff_event| %>
+      <%= render :partial => 'stuff_events/parts/stuff_event', :locals => {:stuff_event => stuff_event} %>
+    <% end %>
+
+    <div class='pagination'>
+      <span class="date"><%= page_entries_info @stuff_events %></span>
+      <%= will_paginate @stuff_events %>
+    </div>
+  <% else %>
+    <%= tt('Hola! you haven\'t reviewed any ' + @topic.name.humanize + ' yet!')%>
+  <% end %>
 </div>
 
 <div class="grid_4" id="site_center_boxes">
