@@ -27,6 +27,12 @@
 <div class="clear"></div>
 <div class="space_5"></div>
 
+<label class="grid_2">CSS</label>
+<%= f.text_area :css, :rows => 5, :class => 'grid_7', :style => 'margin-left: 0;'  %>
+<%= f.error_message_on :css %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
 <label class="grid_2">Site description</label>
 <%= f.text_area :description, :rows => 5, :class => 'grid_7', :style => 'margin-left: 0;' %>
 <%= f.error_message_on :description %>
