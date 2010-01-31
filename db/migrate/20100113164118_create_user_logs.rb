@@ -6,6 +6,12 @@ class CreateUserLogs < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    default_topic = Topic.default
+    User.all.each do |user|
+      UserLog.create(:user_id => user.id,
+                     :topic_id => default_topic.id)
+    end
   end
 
   def self.down

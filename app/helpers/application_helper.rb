@@ -7,7 +7,7 @@ module ApplicationHelper
       topic = Topic.default
       path_prefix = (request.path || '')
       path_prefix = path_prefix[1..path_prefix.length]
-      redirect_to "#{root_url(:subdomain => topic.name.gsub('_', '.'))}#{path_prefix}"
+      redirect_to "#{root_url(:subdomain => topic.subdomain)}#{path_prefix}"
       return
     else
       @topic = Topic.find_by_name(topic_hint)

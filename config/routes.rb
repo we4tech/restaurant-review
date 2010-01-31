@@ -55,7 +55,9 @@ ActionController::Routing::Routes.draw do |map|
   map.change_password "/user/change_password/:token", :controller => "users", :action => "change_password", :token => nil
   map.save_new_password "/user/save_new_password/", :controller => "users", :action => "save_new_password"
 
-  map.restaurant_long_route '/t/:topic_name/:name/:id', :controller => 'restaurants', :action => 'show'
+  map.restaurant_long_route '/t/:topic_name/:name/:id', :controller => 'restaurants',
+                            :action => 'show',
+                            :requirements => {:topic_name => /[\w\d\.\-]+/}
   map.common '/restaurants/:name/:id', :controller => 'restaurants', :action => 'show'
   map.most_loved_places '/at_most_loved_places', :controller => 'home', :action => 'most_loved_places'
   map.recently_reviewed_places '/at_recently_reviewed_places', :controller => 'home', :action => 'recently_reviewed_places'

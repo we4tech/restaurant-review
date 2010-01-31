@@ -35,6 +35,10 @@ class Topic < ActiveRecord::Base
     caches["#{p_text}#{p_options[:group]}"]
   end
 
+  def subdomain
+    self.name.gsub('_', '.')
+  end
+
   private
     def clear_cache
       Topic::CACHES["key_#{self.id}"] = nil

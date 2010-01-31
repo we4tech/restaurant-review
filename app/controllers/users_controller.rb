@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       flash[:error] = "The activation code was missing.  Please follow the URL from your email."
       redirect_back_or_default('/')
     else 
-      flash[:error]  = "We couldn't find a user with that activation code -- check your email? Or maybe you've already activated -- try signing in."
+      flash[:error]  = "We couldn't find a user with that activation code <br/> check your email? Or maybe you've already activated <br/> try signing in."
       redirect_back_or_default('/')
     end
   end
