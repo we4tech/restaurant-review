@@ -31,6 +31,13 @@ class TopicsController < ApplicationController
            'enabled' => true,
            'limit' => 10,
            'label' => 'Recently reviewed places!',
+           'bind_column' => ''},
+
+          {'name' => 'render_search',
+           'order' => 5,
+           'enabled' => true,
+           'limit' => 10,
+           'label' => 'Search places!',
            'bind_column' => ''}
           ]
 

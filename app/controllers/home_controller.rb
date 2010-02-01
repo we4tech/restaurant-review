@@ -12,7 +12,8 @@ class HomeController < ApplicationController
     load_module_preferences
 
     @left_modules = [
-        :render_topic_box, 
+        :render_topic_box,
+        :render_search, 
         :render_tagcloud,
         :render_most_lovable_places,
         :render_recently_added_places]
@@ -121,5 +122,24 @@ class HomeController < ApplicationController
       flash[:notice] = "Invalid tag label - #{label}"
       redirect_to :back
     end
+  end
+
+  def search
+    @title = 'Search results!'
+    @restaurants = WillPaginate::Collection.create(1, Restaurant::per_page) do |pager|
+      pager.replace([])
+      pager.total_entries = 0
+    end
+
+    # pending module - :render_recently_added_pictures
+    load_module_preferences
+
+    @left_modules = [
+        :render_topic_box,
+        :render_search,
+        :render_tagcloud,
+        :render_most_lovable_places,
+        :render_recently_added_places]
+    @breadcrumbs = []
   end
 end
