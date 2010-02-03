@@ -25,7 +25,7 @@ module ApplicationHelper
 
   def load_module_preferences
     @modules_pref = {}
-    @topic.modules.each do |module_pref|
+    (@topic.modules || []).each do |module_pref|
       @modules_pref[module_pref['name'].to_sym] = module_pref
     end
   end

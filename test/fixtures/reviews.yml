@@ -2,12 +2,6 @@
 
 one:
   restaurant_id: 1
-  user_id: 1
-  loved: 1
-  comment: MyText
-
-two:
-  restaurant_id: 1
-  user_id: 1
+  user_id: 2
   loved: 1
   comment: MyText
