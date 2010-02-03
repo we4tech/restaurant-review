@@ -11,5 +11,11 @@ class UserTest < ActiveSupport::TestCase
     )
 
     assert true, user.register!
+    assert_equal 1, ActionMailer::Base.deliveries.length
+    assert_equal 'active', user.state
+    assert_not_nil user.activated_at
+
+    user
   end
+
 end

@@ -24,6 +24,7 @@ class UserMailer < ActionMailer::Base
     else
       topic = Topic.default
     end
+
     setup_email(user, topic)
 
     @subject += 'Your password change request!'
@@ -61,7 +62,7 @@ class UserMailer < ActionMailer::Base
     def setup_email(user, topic)
       @recipients  = "#{user.email}"
       @from        = "notification"
-      @subject     = "[#{topic.subdomain}.welltreat.us] "
+      @subject     = "[#{topic ? topic.subdomain : 'www'}.welltreat.us] "
       @sent_on     = Time.now
       @body[:user] = user
     end

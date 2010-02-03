@@ -33,7 +33,11 @@
   <div id="site_top">
     <div class="grid_11" id="site_logo">
       <div class="site_icon grid_1">
-        <%= link_to image_tag(@topic.banner_image_path), root_url %>
+        <% if @topic.banner_image_path %>
+          <%= link_to image_tag(@topic.banner_image_path), root_url %>
+        <% else %>
+          No banner SET!
+        <% end %>
       </div>
       <div class="site_icon_info grid_8 push_2">
         <%= @topic.description %>

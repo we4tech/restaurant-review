@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   ]
   before_filter :log_new_feature_visiting_status
 
-# Protect these actions behind an admin login
+  # Protect these actions behind an admin login
   # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
   before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge]
   

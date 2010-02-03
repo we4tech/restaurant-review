@@ -13,6 +13,7 @@ class Restaurant < ActiveRecord::Base
   has_many :subscribers, :source => :user, :through => :stuff_events
 
   validates_presence_of :name, :topic_id
+  validates_uniqueness_of :name
   validate :form_attributes_required_fields
 
   named_scope :recent, :order => 'created_at DESC'
