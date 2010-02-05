@@ -64,7 +64,7 @@
               [<span class='icon_hated'><%= tt('disliked') %></span>]
             <% end %>
 
-            <% if comment.can_delete? %>
+            <% if comment.author?(current_user) && comment.can_delete? %>
               [<%= link_to('delete', review_comment_url(:id => comment.id),
                            :method => 'DELETE',
                            :confirm => 'Do you really want to remove this comment?',
