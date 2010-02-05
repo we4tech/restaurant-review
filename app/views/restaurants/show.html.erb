@@ -27,7 +27,7 @@
              field_name = field['field']
              field_type = field['type']
              display = field['display']
-             field_value = field_name ? @restaurant.send(field_name) : ''
+             field_value = field_name ? @restaurant.send(field_name) : nil
           %>
           <% if field_value && display %>
             <div class="grid_2">
