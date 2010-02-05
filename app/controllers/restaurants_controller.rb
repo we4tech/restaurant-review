@@ -11,8 +11,8 @@ class RestaurantsController < ApplicationController
       @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
       @edit_mode = true
     else
-      flash[:notice] = 'You can\'t have more than one record.'
-      redirect_to root_url
+      flash[:notice] = 'You already have a profile with us, you can update!'
+      redirect_to edit_restaurant_url(current_user.restaurants.by_topic(@topic.id).first.id)
     end
   end
 
@@ -111,7 +111,7 @@ class RestaurantsController < ApplicationController
   private
     def topic_imposed_limit_allows?
       form_attribute = @topic.form_attribute
-      form_attribute && form_attribute.allows_more_entry?(current_user)
+      form_attribute && form_attribute.allows_more_entry?(@topic, current_user)
     end
 
 end

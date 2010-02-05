@@ -107,6 +107,7 @@ class TopicsController < ApplicationController
 
   def update_modules
     @topic = Topic.find(params[:id].to_i)
+    (params[:modules] || []).sort!{|a, b| a['order'] <=> b['order']}
     if @topic.update_attribute(:modules, params[:modules])
       flash[:notice] = "Updated topic - '#{@topic.name}'"
       redirect_to edit_topic_modules_url(@topic.id)
