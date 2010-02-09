@@ -36,32 +36,45 @@ class UserMailer < ActionMailer::Base
 
   def comment_notification(review_comment)
     setup_email(review_comment.review.user, review_comment.topic)
-    @subject += "#{review_comment.user.login} has commented on your review at '#{review_comment.restaurant.name}'"
+    @subject += "#{review_comment.user.login.humanize} has commented on your review at '#{review_comment.restaurant.name}'"
     @body[:review_comment] = review_comment
-    @body[:url] = restaurant_long_route_url(
+    @body[:url] = "#{restaurant_long_route_url(
         :topic_name => review_comment.topic.subdomain,
         :name => review_comment.restaurant.name.parameterize.to_s,
         :id => review_comment.restaurant.id,
-        :subdomain => review_comment.topic.subdomain)
+        :subdomain => review_comment.topic.subdomain)}#review-#{review_comment.review_id}"
+    @body[:topic] = review_comment.topic
+  end
+
+  def comment_participants_notification(participant, review_comment)
+    setup_email(participant, review_comment.topic)
+    @subject += "#{review_comment.user.login.humanize} has commented after your comment at '#{review_comment.restaurant.name}'"
+    @body[:review_comment] = review_comment
+    @body[:participant] = participant
+    @body[:url] = "#{restaurant_long_route_url(
+        :topic_name => review_comment.topic.subdomain,
+        :name => review_comment.restaurant.name.parameterize.to_s,
+        :id => review_comment.restaurant.id,
+        :subdomain => review_comment.topic.subdomain)}#review-#{review_comment.review_id}"
     @body[:topic] = review_comment.topic
   end
 
   def review_notification(review)
     setup_email(review.restaurant.user, review.topic)
-    @subject += "#{review.user.login} has reviewed your #{review.topic.subdomain} '#{review.restaurant.name}'"
+    @subject += "#{review.user.login.humanize} has reviewed your #{review.topic.subdomain} '#{review.restaurant.name}'"
     @body[:review] = review
-    @body[:url] = restaurant_long_route_url(
+    @body[:url] = "#{restaurant_long_route_url(
         :topic_name => review.topic.subdomain,
         :name => review.restaurant.name.parameterize.to_s,
         :id => review.restaurant.id,
-        :subdomain => review.topic.subdomain)
+        :subdomain => review.topic.subdomain)}#review-#{review.id}"
     @body[:topic] = review.topic
   end
 
   protected
     def setup_email(user, topic)
       @recipients  = "#{user.email}"
-      @from        = "notification"
+      @from        = "Notification <support@welltreat.us>"
       @subject     = "[#{topic ? topic.subdomain : 'www'}.welltreat.us] "
       @sent_on     = Time.now
       @body[:user] = user

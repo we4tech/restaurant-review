@@ -102,7 +102,10 @@ class TopicsController < ApplicationController
   def edit_modules
     @topic = Topic.find(params[:id].to_i)
     @module_names = DEFAULT_MODULES.collect{|m| m['name']}
-    @bind_columns = Restaurant.column_names - ['description', 'address', 'id', 'created_at', 'updated_at', 'user_id', 'lat', 'lng', 'topic_id']
+    @bind_columns = Restaurant.column_names - [
+        'description', 'address', 'id', 'created_at',
+        'updated_at', 'user_id', 'lat', 'lng', 'topic_id'
+    ]
   end
 
   def update_modules

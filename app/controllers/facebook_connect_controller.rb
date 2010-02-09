@@ -51,6 +51,7 @@ class FacebookConnectController < ApplicationController
         flash[:notice] = "You didn't authorize restaurant review application to share your review with facebook friends."
       else
         flash[:notice] = "Unknown error - '#{e.type.name}' occurred."
+        logger.warn(e)
       end
     end
 
@@ -64,17 +65,24 @@ class FacebookConnectController < ApplicationController
   private
   def publish_story_of_review(p_bundle_id, p_facebook_session, p_review)
     restaurant = p_review.reload.restaurant
-    first_image = nil
+    link = restaurant_long_route_url(
+        :topic_name => p_review.topic.subdomain,
+        :name => restaurant.name.parameterize.to_s,
+        :id => restaurant.id
+    )
+
+    attached_images = []
     images = restaurant.images
     images = restaurant.other_images if images.empty?
 
     if images && !images.empty?
-      first_image = images.rand
-      first_image = {
-        :type => 'image',
-        :src => "#{root_url[0..root_url.length - 2]}#{first_image.public_filename(:large)}",
-        :href => restaurant_url(restaurant)
-      }
+      images.shuffle.each do |image|
+        attached_images << {
+            :type => 'image',
+            :src => "#{root_url[0..root_url.length - 2]}#{image.public_filename(:large)}",
+            :href => link
+        }
+      end
     end
 
     user = p_facebook_session.user
@@ -82,13 +90,13 @@ class FacebookConnectController < ApplicationController
         user, user, {
         :attachment =>  {
           :name => "#{restaurant_review(p_review)} '#{restaurant.name}'",
-          :href => restaurant_url(restaurant),
+          :href => link,
           :caption => restaurant_review_stat(p_review),
           :description => remove_html_entities(p_review.comment),
-          :media => [first_image].compact},
+          :media => attached_images},
         :action_links => {
             'text' => 'add your review!',
-            'href' => restaurant_url(restaurant)}});
+            'href' => link}});
   end
 
   def restaurant_review_stat(p_review)
@@ -110,6 +118,12 @@ class FacebookConnectController < ApplicationController
   end
 
   def publish_story_on_image_added(p_bundle_id, p_facebook_session, p_restaurant, p_image)
+    link = restaurant_long_route_url(
+        :topic_name => p_restaurant.topic.subdomain,
+        :name => p_restaurant.name.parameterize.to_s,
+        :id => p_restaurant.id
+    )
+
     user = p_facebook_session.user
     message = 'uploaded a new image of'
     if p_restaurant.user_id != p_image.user_id
@@ -120,19 +134,25 @@ class FacebookConnectController < ApplicationController
         user, user, {
         :attachment =>  {
           :name => "#{message} '#{p_restaurant.name}'",
-          :href => restaurant_url(p_restaurant),
+          :href => link,
           :description => remove_html_entities(p_restaurant.description),
           :media => [{
             :type => 'image',
             :src => "#{root_url[0..root_url.length - 2]}#{p_image.public_filename(:large)}",
-            :href => restaurant_url(p_restaurant)
+            :href => link
           }]},
         :action_links => {
             'text' => 'add your review!',
-            'href' => restaurant_url(p_restaurant)}});
+            'href' => link}});
   end
 
   def publish_story_of_restaurant(p_bundle_id, p_facebook_session, p_restaurant)
+    link = restaurant_long_route_url(
+        :topic_name => p_restaurant.topic.subdomain,
+        :name => p_restaurant.name.parameterize.to_s,
+        :id => p_restaurant.id
+    )
+
     images = p_restaurant.images
     images = p_restaurant.other_images if images.empty?
     if !images.empty?
@@ -141,7 +161,7 @@ class FacebookConnectController < ApplicationController
         images << {
           :type => 'image',
           :src => "#{url_base}#{image.public_filename(:large)}",
-          :href => restaurant_url(p_restaurant)
+          :href => link
         }
       end
     end
@@ -154,13 +174,13 @@ class FacebookConnectController < ApplicationController
         user, user, {
         :attachment =>  {
           :name => "#{verb} '#{p_restaurant.name}'",
-          :href => restaurant_url(p_restaurant),
+          :href => link,
           :caption => "Address: #{p_restaurant.address || 'no where!!'}",
           :description => remove_html_entities(p_restaurant.description),
           :media => images},
         :action_links => {
             'text' => 'add your review!',
-            'href' => restaurant_url(p_restaurant)}});
+            'href' => link}});
   end
 
   def build_facebook_session
