@@ -1,11 +1,10 @@
 Hi <%= @review.restaurant.user.login.humanize %>,
 
-"<%= @review.user.login %>" just reviewed "<%= @review.restaurant.name %>".
-We are damned sure! you gotta enjoy this review in many ways!.
+"<%= @review.user.login.humanize %>" just reviewed "<%= @review.restaurant.name %>".
 
-btw, i'm not showing you the review here! do you know WHY??
-because i want you to browse the link below and check it out by yourself.
+<%= @review.comment %>
 
+To comment on the reply follow the link below -
 <%= h @url %>
 
 <%= @topic.email_footer %>---------------------------------

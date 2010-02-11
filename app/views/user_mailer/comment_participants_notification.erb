@@ -1,16 +1,10 @@
-Hi,
+Hi <%= @participant.login.humanize %>,,
 
-Do you remember you put a comment on "<%= @review_comment.restaurant.name %>"'s review ?
+"<%= @review_comment.user.login.humanize %>" commented after your comment on review at "<%= @review_comment.restaurant.name %>"
 
-You know what happened lately? your comment on the review got bumper HIT!
-Weeeee! (you gonna treat us soon :)_)).
+<%= h @review_comment.content %>
 
-One of our users "<%= @participant.login %>" just put a comment after your comment.
-We are damned sure! you gotta enjoy this comment in many ways!.
-
-btw, i'm not showing you the comment here! do you know WHY??
-because i want you to browse the link below and check it out by yourself.
-
+To reply back please follow the link below -
 <%= h @url %>
 
 <%= @topic.email_footer %>
