@@ -45,5 +45,7 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 
-  ActionController::Base.cache_store = :file_store, File.join(RAILS_ROOT, 'tmp', 'cache')
+  if defined?(ActionController)
+    ActionController::Base.cache_store = :file_store, File.join(RAILS_ROOT, 'tmp', 'cache')
+  end
 end
