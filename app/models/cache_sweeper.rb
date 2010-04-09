@@ -1,4 +1,4 @@
-class CacheSweeper <  ActionController::Caching::Sweeper
+class CacheSweeper
   
   observe Restaurant
 
