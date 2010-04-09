@@ -2,7 +2,10 @@ class HomeController < ApplicationController
 
   layout 'fresh'
 
-  before_filter :log_new_feature_visiting_status 
+  before_filter :log_new_feature_visiting_status
+  #caches_action :index, :if => Proc.new {|c|
+  #  c.send(:current_user).nil? && c.send(:flash)[:notice].nil?
+  #} 
 
   def index
     @title = 'Recently added restaurants!'
