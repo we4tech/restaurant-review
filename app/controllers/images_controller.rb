@@ -61,7 +61,8 @@ class ImagesController < ApplicationController
       :image_id => @image_file.id,
       :model => Restaurant.name,
       :topic_id => @topic.id,
-      :group => @group
+      :group => @group,
+      :user_id => current_user.id,
     }.merge({field_name => object_id}))
 
     return object_id, field_name, return_url

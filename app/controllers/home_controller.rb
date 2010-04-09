@@ -142,4 +142,21 @@ class HomeController < ApplicationController
         :render_recently_added_places]
     @breadcrumbs = []
   end
+
+  def photos
+    @stuff_events = StuffEvent.paginate(
+        :conditions => {
+            :topic_id => @topic.id,
+            :event_type => [StuffEvent::TYPE_RELATED_IMAGE,
+                            StuffEvent::TYPE_CONTRIBUTED_IMAGE]},
+        :order => 'created_at DESC',
+        :include => [:image, :restaurant],
+        :page => params[:page])
+
+    load_module_preferences
+
+    @title = "Pictures from restaurants!"
+    @left_modules = [:render_topic_box, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @breadcrumbs = [['All', root_url]]
+  end
 end

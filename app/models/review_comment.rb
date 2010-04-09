@@ -8,6 +8,7 @@ class ReviewComment < ActiveRecord::Base
   belongs_to :review
   belongs_to :user
   belongs_to :restaurant
+  has_many :stuff_events, :dependent => :destroy
 
   validates_presence_of :user_id, :topic_id, :restaurant_id, :topic_id, :content
 

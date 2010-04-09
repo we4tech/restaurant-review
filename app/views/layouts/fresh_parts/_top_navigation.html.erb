@@ -7,7 +7,8 @@
     <span> <%= link_to 'home', root_url %>| </span>
     <% if not logged_in? %>
       <%= link_to tt('login'), login_url %> |
-      <%= link_to tt('register'), signup_url %>
+      <%= link_to tt('register'), signup_url %> |
+      <%= link_to tt('photos'), photos_url %>
     <% else %>
       <% if !@record_already_added %>
         <%= link_to tt('add restaurant'), new_restaurant_url %> |
@@ -16,6 +17,7 @@
       <% end %>
       <%= render_activities_link %> |
       <%= link_to tt('my page'), user_long_url(:login => current_user.login, :id => current_user.id) %> |
+      <%= link_to tt('photos'), photos_url %> | 
       <% if current_user.facebook_session_exists? %>
         <span class='facebook_connect_control'>
           <% form_tag facebook_account_status_update_url, :id => 'facebook_connect_control_form' do %>

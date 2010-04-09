@@ -1,0 +1,63 @@
+<div class="grid_8" id="site_center_list">
+  <h1>
+    <% @breadcrumbs.each do |link| %>
+      <%= link_to link.first, link.last %> &raquo;
+    <% end %><%= tt(@title) %>
+  </h1>
+  <div class="break space_5"></div>
+
+  <div class="space_10"></div>
+  <div class='pagination'>
+    <%= will_paginate @stuff_events %>
+  </div>
+
+  <div class='stuff_events'>
+    <% @stuff_events.each do |stuff_event| %>
+      <div class='stuff_event'>
+        <div class='image'>
+          <% if stuff_event.image %>
+            <%= link_to image_tag(stuff_event.image.public_filename(:large), :alt => 'N/A'),
+                        stuff_event.image.public_filename(:very_large),
+                        :class => 'pic_link',
+                        :title => "#{stuff_event.image.caption} @#{link_to(
+                            stuff_event.restaurant.name, 
+                            restaurant_long_url(:name => stuff_event.restaurant.name.parameterize.to_s,
+                                                :id => stuff_event.restaurant.id))}",
+                        :rel => 'prettyPhoto[pics]' %>
+          <% else %>
+            N/A
+          <% end %>
+        </div>
+        <div class='info'>
+          <% if stuff_event.event_type == StuffEvent::TYPE_CONTRIBUTED_IMAGE %>
+            <%= link_to stuff_event.user.login,
+                        user_long_url(:id => stuff_event.user.id,
+                                      :login => stuff_event.user.login.parameterize)  %> contributed to
+          <% else %>
+            Attached with
+          <% end %>
+          <%= link_to stuff_event.restaurant.name, restaurant_long_url(
+            :name => stuff_event.restaurant.name.parameterize.to_s,
+            :id => stuff_event.restaurant.id) %>
+        </div>
+        <div class="clear"></div>
+      </div>
+
+    <% end %>
+  </div>
+
+  <div class="clear"></div>
+  <div class='pagination'>
+    <%= will_paginate @stuff_events %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".stuff_events .image .pic_link").prettyPhoto();
+  });
+</script>
+
+<div class="grid_4" id="site_center_boxes">
+  <%= render :partial => 'layouts/fresh_parts/modules' %>
+</div>

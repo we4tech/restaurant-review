@@ -11,10 +11,7 @@
     <div class="break space_5"></div>
 
     <div class="restaurant_details">
-      <h3><%= link_to @restaurant.name,
-                      restaurant_long_url(
-                          :name => @restaurant.name.parameterize.to_s,
-                          :id => @restaurant.id) %></h3>
+      <h1><%= @restaurant.name %></h1>
       <p>
         <%= render :partial => 'images/parts/image_gallery' %>
         <%= simple_format @restaurant.description %>
@@ -89,16 +86,30 @@
   </div>
 
   <div class="grid_4" id="site_center_boxes">
-    <div class="site_simple_box restaurant_address">
-      <h4>
-        Address
-      </h4>
-      <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
-        <div class="space_5"></div>
-        <img src="http://maps.google.com/maps/api/staticmap?center=<%= @restaurant.lat %>,<%= @restaurant.lng %>&zoom=14&size=280x300&sensor=false&markers=color:green|label:R|<%= @restaurant.lat %>,<%= @restaurant.lng %>&key=<%= MAP_API_KEY %>" alt="" width="299px"/>
-      <% end %>
-      <address><%= @restaurant.address %></address>
-    </div>
+
+    <% if @topic.name == 'restaurant' %>
+      <div class="site_simple_box restaurant_address" align="center">
+        <a href='mailto:biz@welltreat.us?subject=[BIZ knock knock]'
+           title="Do you own this restaurant?">
+          <%= image_tag('fresh/button_do_u_own_this.png')%>
+        </a>
+      </div>
+      <div class="clear"></div>
+      <div class="space_10"></div>
+    <%end %>
+
+    <% if !(@restaurant.address || '').blank? %>
+      <div class="site_simple_box restaurant_address">
+        <h4>
+          Address
+        </h4>
+        <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
+          <div class="space_5"></div>
+          <img src="http://maps.google.com/maps/api/staticmap?center=<%= @restaurant.lat %>,<%= @restaurant.lng %>&zoom=14&size=280x300&sensor=false&markers=color:green|label:R|<%= @restaurant.lat %>,<%= @restaurant.lng %>&key=<%= MAP_API_KEY %>" alt="" width="299px"/>
+        <% end %>
+        <address><%= @restaurant.address %></address>
+      </div>
+    <% end %>
     <div class="clear"></div>
 
     <%= render_who_wanna_go_there(@restaurant) %>

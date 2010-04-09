@@ -4,6 +4,7 @@ class Image < ActiveRecord::Base
   belongs_to :topic
   has_many :related_images, :dependent => :destroy
   has_many :contributed_images, :dependent => :destroy
+  has_many :stuff_events, :dependent => :destroy
 
   has_attachment  :size => 0.megabyte..5.megabytes,
                   :content_type => :image,

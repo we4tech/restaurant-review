@@ -573,3 +573,25 @@ h1, h2, h3, h4, h5, h6 {
   float: left;
   margin: 5px;
 }
+
+.stuff_event {
+  float: left;
+  margin: 20px 20px 20px 0;
+  width: 290px;
+}
+.stuff_event .image {
+  border: 1px solid #ccc;
+  background: #fff;
+  width: 286px;
+  overflow: hidden;
+}
+.stuff_event .info {
+  font-size: 80%;
+  font-weight: bold;
+  text-align: right;
+  font-style:italic;
+  color: crimson;
+}
+.stuff_event img {
+  padding: 10px;
+}

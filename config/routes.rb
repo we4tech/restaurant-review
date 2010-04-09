@@ -82,6 +82,7 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_restaurant '/records/:id/edit', :controller => 'restaurants', :action => 'edit'
   map.new_restaurant '/records/new', :controller => 'restaurants', :action => 'new'
   map.search '/search', :controller => 'home', :action => 'search'
+  map.photos '/photos', :controller => 'home', :action => 'photos'
 
   # See how all your routes lay out with "rake routes"
 
