@@ -31,7 +31,7 @@ class RestaurantsController < ApplicationController
         redirect_to edit_restaurant_url(@restaurant)
       end
     else
-      @form_fields = @topic.form_attribute.fields
+      @form_fields = @topic.form_attribute.fields                                     
       @edit_mode = true
       flash[:notice] = "Failed to store new #{@topic.name.humanize} information!"
       render :action => :new
