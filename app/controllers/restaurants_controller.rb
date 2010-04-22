@@ -54,12 +54,13 @@ class RestaurantsController < ApplicationController
   end
 
   def edit
-    @form_fields = @topic.form_attribute.fields
-    @allow_image_upload = @topic.form_attribute.allow_image_upload
-    @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
-    @edit_mode = true
     restaurant = Restaurant.find(params[:id].to_i)
+
     if restaurant.author?(current_user)
+      @form_fields = @topic.form_attribute.fields
+      @allow_image_upload = @topic.form_attribute.allow_image_upload
+      @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+      @edit_mode = true
       @restaurant = restaurant
     else
       flash[:notice] = "You are not authorized to edit this entry!"
@@ -69,25 +70,37 @@ class RestaurantsController < ApplicationController
 
   def update
     restaurant = Restaurant.find(params[:id].to_i)
-    attributes = params[:restaurant].merge(
-        :user_id => current_user.id, :topic_id => @topic.id)
-    attributes[:long_array] ||= []
-    attributes[:short_array] ||= []
-    
-    if restaurant.update_attributes(attributes)
-      if current_user.share_on_facebook?
-        flash[:notice] = 'Saved and shared your updates!'
-        redirect_to facebook_publish_url('updated_restaurant', restaurant.id, :next_to => edit_restaurant_url(restaurant))
+    user_id = current_user.id
+
+    # Don't change original author if super admin is performing this operation
+    if current_user.admin?
+      user_id = restaurant.user_id
+    end
+
+    if restaurant.author?(current_user)
+      attributes = params[:restaurant].merge(
+          :user_id => user_id, :topic_id => @topic.id)
+      attributes[:long_array] ||= []
+      attributes[:short_array] ||= []
+
+      if restaurant.update_attributes(attributes)
+        if current_user.share_on_facebook?
+          flash[:notice] = 'Saved and shared your updates!'
+          redirect_to facebook_publish_url('updated_restaurant', restaurant.id, :next_to => edit_restaurant_url(restaurant))
+        else
+          flash[:notice] = 'Saved your updates!'
+          redirect_to edit_restaurant_url(restaurant)
+        end
       else
-        flash[:notice] = 'Saved your updates!'
-        redirect_to edit_restaurant_url(restaurant)
+        @form_fields = @topic.form_attribute.fields
+        flash[:notice] = 'Failed to store your updated!'
+        @restaurant = restaurant
+        @edit_mode = true
+        render :action => :edit
       end
     else
-      @form_fields = @topic.form_attribute.fields
-      flash[:notice] = 'Failed to store your updated!'
-      @restaurant = restaurant
-      @edit_mode = true
-      render :action => :edit
+      flash[:notice] = "You are not authorized to edit this entry!"
+      redirect_to root_url
     end
   end
 
