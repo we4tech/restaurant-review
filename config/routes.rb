@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :tag_mappings
+
+  map.resources :tags
+
 
   # The priority is based upon order of creation: first created -> highest priority.
 

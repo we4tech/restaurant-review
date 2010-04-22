@@ -1,6 +1,10 @@
 class Restaurant < ActiveRecord::Base
 
   serialize :properties
+  serialize :short_array
+  serialize :long_array
+  serialize :short_map
+  serialize :long_map
 
   belongs_to :user
   belongs_to :topic
@@ -11,6 +15,8 @@ class Restaurant < ActiveRecord::Base
   has_many :reviews
   has_many :stuff_events, :dependent => :destroy
   has_many :subscribers, :source => :user, :through => :stuff_events
+  has_many :tag_mappings, :dependent => :destroy
+  has_many :tags, :through => :tag_mappings
 
   validates_presence_of :name, :topic_id
   validates_uniqueness_of :name

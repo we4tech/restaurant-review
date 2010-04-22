@@ -3,6 +3,7 @@ class FormAttribute < ActiveRecord::Base
   UNLIMITED_RECORDS = 0
   SINGLE_RECORD = 1
   LIMITED_RECORDS = 2
+  FIELD_TYPES = [:text_field, :text_area, :checkbox, :combobox, :options]
 
   serialize :fields
   belongs_to :topic

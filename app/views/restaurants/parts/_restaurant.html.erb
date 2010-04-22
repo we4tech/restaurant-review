@@ -29,11 +29,19 @@
         | <%= link_to 'edit', edit_restaurant_url(restaurant) %>
       <% end %>
     </div>
+
     <div class="summary">
       <% words = (restaurant.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
       <%= words[0..20].join(' ') %><% if words.length > 20 %>...<% end %>
       <%= link_to 'more', restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
     </div>
+
+    <% if !restaurant.tags.empty? %>
+      <div class="associated_tags">
+        <b><%= tt('Cuisines') %>:</b>
+        <%= restaurant.tags.collect {|tag| link_to(tag.name, tag_details_url(:label => 'cuisines', :tag => tag.name))}.join(', ') %>
+      </div>
+    <% end %>
 
     <% if @display_last_review %>
       <% last_review = restaurant.last_review %>

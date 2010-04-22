@@ -7,7 +7,7 @@ class FormAttributesController < ApplicationController
     @available_fields = Restaurant.column_names
     @available_fields = (@available_fields - [
         'id', 'user_id', 'created_at', 'updated_at', 'lat', 'lng', 'topic_id'])
-    @field_types = [:text_field, :text_area, :checkbox, :combobox]
+    @field_types = FormAttribute::FIELD_TYPES
     @record_options = [
         ['Unlimited', FormAttribute::UNLIMITED_RECORDS],
         ['Limited', FormAttribute::LIMITED_RECORDS],

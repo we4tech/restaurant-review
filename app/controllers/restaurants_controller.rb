@@ -69,10 +69,12 @@ class RestaurantsController < ApplicationController
 
   def update
     restaurant = Restaurant.find(params[:id].to_i)
-    if restaurant.update_attributes(params[:restaurant])
-      restaurant.update_attributes(
-          :user_id => current_user.id,
-          :topic_id => @topic.id)
+    attributes = params[:restaurant].merge(
+        :user_id => current_user.id, :topic_id => @topic.id)
+    attributes[:long_array] ||= []
+    attributes[:short_array] ||= []
+    
+    if restaurant.update_attributes(attributes)
       if current_user.share_on_facebook?
         flash[:notice] = 'Saved and shared your updates!'
         redirect_to facebook_publish_url('updated_restaurant', restaurant.id, :next_to => edit_restaurant_url(restaurant))

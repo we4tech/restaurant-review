@@ -95,8 +95,10 @@ class HomeController < ApplicationController
   def tag_details
     label = params[:label]
     label = label.gsub('-', ' ').downcase
-    tag = params[:tag]
+    tag_string = URI.unescape(params[:tag])
+    tag = Tag.find_by_name_and_topic_id(tag_string, @topic.id)
 
+    # Find out associated label
     selected_module = nil
     @topic.modules.each do |m|
       if m['label'].downcase.parameterize.gsub('-', ' ') == label
@@ -104,20 +106,11 @@ class HomeController < ApplicationController
       end
     end
 
-    if selected_module
-      field = selected_module['bind_column']
-      @restaurants = Restaurant.paginate(
-          :conditions => {
-              field => tag,
-              :topic_id => @topic.id
-          },
-          :order => 'created_at DESC',
-          :page => params[:page]
-      )
-
+    if tag
+      @restaurants = tag.restaurants.paginate :page => params[:page]
       load_module_preferences
 
-      @title = "#{selected_module['label']} » #{tag}"
+      @title = "#{selected_module['label']} » #{tag.name}"
       @left_modules = [:render_topic_box, :render_tagcloud, :render_recently_added_places]
       @breadcrumbs = [['All', root_url]]
       render :action => :index

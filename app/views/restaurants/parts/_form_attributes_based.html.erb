@@ -11,6 +11,7 @@
      text_area = field_type == 'text_area'
      combobox = field_type == 'combobox'
      checkbox = field_type == 'checkbox'
+     options = field_type == 'options'
 
      field_name = field['field']
      address_field = field_name == 'address'
@@ -60,8 +61,28 @@
     <%= f.error_message_on field_name %>
     <br/>
 
+  <% elsif options %>
+    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <div class='options_box'>
+      <% existing_value = @restaurant.send(field_name) || []  %>
+
+      <% (default_value || '').split(/\|/).each do |option| %>
+        <% option.strip! %>
+        <div class='option'>
+          <input id='<%= option_field_id = "option_#{option}" %>'
+                 type='checkbox' name='restaurant[<%= field_name %>][]'
+                 value="<%= option %>" class="<%= field_type %>"
+                 <%= existing_value.include?(option) ? 'checked="checked"' : '' %>
+                 />
+          <label for="<%= option_field_id %>"><%= option %></label>
+        </div>
+      <% end %>
+    </div>
+    <%= f.error_message_on field_name %>
+    <br clear="all"/>
+
   <% else %>
-    Not matched type!
+    <b style='color:red; background: lightYellow'>Not matched type!</b><br/>
   <% end %>
 <% end %>
 

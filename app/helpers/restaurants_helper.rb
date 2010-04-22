@@ -48,12 +48,18 @@ module RestaurantsHelper
   end
 
   def render_tagcloud(p_config)
-    bind_column = p_config['bind_column'].to_sym
-    tags = Restaurant.find_tags_of(bind_column, @topic)
+    bind_column = p_config['bind_column'].to_s
+    field = @topic.form_attribute.fields.reject{|h| h if h['field'] != bind_column}
+    tag_names = (field.first['default_value'] || '').split('|')
+
+    tags = Tag.all(:conditions => {
+        :name => tag_names,
+        :topic_id => @topic.id })
+    
     render :partial => 'restaurants/parts/tagcloud', :locals => {
         :config => p_config,
         :tags => tags,
-        :column => bind_column
+        :column => bind_column.to_sym
     }
   end
 end

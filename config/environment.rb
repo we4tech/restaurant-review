@@ -35,7 +35,7 @@ Rails::Initializer.run do |config|
   config.active_record.observers = [
       :user_observer, :review_comment_observer,
       :review_observer, :restaurant_observer,
-      :related_image_observer, :contributed_image_observer] 
+      :related_image_observer, :contributed_image_observer]
 
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names.

@@ -595,3 +595,22 @@ h1, h2, h3, h4, h5, h6 {
 .stuff_event img {
   padding: 10px;
 }
+.options_box {
+  width: 500px;
+}
+.options_box .option {
+  background: lightYellow;
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  padding: 5px;
+}
+
+.associated_tags {
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+.associated_tags a {
+  
+}
