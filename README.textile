@@ -1,0 +1,89 @@
+h2. WellTreat.US release change logs.
+
+h4. Release - 0.8.
+
+* 69.  [DONE] change FBConnect path to welltreat.us
+* 96.  [DONE] Add multiple selection of field type for fields
+* 100. [DONE] Option for act as super admin to edit other's content
+* 102. [DONE] Dont ask refresh warning on update page if there is no change
+* 103. [DONE] Keep dedicated page for image
+
+h4. Release - 0.7.
+
+* 92. [DONE] show randomized photo gallery
+* 85. [DONE] Dont send email if the comment or review writer is the author himself
+* 54. [DONE] send email notification to everyone
+* 61. [DONE] add multiple image in fb share
+* 90. [DONE] FIX link while sharing over Facebook
+* 85. [DONE] Email should include the comment content
+* 86. [DONE] Email should include the review content
+* 88. [DONE] Fix duplicate ids in Query of Recent stuffs
+* 92. [DONE] Use H1 on each page
+* 94. [DONE] Photo gallery page
+* 38. [DONE] Add button 'do u own this restaurant?, transfer ownership just only 2K per month'
+
+h4. Release - (0.1 - 0.6).
+
+* 2. [DONE] enable disable facebook 6. [DONE] Image title feature
+*  7. [DONE] new reviews list on front page 
+* 9. [DONE] formatted text 
+* 10. [DONE] Recently reviewed list should be sorted by date 
+* 13. [DONE] Rich text editor 
+* 16. [DONE] Organize hate n love options while reviewing and add option for i wanna go!
+*  17. [DONE] add feedback button 
+* 18. [DONE] remove html while publishing on facebook 
+* 19. [DONE] add missing image 
+* 23. [DONE} on front page recently reviewed section should handle wanna go 
+* 25. [DONE] add reset password
+* 26. [DONE] Map searching option
+* 30. [DONE] Topic management tool
+* 37. [DONE] Admin flag for user
+* 42. [DONE] Bug on FB Connect
+* 3. [DONE] comment on review
+* 37. [DONE] Admin flag for user
+* 30. [DONE] Topic management tool
+* 23. [DONE} on front page recently reviewed section should handle wanna go
+*  24. [NOT issue] Fixed descending order prob on recent review 
+* 25. [DONE] add reset password
+* 26. [DONE] Map searching option
+* 2. [DONE] enable disable facebook
+*  6. [DONE] Image title feature 
+* 7. [DONE] new reviews list on front page 
+* 9. [DONE] formatted text
+*  10. [DONE] Recently reviewed list should be sorted by date 
+* 16. [DONE] Organize hate n love options while reviewing and add option for i wanna go! 
+* 17. [DONE] add feedback button 
+* 18. [DONE] remove html while publishing on facebook 
+* 19. [DONE] add missing image 
+* 13. [DONE] Rich text editor
+* 21. [DONE] add profile page
+* 49. [DONE] comment after my comment notification
+* 31. [DONE] Set default topic
+* 51. [DONE] not reviewed mark
+* 28. [DONE] Add bubble to guide new visitor
+* 39. [DONE] Dashboard (who replied)
+* 32. [DONE] Topic based subdomain
+* 33. [DONE] Topic URL forwarding
+* 34. [DONE] Topic properties (for extra variable)
+* 33. [DONE] Topic property should have option to declare input required flag
+* 34. [DONE] Topic relation with all models
+* 35. [DONE] Topic migration for existing data
+* 56. [DONE] FIx 'dot' (.) related issue while serving user profile
+* 57. [DONE] show attributes on show restaurant page
+* 58. [DONE] Remove i wanna go from review box
+* 71. [DONE] Display tag
+* 72. [DONE] On welltreat.us it should redirect to the default topic, topic name "_" should be translated as "."
+* 62. [DONE] make generic url for edit profile
+* 60. [DONE] Stop back button while creating new restaurant
+* 78. [DONE] PUblic time line
+* 79. [DONE] Setting up activites as default after log in
+* 76. [DONE] change hate to dislike
+* 36. [DONE] Topic theme management
+* 63. [DONE] Fix labels
+* 68. [DONE] FIX sub domain in email
+* 64. [DONE] Detect topic from action mailer
+* 82. [DONE] add searching option
+* 65. [DONE] Write test case for registration
+* 66. [DONE] Write test case for checking email
+* 86. [DONE] Don't display delete button for other's comment
+* 67. Function Test case for reset password
