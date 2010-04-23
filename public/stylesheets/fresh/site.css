@@ -612,5 +612,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .associated_tags a {
-  
+}
+
+.big_picture_holder {
+  text-align: center;
+
+}
+
+.big_picture img {
+  max-width: 600px;
+  border: 7px solid gray;
+}
+
+.big_picture_caption {
+  margin: 10px;
+  font-size: 80%;
 }

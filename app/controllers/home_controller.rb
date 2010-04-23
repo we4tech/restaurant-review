@@ -155,4 +155,19 @@ class HomeController < ApplicationController
     @left_modules = [:render_topic_box, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
   end
+
+  def show_photo
+    @stuff_event = StuffEvent.find(params[:id].to_i)
+    @related_image = @stuff_event.image
+
+    load_module_preferences
+
+    @title = @related_image.caption
+    @title = nil if @title.nil? || @title.blank?
+
+    @site_title = @title
+    @left_modules = [:render_topic_box, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @breadcrumbs = [['All', root_url],
+                    ['Photos', photos_url(:page => params[:page])]]
+  end
 end

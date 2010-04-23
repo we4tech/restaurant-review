@@ -1,0 +1,34 @@
+<div class="grid_8" id="site_center_list">
+  <h1>
+    <% @breadcrumbs.each do |link| %>
+      <%= link_to link.first, link.last %> &raquo;
+    <% end %><%= @title ? @title : tt('full view') %>
+  </h1>
+  <div class="break space_5"></div>
+
+  <div class="space_10"></div>
+  <div class='big_picture_holder'>
+    <div class='big_picture'>
+      <%= image_tag(@stuff_event.image.public_filename(:very_large), :alt => @title) %>
+    </div>
+    <div class='big_picture_caption'>
+      <%= distance_of_time_in_words(Time.now, @stuff_event.created_at) %> ago
+      <% if @stuff_event.event_type == StuffEvent::TYPE_CONTRIBUTED_IMAGE %>
+        <%= link_to @stuff_event.user.login,
+                    user_long_url(:id => @stuff_event.user.id,
+                                  :login => @stuff_event.user.login.parameterize)  %> has contributed to
+      <% else %>
+        author has added this picture on 
+      <% end %>
+      <%= link_to @stuff_event.restaurant.name, restaurant_long_url(
+        :name => @stuff_event.restaurant.name.parameterize.to_s,
+        :id => @stuff_event.restaurant.id) %>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+
+<div class="grid_4" id="site_center_boxes">
+  <%= render :partial => 'layouts/fresh_parts/modules' %>
+</div>
