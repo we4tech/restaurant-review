@@ -104,3 +104,9 @@
     });
   </script>
 <% end %>
+
+<script type="text/javascript">
+  $('input, textarea').bind('keypress', function(pEvent) {
+    mFormContentChanged = true;  
+  });
+</script>

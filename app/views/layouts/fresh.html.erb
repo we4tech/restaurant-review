@@ -23,7 +23,12 @@
     <%= @topic.css %>
   </style>
 </head>
-<body<%= @edit_mode ? ' onbeforeunload="return false"' : '' %>>
+
+<script type="text/javascript">
+  var mFormContentChanged = false;
+</script>
+
+<body<%= @edit_mode ? ' onbeforeunload="return (mFormContentChanged) ? \'- Your unsaved changes will be lost.\' : null"' : '' %>>
 <div class="navigation">
   <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
 </div>
