@@ -22,7 +22,7 @@ class Image < ActiveRecord::Base
   named_scope :by_topic, lambda{|topic_id| {:conditions => {:topic_id => topic_id}}}
 
   def author?(p_user)
-    p_user && p_user.id == self.user.id || (p_user && 1 == p_user.admin)
+    p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
   end
   
 end
