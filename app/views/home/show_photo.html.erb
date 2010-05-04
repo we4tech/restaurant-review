@@ -16,7 +16,7 @@
       <% if @stuff_event.event_type == StuffEvent::TYPE_CONTRIBUTED_IMAGE %>
         <%= link_to @stuff_event.user.login,
                     user_long_url(:id => @stuff_event.user.id,
-                                  :login => @stuff_event.user.login.parameterize)  %> has contributed to
+                                  :login => @stuff_event.user.login.parameterize) %> has contributed to
       <% else %>
         author has added this picture on 
       <% end %>
@@ -26,6 +26,44 @@
     </div>
   </div>
   <div class="clear"></div>
+
+  <div class='comments'>
+    <div class='form'>
+      <% form_for PhotoComment.new do |f| %>
+        <%= f.label 'Write your comment' %>
+        <%= f.text_area :content %>
+        <%= f.hidden_field :image_id, :value => @stuff_event.image_id %>
+        <%= f.hidden_field :restaurant_id, :value => @stuff_event.restaurant_id %>
+        <input type="hidden" name="stuff_event_id" value="<%= @stuff_event.id %>"/>
+        <%= f.submit 'Add comment' %>
+      <% end %>
+    </div>
+    <% if !@related_image.photo_comments.empty? %>
+      <% @related_image.photo_comments.each do |comment| %>
+        <div class='comment'>
+          <div class='avatar'>
+            <%= link_to(image_tag(comment.user.image.public_filename(:small),
+                                  :height => '40px', :alt => 'n/a'),
+                        user_long_url(:id => comment.user.id, :login => comment.user.login),
+                        :title => "#{comment.user.login}") %>
+          </div>
+          <div class='content'>
+            <%= simple_format("#{link_to comment.user.login, user_long_url(
+                  :id => comment.user.id,
+                  :login => comment.user.login.parameterize)} #{auto_link(h(comment.content))}
+                  <span class='date'>#{distance_of_time_in_words(Time.now, comment.created_at)} ago</span>") %>
+
+            <% if current_user && current_user.admin? %>
+              <%= link_to 'Do you want to DELETE this comment ?', photo_comment_url(:id => comment.id),
+                          :class => 'date',
+                          :method => :delete, :confirm => 'Do you want to remove this comment?' %>
+            <% end %>
+          </div>
+        </div>
+        <div class="clear"></div>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
 

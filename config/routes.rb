@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :photo_comments
+
   map.resources :tag_mappings
 
   map.resources :tags

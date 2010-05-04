@@ -47,6 +47,10 @@
           <%= link_to stuff_event.restaurant.name, restaurant_long_url(
             :name => stuff_event.restaurant.name.parameterize.to_s,
             :id => stuff_event.restaurant.id) %>
+          <span class='date'>
+            <% comments_count = stuff_event.image.photo_comments_count %>
+            Comments (<%= comments_count %>)
+          </span>
         </div>
         <div class="clear"></div>
       </div>

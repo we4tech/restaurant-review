@@ -628,3 +628,35 @@ h1, h2, h3, h4, h5, h6 {
   margin: 10px;
   font-size: 80%;
 }
+
+.comments {
+  background:#ddeef6;
+  padding: 30px;
+}
+
+.comments label {
+  display: block;
+}
+
+.comments textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 5px;
+}
+
+.comments .comment {
+  margin-top: 10px;
+  border-top: 2px solid #fff;
+  padding-top: 10px;
+}
+
+.comments .comment .avatar {
+  float: left;
+}
+
+.comments .comment .content {
+  float: left;
+  width: 450px;
+  padding-left: 10px;
+}
+
