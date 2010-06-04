@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: ActionView</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">ActionView</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/vendor/plugins/facebooker/lib/facebooker/rails/facebook_url_helper_rb.html">
+                vendor/plugins/facebooker/lib/facebooker/rails/facebook_url_helper.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Extends the <a
+href="ActionView/Helpers/UrlHelper.html">ActionView::Helpers::UrlHelper</a>
+module. See it for details on the usual url helper methods: url_for,
+link_to, button_to, etc.
+</p>
+<p>
+Mostly, the changes sanitize javascript into facebook javascript. It
+sanitizes link_to solely by altering the private methods:
+convert_options_to_javascript!, confirm_javascript_function, and
+method_javascript_function. For button_to, it alters button_to itself, as
+well as confirm_javascript_function. No other methods need to be changed
+because of Facebook javascript.
+</p>
+<p>
+For button_to and link_to, adds alternate confirm options for facebook.
+</p>
+<h4>Options</h4>
+<ul>
+<li><tt>:confirm =&gt; &#8216;question?&#8216;</tt> - This will add a
+JavaScript confirm prompt with the question specified.
+
+<p>
+Example:
+</p>
+<pre>
+  # Generates: &lt;a href=&quot;http://rubyforge.org/projects/facebooker&quot; onclick=&quot;
+  #                 var dlg = new Dialog().showChoice('Please Confirm', 'Go to Facebooker?').setStyle();
+  #                 var a=this;dlg.onconfirm = function() {
+  #                   document.setLocation(a.getHref());
+  #                 }; return false;&quot;&gt;Facebooker&lt;/a&gt;
+  link_to(&quot;Facebooker&quot;, &quot;http://rubyforge.org/projects/facebooker&quot;, :confirm=&gt;&quot;Go to Facebooker?&quot;)
+</pre>
+<p>
+Alternatively, options[:confirm] may be specified. See the Facebook page <a
+href="http://wiki.developers.facebook.com/index.php/FBJS">wiki.developers.facebook.com/index.php/FBJS</a>.
+These options are:
+</p>
+<table>
+<tr><td valign="top"><tt>:title</tt>:</td><td>Specifies the title of the Facebook dialog. Default is &quot;Please
+Confirm&quot;.
+
+</td></tr>
+<tr><td valign="top"><tt>:content</tt>:</td><td>Specifies the title of the Facebook dialog. Default is &quot;Are you
+sure?&quot;.
+
+</td></tr>
+</table>
+<p>
+Example:
+</p>
+<pre>
+  # Generates: &lt;a href=&quot;http://rubyforge.org/projects/facebooker&quot; onclick=&quot;
+  #                 var dlg = new Dialog().showChoice('the page says:', 'Go to Facebooker?').setStyle();
+  #                 var a=this;dlg.onconfirm = function() {
+  #                   document.setLocation(a.getHref());
+  #                 }; return false;&quot;&gt;Facebooker&lt;/a&gt;
+  link_to(&quot;Facebooker&quot;, &quot;http://rubyforge.org/projects/facebooker&quot;, :confirm=&gt;{:title=&gt;&quot;the page says:&quot;, :content=&gt;&quot;Go to Facebooker?&quot;})
+</pre>
+<p>
+Any other options passed are assumed to be css styles. Again, see the
+Facebook page <a
+href="http://wiki.developers.facebook.com/index.php/FBJS">wiki.developers.facebook.com/index.php/FBJS</a>.
+</p>
+<p>
+Example:
+</p>
+<pre>
+  # Generates: &lt;a href=&quot;http://rubyforge.org/projects/facebooker&quot; onclick=&quot;
+  #                 var dlg = new Dialog().showChoice('the page says:', 'Are you sure?').setStyle({color: 'pink', width: '200px'});
+  #                 var a=this;dlg.onconfirm = function() {
+  #                   document.setLocation(a.getHref());
+  #                 }; return false;&quot;&gt;Facebooker&lt;/a&gt;
+  link_to(&quot;Facebooker&quot;, &quot;http://rubyforge.org/projects/facebooker&quot;, :confirm=&gt;{:title=&gt;&quot;the page says:, :color=&gt;&quot;pink&quot;, :width=&gt;&quot;200px&quot;})
+</pre>
+</li>
+</ul>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="ActionView/Helpers.html" class="link">ActionView::Helpers</a><br />
+Class <a href="ActionView/PathSet.html" class="link">ActionView::PathSet</a><br />
+
+    </div>
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

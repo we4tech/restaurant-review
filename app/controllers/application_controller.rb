@@ -19,6 +19,28 @@ class ApplicationController < ActionController::Base
   before_filter :detect_topic_or_forward_to_default_one
 
   protected
+    def restaurant_review(p_review)
+      if p_review.loved?
+        '&hearts; loved and reviewed this place!'
+      elsif p_review.hated?
+        'hated and reviewed this place! '
+      elsif p_review.wanna_go?
+        'wanna go to '
+      end
+    end
+
+    def restaurant_review_stat(p_review)
+      total_reviews_count = p_review.restaurant.reviews.count
+      loved_count = p_review.restaurant.reviews.loved.count
+      loved_percentage = (100 / total_reviews_count) * loved_count
+
+      "#{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}!"
+    end
+  
+    def remove_html_entities(p_str)
+      (p_str || '').gsub(/<[\/\w\d\s="\/\/\.:'@#;\-]+>/, '')
+    end
+  
     def log_last_visiting_time
       if current_user
         @user_log = current_user.user_logs.by_topic(@topic.id).first

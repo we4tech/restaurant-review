@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Facebooker::ApplicationProperties</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Facebooker::ApplicationProperties</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/vendor/plugins/facebooker/lib/facebooker/models/applicationproperties_rb.html">
+                vendor/plugins/facebooker/lib/facebooker/models/applicationproperties.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+application_name string The name of your application. callback_url string
+Your application&#8216;s callback URL. The callback URL cannot be longer
+than 100 characters. post_install_url string The URL where a user gets
+redirected after installing your application. The post-install URL cannot
+be longer than 100 characters. edit_url string dashboard_url string
+uninstall_url string The URL where a user gets redirected after removing
+your application. ip_list string For Web-based applications, these are the
+IP addresses of your servers that can access Facebook&#8216;s servers and
+serve information to your application. email string The email address
+associated with the application; the email address Facebook uses to contact
+you about your application. (default value is your Facebook email address.)
+description string The description of your application. use_iframe bool
+Indicates whether you render your application with FBML (0) or in an iframe
+(1). (default value is 1) desktop bool Indicates whether your application
+is Web-based (0) or gets installed on a user&#8216;s desktop (1). (default
+value is 1) is_mobile bool Indicates whether your application can run on a
+mobile device (1) or not (0). (default value is 1) default_fbml string The
+default FBML code that appears in the user&#8216;s profile box when he or
+she adds your application. default_column bool Indicates whether your
+application appears in the wide (1) or narrow (0) column of a user&#8216;s
+Facebook profile. (default value is 1) message_url string For applications
+that can create attachments, this is the URL where you store the
+attachment&#8216;s content. message_action string For applications that can
+create attachments, this is the label for the action that creates the
+attachment. It cannot be more than 20 characters. about_url string This is
+the URL to your application&#8216;s About page. About pages are now
+Facebook Pages. private_install bool Indicates whether you want to disable
+(1) or enable (0) News <a href="Feed.html">Feed</a> and Mini-<a
+href="Feed.html">Feed</a> stories when a user installs your application.
+(default value is 1) installable bool Indicates whether a user can (1) or
+cannot (0) install your application. (default value is 1) privacy_url
+string The URL to your application&#8216;s privacy terms. help_url string
+The URL to your application&#8216;s help page. see_all_url string tos_url
+string The URL to your application&#8216;s Terms of <a
+href="Service.html">Service</a>. dev_mode bool Indicates whether developer
+mode is enabled (1) or disabled (0). Only developers can install
+applications in developer mode. (default value is 1) preload_fql string A
+preloaded FQL query.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Model.html">Model</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FIELDS</td>
+          <td>=</td>
+          <td class="context-item-value">[ :application_name, :callback_url, :post_install_url, :edit_url, :dashboard_url,                :uninstall_url, :ip_list, :email, :description, :use_iframe, :desktop, :is_mobile,                :default_fbml, :default_column, :message_url, :message_action, :about_url,                :private_install, :installable, :privacy_url, :help_url, :see_all_url, :tos_url,                :dev_mode, :preload_fql, :icon_url, :canvas_name, :logo_url, :connect_logo_url ]</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

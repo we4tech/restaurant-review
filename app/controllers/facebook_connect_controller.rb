@@ -99,24 +99,6 @@ class FacebookConnectController < ApplicationController
             'href' => link}});
   end
 
-  def restaurant_review_stat(p_review)
-    total_reviews_count = p_review.restaurant.reviews.count
-    loved_count = p_review.restaurant.reviews.loved.count
-    loved_percentage = (100 / total_reviews_count) * loved_count
-
-    "#{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}!"
-  end
-
-  def restaurant_review(p_review)
-    if p_review.loved?
-      '&hearts; loved and reviewed this place!'
-    elsif p_review.hated?
-      'hated and reviewed this place! '
-    elsif p_review.wanna_go?
-      'wanna go to '
-    end
-  end
-
   def publish_story_on_image_added(p_bundle_id, p_facebook_session, p_restaurant, p_image)
     link = restaurant_long_route_url(
         :topic_name => p_restaurant.topic.subdomain,
@@ -199,7 +181,4 @@ class FacebookConnectController < ApplicationController
     return session
   end
 
-  def remove_html_entities(p_str)
-    (p_str || '').gsub(/<[\/\w\d\s="\/\/\.:'@#;\-]+>/, '')
-  end
 end

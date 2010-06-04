@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Facebooker::Parser</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Facebooker::Parser</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/vendor/plugins/facebooker/lib/facebooker/parser_rb.html">
+                vendor/plugins/facebooker/lib/facebooker/parser.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000355">anonymous_field_from</a>&nbsp;&nbsp;
+      <a href="#M000348">array_of</a>&nbsp;&nbsp;
+      <a href="#M000350">array_of_hashes</a>&nbsp;&nbsp;
+      <a href="#M000349">array_of_text_values</a>&nbsp;&nbsp;
+      <a href="#M000354">booleanize</a>&nbsp;&nbsp;
+      <a href="#M000351">element</a>&nbsp;&nbsp;
+      <a href="#M000352">hash_or_value_for</a>&nbsp;&nbsp;
+      <a href="#M000353">hashinate</a>&nbsp;&nbsp;
+      <a href="#M000347">parse</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PARSERS</td>
+          <td>=</td>
+          <td class="context-item-value">{       'facebook.auth.revokeAuthorization' =&gt; RevokeAuthorization,       'facebook.auth.createToken' =&gt; CreateToken,       'facebook.auth.getSession' =&gt; GetSession,       'facebook.connect.registerUsers' =&gt; RegisterUsers,       'facebook.connect.unregisterUsers' =&gt; UnregisterUsers,       'facebook.connect.getUnconnectedFriendsCount' =&gt; GetUnconnectedFriendsCount,       'facebook.users.getInfo' =&gt; UserInfo,       'facebook.users.getStandardInfo' =&gt; UserStandardInfo,       'facebook.users.setStatus' =&gt; SetStatus,       'facebook.status.get' =&gt; GetStatus,       'facebook.users.getLoggedInUser' =&gt; GetLoggedInUser,       'facebook.users.hasAppPermission' =&gt; UserHasPermission,       'facebook.pages.isAdmin' =&gt; PagesIsAdmin,       'facebook.pages.getInfo' =&gt; PagesGetInfo,       'facebook.pages.isFan' =&gt; PagesIsFan,       'facebook.friends.get' =&gt; GetFriends,       'facebook.friends.getLists' =&gt; FriendListsGet,       'facebook.friends.areFriends' =&gt; AreFriends,       'facebook.friends.getAppUsers' =&gt; GetAppUsers,       'facebook.feed.publishStoryToUser' =&gt; PublishStoryToUser,       'facebook.feed.publishActionOfUser' =&gt; PublishActionOfUser,       'facebook.feed.publishTemplatizedAction' =&gt; PublishTemplatizedAction,       'facebook.feed.registerTemplateBundle' =&gt; RegisterTemplateBundle,       'facebook.feed.deactivateTemplateBundleByID' =&gt; DeactivateTemplateBundleByID,       'facebook.feed.getRegisteredTemplateBundles' =&gt; GetRegisteredTemplateBundles,       'facebook.feed.publishUserAction' =&gt; PublishUserAction,       'facebook.notifications.get' =&gt; NotificationsGet,       'facebook.notifications.send' =&gt; NotificationsSend,       'facebook.notifications.sendRequest' =&gt; SendRequest,       'facebook.profile.getFBML' =&gt; ProfileFBML,       'facebook.profile.setFBML' =&gt; ProfileFBMLSet,       'facebook.profile.getInfo' =&gt; ProfileInfo,       'facebook.profile.setInfo' =&gt; ProfileInfoSet,       'facebook.fbml.setRefHandle' =&gt; SetRefHandle,       'facebook.fbml.refreshRefUrl' =&gt; RefreshRefURL,       'facebook.fbml.refreshImgSrc' =&gt; RefreshImgSrc,       'facebook.data.setCookie' =&gt; SetCookie,       'facebook.data.getCookies' =&gt; GetCookies,       'facebook.admin.setAppProperties' =&gt; SetAppProperties,       'facebook.admin.getAppProperties' =&gt; GetAppProperties,       'facebook.admin.setRestrictionInfo' =&gt; SetRestrictionInfo,       'facebook.admin.getRestrictionInfo' =&gt; GetRestrictionInfo,       'facebook.admin.getAllocation' =&gt; GetAllocation,       'facebook.application.getPublicInfo' =&gt; GetPublicInfo,       'facebook.batch.run' =&gt; BatchRun,       'facebook.fql.query' =&gt; FqlQuery,       'facebook.fql.multiquery' =&gt; FqlMultiquery,       'facebook.photos.get' =&gt; GetPhotos,       'facebook.photos.getAlbums' =&gt; GetAlbums,       'facebook.photos.createAlbum' =&gt; CreateAlbum,       'facebook.photos.getTags' =&gt; GetTags,       'facebook.photos.addTag' =&gt; AddTags,       'facebook.photos.upload' =&gt; UploadPhoto,       'facebook.stream.publish' =&gt; StreamPublish,       'facebook.stream.addComment' =&gt; StreamAddComment,       'facebook.events.create' =&gt; EventsCreate,       'facebook.events.cancel' =&gt; EventsCancel,       'facebook.events.get' =&gt; EventsGet,       'facebook.events.rsvp' =&gt; EventsRsvp,       'facebook.groups.get' =&gt; GroupsGet,       'facebook.events.getMembers' =&gt; EventMembersGet,       'facebook.groups.getMembers' =&gt; GroupGetMembers,       'facebook.notifications.sendEmail' =&gt; NotificationsSendEmail,       'facebook.data.getUserPreference' =&gt; GetPreference,       'facebook.data.setUserPreference' =&gt; SetPreference,       'facebook.video.upload' =&gt; UploadVideo,       'facebook.sms.send' =&gt; SmsSend,       'facebook.sms.canSend' =&gt; SmsCanSend</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000355" class="method-detail">
+        <a name="M000355"></a>
+
+        <div class="method-heading">
+          <a href="#M000355" class="method-signature">
+          <span class="method-name">anonymous_field_from</span><span class="method-args">(child, hash)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000355-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000355-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/parser.rb, line 116</span>
+116:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">anonymous_field_from</span>(<span class="ruby-identifier">child</span>, <span class="ruby-identifier">hash</span>)
+117:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'anon'</span>
+118:         (<span class="ruby-identifier">hash</span>[<span class="ruby-identifier">child</span>.<span class="ruby-identifier">name</span>] <span class="ruby-operator">||</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">content</span>.<span class="ruby-identifier">strip</span>
+119:       <span class="ruby-keyword kw">end</span>
+120:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000348" class="method-detail">
+        <a name="M000348"></a>
+
+        <div class="method-heading">
+          <a href="#M000348" class="method-signature">
+          <span class="method-name">array_of</span><span class="method-args">(response_element, element_name) {|element| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000348-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000348-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/parser.rb, line 42</span>
+42:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">array_of</span>(<span class="ruby-identifier">response_element</span>, <span class="ruby-identifier">element_name</span>)
+43:       <span class="ruby-identifier">values_to_return</span> = []
+44:       <span class="ruby-identifier">response_element</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>
+45:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">text?</span>
+46:         <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">element_name</span>
+47:         <span class="ruby-identifier">values_to_return</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">yield</span>(<span class="ruby-identifier">element</span>)
+48:       <span class="ruby-keyword kw">end</span>
+49:       <span class="ruby-identifier">values_to_return</span>
+50:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000350" class="method-detail">
+        <a name="M000350"></a>
+
+        <div class="method-heading">
+          <a href="#M000350" class="method-signature">
+          <span class="method-name">array_of_hashes</span><span class="method-args">(response_element, element_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000350-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000350-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/parser.rb, line 58</span>
+58:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">array_of_hashes</span>(<span class="ruby-identifier">response_element</span>, <span class="ruby-identifier">element_name</span>)
+59:       <span class="ruby-identifier">array_of</span>(<span class="ruby-identifier">response_element</span>, <span class="ruby-identifier">element_name</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>
+60:         <span class="ruby-identifier">hashinate</span>(<span class="ruby-identifier">element</span>)
+61:       <span class="ruby-keyword kw">end</span>
+62:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000349" class="method-detail">
+        <a name="M000349"></a>
+
+        <div class="method-heading">
+          <a href="#M000349" class="method-signature">
+          <span class="method-name">array_of_text_values</span><span class="method-args">(response_element, element_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000349-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000349-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/parser.rb, line 52</span>
+52:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">array_of_text_values</span>(<span class="ruby-identifier">response_element</span>, <span class="ruby-identifier">element_name</span>)
+53:       <span class="ruby-identifier">array_of</span>(<span class="ruby-identifier">response_element</span>, <span class="ruby-identifier">element_name</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>
+54:         <span class="ruby-identifier">element</span>.<span class="ruby-identifier">content</span>.<span class="ruby-identifier">strip</span>
+55:       <span class="ruby-keyword kw">end</span>
+56:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000354" class="method-detail">
+        <a name="M000354"></a>
+
+        <div class="method-heading">
+          <a href="#M000354" class="method-signature">
+          <span class="method-name">booleanize</span><span class="method-args">(response)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000354-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000354-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/parser.rb, line 112</span>
+112:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">booleanize</span>(<span class="ruby-identifier">response</span>)
+113:       <span class="ruby-identifier">response</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;1&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+114:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000351" class="method-detail">
+        <a name="M000351"></a>
+
+        <div class="method-heading">
+          <a href="#M000351" class="method-signature">
+          <span class="method-name">element</span><span class="method-args">(name, data)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000351-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000351-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/parser.rb, line 64</span>
+64:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">element</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">data</span>)
+65:       <span class="ruby-identifier">data</span> = <span class="ruby-identifier">data</span>.<span class="ruby-identifier">body</span> <span class="ruby-keyword kw">rescue</span> <span class="ruby-identifier">data</span> <span class="ruby-comment cmt"># either data or an HTTP response</span>
+66:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_defined?</span>(<span class="ruby-identifier">:Nokogiri</span>)
+67:         <span class="ruby-identifier">xml</span> = <span class="ruby-constant">Nokogiri</span><span class="ruby-operator">::</span><span class="ruby-constant">XML</span>(<span class="ruby-identifier">data</span>.<span class="ruby-identifier">strip</span>)
+68:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">node</span> = <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">at</span>(<span class="ruby-identifier">name</span>)
+69:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">node</span>
+70:         <span class="ruby-keyword kw">end</span>
+71:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">name</span>
+72:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">xml</span>.<span class="ruby-identifier">root</span>
+73:         <span class="ruby-keyword kw">end</span>
+74:       <span class="ruby-keyword kw">else</span>
+75:         <span class="ruby-identifier">doc</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>)
+76:         <span class="ruby-identifier">doc</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-identifier">name</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span>
+77:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">element</span>
+78:         <span class="ruby-keyword kw">end</span>
+79:       <span class="ruby-keyword kw">end</span>
+80:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Element #{name} not found in #{data}&quot;</span>
+81:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000352" class="method-detail">
+        <a name="M000352"></a>
+
+        <div class="method-heading">
+          <a href="#M000352" class="method-signature">
+          <span class="method-name">hash_or_value_for</span><span class="method-args">(element)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000352-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000352-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/parser.rb, line 83</span>
+83:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">hash_or_value_for</span>(<span class="ruby-identifier">element</span>)
+84:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">element</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">text?</span>
+85:         <span class="ruby-identifier">element</span>.<span class="ruby-identifier">content</span>.<span class="ruby-identifier">strip</span>
+86:       <span class="ruby-keyword kw">else</span>
+87:         <span class="ruby-identifier">hashinate</span>(<span class="ruby-identifier">element</span>)
+88:       <span class="ruby-keyword kw">end</span>
+89:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000353" class="method-detail">
+        <a name="M000353"></a>
+
+        <div class="method-heading">
+          <a href="#M000353" class="method-signature">
+          <span class="method-name">hashinate</span><span class="method-args">(response_element)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000353-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000353-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/parser.rb, line 91</span>
+ 91:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">hashinate</span>(<span class="ruby-identifier">response_element</span>)
+ 92:       <span class="ruby-identifier">response_element</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">text?</span> }.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>, <span class="ruby-identifier">child</span><span class="ruby-operator">|</span>
+ 93:         <span class="ruby-comment cmt"># If the node hasn't any child, and is not a list, we want empty strings, not empty hashes,</span>
+ 94:         <span class="ruby-comment cmt">#   except if attributes['nil'] == true</span>
+ 95:         <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">child</span>.<span class="ruby-identifier">name</span>] =
+ 96:         <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">child</span>[<span class="ruby-value str">'nil'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span>)
+ 97:           <span class="ruby-keyword kw">nil</span>
+ 98:         <span class="ruby-keyword kw">elsif</span> (<span class="ruby-identifier">child</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">text?</span>) <span class="ruby-operator">||</span> (<span class="ruby-identifier">child</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">child</span>[<span class="ruby-value str">'list'</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">'true'</span>)
+ 99:           <span class="ruby-identifier">anonymous_field_from</span>(<span class="ruby-identifier">child</span>, <span class="ruby-identifier">hash</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">content</span>.<span class="ruby-identifier">strip</span>
+100:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">child</span>[<span class="ruby-value str">'list'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span>
+101:           <span class="ruby-identifier">child</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">text?</span> }.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">subchild</span><span class="ruby-operator">|</span> <span class="ruby-identifier">hash_or_value_for</span>(<span class="ruby-identifier">subchild</span>)}
+102:         <span class="ruby-keyword kw">else</span>
+103:           <span class="ruby-identifier">child</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">text?</span> }.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">subhash</span>, <span class="ruby-identifier">subchild</span><span class="ruby-operator">|</span>
+104:             <span class="ruby-identifier">subhash</span>[<span class="ruby-identifier">subchild</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">hash_or_value_for</span>(<span class="ruby-identifier">subchild</span>)
+105:             <span class="ruby-identifier">subhash</span>
+106:           <span class="ruby-keyword kw">end</span>
+107:         <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#if (child.attributes)</span>
+108:         <span class="ruby-identifier">hash</span>
+109:       <span class="ruby-keyword kw">end</span> <span class="ruby-comment cmt">#do |hash, child|</span>
+110:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000347" class="method-detail">
+        <a name="M000347"></a>
+
+        <div class="method-heading">
+          <a href="#M000347" class="method-signature">
+          <span class="method-name">parse</span><span class="method-args">(method, data)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000347-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000347-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/parser.rb, line 35</span>
+35:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">data</span>)
+36:       <span class="ruby-constant">Errors</span>.<span class="ruby-identifier">process</span>(<span class="ruby-identifier">data</span>)
+37:       <span class="ruby-identifier">parser</span> = <span class="ruby-constant">Parser</span><span class="ruby-operator">::</span><span class="ruby-constant">PARSERS</span>[<span class="ruby-identifier">method</span>]
+38:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Can't find a parser for '#{method}'&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">parser</span>
+39:       <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">process</span>(<span class="ruby-identifier">data</span>)
+40:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

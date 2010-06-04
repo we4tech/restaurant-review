@@ -1,0 +1,1235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Facebooker::Rails::Publisher</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Facebooker::Rails::Publisher</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/vendor/plugins/facebooker/lib/facebooker/rails/publisher_rb.html">
+                vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+ActionMailer like module for publishing Facbook messages
+</p>
+<p>
+To use, create a subclass and define methods Each method should start by
+calling <a href="Publisher.html#M000205">send_as</a> to specify the type of
+message Valid options are :email and :notification, :user_action, :profile,
+:ref, :publish_stream
+</p>
+<p>
+Below is an example of each type
+</p>
+<pre>
+  class TestPublisher &lt; Facebooker::Rails::Publisher
+    # The new message templates are supported as well
+    # First, create a method that contains your templates:
+    # You may include multiple one line story templates and short story templates
+    # but only one full story template
+    #  Your most specific template should be first
+    #
+    # Before using, you must register your template by calling register. For this example
+    #  You would call TestPublisher.register_publish_action
+    #  Registering the template will store the template id returned from Facebook in the
+    # facebook_templates table that is created when you create your first publisher
+    def publish_action_template
+      one_line_story_template &quot;{*actor*} did stuff with {*friend*}&quot;
+      one_line_story_template &quot;{*actor*} did stuff&quot;
+      short_story_template &quot;{*actor*} has a title {*friend*}&quot;, render(:partial=&gt;&quot;short_body&quot;)
+      short_story_template &quot;{*actor*} has a title&quot;, render(:partial=&gt;&quot;short_body&quot;)
+      full_story_template &quot;{*actor*} has a title {*friend*}&quot;, render(:partial=&gt;&quot;full_body&quot;)
+      action_links action_link(&quot;My text {*template_var*}&quot;,&quot;{*link_url*}&quot;)
+    end
+
+    # To send a registered template, you need to create a method to set the data
+    # The publisher will look up the template id from the facebook_templates table
+    def publish_action(f)
+      send_as :user_action
+      from f
+      story_size SHORT # or ONE_LINE or FULL
+      data :friend=&gt;&quot;Mike&quot;
+    end
+
+    # Provide a from user to send a general notification
+    # if from is nil, this will send an announcement
+    def notification(to,f)
+      send_as :notification
+      recipients to
+      from f
+      fbml &quot;Not&quot;
+    end
+
+    def email(to,f)
+      send_as :email
+      recipients to
+      from f
+      title &quot;Email&quot;
+      fbml 'text'
+      text fbml
+    end
+    # This will render the profile in /users/profile.fbml.erb
+    #   it will set @user to user_to_update in the template
+    #  The mobile profile will be rendered from the app/views/test_publisher/_mobile.erb
+    #   template
+    def profile_update(user_to_update,user_with_session_to_use)
+      send_as :profile
+      from user_with_session_to_use
+      recipients user_to_update
+      profile render(:file=&gt;&quot;users/profile.fbml.erb&quot;,:assigns=&gt;{:user=&gt;user_to_update})
+      profile_action &quot;A string&quot;
+      mobile_profile render(:partial=&gt;&quot;mobile&quot;,:assigns=&gt;{:user=&gt;user_to_update})
+  end
+
+    #  Update the given handle ref with the content from a
+    #   template
+    def ref_update(user)
+      send_as :ref
+      from user
+      fbml render(:file=&gt;&quot;users/profile&quot;,:assigns=&gt;{:user=&gt;user_to_update})
+      handle &quot;a_ref_handle&quot;
+  end
+
+    #  Publish a post into the stream on the user's Wall and News Feed.
+    def publish_stream(user_with_session_to_use, user_to_update, params)
+      send_as :publish_stream
+      from  user_with_session_to_use
+      target user_to_update
+      attachment params[:attachment]
+      message params[:message]
+      action_links params[:action_links]
+    end
+</pre>
+<p>
+To send a message, use ActionMailer like semantics
+</p>
+<pre>
+   TestPublisher.deliver_action(@user)
+</pre>
+<p>
+For testing, you may want to create an instance of the underlying message
+without sending it
+</p>
+<pre>
+ TestPublisher.create_action(@user)
+</pre>
+<p>
+will create and return an instance of Facebooker::Feeds::Action
+</p>
+<p>
+<a href="Publisher.html">Publisher</a> makes many helpers available,
+including the linking and asset helpers
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000212">action_link</a>&nbsp;&nbsp;
+      <a href="#M000209">action_links</a>&nbsp;&nbsp;
+      <a href="#M000216">announcement_notification?</a>&nbsp;&nbsp;
+      <a href="#M000227">controller_path</a>&nbsp;&nbsp;
+      <a href="#M000200">default_url_options</a>&nbsp;&nbsp;
+      <a href="#M000201">default_url_options</a>&nbsp;&nbsp;
+      <a href="#M000204">from</a>&nbsp;&nbsp;
+      <a href="#M000206">full_story_template</a>&nbsp;&nbsp;
+      <a href="#M000228">helper</a>&nbsp;&nbsp;
+      <a href="#M000211">image</a>&nbsp;&nbsp;
+      <a href="#M000229">inherited</a>&nbsp;&nbsp;
+      <a href="#M000220">initialize_template_class</a>&nbsp;&nbsp;
+      <a href="#M000218">logger</a>&nbsp;&nbsp;
+      <a href="#M000226">method_missing</a>&nbsp;&nbsp;
+      <a href="#M000210">method_missing</a>&nbsp;&nbsp;
+      <a href="#M000199">new</a>&nbsp;&nbsp;
+      <a href="#M000207">one_line_story_template</a>&nbsp;&nbsp;
+      <a href="#M000214">profile_update?</a>&nbsp;&nbsp;
+      <a href="#M000221">protect_against_forgery?</a>&nbsp;&nbsp;
+      <a href="#M000203">recipients</a>&nbsp;&nbsp;
+      <a href="#M000215">ref_update?</a>&nbsp;&nbsp;
+      <a href="#M000224">register_all_templates</a>&nbsp;&nbsp;
+      <a href="#M000223">register_all_templates_on_all_applications</a>&nbsp;&nbsp;
+      <a href="#M000219">render</a>&nbsp;&nbsp;
+      <a href="#M000202">request_comes_from_facebook?</a>&nbsp;&nbsp;
+      <a href="#M000213">requires_from_user?</a>&nbsp;&nbsp;
+      <a href="#M000205">send_as</a>&nbsp;&nbsp;
+      <a href="#M000217">send_message</a>&nbsp;&nbsp;
+      <a href="#M000208">short_story_template</a>&nbsp;&nbsp;
+      <a href="#M000225">unregister_inactive_templates</a>&nbsp;&nbsp;
+      <a href="#M000222">url_for</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="../../ActionView/Helpers/UrlHelper.html">ActionView::Helpers::UrlHelper</a></span>
+        <span class="include-name">ActionView::Helpers::TextHelper</span>
+        <span class="include-name">ActionView::Helpers::TagHelper</span>
+        <span class="include-name">ActionView::Helpers::FormHelper</span>
+        <span class="include-name">ActionView::Helpers::FormTagHelper</span>
+        <span class="include-name">ActionView::Helpers::AssetTagHelper</span>
+        <span class="include-name">ActionView::Helpers::NumberHelper</span>
+        <span class="include-name"><a href="Helpers.html">Facebooker::Rails::Helpers</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="Publisher/Email.html" class="link">Facebooker::Rails::Publisher::Email</a><br />
+Class <a href="Publisher/FacebookTemplate.html" class="link">Facebooker::Rails::Publisher::FacebookTemplate</a><br />
+Class <a href="Publisher/ImageHolder.html" class="link">Facebooker::Rails::Publisher::ImageHolder</a><br />
+Class <a href="Publisher/InvalidSender.html" class="link">Facebooker::Rails::Publisher::InvalidSender</a><br />
+Class <a href="Publisher/Notification.html" class="link">Facebooker::Rails::Publisher::Notification</a><br />
+Class <a href="Publisher/Profile.html" class="link">Facebooker::Rails::Publisher::Profile</a><br />
+Class <a href="Publisher/PublishStream.html" class="link">Facebooker::Rails::Publisher::PublishStream</a><br />
+Class <a href="Publisher/PublisherController.html" class="link">Facebooker::Rails::Publisher::PublisherController</a><br />
+Class <a href="Publisher/Ref.html" class="link">Facebooker::Rails::Publisher::Ref</a><br />
+Class <a href="Publisher/UnknownBodyType.html" class="link">Facebooker::Rails::Publisher::UnknownBodyType</a><br />
+Class <a href="Publisher/UnspecifiedBodyType.html" class="link">Facebooker::Rails::Publisher::UnspecifiedBodyType</a><br />
+Class <a href="Publisher/UserAction.html" class="link">Facebooker::Rails::Publisher::UserAction</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">ONE_LINE</td>
+          <td>=</td>
+          <td class="context-item-value">1</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+story sizes <a href="Publisher.html#M000204">from</a> the Facebooker API
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">SHORT</td>
+          <td>=</td>
+          <td class="context-item-value">2</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FULL</td>
+          <td>=</td>
+          <td class="context-item-value">4</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">_body</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">action_links</td>
+          <td class="context-item-value">&nbsp;[W]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">one_line_story_templates</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">short_story_templates</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000227" class="method-detail">
+        <a name="M000227"></a>
+
+        <div class="method-heading">
+          <a href="#M000227" class="method-signature">
+          <span class="method-name">controller_path</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000227-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000227-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 548</span>
+548:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">controller_path</span>
+549:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">underscore</span>
+550:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000200" class="method-detail">
+        <a name="M000200"></a>
+
+        <div class="method-heading">
+          <a href="#M000200" class="method-signature">
+          <span class="method-name">default_url_options</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000200-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000200-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 114</span>
+114:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">default_url_options</span>
+115:         {<span class="ruby-identifier">:host</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Facebooker</span>.<span class="ruby-identifier">canvas_server_base</span> <span class="ruby-operator">+</span> <span class="ruby-constant">Facebooker</span>.<span class="ruby-identifier">facebook_path_prefix</span>}
+116:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000228" class="method-detail">
+        <a name="M000228"></a>
+
+        <div class="method-heading">
+          <a href="#M000228" class="method-signature">
+          <span class="method-name">helper</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000228-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000228-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 552</span>
+552:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">helper</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+553:           <span class="ruby-identifier">args</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">arg</span><span class="ruby-operator">|</span>
+554:             <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">arg</span>
+555:             <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Symbol</span>,<span class="ruby-constant">String</span>
+556:               <span class="ruby-identifier">add_template_helper</span>(<span class="ruby-node">&quot;#{arg.to_s.camelcase}Helper&quot;</span>.<span class="ruby-identifier">constantize</span>)
+557:             <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Module</span>
+558:               <span class="ruby-identifier">add_template_helper</span>(<span class="ruby-identifier">arg</span>)
+559:             <span class="ruby-keyword kw">end</span>
+560:           <span class="ruby-keyword kw">end</span>
+561:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000229" class="method-detail">
+        <a name="M000229"></a>
+
+        <div class="method-heading">
+          <a href="#M000229" class="method-signature">
+          <span class="method-name">inherited</span><span class="method-args">(child)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000229-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000229-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 569</span>
+569:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inherited</span>(<span class="ruby-identifier">child</span>)
+570:           <span class="ruby-keyword kw">super</span>
+571:           <span class="ruby-identifier">child</span>.<span class="ruby-identifier">master_helper_module</span>=<span class="ruby-constant">Module</span>.<span class="ruby-identifier">new</span>
+572:           <span class="ruby-identifier">child</span>.<span class="ruby-identifier">master_helper_module</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">:include</span>,<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">master_helper_module</span>)
+573:           <span class="ruby-identifier">child</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:include</span>, <span class="ruby-identifier">child</span>.<span class="ruby-identifier">master_helper_module</span>)
+574:           <span class="ruby-constant">FacebookTemplate</span>.<span class="ruby-identifier">clear_cache!</span>
+575:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000226" class="method-detail">
+        <a name="M000226"></a>
+
+        <div class="method-heading">
+          <a href="#M000226" class="method-signature">
+          <span class="method-name">method_missing</span><span class="method-args">(name,*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000226-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000226-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 523</span>
+523:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">name</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+524:           <span class="ruby-identifier">should_send</span> = <span class="ruby-keyword kw">false</span>
+525:           <span class="ruby-identifier">method</span> = <span class="ruby-value str">''</span>
+526:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-regexp re">/^create_(.*)$/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>)
+527:             <span class="ruby-identifier">method</span> = <span class="ruby-identifier">md</span>[<span class="ruby-value">1</span>]
+528:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">md</span> = <span class="ruby-regexp re">/^deliver_(.*)$/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>)
+529:             <span class="ruby-identifier">method</span> = <span class="ruby-identifier">md</span>[<span class="ruby-value">1</span>]
+530:             <span class="ruby-identifier">should_send</span> = <span class="ruby-keyword kw">true</span>            
+531:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">md</span> = <span class="ruby-regexp re">/^register_(.*)$/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>)
+532:             <span class="ruby-keyword kw">return</span> <span class="ruby-constant">FacebookTemplate</span>.<span class="ruby-identifier">register</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">md</span>[<span class="ruby-value">1</span>])
+533:           <span class="ruby-keyword kw">else</span>
+534:             <span class="ruby-keyword kw">super</span>
+535:           <span class="ruby-keyword kw">end</span>
+536:       
+537:           <span class="ruby-comment cmt">#now create the item</span>
+538:           (<span class="ruby-identifier">publisher</span>=<span class="ruby-identifier">new</span>).<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+539:           <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">publisher</span>.<span class="ruby-identifier">_body</span>
+540:           <span class="ruby-keyword kw">when</span> <span class="ruby-constant">UserAction</span>
+541:             <span class="ruby-identifier">publisher</span>.<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">template_name</span> = <span class="ruby-identifier">method</span>
+542:             <span class="ruby-identifier">publisher</span>.<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">template_id</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">FacebookTemplate</span>.<span class="ruby-identifier">bundle_id_for_class_and_method</span>(<span class="ruby-keyword kw">self</span>,<span class="ruby-identifier">method</span>)
+543:           <span class="ruby-keyword kw">end</span>
+544:           
+545:           <span class="ruby-identifier">should_send</span> <span class="ruby-value">? </span><span class="ruby-identifier">publisher</span>.<span class="ruby-identifier">send_message</span>(<span class="ruby-identifier">method</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">publisher</span>.<span class="ruby-identifier">_body</span>
+546:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000199" class="method-detail">
+        <a name="M000199"></a>
+
+        <div class="method-heading">
+          <a href="#M000199" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000199-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000199-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 107</span>
+107:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+108:         <span class="ruby-ivar">@from</span>                 = <span class="ruby-keyword kw">nil</span>
+109:         <span class="ruby-ivar">@full_story_template</span>  = <span class="ruby-keyword kw">nil</span>
+110:         <span class="ruby-ivar">@recipients</span>           = <span class="ruby-keyword kw">nil</span>
+111:         <span class="ruby-ivar">@controller</span>           = <span class="ruby-constant">PublisherController</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+112:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000224" class="method-detail">
+        <a name="M000224"></a>
+
+        <div class="method-heading">
+          <a href="#M000224" class="method-signature">
+          <span class="method-name">register_all_templates</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000224-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000224-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 505</span>
+505:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register_all_templates</span>
+506:           <span class="ruby-identifier">all_templates</span> = <span class="ruby-identifier">instance_methods</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-regexp re">/_template$/</span>) <span class="ruby-operator">-</span> <span class="ruby-node">%w(short_story_template full_story_template one_line_story_template)</span> 
+507:           <span class="ruby-identifier">all_templates</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">template</span><span class="ruby-operator">|</span>
+508:             <span class="ruby-identifier">template_name</span>=<span class="ruby-identifier">template</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/_template$/</span>,<span class="ruby-value str">&quot;&quot;</span>)
+509:             <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Registering #{template_name}&quot;</span>
+510:             <span class="ruby-identifier">send</span>(<span class="ruby-value str">&quot;register_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">template_name</span>)
+511:           <span class="ruby-keyword kw">end</span>
+512:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000223" class="method-detail">
+        <a name="M000223"></a>
+
+        <div class="method-heading">
+          <a href="#M000223" class="method-signature">
+          <span class="method-name">register_all_templates_on_all_applications</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000223-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000223-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 498</span>
+498:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register_all_templates_on_all_applications</span>
+499:           <span class="ruby-constant">Facebooker</span>.<span class="ruby-identifier">with_all_applications</span> <span class="ruby-keyword kw">do</span>
+500:             <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Registering templates for #{Facebooker.api_key}&quot;</span>
+501:             <span class="ruby-identifier">register_all_templates</span>
+502:           <span class="ruby-keyword kw">end</span>
+503:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000225" class="method-detail">
+        <a name="M000225"></a>
+
+        <div class="method-heading">
+          <a href="#M000225" class="method-signature">
+          <span class="method-name">unregister_inactive_templates</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000225-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000225-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 514</span>
+514:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unregister_inactive_templates</span>
+515:           <span class="ruby-identifier">session</span> = <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">create</span>
+516:           <span class="ruby-identifier">active_template_ids</span> = <span class="ruby-constant">FacebookTemplate</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:bundle_id</span>)
+517:           <span class="ruby-identifier">all_template_ids</span> = <span class="ruby-identifier">session</span>.<span class="ruby-identifier">active_template_bundles</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">t</span>[<span class="ruby-value str">&quot;template_bundle_id&quot;</span>]}
+518:           (<span class="ruby-identifier">all_template_ids</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">active_template_ids</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">template_bundle_id</span><span class="ruby-operator">|</span>
+519:             <span class="ruby-identifier">session</span>.<span class="ruby-identifier">deactivate_template_bundle_by_id</span>(<span class="ruby-identifier">template_bundle_id</span>)
+520:           <span class="ruby-keyword kw">end</span>
+521:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000212" class="method-detail">
+        <a name="M000212"></a>
+
+        <div class="method-heading">
+          <a href="#M000212" class="method-signature">
+          <span class="method-name">action_link</span><span class="method-args">(text,target)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000212-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000212-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 375</span>
+375:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">action_link</span>(<span class="ruby-identifier">text</span>,<span class="ruby-identifier">target</span>)
+376:         {<span class="ruby-identifier">:text=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">text</span>, <span class="ruby-identifier">:href=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">target</span>}
+377:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000209" class="method-detail">
+        <a name="M000209"></a>
+
+        <div class="method-heading">
+          <a href="#M000209" class="method-signature">
+          <span class="method-name">action_links</span><span class="method-args">(*links)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000209-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000209-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 333</span>
+333:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">action_links</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">links</span>)
+334:         <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_body</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:action_links</span>)
+335:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:action_links</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">links</span>)
+336:         <span class="ruby-keyword kw">end</span>
+337:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">links</span>.<span class="ruby-identifier">blank?</span>
+338:           <span class="ruby-ivar">@action_links</span>
+339:         <span class="ruby-keyword kw">else</span>
+340:           <span class="ruby-ivar">@action_links</span> = <span class="ruby-identifier">links</span>
+341:         <span class="ruby-keyword kw">end</span>
+342:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000216" class="method-detail">
+        <a name="M000216"></a>
+
+        <div class="method-heading">
+          <a href="#M000216" class="method-signature">
+          <span class="method-name">announcement_notification?</span><span class="method-args">(from,body)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000216-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000216-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 391</span>
+391:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">announcement_notification?</span>(<span class="ruby-identifier">from</span>,<span class="ruby-identifier">body</span>)
+392:         <span class="ruby-identifier">from</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">body</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Notification</span>)
+393:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000201" class="method-detail">
+        <a name="M000201"></a>
+
+        <div class="method-heading">
+          <a href="#M000201" class="method-signature">
+          <span class="method-name">default_url_options</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000201-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000201-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 118</span>
+118:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_url_options</span>
+119:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">default_url_options</span>
+120:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000204" class="method-detail">
+        <a name="M000204"></a>
+
+        <div class="method-heading">
+          <a href="#M000204" class="method-signature">
+          <span class="method-name">from</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000204-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000204-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 281</span>
+281:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">from</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+282:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">0</span>
+283:           <span class="ruby-ivar">@from</span>
+284:         <span class="ruby-keyword kw">else</span>
+285:           <span class="ruby-ivar">@from</span>=<span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+286:         <span class="ruby-keyword kw">end</span>        
+287:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000206" class="method-detail">
+        <a name="M000206"></a>
+
+        <div class="method-heading">
+          <a href="#M000206" class="method-signature">
+          <span class="method-name">full_story_template</span><span class="method-args">(title=nil,body=nil,params={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000206-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000206-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 315</span>
+315:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">full_story_template</span>(<span class="ruby-identifier">title</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">body</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">params</span>={})
+316:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">nil?</span>
+317:           <span class="ruby-ivar">@full_story_template</span>
+318:         <span class="ruby-keyword kw">else</span>
+319:           <span class="ruby-ivar">@full_story_template</span>=<span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:template_title=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">title</span>, <span class="ruby-identifier">:template_body=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">body</span>)
+320:         <span class="ruby-keyword kw">end</span>
+321:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000211" class="method-detail">
+        <a name="M000211"></a>
+
+        <div class="method-heading">
+          <a href="#M000211" class="method-signature">
+          <span class="method-name">image</span><span class="method-args">(src,target)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000211-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000211-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 371</span>
+371:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">image</span>(<span class="ruby-identifier">src</span>,<span class="ruby-identifier">target</span>)
+372:         <span class="ruby-constant">ImageHolder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">image_path</span>(<span class="ruby-identifier">src</span>),<span class="ruby-identifier">target</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:to_str</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">target</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">target</span>))
+373:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000220" class="method-detail">
+        <a name="M000220"></a>
+
+        <div class="method-heading">
+          <a href="#M000220" class="method-signature">
+          <span class="method-name">initialize_template_class</span><span class="method-args">(assigns)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000220-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000220-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 446</span>
+446:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_template_class</span>(<span class="ruby-identifier">assigns</span>)
+447:         <span class="ruby-identifier">template_root</span> = <span class="ruby-node">&quot;#{RAILS_ROOT}/app/views&quot;</span>
+448:         <span class="ruby-identifier">controller_root</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">template_root</span>,<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">controller_path</span>)
+449:         <span class="ruby-comment cmt">#only do this on Rails 2.1</span>
+450:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:append_view_path</span>)
+451:           <span class="ruby-comment cmt"># only add the view path once</span>
+452:           <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">view_paths</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">controller_root</span>)
+453:             <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">append_view_path</span>(<span class="ruby-identifier">controller_root</span>) 
+454:             <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">append_view_path</span>(<span class="ruby-identifier">controller_root</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;/..&quot;</span>) 
+455:           <span class="ruby-keyword kw">end</span>
+456:           <span class="ruby-identifier">view_paths</span> = <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">view_paths</span>
+457:         <span class="ruby-keyword kw">else</span>
+458:           <span class="ruby-identifier">view_paths</span> = [<span class="ruby-identifier">template_root</span>, <span class="ruby-identifier">controller_root</span>]
+459:         <span class="ruby-keyword kw">end</span>
+460:         <span class="ruby-identifier">returning</span> <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">view_paths</span>, <span class="ruby-identifier">assigns</span>, <span class="ruby-keyword kw">self</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">template</span><span class="ruby-operator">|</span>
+461:           <span class="ruby-identifier">template</span>.<span class="ruby-identifier">controller</span>=<span class="ruby-keyword kw">self</span>
+462:           <span class="ruby-identifier">template</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">master_helper_module</span>)
+463:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template</span>.<span class="ruby-identifier">request_comes_from_facebook?</span>
+464:             <span class="ruby-keyword kw">true</span>
+465:           <span class="ruby-keyword kw">end</span>
+466:         <span class="ruby-keyword kw">end</span>
+467:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000218" class="method-detail">
+        <a name="M000218"></a>
+
+        <div class="method-heading">
+          <a href="#M000218" class="method-signature">
+          <span class="method-name">logger</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+nodoc needed for actionview
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000218-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000218-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 433</span>
+433:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">logger</span>
+434:         <span class="ruby-constant">RAILS_DEFAULT_LOGGER</span>
+435:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000210" class="method-detail">
+        <a name="M000210"></a>
+
+        <div class="method-heading">
+          <a href="#M000210" class="method-signature">
+          <span class="method-name">method_missing</span><span class="method-args">(name,*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000210-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000210-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 344</span>
+344:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">name</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+345:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">1</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-node">&quot;#{name}=&quot;</span>)
+346:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{name}=&quot;</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+347:         <span class="ruby-keyword kw">elsif</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">name</span>)
+348:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">name</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+349:         <span class="ruby-keyword kw">else</span>
+350:           <span class="ruby-keyword kw">super</span>
+351:         <span class="ruby-keyword kw">end</span>
+352:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000207" class="method-detail">
+        <a name="M000207"></a>
+
+        <div class="method-heading">
+          <a href="#M000207" class="method-signature">
+          <span class="method-name">one_line_story_template</span><span class="method-args">(str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000207-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000207-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 323</span>
+323:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">one_line_story_template</span>(<span class="ruby-identifier">str</span>)
+324:         <span class="ruby-ivar">@one_line_story_templates</span> <span class="ruby-operator">||=</span> []
+325:         <span class="ruby-ivar">@one_line_story_templates</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>
+326:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000214" class="method-detail">
+        <a name="M000214"></a>
+
+        <div class="method-heading">
+          <a href="#M000214" class="method-signature">
+          <span class="method-name">profile_update?</span><span class="method-args">(body)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000214-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000214-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 383</span>
+383:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">profile_update?</span>(<span class="ruby-identifier">body</span>)
+384:         <span class="ruby-identifier">body</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Profile</span>)
+385:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000221" class="method-detail">
+        <a name="M000221"></a>
+
+        <div class="method-heading">
+          <a href="#M000221" class="method-signature">
+          <span class="method-name">protect_against_forgery?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+define this for the publisher views
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000221-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000221-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 485</span>
+485:         <span class="ruby-keyword kw">def</span>  <span class="ruby-identifier">protect_against_forgery?</span><span class="ruby-identifier">protect_against_forgery?</span>
+486:           <span class="ruby-ivar">@paf</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">new</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:protect_against_forgery?</span>)
+487:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000203" class="method-detail">
+        <a name="M000203"></a>
+
+        <div class="method-heading">
+          <a href="#M000203" class="method-signature">
+          <span class="method-name">recipients</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000203-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000203-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 273</span>
+273:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">recipients</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+274:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">0</span>
+275:           <span class="ruby-ivar">@recipients</span>
+276:         <span class="ruby-keyword kw">else</span>
+277:           <span class="ruby-ivar">@recipients</span>=<span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+278:         <span class="ruby-keyword kw">end</span>
+279:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000215" class="method-detail">
+        <a name="M000215"></a>
+
+        <div class="method-heading">
+          <a href="#M000215" class="method-signature">
+          <span class="method-name">ref_update?</span><span class="method-args">(body)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000215-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000215-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 387</span>
+387:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ref_update?</span>(<span class="ruby-identifier">body</span>)
+388:         <span class="ruby-identifier">body</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Ref</span>)
+389:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000219" class="method-detail">
+        <a name="M000219"></a>
+
+        <div class="method-heading">
+          <a href="#M000219" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">(opts)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+nodoc delegate to action view. Set up assigns and <a
+href="Publisher.html#M000219">render</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000219-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000219-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 439</span>
+439:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">opts</span>)
+440:         <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">dup</span>
+441:         <span class="ruby-identifier">body</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:assigns</span>) <span class="ruby-operator">||</span> {}
+442:         <span class="ruby-identifier">initialize_template_class</span>(<span class="ruby-identifier">body</span>.<span class="ruby-identifier">dup</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:controller=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">self</span>)).<span class="ruby-identifier">render</span>(<span class="ruby-identifier">opts</span>)
+443:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000202" class="method-detail">
+        <a name="M000202"></a>
+
+        <div class="method-heading">
+          <a href="#M000202" class="method-signature">
+          <span class="method-name">request_comes_from_facebook?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+use facebook options everywhere
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000202-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000202-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 123</span>
+123:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request_comes_from_facebook?</span>
+124:         <span class="ruby-keyword kw">true</span>
+125:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000213" class="method-detail">
+        <a name="M000213"></a>
+
+        <div class="method-heading">
+          <a href="#M000213" class="method-signature">
+          <span class="method-name">requires_from_user?</span><span class="method-args">(from,body)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000213-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000213-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 379</span>
+379:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">requires_from_user?</span>(<span class="ruby-identifier">from</span>,<span class="ruby-identifier">body</span>)
+380:         <span class="ruby-operator">!</span> (<span class="ruby-identifier">announcement_notification?</span>(<span class="ruby-identifier">from</span>,<span class="ruby-identifier">body</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">ref_update?</span>(<span class="ruby-identifier">body</span>) <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">profile_update?</span>(<span class="ruby-identifier">body</span>))
+381:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000205" class="method-detail">
+        <a name="M000205"></a>
+
+        <div class="method-heading">
+          <a href="#M000205" class="method-signature">
+          <span class="method-name">send_as</span><span class="method-args">(option)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000205-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000205-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 290</span>
+290:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send_as</span>(<span class="ruby-identifier">option</span>)
+291:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">_body</span>=<span class="ruby-keyword kw">case</span> <span class="ruby-identifier">option</span>
+292:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:action</span>
+293:           <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Feed</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>.<span class="ruby-identifier">new</span>
+294:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:story</span>
+295:           <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Feed</span><span class="ruby-operator">::</span><span class="ruby-constant">Story</span>.<span class="ruby-identifier">new</span>
+296:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:templatized_action</span>
+297:           <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Feed</span><span class="ruby-operator">::</span><span class="ruby-constant">TemplatizedAction</span>.<span class="ruby-identifier">new</span>
+298:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:notification</span>
+299:           <span class="ruby-constant">Notification</span>.<span class="ruby-identifier">new</span>
+300:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:email</span>
+301:           <span class="ruby-constant">Email</span>.<span class="ruby-identifier">new</span>
+302:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:profile</span>
+303:           <span class="ruby-constant">Profile</span>.<span class="ruby-identifier">new</span>
+304:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:ref</span>
+305:           <span class="ruby-constant">Ref</span>.<span class="ruby-identifier">new</span>
+306:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:user_action</span>
+307:           <span class="ruby-constant">UserAction</span>.<span class="ruby-identifier">new</span>
+308:         <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:publish_stream</span>
+309:           <span class="ruby-constant">StreamPost</span>.<span class="ruby-identifier">new</span>
+310:         <span class="ruby-keyword kw">else</span>
+311:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">UnknownBodyType</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;Unknown type to publish&quot;</span>)
+312:         <span class="ruby-keyword kw">end</span>
+313:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000217" class="method-detail">
+        <a name="M000217"></a>
+
+        <div class="method-heading">
+          <a href="#M000217" class="method-signature">
+          <span class="method-name">send_message</span><span class="method-args">(method)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000217-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000217-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 395</span>
+395:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">send_message</span>(<span class="ruby-identifier">method</span>)
+396:         <span class="ruby-ivar">@recipients</span> = <span class="ruby-ivar">@recipients</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>) <span class="ruby-operator">?</span> <span class="ruby-ivar">@recipients</span> <span class="ruby-operator">:</span> [<span class="ruby-ivar">@recipients</span>]
+397:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">from</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@recipients</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">1</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">requires_from_user?</span>(<span class="ruby-identifier">from</span>,<span class="ruby-identifier">_body</span>)
+398:           <span class="ruby-ivar">@from</span> = <span class="ruby-ivar">@recipients</span>.<span class="ruby-identifier">first</span>
+399:         <span class="ruby-keyword kw">end</span>
+400:         <span class="ruby-comment cmt"># notifications can </span>
+401:         <span class="ruby-comment cmt"># omit the from address</span>
+402:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">InvalidSender</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;Sender must be a Facebooker::User&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">from</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>) <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">requires_from_user?</span>(<span class="ruby-identifier">from</span>,<span class="ruby-identifier">_body</span>)
+403:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">_body</span>
+404:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Feed</span><span class="ruby-operator">::</span><span class="ruby-constant">TemplatizedAction</span>,<span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Feed</span><span class="ruby-operator">::</span><span class="ruby-constant">Action</span>
+405:           <span class="ruby-identifier">from</span>.<span class="ruby-identifier">publish_action</span>(<span class="ruby-identifier">_body</span>)
+406:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Feed</span><span class="ruby-operator">::</span><span class="ruby-constant">Story</span>
+407:           <span class="ruby-ivar">@recipients</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">publish_story</span>(<span class="ruby-identifier">_body</span>)}
+408:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Notification</span>
+409:           (<span class="ruby-identifier">from</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">create</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">from</span>.<span class="ruby-identifier">session</span>).<span class="ruby-identifier">send_notification</span>(<span class="ruby-ivar">@recipients</span>,<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">fbml</span>)
+410:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Email</span>
+411:           <span class="ruby-identifier">from</span>.<span class="ruby-identifier">session</span>.<span class="ruby-identifier">send_email</span>(<span class="ruby-ivar">@recipients</span>, 
+412:                                              <span class="ruby-identifier">_body</span>.<span class="ruby-identifier">title</span>, 
+413:                                              <span class="ruby-identifier">_body</span>.<span class="ruby-identifier">text</span>, 
+414:                                              <span class="ruby-identifier">_body</span>.<span class="ruby-identifier">fbml</span>)
+415:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Profile</span>
+416:          <span class="ruby-comment cmt"># If recipient and from aren't the same person, create a new user object using the</span>
+417:          <span class="ruby-comment cmt"># userid from recipient and the session from from</span>
+418:          <span class="ruby-ivar">@from</span> = <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-ivar">@recipients</span>.<span class="ruby-identifier">first</span>),<span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">create</span>) 
+419:          <span class="ruby-ivar">@from</span>.<span class="ruby-identifier">set_profile_fbml</span>(<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">profile</span>, <span class="ruby-identifier">_body</span>.<span class="ruby-identifier">mobile_profile</span>, <span class="ruby-identifier">_body</span>.<span class="ruby-identifier">profile_action</span>, <span class="ruby-identifier">_body</span>.<span class="ruby-identifier">profile_main</span>)
+420:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Ref</span>
+421:           <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">create</span>.<span class="ruby-identifier">server_cache</span>.<span class="ruby-identifier">set_ref_handle</span>(<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">handle</span>,<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">fbml</span>)
+422:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">UserAction</span>
+423:           <span class="ruby-ivar">@from</span>.<span class="ruby-identifier">session</span>.<span class="ruby-identifier">publish_user_action</span>(<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">template_id</span>,<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">data_hash</span>,<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">target_ids</span>,<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">body_general</span>,<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">story_size</span>)
+424:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">StreamPost</span>
+425:          <span class="ruby-ivar">@from</span>.<span class="ruby-identifier">publish_to</span>(<span class="ruby-identifier">_body</span>.<span class="ruby-identifier">target</span>, {<span class="ruby-identifier">:attachment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">_body</span>.<span class="ruby-identifier">attachment</span>, <span class="ruby-identifier">:action_links</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@action_links</span>, <span class="ruby-identifier">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">_body</span>.<span class="ruby-identifier">message</span> })
+426:         <span class="ruby-keyword kw">else</span>
+427:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">UnspecifiedBodyType</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;You must specify a valid send_as&quot;</span>)
+428:         <span class="ruby-keyword kw">end</span>
+429:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000208" class="method-detail">
+        <a name="M000208"></a>
+
+        <div class="method-heading">
+          <a href="#M000208" class="method-signature">
+          <span class="method-name">short_story_template</span><span class="method-args">(title,body,params={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000208-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000208-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 328</span>
+328:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">short_story_template</span>(<span class="ruby-identifier">title</span>,<span class="ruby-identifier">body</span>,<span class="ruby-identifier">params</span>={})
+329:         <span class="ruby-ivar">@short_story_templates</span> <span class="ruby-operator">||=</span> []
+330:         <span class="ruby-ivar">@short_story_templates</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:template_title=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">title</span>, <span class="ruby-identifier">:template_body=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">body</span>)
+331:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
+
+        <div class="method-heading">
+          <a href="#M000222" class="method-signature">
+          <span class="method-name">url_for</span><span class="method-args">(options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Publisher.html#M000222">url_for</a> calls in publishers tend to
+want full paths
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000222-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000222-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/publisher.rb, line 490</span>
+490:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">options</span> = {})
+491:           <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> {<span class="ruby-identifier">:only_path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>}.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">options</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">options</span>)
+492:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

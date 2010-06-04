@@ -1,0 +1,2628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Facebooker::Rails::Helpers</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Facebooker::Rails::Helpers</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect_rb.html">
+                vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb
+                </a>
+        <br />
+                <a href="../../../files/vendor/plugins/facebooker/lib/facebooker/rails/helpers_rb.html">
+                vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Facebook specific helpers for creating FBML
+</p>
+<p>
+All helpers that take a user as a parameter will get the Facebook UID from
+the facebook_id attribute if it exists. It will use to_s if the facebook_id
+attribute is not present.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000150">cast_to_facebook_id</a>&nbsp;&nbsp;
+      <a href="#M000107">cast_to_photo_id</a>&nbsp;&nbsp;
+      <a href="#M000098">facebook_form_for</a>&nbsp;&nbsp;
+      <a href="#M000118">facebook_messages</a>&nbsp;&nbsp;
+      <a href="#M000132">fb_about_url</a>&nbsp;&nbsp;
+      <a href="#M000122">fb_action</a>&nbsp;&nbsp;
+      <a href="#M000135">fb_add_info_section</a>&nbsp;&nbsp;
+      <a href="#M000134">fb_add_profile_section</a>&nbsp;&nbsp;
+      <a href="#M000099">fb_application_name</a>&nbsp;&nbsp;
+      <a href="#M000133">fb_board</a>&nbsp;&nbsp;
+      <a href="#M000148">fb_bookmark_button</a>&nbsp;&nbsp;
+      <a href="#M000125">fb_comments</a>&nbsp;&nbsp;
+      <a href="#M000143">fb_container</a>&nbsp;&nbsp;
+      <a href="#M000124">fb_create_button</a>&nbsp;&nbsp;
+      <a href="#M000119">fb_dashboard</a>&nbsp;&nbsp;
+      <a href="#M000147">fb_date</a>&nbsp;&nbsp;
+      <a href="#M000082">fb_dialog</a>&nbsp;&nbsp;
+      <a href="#M000088">fb_dialog_button</a>&nbsp;&nbsp;
+      <a href="#M000087">fb_dialog_content</a>&nbsp;&nbsp;
+      <a href="#M000086">fb_dialog_title</a>&nbsp;&nbsp;
+      <a href="#M000131">fb_else</a>&nbsp;&nbsp;
+      <a href="#M000115">fb_error</a>&nbsp;&nbsp;
+      <a href="#M000138">fb_eventlink</a>&nbsp;&nbsp;
+      <a href="#M000116">fb_explanation</a>&nbsp;&nbsp;
+      <a href="#M000149">fb_fbml_attribute</a>&nbsp;&nbsp;
+      <a href="#M000093">fb_friend_selector</a>&nbsp;&nbsp;
+      <a href="#M000127">fb_google_analytics</a>&nbsp;&nbsp;
+      <a href="#M000139">fb_grouplink</a>&nbsp;&nbsp;
+      <a href="#M000123">fb_help</a>&nbsp;&nbsp;
+      <a href="#M000128">fb_if_is_app_user</a>&nbsp;&nbsp;
+      <a href="#M000130">fb_if_is_user</a>&nbsp;&nbsp;
+      <a href="#M000129">fb_if_user_has_added_app</a>&nbsp;&nbsp;
+      <a href="#M000084">fb_iframe</a>&nbsp;&nbsp;
+      <a href="#M000145">fb_intl</a>&nbsp;&nbsp;
+      <a href="#M000146">fb_intl_token</a>&nbsp;&nbsp;
+      <a href="#M000094">fb_multi_friend_input</a>&nbsp;&nbsp;
+      <a href="#M000092">fb_multi_friend_request</a>&nbsp;&nbsp;
+      <a href="#M000095">fb_multi_friend_selector</a>&nbsp;&nbsp;
+      <a href="#M000096">fb_multi_friend_selector_condensed</a>&nbsp;&nbsp;
+      <a href="#M000100">fb_name</a>&nbsp;&nbsp;
+      <a href="#M000121">fb_narrow</a>&nbsp;&nbsp;
+      <a href="#M000106">fb_photo</a>&nbsp;&nbsp;
+      <a href="#M000105">fb_profile_pic</a>&nbsp;&nbsp;
+      <a href="#M000136">fb_prompt_permission</a>&nbsp;&nbsp;
+      <a href="#M000137">fb_prompt_permissions</a>&nbsp;&nbsp;
+      <a href="#M000101">fb_pronoun</a>&nbsp;&nbsp;
+      <a href="#M000102">fb_ref</a>&nbsp;&nbsp;
+      <a href="#M000097">fb_req_choice</a>&nbsp;&nbsp;
+      <a href="#M000090">fb_request_form</a>&nbsp;&nbsp;
+      <a href="#M000091">fb_request_form_submit</a>&nbsp;&nbsp;
+      <a href="#M000142">fb_serverfbml</a>&nbsp;&nbsp;
+      <a href="#M000141">fb_share_button</a>&nbsp;&nbsp;
+      <a href="#M000089">fb_show_feed_dialog</a>&nbsp;&nbsp;
+      <a href="#M000117">fb_success</a>&nbsp;&nbsp;
+      <a href="#M000085">fb_swf</a>&nbsp;&nbsp;
+      <a href="#M000109">fb_tab_item</a>&nbsp;&nbsp;
+      <a href="#M000108">fb_tabs</a>&nbsp;&nbsp;
+      <a href="#M000144">fb_time</a>&nbsp;&nbsp;
+      <a href="#M000126">fb_title</a>&nbsp;&nbsp;
+      <a href="#M000140">fb_user_status</a>&nbsp;&nbsp;
+      <a href="#M000112">fb_wall</a>&nbsp;&nbsp;
+      <a href="#M000114">fb_wall_post</a>&nbsp;&nbsp;
+      <a href="#M000113">fb_wallpost</a>&nbsp;&nbsp;
+      <a href="#M000120">fb_wide</a>&nbsp;&nbsp;
+      <a href="#M000083">fbjs_library</a>&nbsp;&nbsp;
+      <a href="#M000111">validate_fb_photo_align_value</a>&nbsp;&nbsp;
+      <a href="#M000152">validate_fb_photo_size</a>&nbsp;&nbsp;
+      <a href="#M000151">validate_fb_profile_pic_size</a>&nbsp;&nbsp;
+      <a href="#M000104">validate_fb_ref_does_not_have_both_url_and_handle</a>&nbsp;&nbsp;
+      <a href="#M000103">validate_fb_ref_has_either_url_or_handle</a>&nbsp;&nbsp;
+      <a href="#M000110">validate_fb_tab_item_align_value</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Helpers/FbConnect.html">Facebooker::Rails::Helpers::FbConnect</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="Helpers/FbConnect.html" class="link">Facebooker::Rails::Helpers::FbConnect</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_DIALOG_BUTTON_VALID_OPTION_KEYS</td>
+          <td>=</td>
+          <td class="context-item-value">[:close_dialog, :href, :form_id, :clickrewriteurl, :clickrewriteid, :clickrewriteform]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_NAME_OPTION_KEYS_TO_TRANSFORM</td>
+          <td>=</td>
+          <td class="context-item-value">{:first_name_only =&gt; :firstnameonly,                                            :last_name_only =&gt; :lastnameonly,                                           :show_network =&gt; :shownetwork,                                           :use_you =&gt; :useyou,                                           :if_cant_see =&gt; :ifcantsee,                                           :subject_id =&gt; :subjectid}</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_NAME_VALID_OPTION_KEYS</td>
+          <td>=</td>
+          <td class="context-item-value">[:firstnameonly, :linked, :lastnameonly, :possessive, :reflexive,                                     :shownetwork, :useyou, :ifcantsee, :capitalize, :subjectid]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_PRONOUN_OPTION_KEYS_TO_TRANSFORM</td>
+          <td>=</td>
+          <td class="context-item-value">{:use_you =&gt; :useyou, :use_they =&gt; :usethey}</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_PRONOUN_VALID_OPTION_KEYS</td>
+          <td>=</td>
+          <td class="context-item-value">[:useyou, :possessive, :reflexive, :objective,                                        :usethey, :capitalize]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_REF_VALID_OPTION_KEYS</td>
+          <td>=</td>
+          <td class="context-item-value">[:url, :handle]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_PROFILE_PIC_OPTION_KEYS_TO_TRANSFORM</td>
+          <td>=</td>
+          <td class="context-item-value">{:facebook_logo =&gt; 'facebook-logo'}</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_PROFILE_PIC_VALID_OPTION_KEYS</td>
+          <td>=</td>
+          <td class="context-item-value">[:size, :linked, 'facebook-logo', :width, :height]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_PHOTO_VALID_OPTION_KEYS</td>
+          <td>=</td>
+          <td class="context-item-value">[:uid, :size, :align]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALID_FB_SHARED_PHOTO_SIZES</td>
+          <td>=</td>
+          <td class="context-item-value">[:thumb, :small, :normal, :square]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALID_FB_PHOTO_SIZES</td>
+          <td>=</td>
+          <td class="context-item-value">VALID_FB_SHARED_PHOTO_SIZES</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALID_FB_PROFILE_PIC_SIZES</td>
+          <td>=</td>
+          <td class="context-item-value">VALID_FB_SHARED_PHOTO_SIZES</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALID_PERMISSIONS</td>
+          <td>=</td>
+          <td class="context-item-value">[:email, :offline_access, :status_update, :photo_upload, :create_listing, :create_event, :rsvp_event, :sms, :video_upload,                           :publish_stream, :read_stream]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FB_TAB_ITEM_VALID_OPTION_KEYS</td>
+          <td>=</td>
+          <td class="context-item-value">[:align, :selected]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALID_FB_SHARED_ALIGN_VALUES</td>
+          <td>=</td>
+          <td class="context-item-value">[:left, :right]</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALID_FB_PHOTO_ALIGN_VALUES</td>
+          <td>=</td>
+          <td class="context-item-value">VALID_FB_SHARED_ALIGN_VALUES</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALID_FB_TAB_ITEM_ALIGN_VALUES</td>
+          <td>=</td>
+          <td class="context-item-value">VALID_FB_SHARED_ALIGN_VALUES</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
+
+        <div class="method-heading">
+          <a href="#M000107" class="method-signature">
+          <span class="method-name">cast_to_photo_id</span><span class="method-args">(object)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000107-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000107-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 350</span>
+350:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cast_to_photo_id</span>(<span class="ruby-identifier">object</span>)
+351:         <span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:photo_id</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">photo_id</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">object</span>
+352:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000098" class="method-detail">
+        <a name="M000098"></a>
+
+        <div class="method-heading">
+          <a href="#M000098" class="method-signature">
+          <span class="method-name">facebook_form_for</span><span class="method-args">( record_or_name_or_array,*args, &amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a facebook form using &lt;fb:editor&gt;
+</p>
+<p>
+It yields a form builder that will convert the standard rails form helpers
+into the facebook specific version.
+</p>
+<p>
+Example:
+</p>
+<pre>
+ &lt;% facebook_form_for(:poke,@poke,:url =&gt; create_poke_path) do |f| %&gt;
+   &lt;%= f.text_field :message, :label=&gt;&quot;message&quot; %&gt;
+   &lt;%= f.buttons &quot;Save Poke&quot; %&gt;
+ &lt;% end %&gt;
+
+ will generate
+
+ &lt;fb:editor action=&quot;/pokes/create&quot;&gt;
+   &lt;fb:editor-text name=&quot;poke[message]&quot; id=&quot;poke_message&quot; value=&quot;&quot; label=&quot;message&quot; /&gt;
+   &lt;fb:editor-buttonset&gt;
+    &lt;fb:editor-button label=&quot;Save Poke&quot;
+   &lt;/fb:editor-buttonset&gt;
+ &lt;/fb:editor&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000098-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000098-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 195</span>
+195:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">facebook_form_for</span>( <span class="ruby-identifier">record_or_name_or_array</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+196: 
+197:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Missing block&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>
+198:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">:</span> {}
+199: 
+200:         <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">record_or_name_or_array</span>
+201:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">String</span>, <span class="ruby-constant">Symbol</span>
+202:           <span class="ruby-identifier">object_name</span> = <span class="ruby-identifier">record_or_name_or_array</span>
+203:         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+204:           <span class="ruby-identifier">object</span> = <span class="ruby-identifier">record_or_name_or_array</span>.<span class="ruby-identifier">last</span>
+205:           <span class="ruby-identifier">object_name</span> = <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordIdentifier</span>.<span class="ruby-identifier">singular_class_name</span>(<span class="ruby-identifier">object</span>)
+206:           <span class="ruby-identifier">apply_form_for_options!</span>(<span class="ruby-identifier">record_or_name_or_array</span>, <span class="ruby-identifier">options</span>)
+207:           <span class="ruby-identifier">args</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">object</span>
+208:         <span class="ruby-keyword kw">else</span>
+209:           <span class="ruby-identifier">object</span> = <span class="ruby-identifier">record_or_name_or_array</span>
+210:           <span class="ruby-identifier">object_name</span> = <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordIdentifier</span>.<span class="ruby-identifier">singular_class_name</span>(<span class="ruby-identifier">object</span>)
+211:           <span class="ruby-identifier">apply_form_for_options!</span>([<span class="ruby-identifier">object</span>], <span class="ruby-identifier">options</span>)
+212:           <span class="ruby-identifier">args</span>.<span class="ruby-identifier">unshift</span> <span class="ruby-identifier">object</span>
+213:         <span class="ruby-keyword kw">end</span>
+214:         <span class="ruby-identifier">method</span> = (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:html</span>]<span class="ruby-operator">||</span>{})[<span class="ruby-identifier">:method</span>]
+215:         <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:builder</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">Rails</span><span class="ruby-operator">::</span><span class="ruby-constant">FacebookFormBuilder</span>
+216:         <span class="ruby-identifier">editor_options</span>={}
+217:         
+218:         <span class="ruby-identifier">action</span>=<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:url</span>)
+219:         <span class="ruby-identifier">editor_options</span>[<span class="ruby-identifier">:action</span>]= <span class="ruby-identifier">action</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">action</span>.<span class="ruby-identifier">blank?</span>
+220:         <span class="ruby-identifier">width</span>=<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:width</span>)
+221:         <span class="ruby-identifier">editor_options</span>[<span class="ruby-identifier">:width</span>]=<span class="ruby-identifier">width</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">width</span>.<span class="ruby-identifier">blank?</span>
+222:         <span class="ruby-identifier">width</span>=<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:labelwidth</span>)
+223:         <span class="ruby-identifier">editor_options</span>[<span class="ruby-identifier">:labelwidth</span>]=<span class="ruby-identifier">width</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">width</span>.<span class="ruby-identifier">blank?</span>
+224: 
+225:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+226:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">tag</span>(<span class="ruby-value str">&quot;fb:editor&quot;</span>,<span class="ruby-identifier">editor_options</span>,<span class="ruby-keyword kw">true</span>))
+227:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">tag</span>(<span class="ruby-identifier">:input</span>,{<span class="ruby-identifier">:type=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;hidden&quot;</span>,<span class="ruby-identifier">:name=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">:_method</span>, <span class="ruby-identifier">:value=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">method</span>},<span class="ruby-keyword kw">false</span>)) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">blank?</span>
+228:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">token_tag</span>)
+229:           <span class="ruby-identifier">fields_for</span>( <span class="ruby-identifier">object_name</span>,<span class="ruby-operator">*</span>(<span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">options</span>), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+230:           <span class="ruby-identifier">concat</span>(<span class="ruby-value str">&quot;&lt;/fb:editor&gt;&quot;</span>)
+231:         <span class="ruby-keyword kw">else</span>
+232:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">tag</span>(<span class="ruby-value str">&quot;fb:editor&quot;</span>,<span class="ruby-identifier">editor_options</span>,<span class="ruby-keyword kw">true</span>) , <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+233:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">tag</span>(<span class="ruby-identifier">:input</span>,{<span class="ruby-identifier">:type=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;hidden&quot;</span>,<span class="ruby-identifier">:name=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">:_method</span>, <span class="ruby-identifier">:value=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">method</span>},<span class="ruby-keyword kw">false</span>), <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">blank?</span>
+234:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">token_tag</span>, <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+235:           <span class="ruby-identifier">fields_for</span>( <span class="ruby-identifier">object_name</span>,<span class="ruby-operator">*</span>(<span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">options</span>), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+236:           <span class="ruby-identifier">concat</span>(<span class="ruby-value str">&quot;&lt;/fb:editor&gt;&quot;</span>,<span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+237:         <span class="ruby-keyword kw">end</span>
+238:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000118" class="method-detail">
+        <a name="M000118"></a>
+
+        <div class="method-heading">
+          <a href="#M000118" class="method-signature">
+          <span class="method-name">facebook_messages</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render flash values as &lt;fb:message&gt; and &lt;fb:error&gt; tags
+</p>
+<p>
+values in flash[:notice] will be rendered as an &lt;fb:message&gt;
+</p>
+<p>
+values in flash[:error] will be rendered as an &lt;fb:error&gt; TODO: Allow
+flash[:info] to render <a href="Helpers.html#M000116">fb_explanation</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000118-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000118-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 456</span>
+456:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">facebook_messages</span>
+457:         <span class="ruby-identifier">message</span>=<span class="ruby-value str">&quot;&quot;</span>
+458:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>].<span class="ruby-identifier">blank?</span>
+459:           <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">fb_success</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>])
+460:         <span class="ruby-keyword kw">end</span>
+461:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>].<span class="ruby-identifier">blank?</span>
+462:           <span class="ruby-identifier">message</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">fb_error</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>])
+463:         <span class="ruby-keyword kw">end</span>
+464:         <span class="ruby-identifier">message</span>
+465:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000132" class="method-detail">
+        <a name="M000132"></a>
+
+        <div class="method-heading">
+          <a href="#M000132" class="method-signature">
+          <span class="method-name">fb_about_url</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Return the URL for the about page of the application
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000132-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000132-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 628</span>
+628:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_about_url</span>
+629:         <span class="ruby-node">&quot;http://#{Facebooker.www_server_base_url}/apps/application.php?api_key=#{Facebooker.api_key}&quot;</span>
+630:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000122" class="method-detail">
+        <a name="M000122"></a>
+
+        <div class="method-heading">
+          <a href="#M000122" class="method-signature">
+          <span class="method-name">fb_action</span><span class="method-args">(name, url)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders an action using the &lt;fb:action&gt; tag
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000122-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 510</span>
+510:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_action</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">url</span>)
+511:         <span class="ruby-node">&quot;&lt;fb:action href=\&quot;#{url_for(url)}\&quot;&gt;#{name}&lt;/fb:action&gt;&quot;</span>
+512:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000135" class="method-detail">
+        <a name="M000135"></a>
+
+        <div class="method-heading">
+          <a href="#M000135" class="method-signature">
+          <span class="method-name">fb_add_info_section</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders an &#8216;Add to Info&#8217; button The button allows a user to add
+an application info section to her Info tab
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000135-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000135-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 658</span>
+658:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_add_info_section</span>
+659:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:add-section-button&quot;</span>,<span class="ruby-identifier">:section=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;info&quot;</span>
+660:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000134" class="method-detail">
+        <a name="M000134"></a>
+
+        <div class="method-heading">
+          <a href="#M000134" class="method-signature">
+          <span class="method-name">fb_add_profile_section</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders an &#8216;Add to Profile&#8217; button The button allows a user to
+add condensed profile box to the main profile
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000134-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000134-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 652</span>
+652:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_add_profile_section</span>
+653:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:add-section-button&quot;</span>,<span class="ruby-identifier">:section=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;profile&quot;</span>
+654:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000099" class="method-detail">
+        <a name="M000099"></a>
+
+        <div class="method-heading">
+          <a href="#M000099" class="method-signature">
+          <span class="method-name">fb_application_name</span><span class="method-args">(options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an fb:application-name tag
+</p>
+<p>
+This renders the current application name via fbml. See <a
+href="http://wiki.developers.facebook.com/index.php/Fb:application-name">wiki.developers.facebook.com/index.php/Fb:application-name</a>
+for a full description.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000099-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000099-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 246</span>
+246:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_application_name</span>(<span class="ruby-identifier">options</span>={})
+247:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:application-name&quot;</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>)
+248:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000133" class="method-detail">
+        <a name="M000133"></a>
+
+        <div class="method-heading">
+          <a href="#M000133" class="method-signature">
+          <span class="method-name">fb_board</span><span class="method-args">(xid,options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Embed a discussion board named xid on the current page &lt;em&gt;See&lt;/em
+<a
+href="http://wiki.developers.facebook.com/index.php/Fb:board">wiki.developers.facebook.com/index.php/Fb:board</a>
+for more details Options are:
+</p>
+<pre>
+  * canpost
+  * candelete
+  * canmark
+  * cancreatet
+  * numtopics
+  * callbackurl
+  * returnurl
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000133-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000133-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 644</span>
+644:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_board</span>(<span class="ruby-identifier">xid</span>,<span class="ruby-identifier">options</span>={})
+645:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+646:         <span class="ruby-identifier">title</span> = (<span class="ruby-identifier">title</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:title</span>)) <span class="ruby-operator">?</span> <span class="ruby-identifier">fb_title</span>(<span class="ruby-identifier">title</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+647:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:board&quot;</span>, <span class="ruby-identifier">title</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:xid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">xid</span>)))
+648:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000148" class="method-detail">
+        <a name="M000148"></a>
+
+        <div class="method-heading">
+          <a href="#M000148" class="method-signature">
+          <span class="method-name">fb_bookmark_button</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders the Facebook bookmark button
+</p>
+<p>
+See <a
+href="http://wiki.developers.facebook.com/index.php/Fb:bookmark">wiki.developers.facebook.com/index.php/Fb:bookmark</a>
+for more details
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000148-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000148-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 788</span>
+788:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_bookmark_button</span>
+789:         <span class="ruby-identifier">content_tag</span> <span class="ruby-value str">&quot;fb:bookmark&quot;</span>
+790:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000125" class="method-detail">
+        <a name="M000125"></a>
+
+        <div class="method-heading">
+          <a href="#M000125" class="method-signature">
+          <span class="method-name">fb_comments</span><span class="method-args">(xid,canpost=true,candelete=false,numposts=5,options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a comment area All the data for this content area is stored on the
+facebook servers. <em>See:</em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:comments">wiki.developers.facebook.com/index.php/Fb:comments</a>
+for full details
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000125-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000125-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 529</span>
+529:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_comments</span>(<span class="ruby-identifier">xid</span>,<span class="ruby-identifier">canpost</span>=<span class="ruby-keyword kw">true</span>,<span class="ruby-identifier">candelete</span>=<span class="ruby-keyword kw">false</span>,<span class="ruby-identifier">numposts</span>=<span class="ruby-value">5</span>,<span class="ruby-identifier">options</span>={})
+530:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+531:                           <span class="ruby-identifier">title</span> = (<span class="ruby-identifier">title</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:title</span>)) <span class="ruby-operator">?</span> <span class="ruby-identifier">fb_title</span>(<span class="ruby-identifier">title</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span> 
+532:         <span class="ruby-identifier">content_tag</span> <span class="ruby-value str">&quot;fb:comments&quot;</span>,<span class="ruby-identifier">title</span>,<span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:xid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">xid</span>,<span class="ruby-identifier">:canpost=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">canpost</span>.<span class="ruby-identifier">to_s</span>,<span class="ruby-identifier">:candelete=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">candelete</span>.<span class="ruby-identifier">to_s</span>,<span class="ruby-identifier">:numposts=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">numposts</span>))
+533:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000143" class="method-detail">
+        <a name="M000143"></a>
+
+        <div class="method-heading">
+          <a href="#M000143" class="method-signature">
+          <span class="method-name">fb_container</span><span class="method-args">(options={},&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000143-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 731</span>
+731:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_container</span>(<span class="ruby-identifier">options</span>={},<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+732:         <span class="ruby-identifier">inner</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+733:         <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:container&quot;</span>,<span class="ruby-identifier">inner</span>,<span class="ruby-identifier">options</span>))
+734:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000124" class="method-detail">
+        <a name="M000124"></a>
+
+        <div class="method-heading">
+          <a href="#M000124" class="method-signature">
+          <span class="method-name">fb_create_button</span><span class="method-args">(name, url)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render a &lt;fb:create-button&gt; tag For use inside &lt;fb:dashboard&gt;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000124-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 522</span>
+522:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_create_button</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">url</span>)
+523:          <span class="ruby-node">&quot;&lt;fb:create-button href=\&quot;#{url_for(url)}\&quot;&gt;#{name}&lt;/fb:create-button&gt;&quot;</span>
+524:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000119" class="method-detail">
+        <a name="M000119"></a>
+
+        <div class="method-heading">
+          <a href="#M000119" class="method-signature">
+          <span class="method-name">fb_dashboard</span><span class="method-args">(&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a dashboard. It can contain <a
+href="Helpers.html#M000122">fb_action</a>, <a
+href="Helpers.html#M000123">fb_help</a>, and <a
+href="Helpers.html#M000124">fb_create_button</a>
+</p>
+<p>
+For Example:
+</p>
+<pre>
+  &lt;% fb_dashboard do %&gt;
+    &lt;%= APP_NAME %&gt;
+    &lt;%= fb_action 'My Matches', search_path %&gt;
+    &lt;%= fb_help 'Feedback', &quot;http://www.facebook.com/apps/application.php?id=6236036681&quot; %&gt;
+    &lt;%= fb_create_button 'Invite Friends', main_path %&gt;
+  &lt;% end %&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000119-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 476</span>
+476:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_dashboard</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+477:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+478:           <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+479:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+480:             <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:dashboard&quot;</span>,<span class="ruby-identifier">content</span>,{}))
+481:           <span class="ruby-keyword kw">else</span>
+482:             <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:dashboard&quot;</span>,<span class="ruby-identifier">content</span>,{}),<span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+483:           <span class="ruby-keyword kw">end</span>
+484:         <span class="ruby-keyword kw">else</span>
+485:           <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:dashboard&quot;</span>,<span class="ruby-identifier">content</span>,{})
+486:         <span class="ruby-keyword kw">end</span>
+487:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000147" class="method-detail">
+        <a name="M000147"></a>
+
+        <div class="method-heading">
+          <a href="#M000147" class="method-signature">
+          <span class="method-name">fb_date</span><span class="method-args">(time, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders a fb:date element
+</p>
+<p>
+Example: &lt;%= <a href="Helpers.html#M000147">fb_date</a>(Time.now,
+:format =&gt; &#8216;verbose&#8217;, :tz =&gt; &#8216;America/New
+York&#8217;) %&gt;
+</p>
+<p>
+See <a
+href="http://wiki.developers.facebook.com/index.php/Fb:date">wiki.developers.facebook.com/index.php/Fb:date</a>
+for more details
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000147-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000147-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 780</span>
+780:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_date</span>(<span class="ruby-identifier">time</span>, <span class="ruby-identifier">options</span>={})
+781:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:date&quot;</span>, <span class="ruby-identifier">stringify_vals</span>({<span class="ruby-identifier">:t</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time</span>.<span class="ruby-identifier">to_i</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>))
+782:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000082" class="method-detail">
+        <a name="M000082"></a>
+
+        <div class="method-heading">
+          <a href="#M000082" class="method-signature">
+          <span class="method-name">fb_dialog</span><span class="method-args">( id, cancel_button, &amp;block )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create an fb:dialog id must be a unique name e.g. &quot;my_dialog&quot;
+cancel_button is true or false
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000082-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000082-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 18</span>
+18:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_dialog</span>( <span class="ruby-identifier">id</span>, <span class="ruby-identifier">cancel_button</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+19:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+20:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+21:           <span class="ruby-identifier">concat</span>( <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:dialog&quot;</span>, <span class="ruby-identifier">content</span>, {<span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>, <span class="ruby-identifier">:cancel_button</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cancel_button</span>}) )
+22:         <span class="ruby-keyword kw">else</span>
+23:           <span class="ruby-identifier">concat</span>( <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:dialog&quot;</span>, <span class="ruby-identifier">content</span>, {<span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>, <span class="ruby-identifier">:cancel_button</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cancel_button</span>}), <span class="ruby-identifier">block</span>.<span class="ruby-identifier">binding</span> )
+24:         <span class="ruby-keyword kw">end</span>
+25:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
+
+        <div class="method-heading">
+          <a href="#M000088" class="method-signature">
+          <span class="method-name">fb_dialog_button</span><span class="method-args">( type, value, options={} )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000088-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000088-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 53</span>
+53:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_dialog_button</span>( <span class="ruby-identifier">type</span>, <span class="ruby-identifier">value</span>, <span class="ruby-identifier">options</span>={} )
+54:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">assert_valid_keys</span> <span class="ruby-constant">FB_DIALOG_BUTTON_VALID_OPTION_KEYS</span>
+55:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span> <span class="ruby-identifier">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">type</span>, <span class="ruby-identifier">:value</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">value</span>
+56:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:dialog-button&quot;</span>, <span class="ruby-identifier">options</span>
+57:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
+
+        <div class="method-heading">
+          <a href="#M000087" class="method-signature">
+          <span class="method-name">fb_dialog_content</span><span class="method-args">( &amp;block )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000087-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 44</span>
+44:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_dialog_content</span>( <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> )
+45:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+46:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+47:           <span class="ruby-identifier">concat</span>( <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:dialog-content&quot;</span>, <span class="ruby-identifier">content</span>) )
+48:         <span class="ruby-keyword kw">else</span>
+49:           <span class="ruby-identifier">concat</span>( <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:dialog-content&quot;</span>, <span class="ruby-identifier">content</span>), <span class="ruby-identifier">block</span>.<span class="ruby-identifier">binding</span> )
+50:         <span class="ruby-keyword kw">end</span>
+51:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
+
+        <div class="method-heading">
+          <a href="#M000086" class="method-signature">
+          <span class="method-name">fb_dialog_title</span><span class="method-args">( title )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000086-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 40</span>
+40:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_dialog_title</span>( <span class="ruby-identifier">title</span> )
+41:         <span class="ruby-identifier">content_tag</span> <span class="ruby-value str">&quot;fb:dialog-title&quot;</span>, <span class="ruby-identifier">title</span>
+42:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000131" class="method-detail">
+        <a name="M000131"></a>
+
+        <div class="method-heading">
+          <a href="#M000131" class="method-signature">
+          <span class="method-name">fb_else</span><span class="method-args">(&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render fb:else tag Must be used within if block such as <a
+href="Helpers.html#M000130">fb_if_is_user</a> or <a
+href="Helpers.html#M000128">fb_if_is_app_user</a> . See example in <a
+href="Helpers.html#M000128">fb_if_is_app_user</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000131-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000131-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 617</span>
+617:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_else</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+618:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+619:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+620:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:else&quot;</span>,<span class="ruby-identifier">content</span>))
+621:         <span class="ruby-keyword kw">else</span>
+622:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:else&quot;</span>,<span class="ruby-identifier">content</span>),<span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+623:         <span class="ruby-keyword kw">end</span>
+624:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000115" class="method-detail">
+        <a name="M000115"></a>
+
+        <div class="method-heading">
+          <a href="#M000115" class="method-signature">
+          <span class="method-name">fb_error</span><span class="method-args">(message, text=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:error&gt; tag If message and text are present then this
+will render fb:error and fb:message tag TODO: Optionally takes a decoration
+tag with value of &#8216;no_padding&#8217; or &#8216;shorten&#8216;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000115-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000115-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 432</span>
+432:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_error</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">text</span>=<span class="ruby-keyword kw">nil</span>)
+433:         <span class="ruby-identifier">fb_status_msg</span>(<span class="ruby-value str">&quot;error&quot;</span>, <span class="ruby-identifier">message</span>, <span class="ruby-identifier">text</span>)
+434:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000138" class="method-detail">
+        <a name="M000138"></a>
+
+        <div class="method-heading">
+          <a href="#M000138" class="method-signature">
+          <span class="method-name">fb_eventlink</span><span class="method-args">(eid)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders an &lt;fb:eventlink /&gt; tag that displays the event name and
+links to the event&#8216;s page.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000138-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000138-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 704</span>
+704:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_eventlink</span>(<span class="ruby-identifier">eid</span>)
+705:         <span class="ruby-identifier">content_tag</span> <span class="ruby-value str">&quot;fb:eventlink&quot;</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">:eid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">eid</span>
+706:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000116" class="method-detail">
+        <a name="M000116"></a>
+
+        <div class="method-heading">
+          <a href="#M000116" class="method-signature">
+          <span class="method-name">fb_explanation</span><span class="method-args">(message, text=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:explanation&gt; tag If message and text are present then
+this will render fb:error and fb:message tag TODO: Optionally takes a
+decoration tag with value of &#8216;no_padding&#8217; or
+&#8216;shorten&#8216;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000116-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000116-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 439</span>
+439:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_explanation</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">text</span>=<span class="ruby-keyword kw">nil</span>)
+440:         <span class="ruby-identifier">fb_status_msg</span>(<span class="ruby-value str">&quot;explanation&quot;</span>, <span class="ruby-identifier">message</span>, <span class="ruby-identifier">text</span>)
+441:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000149" class="method-detail">
+        <a name="M000149"></a>
+
+        <div class="method-heading">
+          <a href="#M000149" class="method-signature">
+          <span class="method-name">fb_fbml_attribute</span><span class="method-args">(name, text, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders a fb:fbml-attribute element
+</p>
+<p>
+Example: &lt;%= <a
+href="Helpers.html#M000149">fb_fbml_attribute</a>(&#8216;title&#8217;,
+Education) %&gt;
+</p>
+<p>
+The options hash is passed to the fb:intl element that is generated inside
+this element and can have the keys available for the fb:intl element.
+</p>
+<p>
+See <a
+href="http://wiki.developers.facebook.com/index.php/Fb:fbml-attribute">wiki.developers.facebook.com/index.php/Fb:fbml-attribute</a>
+for more details
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000149-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000149-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 802</span>
+802:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_fbml_attribute</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">text</span>, <span class="ruby-identifier">options</span>={})
+803:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:fbml-attribute&quot;</span>, <span class="ruby-identifier">fb_intl</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">options</span>), <span class="ruby-identifier">stringify_vals</span>({<span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>}))
+804:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000093" class="method-detail">
+        <a name="M000093"></a>
+
+        <div class="method-heading">
+          <a href="#M000093" class="method-signature">
+          <span class="method-name">fb_friend_selector</span><span class="method-args">(options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:friend-selector&gt; element <em>See:</em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:friend-selector">wiki.developers.facebook.com/index.php/Fb:friend-selector</a>
+for options
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000093-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000093-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 141</span>
+141:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_friend_selector</span>(<span class="ruby-identifier">options</span>={})
+142:         <span class="ruby-identifier">tag</span>(<span class="ruby-value str">&quot;fb:friend-selector&quot;</span>,<span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>))
+143:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000127" class="method-detail">
+        <a name="M000127"></a>
+
+        <div class="method-heading">
+          <a href="#M000127" class="method-signature">
+          <span class="method-name">fb_google_analytics</span><span class="method-args">(uacct, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a Google Analytics tag
+</p>
+<p>
+<tt>uacct</tt>: Your Urchin/Google Analytics account ID.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000127-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000127-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 547</span>
+547:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_google_analytics</span>(<span class="ruby-identifier">uacct</span>, <span class="ruby-identifier">options</span>={})
+548:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+549:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:google-analytics&quot;</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:uacct</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">uacct</span>))
+550:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000139" class="method-detail">
+        <a name="M000139"></a>
+
+        <div class="method-heading">
+          <a href="#M000139" class="method-signature">
+          <span class="method-name">fb_grouplink</span><span class="method-args">(gid)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders an &lt;fb:grouplink /&gt; tag that displays the group name and
+links to the group&#8216;s page.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000139-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000139-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 709</span>
+709:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_grouplink</span>(<span class="ruby-identifier">gid</span>)
+710:         <span class="ruby-identifier">content_tag</span> <span class="ruby-value str">&quot;fb:grouplink&quot;</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">:gid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">gid</span>
+711:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
+
+        <div class="method-heading">
+          <a href="#M000123" class="method-signature">
+          <span class="method-name">fb_help</span><span class="method-args">(name, url)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render a &lt;fb:help&gt; tag For use inside &lt;fb:dashboard&gt;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000123-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 516</span>
+516:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_help</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">url</span>)
+517:         <span class="ruby-node">&quot;&lt;fb:help href=\&quot;#{url_for(url)}\&quot;&gt;#{name}&lt;/fb:help&gt;&quot;</span>
+518:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000128" class="method-detail">
+        <a name="M000128"></a>
+
+        <div class="method-heading">
+          <a href="#M000128" class="method-signature">
+          <span class="method-name">fb_if_is_app_user</span><span class="method-args">(user=nil,options={},&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <pre>
+ Render if-is-app-user tag
+ This tag renders the enclosing content only if the user specified has accepted the terms of service for the application.
+ Use fb_if_user_has_added_app to determine wether the user has added the app.
+ Example:
+ &lt;% fb_if_is_app_user(@facebook_user) do %&gt;
+         Thanks for accepting our terms of service!
+       &lt;% fb_else do %&gt;
+         Hey you haven't agreed to our terms.  &lt;%= link_to(&quot;Please accept our terms of service.&quot;, :action =&gt; &quot;terms_of_service&quot;) %&gt;
+       &lt;% end %&gt;
+</pre>
+<p>
+&lt;% end %&gt;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000128-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000128-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 562</span>
+562:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_if_is_app_user</span>(<span class="ruby-identifier">user</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">options</span>={},<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+563:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>) 
+564:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+565:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">:uid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">user</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
+566:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+567:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:if-is-app-user&quot;</span>,<span class="ruby-identifier">content</span>,<span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>)))
+568:         <span class="ruby-keyword kw">else</span>
+569:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:if-is-app-user&quot;</span>,<span class="ruby-identifier">content</span>,<span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>)),<span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+570:         <span class="ruby-keyword kw">end</span>
+571:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000130" class="method-detail">
+        <a name="M000130"></a>
+
+        <div class="method-heading">
+          <a href="#M000130" class="method-signature">
+          <span class="method-name">fb_if_is_user</span><span class="method-args">(user,&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render fb:if-is-user tag This tag only renders enclosing content if the
+user is one of those specified user can be a single user or an Array of
+users Example: &lt;% <a
+href="Helpers.html#M000130">fb_if_is_user</a>(@check_user) do %&gt;
+</p>
+<pre>
+           &lt;%= fb_name(@facebook_user) %&gt; are one of the users. &lt;%= link_to(&quot;Check the other side&quot;, :action =&gt; &quot;friend&quot;) %&gt;
+      &lt;% fb_else do %&gt;
+        &lt;%= fb_name(@facebook_user) %&gt;  are not one of the users  &lt;%= fb_name(@check_user) %&gt;
+          &lt;%= link_to(&quot;Check the other side&quot;, :action =&gt; &quot;you&quot;) %&gt;
+      &lt;% end %&gt;
+</pre>
+<p>
+&lt;% end %&gt;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000130-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000130-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 604</span>
+604:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_if_is_user</span>(<span class="ruby-identifier">user</span>,<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+605:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>) 
+606:         <span class="ruby-identifier">user</span> = [<span class="ruby-identifier">user</span>] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Array</span>
+607:         <span class="ruby-identifier">user_list</span>=<span class="ruby-identifier">user</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">u</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">u</span>)}.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;,&quot;</span>)
+608:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+609:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:if-is-user&quot;</span>,<span class="ruby-identifier">content</span>,{<span class="ruby-identifier">:uid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">user_list</span>}))
+610:         <span class="ruby-keyword kw">else</span>
+611:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:if-is-user&quot;</span>,<span class="ruby-identifier">content</span>,{<span class="ruby-identifier">:uid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">user_list</span>}),<span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+612:         <span class="ruby-keyword kw">end</span>
+613:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000129" class="method-detail">
+        <a name="M000129"></a>
+
+        <div class="method-heading">
+          <a href="#M000129" class="method-signature">
+          <span class="method-name">fb_if_user_has_added_app</span><span class="method-args">(user,options={},&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <pre>
+ Render if-user-has-added-app tag
+ This tag renders the enclosing content only if the user specified has installed the application
+
+ Example:
+ &lt;% fb_if_user_has_added_app(@facebook_user) do %&gt;
+         Hey you are an app user!
+       &lt;% fb_else do %&gt;
+         Hey you aren't an app user.  &lt;%= link_to(&quot;Add App and see the other side.&quot;, :action =&gt; &quot;added_app&quot;) %&gt;
+       &lt;% end %&gt;
+</pre>
+<p>
+&lt;% end %&gt;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000129-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000129-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 583</span>
+583:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_if_user_has_added_app</span>(<span class="ruby-identifier">user</span>,<span class="ruby-identifier">options</span>={},<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+584:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>) 
+585:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+586:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+587:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:if-user-has-added-app&quot;</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:uid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">user</span>)))))
+588:         <span class="ruby-keyword kw">else</span>
+589:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:if-user-has-added-app&quot;</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:uid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">user</span>)))),<span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+590:         <span class="ruby-keyword kw">end</span>
+591:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
+
+        <div class="method-heading">
+          <a href="#M000084" class="method-signature">
+          <span class="method-name">fb_iframe</span><span class="method-args">(src, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000084-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000084-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 32</span>
+32:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_iframe</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">options</span> = {})
+33:         <span class="ruby-identifier">content_tag</span> <span class="ruby-value str">&quot;fb:iframe&quot;</span>, <span class="ruby-value str">''</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>({ <span class="ruby-identifier">:src</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">src</span> })
+34:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000145" class="method-detail">
+        <a name="M000145"></a>
+
+        <div class="method-heading">
+          <a href="#M000145" class="method-signature">
+          <span class="method-name">fb_intl</span><span class="method-args">(text=nil, options={}, &amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders a fb:intl element
+</p>
+<p>
+Example: &lt;%= <a
+href="Helpers.html#M000145">fb_intl</a>(&#8216;Age&#8217;, :desc =&gt;
+&#8216;Label for the age form field&#8217;, :delimiters =&gt;
+&#8217;[]&#8217;) %&gt;
+</p>
+<p>
+See <a
+href="http://wiki.developers.facebook.com/index.php/Fb:intl">wiki.developers.facebook.com/index.php/Fb:intl</a>
+for more details
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000145-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000145-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 754</span>
+754:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_intl</span>(<span class="ruby-identifier">text</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+755:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Missing block or text&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">text</span>
+756:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">block_given?</span> <span class="ruby-value">? </span><span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">text</span>
+757:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:intl&quot;</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>))
+758:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000146" class="method-detail">
+        <a name="M000146"></a>
+
+        <div class="method-heading">
+          <a href="#M000146" class="method-signature">
+          <span class="method-name">fb_intl_token</span><span class="method-args">(name, text=nil, &amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders a fb:intl-token element
+</p>
+<p>
+Example: &lt;%= <a
+href="Helpers.html#M000145">fb_intl</a>-token(&#8216;number&#8217;, 5)
+%&gt;
+</p>
+<p>
+See <a
+href="http://wiki.developers.facebook.com/index.php/Fb:intl-token">wiki.developers.facebook.com/index.php/Fb:intl-token</a>
+for more details
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000146-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000146-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 767</span>
+767:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_intl_token</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">text</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+768:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;Missing block or text&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">text</span>
+769:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">block_given?</span> <span class="ruby-value">? </span><span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">text</span>
+770:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:intl-token&quot;</span>, <span class="ruby-identifier">content</span>, <span class="ruby-identifier">stringify_vals</span>({<span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>}))
+771:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000094" class="method-detail">
+        <a name="M000094"></a>
+
+        <div class="method-heading">
+          <a href="#M000094" class="method-signature">
+          <span class="method-name">fb_multi_friend_input</span><span class="method-args">(options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:multi-friend-input&gt; element <em> See: </em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:multi-friend-input">wiki.developers.facebook.com/index.php/Fb:multi-friend-input</a>
+for options
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000094-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000094-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 147</span>
+147:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_multi_friend_input</span>(<span class="ruby-identifier">options</span>={})
+148:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:multi-friend-input&quot;</span>,<span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>)
+149:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000092" class="method-detail">
+        <a name="M000092"></a>
+
+        <div class="method-heading">
+          <a href="#M000092" class="method-signature">
+          <span class="method-name">fb_multi_friend_request</span><span class="method-args">(type,friend_selector_message,url,&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create an fb:request-form with an <a
+href="Helpers.html#M000095">fb_multi_friend_selector</a> inside
+</p>
+<p>
+The content of the block are used as the message on the form,
+</p>
+<p>
+For example:
+</p>
+<pre>
+ &lt;% fb_multi_friend_request(&quot;Poke&quot;,&quot;Choose some friends to Poke&quot;,create_poke_path) do %&gt;
+   If you select some friends, they will see this message.
+   &lt;%= fb_req_choice(&quot;They will get this button, too&quot;,new_poke_path) %&gt;
+ &lt;% end %&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000092-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000092-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 122</span>
+122:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_multi_friend_request</span>(<span class="ruby-identifier">type</span>,<span class="ruby-identifier">friend_selector_message</span>,<span class="ruby-identifier">url</span>,<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+123:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+124:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+125:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:request-form&quot;</span>,
+126:                               <span class="ruby-identifier">fb_multi_friend_selector</span>(<span class="ruby-identifier">friend_selector_message</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">token_tag</span>,
+127:                               {<span class="ruby-identifier">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url</span>,<span class="ruby-identifier">:method=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;post&quot;</span>,<span class="ruby-identifier">:invite=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>,<span class="ruby-identifier">:type=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">type</span>,<span class="ruby-identifier">:content=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">content</span>}
+128:                               ))
+129:         <span class="ruby-keyword kw">else</span>
+130:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:request-form&quot;</span>,
+131:                               <span class="ruby-identifier">fb_multi_friend_selector</span>(<span class="ruby-identifier">friend_selector_message</span>) <span class="ruby-operator">+</span> <span class="ruby-identifier">token_tag</span>,
+132:                               {<span class="ruby-identifier">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url</span>,<span class="ruby-identifier">:method=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;post&quot;</span>,<span class="ruby-identifier">:invite=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>,<span class="ruby-identifier">:type=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">type</span>,<span class="ruby-identifier">:content=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">content</span>}
+133:                               ),
+134:                 <span class="ruby-identifier">block</span>.<span class="ruby-identifier">binding</span>)
+135:         <span class="ruby-keyword kw">end</span>
+136:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000095" class="method-detail">
+        <a name="M000095"></a>
+
+        <div class="method-heading">
+          <a href="#M000095" class="method-signature">
+          <span class="method-name">fb_multi_friend_selector</span><span class="method-args">(message,options={},&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:multi-friend-selector&gt; with the passed in welcome
+message Full version shows all profile pics for friends. <em> See: </em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:multi-friend-selector">wiki.developers.facebook.com/index.php/Fb:multi-friend-selector</a>
+for options <em> Note: </em> I don&#8216;t think the block is used here.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000095-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000095-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 155</span>
+155:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_multi_friend_selector</span>(<span class="ruby-identifier">message</span>,<span class="ruby-identifier">options</span>={},<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+156:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+157:         <span class="ruby-identifier">tag</span>(<span class="ruby-value str">&quot;fb:multi-friend-selector&quot;</span>,<span class="ruby-identifier">stringify_vals</span>({<span class="ruby-identifier">:showborder=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">false</span>,<span class="ruby-identifier">:actiontext=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">message</span>,<span class="ruby-identifier">:max=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">20</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)))
+158:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000096" class="method-detail">
+        <a name="M000096"></a>
+
+        <div class="method-heading">
+          <a href="#M000096" class="method-signature">
+          <span class="method-name">fb_multi_friend_selector_condensed</span><span class="method-args">(options={},&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render a condensed &lt;fb:multi-friend-selector&gt; with the passed in
+welcome message Condensed version show checkboxes for each friend. <em>
+See: </em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:multi-friend-selector_%28condensed%29">wiki.developers.facebook.com/index.php/Fb:multi-friend-selector_%28condensed%29</a>
+for options <em> Note: </em> I don&#8216;t think the block is used here.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000096-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000096-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 164</span>
+164:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_multi_friend_selector_condensed</span>(<span class="ruby-identifier">options</span>={},<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+165:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+166:         <span class="ruby-identifier">tag</span>(<span class="ruby-value str">&quot;fb:multi-friend-selector&quot;</span>,<span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:condensed=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>)))
+167:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000100" class="method-detail">
+        <a name="M000100"></a>
+
+        <div class="method-heading">
+          <a href="#M000100" class="method-signature">
+          <span class="method-name">fb_name</span><span class="method-args">(user, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an fb:name tag for the given user This renders the name of the user
+specified. You can use this tag as both subject and object of a sentence.
+<em> See </em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:name">wiki.developers.facebook.com/index.php/Fb:name</a>
+for full description. Use this tag on FBML pages instead of retrieving the
+user&#8216;s info and rendering the name explicitly.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000100-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000100-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 255</span>
+255:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_name</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">options</span>={})
+256:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+257:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">transform_keys!</span>(<span class="ruby-constant">FB_NAME_OPTION_KEYS_TO_TRANSFORM</span>)
+258:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">assert_valid_keys</span>(<span class="ruby-constant">FB_NAME_VALID_OPTION_KEYS</span>)
+259:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">:uid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">user</span>))
+260:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:name&quot;</span>,<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>))
+261:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000121" class="method-detail">
+        <a name="M000121"></a>
+
+        <div class="method-heading">
+          <a href="#M000121" class="method-signature">
+          <span class="method-name">fb_narrow</span><span class="method-args">(&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Content for the narrow profile box goes in this tag
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000121-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000121-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 500</span>
+500:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_narrow</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+501:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+502:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+503:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:narrow&quot;</span>, <span class="ruby-identifier">content</span>, {}))
+504:         <span class="ruby-keyword kw">else</span>
+505:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:narrow&quot;</span>, <span class="ruby-identifier">content</span>, {}), <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+506:         <span class="ruby-keyword kw">end</span>
+507:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
+
+        <div class="method-heading">
+          <a href="#M000106" class="method-signature">
+          <span class="method-name">fb_photo</span><span class="method-args">(photo, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an fb:photo tag. photo is either a <a
+href="../Photo.html">Facebooker::Photo</a> or an id of a Facebook photo or
+an object that responds to photo_id. <em> See: </em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:photo">wiki.developers.facebook.com/index.php/Fb:photo</a>
+for complete list of options.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000106-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000106-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 339</span>
+339:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_photo</span>(<span class="ruby-identifier">photo</span>, <span class="ruby-identifier">options</span>={})
+340:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+341:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">assert_valid_keys</span>(<span class="ruby-constant">FB_PHOTO_VALID_OPTION_KEYS</span>)
+342:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">:pid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cast_to_photo_id</span>(<span class="ruby-identifier">photo</span>))
+343:         <span class="ruby-identifier">validate_fb_photo_size</span>(<span class="ruby-identifier">options</span>)
+344:         <span class="ruby-identifier">validate_fb_photo_align_value</span>(<span class="ruby-identifier">options</span>)
+345:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:photo&quot;</span>,<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>))
+346:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000105" class="method-detail">
+        <a name="M000105"></a>
+
+        <div class="method-heading">
+          <a href="#M000105" class="method-signature">
+          <span class="method-name">fb_profile_pic</span><span class="method-args">(user, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:profile-pic&gt; for the specified user.
+</p>
+<p>
+You can optionally specify the size using the :size=&gt; option. Valid
+sizes are :thumb, :small, :normal and :square. Or, you can specify width
+and height settings instead, just like an img tag.
+</p>
+<p>
+You can optionally specify whether or not to include the facebook icon
+overlay using the :facebook_logo =&gt; true option. Default is false.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000105-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000105-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 323</span>
+323:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_profile_pic</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">options</span>={})
+324:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+325:         <span class="ruby-identifier">validate_fb_profile_pic_size</span>(<span class="ruby-identifier">options</span>)
+326:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">transform_keys!</span>(<span class="ruby-constant">FB_PROFILE_PIC_OPTION_KEYS_TO_TRANSFORM</span>)
+327:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">assert_valid_keys</span>(<span class="ruby-constant">FB_PROFILE_PIC_VALID_OPTION_KEYS</span>)
+328:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">:uid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">user</span>))
+329:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:profile-pic&quot;</span>, <span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>))
+330:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000136" class="method-detail">
+        <a name="M000136"></a>
+
+        <div class="method-heading">
+          <a href="#M000136" class="method-signature">
+          <span class="method-name">fb_prompt_permission</span><span class="method-args">(permission,message,callback=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders a link that, when clicked, initiates a dialog requesting the
+specified extended permission from the user.
+</p>
+<p>
+You can prompt a user with the following permissions:
+</p>
+<pre>
+  * email
+  * read_stream
+  * publish_stream
+  * offline_access
+  * status_update
+  * photo_upload
+  * create_event
+  * rsvp_event
+  * sms
+  * video_upload
+  * create_note
+  * share_item
+</pre>
+<p>
+Example: &lt;%= <a
+href="Helpers.html#M000136">fb_prompt_permission</a>(&#8216;email&#8217;,
+&quot;Would you like to receive email from our application?&quot; ) %&gt;
+</p>
+<p>
+See <a
+href="http://wiki.developers.facebook.com/index.php/Fb:prompt-permission">wiki.developers.facebook.com/index.php/Fb:prompt-permission</a>
+for more details. Correct as of 7th June 2009.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000136-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000136-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 683</span>
+683:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_prompt_permission</span>(<span class="ruby-identifier">permission</span>,<span class="ruby-identifier">message</span>,<span class="ruby-identifier">callback</span>=<span class="ruby-keyword kw">nil</span>)
+684:         <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Unknown value for permission: #{permission}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">VALID_PERMISSIONS</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">permission</span>.<span class="ruby-identifier">to_sym</span>)
+685:         <span class="ruby-identifier">args</span>={<span class="ruby-identifier">:perms=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">permission</span>}
+686:         <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:next_fbjs</span>]=<span class="ruby-identifier">callback</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">nil?</span>
+687:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:prompt-permission&quot;</span>,<span class="ruby-identifier">message</span>,<span class="ruby-identifier">args</span>)
+688:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000137" class="method-detail">
+        <a name="M000137"></a>
+
+        <div class="method-heading">
+          <a href="#M000137" class="method-signature">
+          <span class="method-name">fb_prompt_permissions</span><span class="method-args">(permissions,message,callback=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders a link to prompt for multiple permissions at once.
+</p>
+<p>
+Example: &lt;%= <a
+href="Helpers.html#M000137">fb_prompt_permissions</a>([&#8216;email&#8217;,&#8217;offline_access&#8217;,&#8217;status_update&#8217;],
+&#8216;Would you like to grant some permissions?&#8217;)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000137-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000137-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 694</span>
+694:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_prompt_permissions</span>(<span class="ruby-identifier">permissions</span>,<span class="ruby-identifier">message</span>,<span class="ruby-identifier">callback</span>=<span class="ruby-keyword kw">nil</span>)
+695:         <span class="ruby-identifier">permissions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+696:           <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Unknown value for permission: #{p}&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">VALID_PERMISSIONS</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">p</span>.<span class="ruby-identifier">to_sym</span>)          
+697:         <span class="ruby-keyword kw">end</span>
+698:         <span class="ruby-identifier">args</span>={<span class="ruby-identifier">:perms=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">permissions</span><span class="ruby-operator">*</span><span class="ruby-value str">','</span>}
+699:         <span class="ruby-identifier">args</span>[<span class="ruby-identifier">:next_fbjs</span>]=<span class="ruby-identifier">callback</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">nil?</span>
+700:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:prompt-permission&quot;</span>,<span class="ruby-identifier">message</span>,<span class="ruby-identifier">args</span>)        
+701:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000101" class="method-detail">
+        <a name="M000101"></a>
+
+        <div class="method-heading">
+          <a href="#M000101" class="method-signature">
+          <span class="method-name">fb_pronoun</span><span class="method-args">(user, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:pronoun&gt; tag for the specified user Options give
+flexibility for placing in any part of a sentence. <em> See </em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:pronoun">wiki.developers.facebook.com/index.php/Fb:pronoun</a>
+for complete list of options.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000101-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000101-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 276</span>
+276:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_pronoun</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">options</span>={})
+277:         <span class="ruby-identifier">options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+278:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">transform_keys!</span>(<span class="ruby-constant">FB_PRONOUN_OPTION_KEYS_TO_TRANSFORM</span>)
+279:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">assert_valid_keys</span>(<span class="ruby-constant">FB_PRONOUN_VALID_OPTION_KEYS</span>)
+280:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">:uid</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">user</span>))
+281:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:pronoun&quot;</span>,<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>))
+282:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000102" class="method-detail">
+        <a name="M000102"></a>
+
+        <div class="method-heading">
+          <a href="#M000102" class="method-signature">
+          <span class="method-name">fb_ref</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an fb:ref tag. Options must contain either url or handle.
+</p>
+<ul>
+<li><em> url </em> The URL from which to fetch the FBML. You may need to call
+fbml.refreshRefUrl to refresh cache
+
+</li>
+<li><em> handle </em> The string previously set by fbml.setRefHandle that
+identifies the FBML
+
+</li>
+</ul>
+<p>
+<em> See </em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:ref">wiki.developers.facebook.com/index.php/Fb:ref</a>
+for complete description
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000102-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 293</span>
+293:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_ref</span>(<span class="ruby-identifier">options</span>)
+294:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">assert_valid_keys</span>(<span class="ruby-constant">FB_REF_VALID_OPTION_KEYS</span>)
+295:         <span class="ruby-identifier">validate_fb_ref_has_either_url_or_handle</span>(<span class="ruby-identifier">options</span>)
+296:         <span class="ruby-identifier">validate_fb_ref_does_not_have_both_url_and_handle</span>(<span class="ruby-identifier">options</span>)
+297:         <span class="ruby-identifier">tag</span>(<span class="ruby-value str">&quot;fb:ref&quot;</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>))
+298:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000097" class="method-detail">
+        <a name="M000097"></a>
+
+        <div class="method-heading">
+          <a href="#M000097" class="method-signature">
+          <span class="method-name">fb_req_choice</span><span class="method-args">(label,url)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render a button in a request using the &lt;fb:req-choice&gt; tag url must
+be an absolute url This should be used inside the block of an <a
+href="Helpers.html#M000092">fb_multi_friend_request</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000097-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000097-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 172</span>
+172:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_req_choice</span>(<span class="ruby-identifier">label</span>,<span class="ruby-identifier">url</span>)
+173:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:req-choice&quot;</span>,<span class="ruby-identifier">:label=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">label</span>,<span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url</span>
+174:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000090" class="method-detail">
+        <a name="M000090"></a>
+
+        <div class="method-heading">
+          <a href="#M000090" class="method-signature">
+          <span class="method-name">fb_request_form</span><span class="method-args">(type,message_param,url,options={},&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create an fb:request-form without a selector
+</p>
+<p>
+The block passed to this tag is used as the content of the form
+</p>
+<p>
+The message param is the name sent to content_for that specifies the body
+of the message
+</p>
+<p>
+For example,
+</p>
+<pre>
+ &lt;% content_for(&quot;invite_message&quot;) do %&gt;
+   This gets sent in the invite. &lt;%= fb_req_choice(&quot;with a button!&quot;,new_poke_path) %&gt;
+ &lt;% end %&gt;
+ &lt;% fb_request_form(&quot;Poke&quot;,&quot;invite_message&quot;,create_poke_path) do %&gt;
+   Send a poke to: &lt;%= fb_friend_selector %&gt; &lt;br /&gt;
+   &lt;%= fb_request_form_submit %&gt;
+ &lt;% end %&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000090-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000090-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 83</span>
+83:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_request_form</span>(<span class="ruby-identifier">type</span>,<span class="ruby-identifier">message_param</span>,<span class="ruby-identifier">url</span>,<span class="ruby-identifier">options</span>={},<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+84:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+85:         <span class="ruby-identifier">message</span> = <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-node">&quot;@content_for_#{message_param}&quot;</span>)
+86:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+87:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:request-form&quot;</span>, <span class="ruby-identifier">content</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">token_tag</span>,
+88:                     {<span class="ruby-identifier">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url</span>,<span class="ruby-identifier">:method=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;post&quot;</span>,<span class="ruby-identifier">:invite=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>,<span class="ruby-identifier">:type=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">type</span>,<span class="ruby-identifier">:content=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">message</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)))
+89:         <span class="ruby-keyword kw">else</span>
+90:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:request-form&quot;</span>, <span class="ruby-identifier">content</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">token_tag</span>,
+91:                     {<span class="ruby-identifier">:action=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url</span>,<span class="ruby-identifier">:method=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;post&quot;</span>,<span class="ruby-identifier">:invite=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">true</span>,<span class="ruby-identifier">:type=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">type</span>,<span class="ruby-identifier">:content=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">message</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)),
+92:                 <span class="ruby-identifier">block</span>.<span class="ruby-identifier">binding</span>)
+93:         <span class="ruby-keyword kw">end</span>
+94:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000091" class="method-detail">
+        <a name="M000091"></a>
+
+        <div class="method-heading">
+          <a href="#M000091" class="method-signature">
+          <span class="method-name">fb_request_form_submit</span><span class="method-args">(options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a submit button for an &lt;fb:request-form&gt; If the request is for
+an individual user you can optionally Provide the user and a label for the
+request button. For example
+</p>
+<pre>
+  &lt;% content_for(&quot;invite_user&quot;) do %&gt;
+    This gets sent in the invite. &lt;%= fb_req_choice(&quot;Come join us!&quot;,new_invite_path) %&gt;
+  &lt;% end %&gt;
+  &lt;% fb_request_form(&quot;Invite&quot;,&quot;invite_user&quot;,create_invite_path) do %&gt;
+    Invite &lt;%= fb_name(@facebook_user.friends.first.id)%&gt; to the party &lt;br /&gt;
+    &lt;%= fb_request_form_submit(:uid =&gt; @facebook_user.friends.first.id, :label =&gt; &quot;Invite %n&quot;) %&gt;
+  &lt;% end %&gt;
+</pre>
+<p>
+<em>See:</em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:request-form-submit">wiki.developers.facebook.com/index.php/Fb:request-form-submit</a>
+for options
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000091-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000091-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 108</span>
+108:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_request_form_submit</span>(<span class="ruby-identifier">options</span>={})
+109:          <span class="ruby-identifier">tag</span>(<span class="ruby-value str">&quot;fb:request-form-submit&quot;</span>,<span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>))
+110:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000142" class="method-detail">
+        <a name="M000142"></a>
+
+        <div class="method-heading">
+          <a href="#M000142" class="method-signature">
+          <span class="method-name">fb_serverfbml</span><span class="method-args">(options={},&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders the FBML on a Facebook server inside an iframe.
+</p>
+<p>
+Meant to be used for a Facebook Connect site or an iframe application
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000142-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 726</span>
+726:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_serverfbml</span>(<span class="ruby-identifier">options</span>={},<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+727:         <span class="ruby-identifier">inner</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+728:         <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:serverfbml&quot;</span>,<span class="ruby-identifier">inner</span>,<span class="ruby-identifier">options</span>))
+729:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000141" class="method-detail">
+        <a name="M000141"></a>
+
+        <div class="method-heading">
+          <a href="#M000141" class="method-signature">
+          <span class="method-name">fb_share_button</span><span class="method-args">(url)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders a standard &#8216;Share&#8217; button for the specified URL.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000141-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000141-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 719</span>
+719:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_share_button</span>(<span class="ruby-identifier">url</span>)
+720:         <span class="ruby-identifier">content_tag</span> <span class="ruby-value str">&quot;fb:share-button&quot;</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">:class</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;url&quot;</span>,<span class="ruby-identifier">:href=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url</span>
+721:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
+
+        <div class="method-heading">
+          <a href="#M000089" class="method-signature">
+          <span class="method-name">fb_show_feed_dialog</span><span class="method-args">(action, user_message = &quot;&quot;, prompt = &quot;&quot;, callback = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000089-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000089-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 61</span>
+61:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_show_feed_dialog</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">user_message</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">prompt</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">callback</span> = <span class="ruby-keyword kw">nil</span>)
+62:         <span class="ruby-identifier">update_page</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span>
+63:           <span class="ruby-identifier">page</span>.<span class="ruby-identifier">call</span> <span class="ruby-value str">&quot;Facebook.showFeedDialog&quot;</span>,<span class="ruby-identifier">action</span>.<span class="ruby-identifier">template_id</span>,<span class="ruby-identifier">action</span>.<span class="ruby-identifier">data</span>,<span class="ruby-identifier">action</span>.<span class="ruby-identifier">body_general</span>,<span class="ruby-identifier">action</span>.<span class="ruby-identifier">target_ids</span>,<span class="ruby-identifier">callback</span>,<span class="ruby-identifier">prompt</span>,<span class="ruby-identifier">user_message</span>
+64:         <span class="ruby-keyword kw">end</span>
+65:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000117" class="method-detail">
+        <a name="M000117"></a>
+
+        <div class="method-heading">
+          <a href="#M000117" class="method-signature">
+          <span class="method-name">fb_success</span><span class="method-args">(message, text=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:success&gt; tag If message and text are present then this
+will render fb:error and fb:message tag TODO: Optionally takes a decoration
+tag with value of &#8216;no_padding&#8217; or &#8216;shorten&#8216;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000117-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000117-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 446</span>
+446:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_success</span>(<span class="ruby-identifier">message</span>, <span class="ruby-identifier">text</span>=<span class="ruby-keyword kw">nil</span>)
+447:         <span class="ruby-identifier">fb_status_msg</span>(<span class="ruby-value str">&quot;success&quot;</span>, <span class="ruby-identifier">message</span>, <span class="ruby-identifier">text</span>)
+448:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
+
+        <div class="method-heading">
+          <a href="#M000085" class="method-signature">
+          <span class="method-name">fb_swf</span><span class="method-args">(src, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000085-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 36</span>
+36:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_swf</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">options</span> = {})
+37:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:swf&quot;</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:swfsrc</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">src</span>)
+38:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
+
+        <div class="method-heading">
+          <a href="#M000109" class="method-signature">
+          <span class="method-name">fb_tab_item</span><span class="method-args">(title, url, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an fb:tab_item tag. Use this in conjunction with <a
+href="Helpers.html#M000108">fb_tabs</a> Options can contains :selected
+=&gt; true to indicate that a tab is the current tab. <em> See: </em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:tab-item">wiki.developers.facebook.com/index.php/Fb:tab-item</a>
+for complete list of options
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000109-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000109-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 379</span>
+379:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_tab_item</span>(<span class="ruby-identifier">title</span>, <span class="ruby-identifier">url</span>, <span class="ruby-identifier">options</span>={})
+380:         <span class="ruby-identifier">options</span>= <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
+381:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">assert_valid_keys</span>(<span class="ruby-constant">FB_TAB_ITEM_VALID_OPTION_KEYS</span>)
+382:         <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">title</span>, <span class="ruby-identifier">:href</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">url</span>)    
+383:         <span class="ruby-identifier">validate_fb_tab_item_align_value</span>(<span class="ruby-identifier">options</span>)
+384:         <span class="ruby-identifier">tag</span>(<span class="ruby-value str">&quot;fb:tab-item&quot;</span>, <span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">options</span>))
+385:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
+
+        <div class="method-heading">
+          <a href="#M000108" class="method-signature">
+          <span class="method-name">fb_tabs</span><span class="method-args">(&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an fb:tabs tag containing some number of fb:tab_item tags. Example:
+&lt;% <a href="Helpers.html#M000108">fb_tabs</a> do %&gt;
+</p>
+<pre>
+  &lt;%= fb_tab_item(&quot;Home&quot;, &quot;home&quot;) %&gt;
+  &lt;%= fb_tab_item(&quot;Office&quot;, &quot;office&quot;) %&gt;
+</pre>
+<p>
+&lt;% end %&gt;
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000108-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000108-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 366</span>
+366:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_tabs</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+367:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+368:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+369:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:tabs&quot;</span>, <span class="ruby-identifier">content</span>))
+370:         <span class="ruby-keyword kw">else</span>
+371:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:tabs&quot;</span>, <span class="ruby-identifier">content</span>), <span class="ruby-identifier">block</span>.<span class="ruby-identifier">binding</span>)
+372:         <span class="ruby-keyword kw">end</span>
+373:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000144" class="method-detail">
+        <a name="M000144"></a>
+
+        <div class="method-heading">
+          <a href="#M000144" class="method-signature">
+          <span class="method-name">fb_time</span><span class="method-args">(time, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Renders an fb:time element
+</p>
+<p>
+Example: &lt;%= <a href="Helpers.html#M000144">fb_time</a>(Time.now, :tz
+=&gt; &#8216;America/New York&#8217;, :preposition =&gt; true) %&gt;
+</p>
+<p>
+See <a
+href="http://wiki.developers.facebook.com/index.php/Fb:time">wiki.developers.facebook.com/index.php/Fb:time</a>
+for more details
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000144-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000144-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 743</span>
+743:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_time</span>(<span class="ruby-identifier">time</span>, <span class="ruby-identifier">options</span>={})
+744:         <span class="ruby-identifier">tag</span> <span class="ruby-value str">&quot;fb:time&quot;</span>,<span class="ruby-identifier">stringify_vals</span>({<span class="ruby-identifier">:t</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">time</span>.<span class="ruby-identifier">to_i</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>))
+745:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000126" class="method-detail">
+        <a name="M000126"></a>
+
+        <div class="method-heading">
+          <a href="#M000126" class="method-signature">
+          <span class="method-name">fb_title</span><span class="method-args">(title)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds a title to the title bar
+</p>
+<p>
+Facebook | App Name | This is the canvas page window title
+</p>
+<p>
+<tt>title</tt>: This is the canvas page window
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000126-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000126-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 540</span>
+540:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_title</span>(<span class="ruby-identifier">title</span>)
+541:        <span class="ruby-node">&quot;&lt;fb:title&gt;#{title}&lt;/fb:title&gt;&quot;</span>
+542:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000140" class="method-detail">
+        <a name="M000140"></a>
+
+        <div class="method-heading">
+          <a href="#M000140" class="method-signature">
+          <span class="method-name">fb_user_status</span><span class="method-args">(user,linked=true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the status of the user
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000140-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000140-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 714</span>
+714:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_user_status</span>(<span class="ruby-identifier">user</span>,<span class="ruby-identifier">linked</span>=<span class="ruby-keyword kw">true</span>)
+715:         <span class="ruby-identifier">content_tag</span> <span class="ruby-value str">&quot;fb:user-status&quot;</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">stringify_vals</span>(<span class="ruby-identifier">:uid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">user</span>), <span class="ruby-identifier">:linked=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">linked</span>)
+716:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000112" class="method-detail">
+        <a name="M000112"></a>
+
+        <div class="method-heading">
+          <a href="#M000112" class="method-signature">
+          <span class="method-name">fb_wall</span><span class="method-args">(&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Create a Facebook wall. It can contain fb_wall_posts
+</p>
+<p>
+For Example:
+</p>
+<pre>
+  &lt;% fb_wall do %&gt;
+    &lt;%= fb_wall_post(@user,&quot;This is my message&quot;) %&gt;
+    &lt;%= fb_wall_post(@otheruser,&quot;This is another message&quot;) %&gt;
+  &lt;% end %&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000112-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 413</span>
+413:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_wall</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+414:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+415:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+416:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:wall&quot;</span>,<span class="ruby-identifier">content</span>,{}))
+417:         <span class="ruby-keyword kw">else</span>
+418:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:wall&quot;</span>,<span class="ruby-identifier">content</span>,{}),<span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+419:         <span class="ruby-keyword kw">end</span>
+420:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000114" class="method-detail">
+        <a name="M000114"></a>
+
+        <div class="method-heading">
+          <span class="method-name">fb_wall_post</span><span class="method-args">(user,message)</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for <a href="Helpers.html#M000113">fb_wallpost</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000113" class="method-detail">
+        <a name="M000113"></a>
+
+        <div class="method-heading">
+          <a href="#M000113" class="method-signature">
+          <span class="method-name">fb_wallpost</span><span class="method-args">(user,message)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:wallpost&gt; tag TODO: Optionally takes a time parameter t
+= int The current time, which is displayed in epoch seconds.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000113-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000113-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 424</span>
+424:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_wallpost</span>(<span class="ruby-identifier">user</span>,<span class="ruby-identifier">message</span>)
+425:         <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:wallpost&quot;</span>,<span class="ruby-identifier">message</span>,<span class="ruby-identifier">:uid=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">user</span>))
+426:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000120" class="method-detail">
+        <a name="M000120"></a>
+
+        <div class="method-heading">
+          <a href="#M000120" class="method-signature">
+          <span class="method-name">fb_wide</span><span class="method-args">(&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Content for the wide profile box goes in this tag
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000120-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 490</span>
+490:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_wide</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+491:         <span class="ruby-identifier">content</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+492:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ignore_binding?</span>
+493:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:wide&quot;</span>, <span class="ruby-identifier">content</span>, {}))
+494:         <span class="ruby-keyword kw">else</span>
+495:           <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:wide&quot;</span>, <span class="ruby-identifier">content</span>, {}), <span class="ruby-identifier">proc</span>.<span class="ruby-identifier">binding</span>)
+496:         <span class="ruby-keyword kw">end</span>
+497:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
+
+        <div class="method-heading">
+          <a href="#M000083" class="method-signature">
+          <span class="method-name">fbjs_library</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000083-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 27</span>
+27:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fbjs_library</span>
+28:         <span class="ruby-node">&quot;&lt;script&gt;var _token = '#{form_authenticity_token}';var _hostname = '#{ActionController::Base.asset_host}'&lt;/script&gt;&quot;</span><span class="ruby-operator">+</span>
+29:         <span class="ruby-node">&quot;#{javascript_include_tag 'facebooker'}&quot;</span>
+30:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000111" class="method-detail">
+        <a name="M000111"></a>
+
+        <div class="method-heading">
+          <a href="#M000111" class="method-signature">
+          <span class="method-name">validate_fb_photo_align_value</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000111-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 395</span>
+395:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_fb_photo_align_value</span>(<span class="ruby-identifier">options</span>)
+396:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:align</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">VALID_FB_PHOTO_ALIGN_VALUES</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:align</span>].<span class="ruby-identifier">to_sym</span>)
+397:           <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Unknown value for align: #{options[:align]}&quot;</span>)
+398:         <span class="ruby-keyword kw">end</span>
+399:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000104" class="method-detail">
+        <a name="M000104"></a>
+
+        <div class="method-heading">
+          <a href="#M000104" class="method-signature">
+          <span class="method-name">validate_fb_ref_does_not_have_both_url_and_handle</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000104-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000104-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 306</span>
+306:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_fb_ref_does_not_have_both_url_and_handle</span>(<span class="ruby-identifier">options</span>)
+307:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:url</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:handle</span>)
+308:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;fb_ref may not have both :url and :handle&quot;</span>
+309:         <span class="ruby-keyword kw">end</span>
+310:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000103" class="method-detail">
+        <a name="M000103"></a>
+
+        <div class="method-heading">
+          <a href="#M000103" class="method-signature">
+          <span class="method-name">validate_fb_ref_has_either_url_or_handle</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000103-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 300</span>
+300:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_fb_ref_has_either_url_or_handle</span>(<span class="ruby-identifier">options</span>)
+301:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:url</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:handle</span>)
+302:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;fb_ref requires :url or :handle&quot;</span>
+303:         <span class="ruby-keyword kw">end</span>
+304:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
+
+        <div class="method-heading">
+          <a href="#M000110" class="method-signature">
+          <span class="method-name">validate_fb_tab_item_align_value</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000110-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 389</span>
+389:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_fb_tab_item_align_value</span>(<span class="ruby-identifier">options</span>)
+390:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:align</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">VALID_FB_TAB_ITEM_ALIGN_VALUES</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:align</span>].<span class="ruby-identifier">to_sym</span>)
+391:           <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Unknown value for align: #{options[:align]}&quot;</span>)
+392:         <span class="ruby-keyword kw">end</span>
+393:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+      <div id="method-M000150" class="method-detail">
+        <a name="M000150"></a>
+
+        <div class="method-heading">
+          <a href="#M000150" class="method-signature">
+          <span class="method-name">cast_to_facebook_id</span><span class="method-args">(object)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000150-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000150-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 808</span>
+808:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">object</span>)
+809:         <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">object</span>)
+810:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000152" class="method-detail">
+        <a name="M000152"></a>
+
+        <div class="method-heading">
+          <a href="#M000152" class="method-signature">
+          <span class="method-name">validate_fb_photo_size</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000152-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000152-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 818</span>
+818:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_fb_photo_size</span>(<span class="ruby-identifier">options</span>)
+819:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:size</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">VALID_FB_PHOTO_SIZES</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>].<span class="ruby-identifier">to_sym</span>)
+820:           <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Unknown value for size: #{options[:size]}&quot;</span>)
+821:         <span class="ruby-keyword kw">end</span>
+822:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000151" class="method-detail">
+        <a name="M000151"></a>
+
+        <div class="method-heading">
+          <a href="#M000151" class="method-signature">
+          <span class="method-name">validate_fb_profile_pic_size</span><span class="method-args">(options)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000151-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000151-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers.rb, line 812</span>
+812:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate_fb_profile_pic_size</span>(<span class="ruby-identifier">options</span>)
+813:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:size</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-constant">VALID_FB_PROFILE_PIC_SIZES</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:size</span>].<span class="ruby-identifier">to_sym</span>)
+814:           <span class="ruby-identifier">raise</span>(<span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">&quot;Unknown value for size: #{options[:size]}&quot;</span>)
+815:         <span class="ruby-keyword kw">end</span>
+816:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

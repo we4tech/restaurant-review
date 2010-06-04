@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: facebooker.rb</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>facebooker.rb</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>vendor/plugins/facebooker/lib/facebooker.rb
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Fri Dec 25 13:18:25 +0700 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+    <div id="requires-list">
+      <h3 class="section-bar">Required files</h3>
+
+      <div class="name-list">
+      json&nbsp;&nbsp;
+      zlib&nbsp;&nbsp;
+      digest/md5&nbsp;&nbsp;
+      facebooker/attachment&nbsp;&nbsp;
+      facebooker/batch_request&nbsp;&nbsp;
+      facebooker/feed&nbsp;&nbsp;
+      facebooker/logging&nbsp;&nbsp;
+      facebooker/model&nbsp;&nbsp;
+      facebooker/parser&nbsp;&nbsp;
+      facebooker/service&nbsp;&nbsp;
+      facebooker/service/base_service&nbsp;&nbsp;
+      facebooker/service/curl_service&nbsp;&nbsp;
+      facebooker/service/typhoeus_service&nbsp;&nbsp;
+      facebooker/service/typhoeus_multi_service&nbsp;&nbsp;
+      facebooker/service/net_http_service&nbsp;&nbsp;
+      facebooker/server_cache&nbsp;&nbsp;
+      facebooker/data&nbsp;&nbsp;
+      facebooker/admin&nbsp;&nbsp;
+      facebooker/application&nbsp;&nbsp;
+      facebooker/mobile&nbsp;&nbsp;
+      facebooker/session&nbsp;&nbsp;
+      facebooker/stream_post&nbsp;&nbsp;
+      facebooker/version&nbsp;&nbsp;
+      facebooker/models/location&nbsp;&nbsp;
+      facebooker/models/affiliation&nbsp;&nbsp;
+      facebooker/models/album&nbsp;&nbsp;
+      facebooker/models/education_info&nbsp;&nbsp;
+      facebooker/models/work_info&nbsp;&nbsp;
+      facebooker/models/event&nbsp;&nbsp;
+      facebooker/models/group&nbsp;&nbsp;
+      facebooker/models/notifications&nbsp;&nbsp;
+      facebooker/models/page&nbsp;&nbsp;
+      facebooker/models/photo&nbsp;&nbsp;
+      facebooker/models/cookie&nbsp;&nbsp;
+      facebooker/models/applicationproperties&nbsp;&nbsp;
+      facebooker/models/applicationrestrictions&nbsp;&nbsp;
+      facebooker/models/tag&nbsp;&nbsp;
+      facebooker/models/user&nbsp;&nbsp;
+      facebooker/models/info_item&nbsp;&nbsp;
+      facebooker/models/info_section&nbsp;&nbsp;
+      facebooker/models/friend_list&nbsp;&nbsp;
+      facebooker/models/video&nbsp;&nbsp;
+      facebooker/adapters/adapter_base&nbsp;&nbsp;
+      facebooker/adapters/facebook_adapter&nbsp;&nbsp;
+      facebooker/adapters/bebo_adapter&nbsp;&nbsp;
+      </div>
+    </div>
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

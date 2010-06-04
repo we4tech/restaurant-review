@@ -1,9 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :treat_requests, :member => {:accept => :get, :deny => :get}
+
   map.resources :photo_comments
 
-  map.resources :tag_mappings
+  map.facebook_resources :tag_mappings
 
   map.resources :tags
+
+  map.facebook_resources :games
 
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -92,6 +96,9 @@ ActionController::Routing::Routes.draw do |map|
   map.display_photo '/photos/:title/:id', :controller => 'home',
                     :action => 'show_photo',
                     :requirements => {:title => /[\w\d\.\-]+/}
+
+  map.treat_me '/games/treat_me', :controller => 'games', :action => 'treat_me'
+  map.accept_treat_request '/games/accept_request/:id', :controller => 'games', :action => 'accept_request'
 
   # See how all your routes lay out with "rake routes"
 

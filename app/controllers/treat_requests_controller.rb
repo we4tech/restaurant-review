@@ -1,0 +1,4 @@
+class TreatRequestsController < ApplicationController
+
+
+end

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Facebooker::Rails::Helpers::FbConnect</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Facebooker::Rails::Helpers::FbConnect</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../../files/vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect_rb.html">
+                vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000159">fb_bookmark_link</a>&nbsp;&nbsp;
+      <a href="#M000153">fb_connect_javascript_tag</a>&nbsp;&nbsp;
+      <a href="#M000161">fb_connect_stream_publish</a>&nbsp;&nbsp;
+      <a href="#M000156">fb_login_and_redirect</a>&nbsp;&nbsp;
+      <a href="#M000155">fb_login_button</a>&nbsp;&nbsp;
+      <a href="#M000158">fb_logout_link</a>&nbsp;&nbsp;
+      <a href="#M000157">fb_unconnected_friends_count</a>&nbsp;&nbsp;
+      <a href="#M000160">fb_user_action</a>&nbsp;&nbsp;
+      <a href="#M000154">init_fb_connect</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000159" class="method-detail">
+        <a name="M000159"></a>
+
+        <div class="method-heading">
+          <a href="#M000159" class="method-signature">
+          <span class="method-name">fb_bookmark_link</span><span class="method-args">(text,url,*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000159-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb, line 113</span>
+113:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_bookmark_link</span>(<span class="ruby-identifier">text</span>,<span class="ruby-identifier">url</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+114:           <span class="ruby-identifier">js</span> = <span class="ruby-identifier">update_page</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span>
+115:             <span class="ruby-identifier">page</span>.<span class="ruby-identifier">call</span> <span class="ruby-value str">&quot;FB.Connect.showBookmarkDialog&quot;</span>,<span class="ruby-identifier">url</span>
+116:           <span class="ruby-keyword kw">end</span>
+117:           <span class="ruby-identifier">link_to_function</span> <span class="ruby-identifier">text</span>, <span class="ruby-identifier">js</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+118:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000153" class="method-detail">
+        <a name="M000153"></a>
+
+        <div class="method-heading">
+          <a href="#M000153" class="method-signature">
+          <span class="method-name">fb_connect_javascript_tag</span><span class="method-args">(options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000153-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000153-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb, line 6</span>
+ 6:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_connect_javascript_tag</span>(<span class="ruby-identifier">options</span> = {})
+ 7:           <span class="ruby-comment cmt"># accept both Rails and Facebook locale formatting, i.e. &quot;en-US&quot; and &quot;en_US&quot;.</span>
+ 8:           <span class="ruby-identifier">lang</span> = <span class="ruby-node">&quot;/#{options[:lang].to_s.gsub('-', '_')}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:lang</span>]
+ 9:           <span class="ruby-comment cmt"># dont use the javascript_include_tag helper since it adds a .js at the end</span>
+10:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">ssl?</span>
+11:             <span class="ruby-node">&quot;&lt;script src=\&quot;https://www.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php#{lang}\&quot; type=\&quot;text/javascript\&quot;&gt;&lt;/script&gt;&quot;</span>
+12:           <span class="ruby-keyword kw">else</span>
+13:             <span class="ruby-node">&quot;&lt;script src=\&quot;http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php#{lang}\&quot; type=\&quot;text/javascript\&quot;&gt;&lt;/script&gt;&quot;</span>
+14:           <span class="ruby-keyword kw">end</span>
+15:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000161" class="method-detail">
+        <a name="M000161"></a>
+
+        <div class="method-heading">
+          <a href="#M000161" class="method-signature">
+          <span class="method-name">fb_connect_stream_publish</span><span class="method-args">(stream_post,user_message_prompt=nil,callback=nil,auto_publish=false,actor=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000161-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb, line 127</span>
+127:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_connect_stream_publish</span>(<span class="ruby-identifier">stream_post</span>,<span class="ruby-identifier">user_message_prompt</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">callback</span>=<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">auto_publish</span>=<span class="ruby-keyword kw">false</span>,<span class="ruby-identifier">actor</span>=<span class="ruby-keyword kw">nil</span>)
+128:           <span class="ruby-identifier">defaulted_callback</span> = <span class="ruby-identifier">callback</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;null&quot;</span>
+129:           <span class="ruby-identifier">update_page</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span>
+130:             <span class="ruby-identifier">page</span>.<span class="ruby-identifier">call</span>(<span class="ruby-value str">&quot;FB.Connect.streamPublish&quot;</span>,
+131:                         <span class="ruby-identifier">stream_post</span>.<span class="ruby-identifier">user_message</span>,
+132:                         <span class="ruby-identifier">stream_post</span>.<span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">to_hash</span>,
+133:                         <span class="ruby-identifier">stream_post</span>.<span class="ruby-identifier">action_links</span>,
+134:                         <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">stream_post</span>.<span class="ruby-identifier">target</span>),
+135:                         <span class="ruby-identifier">user_message_prompt</span>,
+136:                         <span class="ruby-identifier">page</span>.<span class="ruby-identifier">literal</span>(<span class="ruby-identifier">defaulted_callback</span>),
+137:                         <span class="ruby-identifier">auto_publish</span>,
+138:                         <span class="ruby-constant">Facebooker</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">actor</span>))
+139:           <span class="ruby-keyword kw">end</span>          
+140:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000156" class="method-detail">
+        <a name="M000156"></a>
+
+        <div class="method-heading">
+          <a href="#M000156" class="method-signature">
+          <span class="method-name">fb_login_and_redirect</span><span class="method-args">(url, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000156-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000156-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb, line 95</span>
+ 95:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_login_and_redirect</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">options</span> = {})
+ 96:           <span class="ruby-identifier">js</span> = <span class="ruby-identifier">update_page</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span>
+ 97:             <span class="ruby-identifier">page</span>.<span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">url</span>
+ 98:           <span class="ruby-keyword kw">end</span>
+ 99:           <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:login-button&quot;</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">:onlogin=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">js</span>))
+100:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000155" class="method-detail">
+        <a name="M000155"></a>
+
+        <div class="method-heading">
+          <a href="#M000155" class="method-signature">
+          <span class="method-name">fb_login_button</span><span class="method-args">(*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render an &lt;fb:login-button&gt; element
+</p>
+<h4>Examples</h4>
+<p>
+&lt;%= <a href="FbConnect.html#M000155">fb_login_button</a>%&gt;
+</p>
+<h1>&gt; &lt;fb:login-button&gt;&lt;/fb:login-button&gt;</h1>
+<p>
+Specifying a javascript callback
+</p>
+<p>
+&lt;%= <a href="FbConnect.html#M000155">fb_login_button</a>
+&#8216;update_something();&#8217;%&gt;
+</p>
+<h1>&gt; &lt;fb:login-button onlogin=&#8216;update_something();&#8217;&gt;&lt;/fb:login-button&gt;</h1>
+<p>
+Adding options <em>See:</em> <a
+href="http://wiki.developers.facebook.com/index.php/Fb:login-button">wiki.developers.facebook.com/index.php/Fb:login-button</a>
+</p>
+<p>
+&lt;%= <a href="FbConnect.html#M000155">fb_login_button</a>
+&#8216;update_something();&#8217;, :size =&gt; :small, :background =&gt;
+:dark%&gt;
+</p>
+<h1>&gt; &lt;fb:login-button background=&#8216;dark&#8217; onlogin=&#8216;update_something();&#8217; size=&#8216;small&#8217;&gt;&lt;/fb:login-button&gt;</h1>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000155-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000155-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb, line 86</span>
+86:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_login_button</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+87: 
+88:           <span class="ruby-identifier">callback</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+89:           <span class="ruby-identifier">options</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">||</span> {}
+90:           <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">:onlogin=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">callback</span>)<span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback</span>
+91: 
+92:           <span class="ruby-identifier">content_tag</span>(<span class="ruby-value str">&quot;fb:login-button&quot;</span>,<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>)
+93:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000158" class="method-detail">
+        <a name="M000158"></a>
+
+        <div class="method-heading">
+          <a href="#M000158" class="method-signature">
+          <span class="method-name">fb_logout_link</span><span class="method-args">(text,url,*args)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000158-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000158-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb, line 106</span>
+106:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_logout_link</span>(<span class="ruby-identifier">text</span>,<span class="ruby-identifier">url</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+107:           <span class="ruby-identifier">js</span> = <span class="ruby-identifier">update_page</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span>
+108:             <span class="ruby-identifier">page</span>.<span class="ruby-identifier">call</span> <span class="ruby-value str">&quot;FB.Connect.logoutAndRedirect&quot;</span>,<span class="ruby-identifier">url</span>
+109:           <span class="ruby-keyword kw">end</span>
+110:           <span class="ruby-identifier">link_to_function</span> <span class="ruby-identifier">text</span>, <span class="ruby-identifier">js</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+111:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000157" class="method-detail">
+        <a name="M000157"></a>
+
+        <div class="method-heading">
+          <a href="#M000157" class="method-signature">
+          <span class="method-name">fb_unconnected_friends_count</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000157-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000157-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb, line 102</span>
+102:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_unconnected_friends_count</span>
+103:           <span class="ruby-identifier">content_tag</span> <span class="ruby-value str">&quot;fb:unconnected-friends-count&quot;</span>,<span class="ruby-keyword kw">nil</span>
+104:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000160" class="method-detail">
+        <a name="M000160"></a>
+
+        <div class="method-heading">
+          <a href="#M000160" class="method-signature">
+          <span class="method-name">fb_user_action</span><span class="method-args">(action, user_message = nil, prompt = &quot;&quot;, callback = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000160-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000160-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb, line 120</span>
+120:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_user_action</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">user_message</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">prompt</span> = <span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-identifier">callback</span> = <span class="ruby-keyword kw">nil</span>)
+121:           <span class="ruby-identifier">defaulted_callback</span> = <span class="ruby-identifier">callback</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;null&quot;</span>
+122:           <span class="ruby-identifier">update_page</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span>
+123:             <span class="ruby-identifier">page</span>.<span class="ruby-identifier">call</span>(<span class="ruby-value str">&quot;FB.Connect.showFeedDialog&quot;</span>,<span class="ruby-identifier">action</span>.<span class="ruby-identifier">template_id</span>,<span class="ruby-identifier">action</span>.<span class="ruby-identifier">data</span>,<span class="ruby-identifier">action</span>.<span class="ruby-identifier">target_ids</span>,<span class="ruby-identifier">action</span>.<span class="ruby-identifier">body_general</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-identifier">page</span>.<span class="ruby-identifier">literal</span>(<span class="ruby-value str">&quot;FB.RequireConnect.promptConnect&quot;</span>),<span class="ruby-identifier">page</span>.<span class="ruby-identifier">literal</span>(<span class="ruby-identifier">defaulted_callback</span>),<span class="ruby-identifier">prompt</span>,<span class="ruby-identifier">user_message</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> {<span class="ruby-identifier">:value=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">user_message</span>})
+124:           <span class="ruby-keyword kw">end</span>
+125:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000154" class="method-detail">
+        <a name="M000154"></a>
+
+        <div class="method-heading">
+          <a href="#M000154" class="method-signature">
+          <span class="method-name">init_fb_connect</span><span class="method-args">(*required_features,&amp;proc)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+For information on the :app_settings argument see <a
+href="http://wiki.developers.facebook.com/index.php/JS_API_M_FB.Facebook.Init_2">wiki.developers.facebook.com/index.php/JS_API_M_FB.Facebook.Init_2</a>
+While it would be nice to treat :app_settings as a hash, some of the
+arguments do different things if they are a string vs a javascript function
+and <a href="../../Rails.html">Rails</a>&#8217; Hash#to_json always quotes
+strings so there is no way to indicate when the value should be a
+javascript function. For this reason :app_settings needs to be a string
+that is valid JSON (including the {}&#8217;s).
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000154-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000154-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker/lib/facebooker/rails/helpers/fb_connect.rb, line 23</span>
+23:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">init_fb_connect</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">required_features</span>,<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+24:           <span class="ruby-identifier">additions</span> = <span class="ruby-value str">&quot;&quot;</span>
+25:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+26:             <span class="ruby-identifier">additions</span> = <span class="ruby-identifier">capture</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">proc</span>)
+27:           <span class="ruby-keyword kw">end</span>
+28: 
+29:           <span class="ruby-comment cmt"># Yes, app_settings is set to a string of an empty JSON element. That's intentional.</span>
+30:           <span class="ruby-identifier">options</span> = {<span class="ruby-identifier">:js</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:prototype</span>, <span class="ruby-identifier">:app_settings</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'{}'</span>}
+31: 
+32:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">required_features</span>.<span class="ruby-identifier">last</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+33:             <span class="ruby-identifier">options</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">required_features</span>.<span class="ruby-identifier">pop</span>.<span class="ruby-identifier">symbolize_keys</span>)
+34:           <span class="ruby-keyword kw">end</span>
+35: 
+36:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">ssl?</span>
+37:             <span class="ruby-identifier">init_string</span> = <span class="ruby-node">&quot;FB.init('#{Facebooker.api_key}','/xd_receiver_ssl.html', #{options[:app_settings]});&quot;</span>
+38:           <span class="ruby-keyword kw">else</span>
+39:             <span class="ruby-identifier">init_string</span> = <span class="ruby-node">&quot;FB.init('#{Facebooker.api_key}','/xd_receiver.html', #{options[:app_settings]});&quot;</span>
+40:           <span class="ruby-keyword kw">end</span>
+41:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">required_features</span>.<span class="ruby-identifier">blank?</span>
+42:              <span class="ruby-identifier">init_string</span> = <span class="ruby-value str">&quot;\#{case options[:js]\nwhen :jquery then \&quot;jQuery(document).ready(\&quot;\nwhen :dojo then \&quot;dojo.addOnLoad(\&quot;\nelse \&quot;Element.observe(window,'load',\&quot;\nend} function() {\nFB_RequireFeatures(\#{required_features.to_json}, function() {\n\#{init_string}\n\#{additions}\n});\n});\n&quot;</span>
+43:           <span class="ruby-keyword kw">end</span>
+44: 
+45:           <span class="ruby-comment cmt"># block_is_within_action_view? is rails 2.1.x and has been</span>
+46:           <span class="ruby-comment cmt"># deprecated.  rails &gt;= 2.2.x uses block_called_from_erb?</span>
+47:           <span class="ruby-identifier">block_tester</span> = <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:block_is_within_action_view?</span>) <span class="ruby-operator">?</span>
+48:             <span class="ruby-identifier">:block_is_within_action_view?</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">:block_called_from_erb?</span>
+49: 
+50:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">block_tester</span>, <span class="ruby-identifier">proc</span>)
+51:             <span class="ruby-identifier">concat</span>(<span class="ruby-identifier">javascript_tag</span>(<span class="ruby-identifier">init_string</span>))
+52:           <span class="ruby-keyword kw">else</span>
+53:             <span class="ruby-identifier">javascript_tag</span> <span class="ruby-identifier">init_string</span>
+54:           <span class="ruby-keyword kw">end</span>
+55:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
