@@ -4,6 +4,7 @@
   <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/accepted_my_request' title='Gonna treat me'/>
   <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/not_interested' title='Not interested to treat me'/>
 </fb:tabs>
+
 <div style="margin-top: 10px"></div>
 <% if flash[:notice] %>
   <fb:error><fb:message><%= flash[:notice] %></fb:message></fb:error>
@@ -21,7 +22,7 @@
       Who should be treating <fb:name useyou='true' linked='true' uid='loggedinuser' capitalize='true'/> NOW?
     </h1>
 
-    <%= form_tag 'treat_me', :method => :post %>
+    <% form_tag 'treat_me', :method => :post do %>
       <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'/>
       <div class='todaysRestaurant'>
         <h2>We have selected</h2>
@@ -67,7 +68,9 @@
           </label>
         </div>
       </div>
-    </form>
+
+    <% end %>
+
   </div>
 </div>
 

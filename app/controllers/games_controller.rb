@@ -5,7 +5,10 @@ class GamesController < ApplicationController
 
   def index
     @randomly_selected_friends = select_friends(12)
-    @restaurant = @topic.restaurants.first(:order => 'RAND()')
+    @restaurant = @topic.restaurants.first(
+        :include => [:images, :other_images],
+        :conditions => 'related_images.id <> 0 OR contributed_images.id <> 0',
+        :order => 'RAND()')
   end
 
   def treat_me
@@ -55,7 +58,7 @@ class GamesController < ApplicationController
         flash[:notice] = 'Such a pain in aaa... (amazon)!'
       end
     else
-      flash[:notice] = "Hi, this link is only for #{@requested_to.name}"
+      flash[:notice] = "Hi, we understand you can treat, but this time it was asked from <fb:name uid='#{@requested_to.uid}' firstnameonly='true' linked='true'/>"
     end
 
     redirect_to "#{Facebooker.facebook_path_prefix}/"
