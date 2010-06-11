@@ -34,6 +34,8 @@
       <% if restaurant.author?(current_user) %>
         | <%= link_to 'edit', edit_restaurant_url(restaurant) %>
       <% end %>
+
+      <fb:share-button class="url" href="<%= restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>" />
     </div>
 
     <div class="summary">
