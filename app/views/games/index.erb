@@ -1,180 +1,57 @@
-<fb:tabs>
-  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>' title="Today's treat" selected='true'/>
-  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/my_requests' title='My requests'/>
-  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/accepted_my_request' title='Gonna treat me'/>
-  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/not_interested' title='Not interested to treat me'/>
-</fb:tabs>
 
-<div style="margin-top: 10px"></div>
-<% if flash[:notice] %>
-  <fb:error><fb:message><%= flash[:notice] %></fb:message></fb:error>
-<% elsif flash[:success] %>
-  <fb:success>
-     <fb:message><%= flash[:success] %></fb:message>
-  </fb:success>
-<% end %>
+<div class='selectedFriends'>
+  <h1>
+    Who should be treating <fb:name useyou='true' linked='true' uid='loggedinuser' capitalize='true'/> TODAY?
+  </h1>
 
-<fb:title>Find out Who is treating you today?</fb:title>
+  <% form_tag 'treat_me', :method => :post do %>
+    <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'/>
+    <div class='todaysRestaurant'>
+      <h2>We have selected</h2>
+      <input type='hidden' name='restaurant_id' value='<%= @restaurant.id %>'/>
+      <%= render :partial => 'restaurants/parts/restaurant', :local => {:restaurant => @restaurant} %>
+    </div>
 
-<div class='container'>
-  <div class='selectedFriends'>
-    <h1>
-      Who should be treating <fb:name useyou='true' linked='true' uid='loggedinuser' capitalize='true'/> NOW?
-    </h1>
+    <div class='friends'>
+      <h2>
+        Ask your friends to treat you at
+        <%= link_to @restaurant.name, restaurant_long_url(
+          :canvas => false,
+          :name => (@restaurant.name || '').parameterize.to_s,
+          :id => @restaurant.id) %>
+      </h2>
+      <% @randomly_selected_friends.each do |uid, user| %>
+        <fb:user uid="<%= uid %>">
+          <div class='friendProfile'>
+            <% friend_checkbox_id = "friend_#{uid}" %>
+            <label for='<%= friend_checkbox_id %>'>
+              <fb:profile-pic uid="<%= uid %>" size='square' linked='false'/>
+              <div class='friendName'>
+                <input type='checkbox' name='friend_ids[]' id="<%= friend_checkbox_id %>" value='<%= uid %>'/>
+                <label for='<%= friend_checkbox_id %>'>
+                  <fb:name uid="<%= uid %>" firstnameonly='true' linked='false'/>
+                </label>
+              </div>
+            </label>
+          </div>
+        </fb:user>
+      <% end %>
 
-    <% form_tag 'treat_me', :method => :post do %>
-      <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'/>
-      <div class='todaysRestaurant'>
-        <h2>We have selected</h2>
-        <input type='hidden' name='restaurant_id' value='<%= @restaurant.id %>'/>
-        <%= render :partial => 'restaurants/parts/restaurant', :local => {:restaurant => @restaurant} %>
+      <div class='clear'></div>
+
+      <h2>Add your message</h2>
+      <div class='comment'>
+        <textarea name='comment'></textarea>
       </div>
 
-      <div class='friends'>
-        <h2>
-          Ask your friends to treat you at
-          <%= link_to @restaurant.name, restaurant_long_url(
-            :canvas => false,
-            :name => (@restaurant.name || '').parameterize.to_s,
-            :id => @restaurant.id) %>
-        </h2>
-        <% @randomly_selected_friends.each do |uid, user| %>
-          <fb:user uid="<%= uid %>">
-            <div class='friendProfile'>
-              <% friend_checkbox_id = "friend_#{uid}" %>
-              <label for='<%= friend_checkbox_id %>'>
-                <fb:profile-pic uid="<%= uid %>" size='square' linked='false'/>
-                <div class='friendName'>
-                  <input type='checkbox' name='friend_ids[]' id="<%= friend_checkbox_id %>" value='<%= uid %>'/>
-                  <label for='<%= friend_checkbox_id %>'>
-                    <fb:name uid="<%= uid %>" firstnameonly='true' linked='false'/>
-                  </label>
-                </div>
-              </label>
-            </div>
-          </fb:user>
-        <% end %>
-
-        <div class='clear'></div>
-
-        <h2>Add your message</h2>
-        <div class='comment'>
-          <textarea name='comment'></textarea>
-        </div>
-
-        <div class='buttons'>
-          <label class="uiButton uiButtonConfirm uiButtonMedium">
-            <input type="submit" class="FN_call-method" value="Please please khawan!">
-          </label>
-        </div>
+      <div class='buttons'>
+        <label class="uiButton uiButtonConfirm uiButtonMedium">
+          <input type="submit" class="FN_call-method" value="Please please khawan!">
+        </label>
       </div>
+    </div>
 
-    <% end %>
+  <% end %>
 
-  </div>
 </div>
 
-<style type="text/css">
-  .container {
-    margin: 20px;
-  }
-
-  .todaysRestaurant {
-    margin-top: 20px;
-    margin-bottom: 10px;
-
-  }
-
-  h2 {
-    font-size: 120%;
-    margin-bottom: 10px;
-  }
-
-  .site_list_item {
-    border: 1px solid #ccc;
-  }
-
-  .selectedFriends h1 {
-    padding: 20px;
-    border: 1px solid #ccc;
-    font-size: 150%;
-  }
-
-  .selectedFriends .friends {
-    margin-top: 20px;
-    
-  }
-
-  .friendProfile {
-    float: left;
-    margin-right: 20px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    text-align: center;
-    font-size: 120%;
-    margin-bottom: 20px;
-  }
-
-  .friendProfile:hover {
-    background: #f0f0f0;
-    cursor: pointer;
-  }
-
-  .friendSelectButton {
-    margin-top: 5px;
-  }
-
-  textarea {
-    width: 99%;
-    margin-bottom: 10px;
-    padding: 5px;
-  }
-
-  .clear { clear: both; }
-
-  .buttons {
-    text-align: right;
-  }
-
-  .buttons input {
-    font-size: 150%;
-  }
-
-  .site_list_item {
-    padding: 10px;
-    border: 5px solid #ccc;
-    background: url(<%= root_url(:canvas => false) %>/images/fresh/stripe.png);
-  }
-
-  .site_list_item .grid_1 {
-    float: left;
-    margin-right: 10px;
-  }
-
-  .site_list_item .grid_6 {
-    float: left;
-    width: 410px;
-    font-size: 15px;
-  }
-
-  .site_list_item .grid_6 h4 a {
-    font-size: 17px;
-    margin-bottom: 5px;
-  }
-
-  .site_list_item_rating {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  .associated_tags {
-    margin-top: 10px;
-  }
-
-  .associated_tags a {
-    
-  }
-</style>
-<!--fb:mediaheader uid="<% #uid %>">
-          <fb:header-title>Header title</fb:header-title>
-      </fb:mediaheader-->

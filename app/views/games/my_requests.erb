@@ -1,0 +1,36 @@
+<div class='treat_requests'>
+  <% @treat_requests.each do |treat_request| %>
+    <div class='treat_request'>
+      <fb:user uid="<%= treat_request.requested_uid %>">
+        <div class='avatar'>
+          <fb:profile-pic size='square' uid="<%= treat_request.requested_uid %>"/>
+        </div>
+        <div class='profile'>
+          You have asked <fb:name uid="<%= treat_request.requested_uid %>" firstname='true'/>
+          to treat you at
+          <%= link_to treat_request.restaurant.name, restaurant_long_url(
+              :name => treat_request.restaurant.name.parameterize.to_s,
+              :id => treat_request.restaurant.id) %><br/>
+
+          <% if treat_request.accepted? %>
+            <i class="UIImageBlock_Image UIImageBlock_ICON_Image img spritemap_e6h3iy sx_7945e6"></i>
+            <fb:name uid="<%= treat_request.requested_uid %>" firstname='true'/> accepted!
+          <% elsif treat_request.denied? %>
+            <fb:name uid="<%= treat_request.requested_uid %>" firstname='true'/> denied!
+          <% else %>
+            <fb:name uid="<%= treat_request.requested_uid %>" firstname='true'/> not interested!
+          <% end %>
+          <br/>
+
+          <small><i>posted on wall <%= distance_of_time_in_words(Time.now, treat_request.created_at) %> ago.</i></small><br/>
+        </div>
+      </fb:user>
+    </div>
+    <div class="clear"></div>
+  <% end %>
+
+  <div class='pagination'>
+    <%= will_paginate @treat_requests, :params => {:controller => '.'} %>
+  </div>
+</div>
+

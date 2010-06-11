@@ -1,0 +1,153 @@
+<fb:tabs>
+  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>' title="Today's treat" <%= @selected_tab_index.to_i == 0 ? 'selected="true"' : '' %>/>
+  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/my_requests' title='My requests' <%= @selected_tab_index.to_i == 1 ? 'selected="true"' : '' %>/>
+  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/accepted_my_request' title='Gonna treat me' <%= @selected_tab_index.to_i == 2 ? 'selected="true"' : '' %>/>
+</fb:tabs>
+
+<div style="margin-top: 10px"></div>
+<% if flash[:notice] %>
+  <fb:error>
+    <fb:message><%= flash[:notice] %></fb:message>
+  </fb:error>
+<% elsif flash[:success] %>
+  <fb:success>
+    <fb:message><%= flash[:success] %></fb:message>
+  </fb:success>
+<% end %>
+
+<fb:title><%= @title || 'Find out Who is treating you today?' %></fb:title>
+
+<fb:dashboard>
+  <fb:create-button href='/'>Ask others to treat you!</fb:create-button>
+</fb:dashboard>
+
+<div class='container'>
+  <%= yield %>
+</div>
+
+<style type="text/css">
+  .container {
+    margin: 20px;
+  }
+
+  .todaysRestaurant {
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+  }
+
+  h2 {
+    font-size: 120%;
+    margin-bottom: 10px;
+  }
+
+  .site_list_item {
+    border: 1px solid #ccc;
+  }
+
+  .selectedFriends h1 {
+    padding: 20px;
+    border: 1px solid #ccc;
+    font-size: 150%;
+  }
+
+  .selectedFriends .friends {
+    margin-top: 20px;
+
+  }
+
+  .friendProfile {
+    float: left;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+    font-size: 120%;
+    margin-bottom: 20px;
+  }
+
+  .friendProfile:hover {
+    background: #f0f0f0;
+    cursor: pointer;
+  }
+
+  .friendSelectButton {
+    margin-top: 5px;
+  }
+
+  textarea {
+    width: 99%;
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+
+  .clear {
+    clear: both;
+  }
+
+  .buttons {
+    text-align: right;
+  }
+
+  .buttons input {
+    font-size: 150%;
+  }
+
+  .site_list_item {
+    padding: 10px;
+    border: 5px solid #ccc;
+    background: url(<%= root_url(:canvas => false) %>/images/fresh/stripe.png);
+  }
+
+  .site_list_item .grid_1 {
+    float: left;
+    margin-right: 10px;
+  }
+
+  .site_list_item .grid_6 {
+    float: left;
+    width: 410px;
+    font-size: 15px;
+  }
+
+  .site_list_item .grid_6 h4 a {
+    font-size: 17px;
+    margin-bottom: 5px;
+  }
+
+  .site_list_item_rating {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .associated_tags {
+    margin-top: 10px;
+  }
+
+  .associated_tags a {
+
+  }
+
+  .treat_request {
+    margin-top: 15px;
+    border-top: 1px solid #ccc;
+  }
+
+  .treat_request .avatar {
+    float: left;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    padding: 3px;
+  }
+
+  .treat_request .profile {
+    float: left;
+    font-size: 120%;
+    margin-top: 10px;
+  }
+
+  .clear {
+    clear: both;
+  }
+</style>

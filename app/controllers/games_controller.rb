@@ -2,6 +2,7 @@ class GamesController < ApplicationController
 
   layout false
   ensure_application_is_installed_by_facebook_user
+  layout 'facebook'
 
   def index
     @randomly_selected_friends = select_friends(12)
@@ -9,6 +10,7 @@ class GamesController < ApplicationController
         :include => [:images, :other_images],
         :conditions => 'related_images.id <> 0 OR contributed_images.id <> 0',
         :order => 'RAND()')
+    @selected_tab_index = 0
   end
 
   def treat_me
@@ -36,7 +38,7 @@ class GamesController < ApplicationController
             flash[:notice] = $e;
           end
         end
-        flash[:success] = 'Weee! your request has been posted on your friend\'s wall!'
+        flash[:success] = "Weee! your request has been posted on your friend's wall! <fb:name uid='#{friend.uid}' firstnameonly='true' linked='true' />"
       else
         flash[:notice] = 'Sorry, we couldn\'t update anything'
       end
@@ -62,6 +64,32 @@ class GamesController < ApplicationController
     end
 
     redirect_to "#{Facebooker.facebook_path_prefix}/"
+  end
+
+  def my_requests
+    @selected_tab_index = 1
+    @title = 'My already sent treat requests!'
+
+    @treat_requests = TreatRequest.paginate(
+        :conditions => {
+            :topic_id => @topic.id,
+            :uid => @facebook_session.user.uid
+        },
+        :include => [:restaurant],
+        :page => params[:page])
+  end
+
+  def accepted_my_request
+    @treat_requests = TreatRequest.paginate(
+        :conditions => {
+            :topic_id => @topic.id,
+            :uid => @facebook_session.user.uid,
+            :accepted => true
+        },
+        :include => [:restaurant],
+        :page => params[:page])
+    @selected_tab_index = 2
+    @title = 'My accepted requests!'
   end
 
   private
