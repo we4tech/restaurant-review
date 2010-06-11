@@ -38,7 +38,7 @@ class GamesController < ApplicationController
             flash[:notice] = $e;
           end
         end
-        flash[:success] = "Weee! your request has been posted on your friend's wall! <fb:name uid='#{friend.uid}' firstnameonly='true' linked='true' />"
+        flash[:success] = "Weee! your request has been posted on your friend's wall!"
       else
         flash[:notice] = 'Sorry, we couldn\'t update anything'
       end
