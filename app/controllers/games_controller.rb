@@ -1,7 +1,8 @@
 class GamesController < ApplicationController
 
-  layout false
-  ensure_application_is_installed_by_facebook_user
+
+  ensure_authenticated_to_facebook
+
   layout 'facebook'
 
   def index
@@ -93,6 +94,11 @@ class GamesController < ApplicationController
   end
 
   private
+
+    def ensure_offline_permission
+      redirect_to facebook_session.permission_url(:offline_access, :next => root_url) unless @facebook_session.user.has_permission?(:offline_access)
+      true
+    end
 
     def publish_wall_post(session, friend, treat_request, restaurant, comment)
       restaurant_url = restaurant_long_url(
