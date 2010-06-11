@@ -77,7 +77,8 @@ class GamesController < ApplicationController
             :uid => @facebook_session.user.uid
         },
         :include => [:restaurant],
-        :page => params[:page])
+        :page => params[:page],
+        :order => 'id DESC')
   end
 
   def accepted_my_request
@@ -88,7 +89,8 @@ class GamesController < ApplicationController
             :accepted => true
         },
         :include => [:restaurant],
-        :page => params[:page])
+        :page => params[:page],
+        :order => 'id DESC')
     @selected_tab_index = 2
     @title = 'My accepted requests!'
   end
