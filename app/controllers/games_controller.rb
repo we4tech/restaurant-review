@@ -180,12 +180,12 @@ class GamesController < ApplicationController
 
     def after_facebook_login_url
       next_url = CGI.escape("http://apps.facebook.com#{(request.path || '').gsub(/\/games/, Facebooker.facebook_path_prefix)}")
-      redirect_to "#{Facebooker.permission_url_base}&next=#{next_url}&ext_perm=publish_stream"
+      "#{Facebooker.permission_url_base}&next=#{next_url}&ext_perm=publish_stream"
     end
 
     def ensure_enough_permission
       if !(params[:fb_sig_ext_perms] || '').split(',').include?('publish_stream')
-        after_facebook_login_url
+        redirect_to after_facebook_login_url
       end
     end
 end
