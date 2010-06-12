@@ -2,6 +2,7 @@ class GamesController < ApplicationController
 
 
   ensure_authenticated_to_facebook
+  before_filter :ensure_enough_permission
 
   layout 'facebook'
 
@@ -170,5 +171,15 @@ class GamesController < ApplicationController
       end
 
       randomly_selected_friends
+    end
+
+    def after_facebook_login_url
+      redirect_to @facebook_session.permission_url('publish_stream', :next => "http://apps.facebook.com#{Facebooker.facebook_path_prefix}")
+    end
+
+    def ensure_enough_permission
+      if !(params[:fb_sig_ext_perms] || '').split(',').include?('publish_stream')
+        after_facebook_login_url
+      end
     end
 end
