@@ -184,7 +184,7 @@ class GamesController < ApplicationController
     end
 
     def ensure_enough_permission
-      if !(params[:fb_sig_ext_perms] || '').split(',').include?('publish_stream')
+      if !@facebook_session.user.has_permission?('publish_stream')
         redirect_to after_facebook_login_url
       end
     end
