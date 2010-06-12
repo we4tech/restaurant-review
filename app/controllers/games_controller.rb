@@ -174,7 +174,8 @@ class GamesController < ApplicationController
     end
 
     def after_facebook_login_url
-      redirect_to @facebook_session.permission_url('publish_stream', :next => "http://apps.facebook.com#{Facebooker.facebook_path_prefix}")
+      redirect_to @facebook_session.permission_url(
+          'publish_stream', :next => "http://apps.facebook.com#{(request.path || '').gsub(/\/games/, Facebooker.facebook_path_prefix)}")
     end
 
     def ensure_enough_permission
