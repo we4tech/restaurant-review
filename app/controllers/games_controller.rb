@@ -35,6 +35,7 @@ class GamesController < ApplicationController
 
           begin
             publish_wall_post(@facebook_session, friend, treat_request, @restaurant, comment)
+            publish_notification(@facebook_session, friend, treat_request, @restaurant, comment)
           rescue => $e
             logger.error($e)
             flash[:notice] = $e;
@@ -127,6 +128,10 @@ class GamesController < ApplicationController
       )
     end
 
+    def publish_notification(facebook_session, friend, treat_request, restaurant, comment)
+      #facebook_session.send_notification([facebook_session.user.uid], "khawan")
+    end
+
     def attach_images(restaurant_url, restaurant)
       attached_images = []
       images = restaurant.images
@@ -174,8 +179,8 @@ class GamesController < ApplicationController
     end
 
     def after_facebook_login_url
-      redirect_to @facebook_session.permission_url(
-          'publish_stream', :next => "http://apps.facebook.com#{(request.path || '').gsub(/\/games/, Facebooker.facebook_path_prefix)}")
+      next_url = CGI.escape("http://apps.facebook.com#{(request.path || '').gsub(/\/games/, Facebooker.facebook_path_prefix)}")
+      redirect_to "#{Facebooker.permission_url_base}&next=#{next_url}&ext_perm=publish_stream"
     end
 
     def ensure_enough_permission
