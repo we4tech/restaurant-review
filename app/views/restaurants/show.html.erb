@@ -111,10 +111,19 @@
           Address
         </h4>
         <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
+          <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
+                       "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
+                       "sensor=false&markers=color:green|label:R|" +
+                       "#{@restaurant.lat},#{@restaurant.lng}&key=#{MAP_API_KEY}&size="
+             details_link = "http://maps.google.com/maps?f=q&" +
+                            "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
+                            "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"
+          %>
+
           <div class="space_5"></div>
-          <a href="http://maps.google.com/maps?f=q&hl=en&geocode=&sll=<%= @restaurant.lat %>,<%= @restaurant.lng %>" style="border: 0">
-            <img src="http://maps.google.com/maps/api/staticmap?center=<%= @restaurant.lat %>,<%= @restaurant.lng %>&zoom=14&size=280x300&sensor=false&markers=color:green|label:R|<%= @restaurant.lat %>,<%= @restaurant.lng %>&key=<%= MAP_API_KEY %>" alt="" width="299px"/>
-          </a>
+          <%= link_to image_tag(map_url + "300x300"), "#{map_url}800x800",
+                      :class => 'openUpinLightBox',
+                      :title => link_to("Browse on google map", details_link) %>
         <% end %>
         <address><%= @restaurant.address %></address>
       </div>
@@ -126,3 +135,10 @@
     <%= render :partial => 'layouts/fresh_parts/modules' %>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".openUpinLightBox").prettyPhoto();
+  });
+</script>
+

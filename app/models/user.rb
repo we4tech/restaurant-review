@@ -110,8 +110,8 @@ class User < ActiveRecord::Base
     user_log = self.user_logs.by_topic(p_topic.id).first
     if user_log
       count = StuffEvent.count(:conditions => [
-          'restaurant_id IN (?) AND user_id != ? AND created_at > ?',
-          subscribed_restaurants.collect{|r| r.id}.uniq, self.id, user_log.updated_at
+          'topic_id = ? AND restaurant_id IN (?) AND user_id != ? AND created_at > ?',
+          p_topic.id, subscribed_restaurants.collect(&:id).uniq, self.id, user_log.updated_at
       ])
       count
     else

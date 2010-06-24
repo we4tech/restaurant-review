@@ -23,6 +23,23 @@ class HomeController < ApplicationController
     @breadcrumbs = []
   end
 
+  def frontpage
+    @title = 'Recently added restaurants!'
+    @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => params[:page])
+    @top_rated_restaurants = Restaurant.most_loved(@topic, 5)
+
+    # pending module - :render_recently_added_pictures
+    load_module_preferences
+
+    @left_modules = [
+        :render_topic_box,
+        :render_search,
+        :render_tagcloud,
+        :render_most_lovable_places,
+        :render_recently_added_places]
+    @breadcrumbs = []
+  end
+
   def most_loved_places
     offset = params[:page].to_i
     offset = 1 if offset == 0
@@ -40,7 +57,7 @@ class HomeController < ApplicationController
     load_module_preferences
     
     @title = 'Most loved places!'
-    @left_modules = [:render_topic_box, :render_tagcloud, :render_recently_added_places]
+    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -63,7 +80,7 @@ class HomeController < ApplicationController
     
     @title = 'Recently reviewed places!'
     @display_last_review = true
-    @left_modules = [:render_topic_box, :render_tagcloud, :render_most_lovable_places]
+    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -87,7 +104,7 @@ class HomeController < ApplicationController
     load_module_preferences
     
     @title = "Who else wanna visit this place!"
-    @left_modules = [:render_topic_box, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_url(restaurant)]]
     @restaurant = restaurant
   end
@@ -111,7 +128,7 @@ class HomeController < ApplicationController
       load_module_preferences
 
       @title = "#{selected_module['label']} » #{tag.name}"
-      @left_modules = [:render_topic_box, :render_tagcloud, :render_recently_added_places]
+      @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_recently_added_places]
       @breadcrumbs = [['All', root_url]]
       render :action => :index
     else
@@ -152,7 +169,7 @@ class HomeController < ApplicationController
     load_module_preferences
 
     @title = "Pictures from restaurants!"
-    @left_modules = [:render_topic_box, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
   end
 
@@ -166,8 +183,12 @@ class HomeController < ApplicationController
     @title = nil if @title.nil? || @title.blank?
 
     @site_title = @title
-    @left_modules = [:render_topic_box, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url],
                     ['Photos', photos_url(:page => params[:page])]]
+  end
+
+  def static_page
+      
   end
 end

@@ -34,6 +34,11 @@
       <% words = (restaurant.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
       <%= words[0..20].join(' ') %><% if words.length > 20 %>...<% end %>
       <%= link_to 'more', restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
+      <% if !(restaurant.address || '').blank? %>
+      <br/>
+      <b><%= tt('Address') %>:</b>
+      <%= restaurant.address %>
+      <% end %>
     </div>
 
     <% if !restaurant.tags.empty? %>

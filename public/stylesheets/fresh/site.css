@@ -1,7 +1,7 @@
 body {
   font-family: verdana;
   font-size: 15px;
-  background: lightgreen;
+  background: #6CCAC7 url(/images/fresh/gradient_black_blue.png) repeat-x;
   margin: 0;
   padding: 0;
 }
@@ -51,6 +51,8 @@ h1, h2, h3, h4, h5, h6 {
 
 #site_logo {
   padding: 10px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 #site_logo h1 {
@@ -75,7 +77,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 10px;
   color: gray;
   padding: 10px;
-  border-bottom: 4px solid #fff;
 }
 
 #site_top_navigation a {
@@ -172,11 +173,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* bottom style starts */
 #site_bottom {
-  background: #3B3630 url(/images/fresh/bottom_bg.gif) repeat-x;
+  background: #000 url(/images/fresh/gradient_white_black.png) repeat-x;
   color: #fff;
   width: 98.6%;
   margin-top: 30px;
   padding: 10px;
+  padding-bottom: 20px;
 }
 
 .grid_box {
@@ -199,8 +201,13 @@ h1, h2, h3, h4, h5, h6 {
 
 #site_bottom_navigation li {
   padding: 5px;
-  border: 1px solid #ccc;
   margin-bottom: 5px;
+  color: #fff;
+  border-bottom: 1px dashed #fff;
+}
+
+#site_bottom_navigation li a {
+  
 }
 /* bottom style ends */
 
@@ -351,16 +358,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #site_center_list {
-  
+  padding-left: 35px;
 }
 
 .restaurant_details {
-  ;
 }
 
 .site_icon_info {
   margin-top: 25px;
-  font-size: 18px;
+  font-size: 190%;
+  color: #666666;
+  font-family: verdana;
+}
+
+.site_icon_info b {
+  color: #fff;
 }
 
 .site_icon_info {
@@ -388,7 +400,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .navigation {
-  background: #000;
 }
 
 .site_quote {
@@ -660,3 +671,98 @@ h1, h2, h3, h4, h5, h6 {
   padding-left: 10px;
 }
 
+.weeeFeatureBox {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+.weeeFeatureBox img.featureImage {
+  float: left;
+  max-width: 460px;
+  margin-right: 20px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  background: #fff;
+  margin-bottom: 20px;
+}
+
+.weeeFeatureBox .side-overlay {
+  float: left;
+  width: 400px;
+}
+
+.weeeFeatureBox .side-overlay p.description {
+  line-height: 25px;
+  font-size: 140%;
+  font-family: monospace
+}
+
+.weeeFeatureBox .side-overlay .description {
+  background: lightyellow;
+  padding: 5px;
+}
+
+.weeeFeatureBox .side-overlay small {
+  font-size: 80%;
+  font-style: italic;
+  color: #aaa;
+  font-family: cursive;
+}
+
+.weeeFeatureBox .side-overlay h2 {
+  font-size: 140%;
+  margin-bottom: 10px;
+  font-family: 'Tahoma'
+}
+
+
+
+.weeeFeatureBox .side-overlay .featureNav a.btnNext {
+  position: absolute;
+  top: 90px;
+  left: 945px;
+  background: url(/images/fresh/slide_nav_parts.png) -124px 0 no-repeat;
+  width: 125px;
+  height: 200px;
+}
+
+.weeeFeatureBox .side-overlay .featureNav a.btnPrevious {
+  position: absolute;
+  top: 90px;
+  left: -130px;
+  background: url(/images/fresh/slide_nav_parts.png) no-repeat 3px 0;
+  width: 125px;
+  height: 200px;
+}
+
+.weeeFeatureBox li {
+  clear: both;
+}
+
+.border {
+  border-bottom: 2px solid #ccc;
+}
+
+.grid_8 {
+  width: 575px!important;
+  padding-left: 35px!important;
+}
+
+.weeeFeatureBox .restaurant-rate {
+  float: right;
+  font-weight: bold;
+  padding: 3px;
+  font-size: 60%;
+  font-style: italic;
+  border-bottom: 1px solid red;
+}
+
+.logo {
+  margin-left: 200px;
+}
+
+.bottom_box h4 {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+}

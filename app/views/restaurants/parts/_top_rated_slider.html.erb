@@ -1,0 +1,87 @@
+<ul id="topRatedRestaurants" class="weeeFeatureBox">
+  <% @top_rated_restaurants.each_with_index do |restaurant, index| %>
+    <%
+       link = restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id)
+       all_images = restaurant.all_images
+       selected_image = all_images.rand
+    %>
+
+    <li style="display:<%= index == 0 ? 'block' : 'none' %>">
+      <%= link_to image_tag(selected_image.public_filename(:very_large), :class => 'featureImage'), link %>
+      <div class="side-overlay">
+        <small>Restaurant highlights: <%= (restaurant.address || '').blank? ? '' : "@#{restaurant.address}" %></small>
+        <h2><%= link_to restaurant.name, link %></h2>
+        <div class='restaurant-rate'>
+          <%= restaurant.reviews.loved.count %> people <span class='icon_loved'>loved</span> it!
+        </div>
+        <p class='description'><%= truncate strip_tags(restaurant.description), :length => 200 %></p>
+        <p>
+          <%= link_to 'read more...', link %>
+        </p>
+
+        <div class='featureOtherPics'>
+          <% (all_images - [selected_image]).each do |image| %>
+            <%= link_to image_tag(image.public_filename(:small)), image.public_filename(:very_large),
+                        :rel => "prettyPhoto[embedGallery#{restaurant.id}]",
+                        :title => image.caption %>
+          <% end %>
+
+          <% if restaurant.lat > 0 && restaurant.lng > 0 %>
+            <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
+                         "#{restaurant.lat},#{restaurant.lng}&zoom=14&" +
+                         "sensor=false&markers=color:green|label:R|" +
+                         "#{restaurant.lat},#{restaurant.lng}&key=#{MAP_API_KEY}&size="
+               details_link = "http://maps.google.com/maps?f=q&" +
+                              "q=#{CGI.escape(restaurant.address)}&hl=en&" +
+                              "geocode=&sll=#{restaurant.lat},#{restaurant.lng}"
+            %>
+            <%= link_to image_tag(map_url + "60x45"), "#{map_url}800x800",
+                        :title => link_to("Browse on google map", details_link) %>
+          <% end %>
+
+        </div>
+
+        <div class='featureNav'>
+          <a href='javascript:void(0)' class='btnNext'></a>
+          <a href='javascript:void(0)' class='btnPrevious'></a>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>
+<div class="clear"></div>
+<div class='space_10'></div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".featureOtherPics a").prettyPhoto();
+    
+    $('ul.weeeFeatureBox').each(function() {
+      var $root = $(this);
+      var currentIndex = 0;
+      var $items = $root.find("li");
+
+      $root.find('.btnNext').click(function() {
+        currentIndex += 1;
+
+        if (currentIndex < $items.length) {
+          $($items[currentIndex - 1]).css('display', 'none');
+          $($items[currentIndex]).css('display', 'block');
+        } else {
+          currentIndex -= 1;
+        }
+      });
+
+      $root.find('.btnPrevious').click(function() {
+        currentIndex -= 1;
+
+        if (currentIndex >= 0) {
+          $($items[currentIndex + 1]).hide("slide", {direction: 'down'}, 1000);
+          $($items[currentIndex]).css('display', 'block');
+        } else {
+          currentIndex += 1;
+        }
+      });
+    });
+  });
+</script>

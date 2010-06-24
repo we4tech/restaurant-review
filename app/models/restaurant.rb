@@ -98,6 +98,19 @@ class Restaurant < ActiveRecord::Base
     end
   end
 
+  def rand_images
+    rand_imgs = self.images
+    if rand_imgs.empty?
+      rand_imgs = self.other_images
+    end
+
+    rand_imgs
+  end
+
+  def all_images
+    (images || []) + (other_images || [])
+  end
+
   def self.find_tags_of(p_column, p_topic)
     self.find(:all,
               :select => "restaurants.#{p_column.to_s}, count(#{p_column.to_s}) as hit_count",

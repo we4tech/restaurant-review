@@ -42,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   #   end
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => "home"
+  map.root :controller => "home", :action => 'frontpage'
 
   map.resources :users, :member => { :suspend => :put, :unsuspend => :put, :purge => :delete }
   map.resource  :session
@@ -99,6 +99,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.treat_me '/games/treat_me', :controller => 'games', :action => 'treat_me'
   map.accept_treat_request '/games/accept_request/:id', :controller => 'games', :action => 'accept_request'
+  map.static_page '/static/:page_name', :controller => 'home', :action => 'static_page', 
+                  :requirements => {:page_name => /[\d\w\.\-\s]/}
 
   # See how all your routes lay out with "rake routes"
 

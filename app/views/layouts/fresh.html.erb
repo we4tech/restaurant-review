@@ -5,11 +5,18 @@
     <%= @topic.site_title %> <%= @site_title ? "&raquo; #{@site_title}" : '' %>
   </title>
 
-  <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css', 'fresh/text.css', 'fresh/site.css', :cache => 'cache_all.css' %>
-  <%= stylesheet_link_tag 'ext/prettyPhoto.css', 'ext/jquery.bt.css', :cache => 'cache_supporting.js' %>
+  <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css',
+                          'fresh/text.css', 'fresh/site.css',
+                          :cache => 'cache_all.css' %>
+  <%= stylesheet_link_tag 'ext/prettyPhoto.css', 'ext/jquery.bt.css',
+                          :cache => 'cache_supporting.js' %>
 
-  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application', :cache => 'cache_all.js' %>
-  <%= javascript_include_tag 'jquery.prettyPhoto.js', 'jquery.bt.min.js', :cache => 'cache_supporting.js' %>
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application',
+                             :cache => 'cache_all.js' %>
+
+  <%= javascript_include_tag 'jquery.prettyPhoto.js', 'jquery.bt.min.js',
+                             'jquery.easing.js', 'jquery.timers.js',
+                             :cache => 'cache_supporting.js' %>
 
   <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
 
@@ -35,7 +42,8 @@
 <div class="clear"></div>
 
 <div class="container_12 site_body">
-  <div id="site_top">
+
+ <div id="site_top">
     <div class="grid_11" id="site_logo">
       <div class="site_icon grid_1">
         <% if @topic.banner_image_path %>
@@ -79,7 +87,8 @@
 
     <div class="grid_4 align_right">
       <ul id="site_bottom_navigation">
-        <li><a href="http://hasan.we4tech.com">Contact</a></li>
+        <li><%= link_to 'Business Contact', 'mailto:biz@welltreat.us?subject=[Biz talk]' %></li>
+        <li><a href="http://hasan.we4tech.com">Developer's blog</a></li>
         <li><a href="http://github.com/we4tech/restaurant-review/">Fork on github!</a></li>
       </ul>
     </div>

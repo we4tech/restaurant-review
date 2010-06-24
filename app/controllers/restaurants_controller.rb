@@ -48,6 +48,7 @@ class RestaurantsController < ApplicationController
     load_module_preferences
     @left_modules = [
         :render_tagcloud,
+        :render_search,
         :render_most_lovable_places,
         :render_recently_added_places,
         :render_topic_box]

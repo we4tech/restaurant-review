@@ -15,11 +15,10 @@ class StuffEventsController < ApplicationController
           find(:all, :group => 'restaurants.id')
       @user_log = current_user.user_logs.by_topic(@topic.id).first
       conditions = [
-          'restaurant_id IN (?) AND user_id != ?',
-          @subscribed_restaurants.collect{|r| r.id},
-          current_user.id]
+          'topic_id = ? AND restaurant_id IN (?) AND user_id != ?',
+          @topic.id, @subscribed_restaurants.collect(&:id), current_user.id]
     else
-      conditions = []
+      conditions = ['topic_id = ?', @topic.id]
     end
 
     @stuff_events = StuffEvent.paginate(

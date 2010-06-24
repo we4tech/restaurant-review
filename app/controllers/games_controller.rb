@@ -148,12 +148,14 @@ class GamesController < ApplicationController
         end
       end
 
-      attached_images << {
-          :type => 'image',
-          :src => "http://maps.google.com/maps/api/staticmap?center=#{restaurant.lat},#{restaurant.lng}&zoom=14&size=280x300&sensor=false&markers=color:green|label:R|#{restaurant.lat},#{restaurant.lng}&key=#{MAP_API_KEY}",
-          :title => "address: #{restaurant.address}",
-          :href => "http://maps.google.com/maps?f=q&hl=en&geocode=&sll=#{restaurant.lat},#{restaurant.lng}"
-          }
+      if restaurant.lat > 0 && restaurant.lng > 0
+        attached_images << {
+            :type => 'image',
+            :src => "http://maps.google.com/maps/api/staticmap?center=#{restaurant.lat},#{restaurant.lng}&zoom=14&size=280x300&sensor=false&markers=color:green|label:R|#{restaurant.lat},#{restaurant.lng}&key=#{MAP_API_KEY}",
+            :title => "address: #{restaurant.address}",
+            :href => "http://maps.google.com/maps?f=q&q=#{CGI.escape(restaurant.address)}&hl=en&geocode=&sll=#{restaurant.lat},#{restaurant.lng}"
+            }
+      end
 
       attached_images
     end
