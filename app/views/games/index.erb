@@ -1,58 +1,58 @@
-
 <div class='selectedFriends'>
-  <h1>
-    Who should be treating <fb:name useyou='true' linked='true' uid='loggedinuser' capitalize='true'/> TODAY?<br/>
-    <fb:share-button class="url" href="http://apps.facebook.com<%= Facebooker.facebook_path_prefix %>"/> this application with friends!
+  <h1 style='font-family:fantasy; font-size:50px;'>
+    <%= image_tag '/images/fresh/food.png', :height => '120px', :style => 'float: left; margin-right: 20px' %>
+    খাওয়াবে কে আজকে ? <br/>
+    <small style='font-size: 15px; float: left; color: #777'>
+      সবসময় মুখের রুচি এক থাকে না, যদি বন্ধুগুলান একটু খাওইতো আপনারে ত হলে ত জোস! এই এপ্লিকেশন এর মাথ্যমে আপনে আপনার বন্ধুকে বলতে পারেন খাওয়াতে.
+    </small>
   </h1>
 
+  <div class='clear'></div>
+
   <% form_tag 'treat_me', :method => :post do %>
+
+    <h2 style='margin-top: 20px; font-size: 30px; margin-bottom: 20px;'>
+      কোন দোস্তের থেকে খাইতে চান ?
+    </h2>
+
+    <fb:friend-selector uid="<%= @facebook_session.user.uid %>"
+                        name="friend_sel_name" idname="friend_ids[]"/>
+
+    <div class='clear'></div>
+
     <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'/>
+
     <div class='todaysRestaurant'>
-      <h2>We have selected</h2>
+      <h2 style='font-size: 30px'>
+        বলেন এখানে খাবেন 
+      </h2>
       <input type='hidden' name='restaurant_id' value='<%= @restaurant.id %>'/>
       <%= render :partial => 'restaurants/parts/restaurant', :local => {:restaurant => @restaurant} %>
     </div>
 
     <div class='friends'>
-      <h2>
-        Ask your friends to treat you at
-        <%= link_to @restaurant.name, restaurant_long_url(
-          :canvas => false,
-          :name => (@restaurant.name || '').parameterize.to_s,
-          :id => @restaurant.id) %>
+
+
+      <h2 style='font-size: 30px;'>
+        কিছু বল্তে চাইলে বলেন  
       </h2>
-      <% @randomly_selected_friends.each do |uid, user| %>
-        <fb:user uid="<%= uid %>">
-          <div class='friendProfile'>
-            <% friend_checkbox_id = "friend_#{uid}" %>
-            <label for='<%= friend_checkbox_id %>'>
-              <fb:profile-pic uid="<%= uid %>" size='square' linked='false'/>
-              <div class='friendName'>
-                <input type='checkbox' name='friend_ids[]' id="<%= friend_checkbox_id %>" value='<%= uid %>'/>
-                <label for='<%= friend_checkbox_id %>'>
-                  <fb:name uid="<%= uid %>" firstnameonly='true' linked='false'/>
-                </label>
-              </div>
-            </label>
-          </div>
-        </fb:user>
-      <% end %>
 
-      <div class='clear'></div>
-
-      <h2>Add your message</h2>
       <div class='comment'>
         <textarea name='comment'></textarea>
       </div>
 
       <div class='buttons'>
         <label class="uiButton uiButtonConfirm uiButtonMedium">
-          <input type="submit" class="FN_call-method" value="Please please khawan!">
+          <input type="submit" class="FN_call-method" value="খাওয়ান প্লিজ!" style='font-size: 30px'/>
         </label>
       </div>
     </div>
 
   <% end %>
+
+  <div class="space_10"></div>
+  <fb:share-button class="url" href="http://apps.facebook.com<%= Facebooker.facebook_path_prefix %>"/>
+  this application with friends!
 
 </div>
 

@@ -90,6 +90,11 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff!important;
 }
 
+#site_top_navigation a.fb_button {
+  font-size: 11px!important;
+  padding: 0!important;
+}
+
 /* Top style ends */
 
 /* Center style starts */
@@ -721,19 +726,35 @@ h1, h2, h3, h4, h5, h6 {
 .weeeFeatureBox .side-overlay .featureNav a.btnNext {
   position: absolute;
   top: 90px;
-  left: 945px;
-  background: url(/images/fresh/slide_nav_parts.png) -124px 0 no-repeat;
-  width: 125px;
-  height: 200px;
+  left: 790px;
+  font-size: 200%;
+  padding: 20px;
+  background: #fff;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  display: none;
+}
+
+.weeeFeatureBox .side-overlay .featureNav a.btnNext:hover {
+  display: block;
 }
 
 .weeeFeatureBox .side-overlay .featureNav a.btnPrevious {
   position: absolute;
   top: 90px;
-  left: -130px;
-  background: url(/images/fresh/slide_nav_parts.png) no-repeat 3px 0;
-  width: 125px;
-  height: 200px;
+  left: 0px;
+  font-size: 200%;
+  background: #fff;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  display: none;
+}
+
+.weeeFeatureBox .side-overlay .featureNav a.btnPrevious:hover {
+  display: block;
 }
 
 .weeeFeatureBox li {

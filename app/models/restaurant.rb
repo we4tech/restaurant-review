@@ -50,7 +50,7 @@ class Restaurant < ActiveRecord::Base
         :order => 'count(restaurant_id) DESC',
         :offset => p_offset,
         :limit => limit})
-    reviews.collect{|r| r.restaurant}
+    reviews.collect(&:restaurant)
   end
 
   def self.count_most_loved(p_topic)

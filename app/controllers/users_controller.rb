@@ -82,12 +82,10 @@ class UsersController < ApplicationController
   end
 
   def update_facebook_connect_status
-    facebook_user_id = params[:uid]
-    facebook_session_id = params[:sid]
-    status = current_user.update_attributes(
-        :facebook_uid => facebook_user_id,
-        :facebook_sid => facebook_session_id
-    )
+    user = current_user.reload
+    user.facebook_uid = params[:uid] if params[:uid]
+    user.facebook_sid = params[:sid] if params[:sid]
+    status = user.save(false)
 
     render :text => "Update status - #{status.inspect}"
   end

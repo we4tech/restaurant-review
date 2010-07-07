@@ -42,7 +42,7 @@
       <% @related_image.photo_comments.each do |comment| %>
         <div class='comment'>
           <div class='avatar'>
-            <%= link_to(image_tag(comment.user.image.public_filename(:small),
+            <%= link_to(image_tag(comment.user.display_picture,
                                   :height => '40px', :alt => 'n/a'),
                         user_long_url(:id => comment.user.id, :login => comment.user.login),
                         :title => "#{comment.user.login}") %>

@@ -125,8 +125,12 @@ module Facebooker
         Facebooker.api_key+"_"
       end
 
+      def fb_cookie_prefix2
+        "fbs_" + Facebooker.api_key
+      end
+
       def fb_cookie_names
-        fb_cookie_names = cookies.keys.select{|k| k && k.starts_with?(fb_cookie_prefix)}
+        fb_cookie_names = cookies.keys.select{|k| k && (k.starts_with?(fb_cookie_prefix) || k.match(fb_cookie_prefix2)) }
       end
 
       def secure_with_cookies!

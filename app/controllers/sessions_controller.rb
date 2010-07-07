@@ -1,6 +1,8 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
 
+  before_filter :log_new_feature_visiting_status
+  
   # render new.rhtml
   def new
   end
@@ -51,7 +53,13 @@ class SessionsController < ApplicationController
   def destroy
     logout_killing_session!
     flash[:notice] = "You have been logged out."
+    cookies.delete("#{FacebookConnectHelper::FACEBOOK_CONNECT_COOKIE_PREFIX}#{Facebooker.api_key}")
     redirect_back_or_default('/')
+  end
+
+  def fb_destroy
+    session[FacebookConnectHelper::FACEBOOK_CONNECT_SESSION_ID] = nil    
+    cookies.delete("#{FacebookConnectHelper::FACEBOOK_CONNECT_COOKIE_PREFIX}#{Facebooker.api_key}")
   end
 
 protected

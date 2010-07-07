@@ -8,9 +8,9 @@ module Facebooker
           lang = "/#{options[:lang].to_s.gsub('-', '_')}" if options[:lang]
           # dont use the javascript_include_tag helper since it adds a .js at the end
           if request.ssl?
-            "<script src=\"https://www.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php#{lang}\" type=\"text/javascript\"></script>"
+            "<div id=\"fb-root\"></div><script src=\"https://www.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php#{lang}\" type=\"text/javascript\"></script>"
           else
-            "<script src=\"http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php#{lang}\" type=\"text/javascript\"></script>"
+            "<div id=\"fb-root\"></div><script src=\"http://connect.facebook.net/#{lang || 'en_US'}/all.js\"></script>"
           end
         end
 
@@ -33,10 +33,12 @@ module Facebooker
             options.merge!(required_features.pop.symbolize_keys)
           end
 
+          # {appId: 'your app id', status: true, cookie: true, xfbml: true}
           if request.ssl?
             init_string = "FB.init('#{Facebooker.api_key}','/xd_receiver_ssl.html', #{options[:app_settings]});"
           else
-            init_string = "FB.init('#{Facebooker.api_key}','/xd_receiver.html', #{options[:app_settings]});"
+            #init_string = "FB.init('#{Facebooker.api_key}','/xd_receiver.html', #{options[:app_settings]});"
+            init_string = "FB.init({appId: '#{Facebooker.api_key}', status: true, cookie: true, xfbml: true})"
           end
           unless required_features.blank?
              init_string = <<-FBML
@@ -87,8 +89,9 @@ module Facebooker
           callback = args.first
           options = args[1] || {}
           options.merge!(:onlogin=>callback)if callback
+          value = options.delete(:value)
 
-          content_tag("fb:login-button",nil, options)
+          content_tag("fb:login-button", value, options)
         end
 
         def fb_login_and_redirect(url, options = {})

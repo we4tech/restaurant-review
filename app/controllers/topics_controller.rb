@@ -38,6 +38,13 @@ class TopicsController < ApplicationController
            'enabled' => true,
            'limit' => 10,
            'label' => 'Search places!',
+           'bind_column' => ''},
+
+          {'name' => 'render_related_restaurants',
+           'order' => 6,
+           'enabled' => true,
+           'limit' => 5,
+           'label' => 'Similar places!',
            'bind_column' => ''}
           ]
 
@@ -102,6 +109,7 @@ class TopicsController < ApplicationController
   def edit_modules
     @topic = Topic.find(params[:id].to_i)
     @module_names = DEFAULT_MODULES.collect{|m| m['name']}
+    @all_modules = DEFAULT_MODULES.clone
     @bind_columns = Restaurant.column_names - [
         'description', 'address', 'id', 'created_at',
         'updated_at', 'user_id', 'lat', 'lng', 'topic_id'

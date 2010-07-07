@@ -44,7 +44,7 @@
     <% if !restaurant.tags.empty? %>
       <div class="associated_tags">
         <b><%= tt('Cuisines') %>:</b>
-        <%= restaurant.tags.collect {|tag| link_to(tag.name, tag_details_url(:label => 'cuisines', :tag => tag.name))}.join(', ') %>
+        <%= restaurant.tags.collect {|tag| link_to(tag.name, tag_details_url(:label => 'cuisines-tags', :tag => tag.name))}.join(', ') %>
       </div>
     <% end %>
 

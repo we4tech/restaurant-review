@@ -110,7 +110,7 @@ class GamesController < ApplicationController
           :name => (restaurant.name || '').parameterize.to_s,
           :id => restaurant.id)
 
-      message = %{asked for your treat @ #{restaurant.name}}
+      message = %{বলছে #{restaurant.name} খাওয়াতে, কি খাওয়াবেন না ? দেখি কতটুকু উদারতা আছে আপনার মাঝে}
       attached_images = attach_images(restaurant_url, restaurant)
       
       session.user.publish_to(friend,  :message => message,
@@ -122,7 +122,7 @@ class GamesController < ApplicationController
         },
 
         :action_links => [{
-            :text => 'Yes, i will treat!',
+            :text => 'হ খাওয়ামুই ত !',
             :href => "accept_request/#{treat_request.id}"
           }]
       )

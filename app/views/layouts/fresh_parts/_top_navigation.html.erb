@@ -6,7 +6,8 @@
   <div id="site_top_navigation">
     <span> <%= link_to 'home', root_url %>| </span>
     <% if not logged_in? %>
-      <%= link_to tt('login'), login_url %> |
+      <%= link_to tt('login'), login_url %> OR 
+      <fb:login-button perms="email,publish_stream,create_event,rsvp_event">Login with facebook</fb:login-button> |
       <%= link_to tt('register'), signup_url %> |
       <%= link_to tt('photos'), photos_url %>
     <% else %>
@@ -36,6 +37,11 @@
           <label for="facebook_share_checkbox">share on facebook</label>
           <% end %>
         </span> |
+      <% else %>
+        <fb:login-button perms="email,publish_stream,create_event,rsvp_event"
+                         onlogin='window.location.reload()'>
+          Auto share on Facebook
+        </fb:login-button> |
       <% end %>
 
       <% if current_user.admin? %>
@@ -43,7 +49,30 @@
       <% end %>
       
       <%= link_to 'edit account', edit_user_url(current_user) %> |
-      <%= link_to 'logout', logout_url %>
+      <% if current_user.facebook_session_exists? %>
+        <%= link_to 'logout', fb_logout_url %>
+      <% else %>
+        <%= link_to 'logout', logout_url %>
+      <% end %>
     <% end %>
   </div>
 </div>
+
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+  $(function() {
+    FB.init({appId: '<%= Facebooker.api_key %>', status: true, cookie: true, xfbml: true});
+    <% if !logged_in? %>
+      FB.Event.subscribe('auth.sessionChange', function(response) {
+        if (response.session) {
+          location.reload();
+        }
+      });
+    <% end %>
+  });
+</script>
+<% if logged_in? %>
+  <%= render :partial => 'users/parts/facebook_app_script' %>
+<% end %>
+

@@ -1,6 +1,9 @@
-<div class='grid_12'>
-  <%= render :partial => 'restaurants/parts/top_rated_slider' %>
-</div>
+<% if @topic.name == 'restaurant' %>
+  <div class='grid_12' id='featureBox'>
+    <%= render :partial => 'restaurants/parts/top_rated_slider' %>
+  </div>
+<% end %>
+
 <div class="clear"></div>
 <div class="grid_8" id="site_center_list">
   <h1>

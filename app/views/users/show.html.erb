@@ -8,9 +8,7 @@
 
     <div class='user_profile_brief'>
       <div class="grid_1">
-        <% if @user.image %>
-          <%= image_tag(@user.image.public_filename(:small), :title => @user.login, :alt => 'N/A') %>
-        <% end %>
+        <%= image_tag(@user.display_picture, :title => @user.login, :alt => 'N/A') %>
       </div>
       <div class="grid_4 user_profile_facts">
         <h4>Facts:</h4>

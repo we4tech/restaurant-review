@@ -62,4 +62,8 @@ module RestaurantsHelper
         :column => bind_column.to_sym
     }
   end
+
+  def render_related_restaurants(p_config)
+    "Hola"
+  end
 end

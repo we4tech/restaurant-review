@@ -24,7 +24,10 @@ class User < ActiveRecord::Base
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :name, :password, :password_confirmation, :facebook_sid, :facebook_uid, :remember_token, :remember_token_expires_at
+  attr_accessible :login, :email, :name, :password,
+                  :password_confirmation, :facebook_sid,
+                  :facebook_uid, :remember_token,
+                  :remember_token_expires_at
 
   has_many :restaurants
   has_many :images
@@ -56,8 +59,26 @@ class User < ActiveRecord::Base
     write_attribute :login, (value ? value.downcase : nil)
   end
 
+  def login
+    if read_attribute(:login)
+      read_attribute(:login)
+    else
+      self.name.parameterize.to_s
+    end
+  end
+
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
+  end
+
+  def display_picture
+    if self.image
+      self.image.public_filename(:very_small)
+    elsif facebook_uid.to_i > 0
+      FacebookGraphApi::display_picture(facebook_uid, 'square')
+    else
+      '/images/fresh/user.png'
+    end
   end
 
   def self.top_contributors(p_topic, p_limit = 10)
@@ -82,6 +103,69 @@ class User < ActiveRecord::Base
         :conditions => ['reviews.topic_id = ?', p_topic.id],
         :limit => p_limit
     )
+  end
+
+  def self.register_by_facebook_account(fb_session, fb_uid)
+    api = FacebookGraphApi.new(fb_session.auth_token, fb_uid)
+    user_attributes = api.find_user(fb_uid)
+    email = user_attributes['email'] || ''
+    name = user_attributes['name'] || ''
+
+    if !email.blank? && !name.blank?
+      existing_user = User.find_by_email(email)
+      existing_user = User.find_by_facebook_uid(fb_uid) if existing_user.nil?
+
+      if existing_user
+        existing_user.facebook_uid = fb_uid
+        existing_user.facebook_sid = fb_session.auth_token
+        existing_user.facebook_connect_enabled = true
+        existing_user.save(false)
+
+        existing_user.update_attribute(:state, 'active')
+      else
+        attributes = {
+            :login => find_or_build_unique_user_name(name),
+            :name => name,
+            :email => email,
+            :facebook_uid => fb_uid,
+            :facebook_sid => fb_session.session_key,
+            :activated_at => Time.now,
+            :state => 'active',
+            :facebook_connect_enabled => true
+        }
+
+        user = User.new(attributes)
+        user.save(false)
+
+        user.update_attribute(:state, 'activate')
+      end
+    else
+      # Do something else let's log him out from facebook
+      raise 'Durrr! you are one of those unlucky person for whom we haven\'t fixed this bug!
+            please let me know that i told you this crap!' 
+    end
+  end
+
+  def self.update_facebook_session(fb_uid, fb_session)
+    existing_user = User.find_by_facebook_uid(fb_uid)
+    existing_user.facebook_sid = fb_session.auth_token
+    existing_user.save(false)
+  end
+
+  private
+    def self.find_or_build_unique_user_name (name)
+      name = CGI.escape(name.parameterize.to_s)
+      if self.unique?(:login, name)
+        name
+      else
+        "#{name}-#{Time.now.to_i.to_s[6..10].to_i}"
+      end
+    end
+
+  public
+
+  def self.unique?(field, value)
+    !User.send("find_by_#{field}", value)
   end
 
   def share_on_facebook?

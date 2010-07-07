@@ -4,11 +4,11 @@
    hide_comment = hide_comment || false
 %>
 <<%= tag_name %>>
-  <% if review.user.image %>
-    <%= link_to image_tag(review.user.image.public_filename(:very_small), :width => '40px', :alt => 'N/A'), user_long_url(:id => review.user.id, :login => review.user.login), :class => 'image_small' %>
-  <% else %>
-    <%= link_to image_tag('fresh/user.png', :width => '40px', :alt => 'N/A'), user_long_url(:id => review.user.id, :login => review.user.login), :class => 'image_small' %>
-  <% end %>
+  <%= link_to image_tag(review.user.display_picture,
+                        :width => '40px', :alt => 'DP'),
+              user_long_url(:id => review.user.id,
+                            :login => review.user.login),
+              :class => 'image_small' %>
 </<%= tag_name %>>
 <<%= tag_name %> class="review <%= grid_class %>">
   <a name="review-<%= review.id %>"></a>
@@ -50,9 +50,10 @@
       <% comments.each do |comment| %>
         <div class='review_comment'>
           <span class='review_comment_author'>
-            <% if comment.user.image %>
-              <%= link_to "#{image_tag(comment.user.image.public_filename(:very_small), :width => '40px', :alt => 'N/A')} #{comment.user.login}", user_long_url(:login => comment.user.login, :id => comment.user.id)%>
-            <% end %> -
+            <%= link_to "#{image_tag(comment.user.display_picture, 
+                                     :width => '40px', :alt => 'N/A')} #{comment.user.login}",
+                        user_long_url(:login => comment.user.login,
+                                      :id => comment.user.id) %> -
           </span>
           <em><%= h(comment.content) %></em> 
           <span class="date" title="<%= comment.updated_at.strftime('%d %b %Y') %>">
