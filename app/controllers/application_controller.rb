@@ -21,6 +21,22 @@ class ApplicationController < ActionController::Base
   before_filter :check_facebook_connect_session
 
   protected
+    def notify(type, redirect)
+      case type
+        when :success
+          flash[:success] = 'Successfully completed!'
+          redirect_to redirect
+
+        when :failure
+          flash[:notice] = 'Failed to complete!'
+          if redirect.is_a?(Symbol)
+            render :action => redirect
+          else
+            redirect_to redirect
+          end
+      end
+    end
+
     def restaurant_review(p_review)
       if p_review.loved?
         '&hearts; loved and reviewed this place!'

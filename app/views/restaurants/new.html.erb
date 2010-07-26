@@ -2,10 +2,13 @@
   <h1><%= tt('Create new restaurant') %></h1>
   <div class="break"></div>
 
+  <%
+    # Fetch location from location field and split them by comma
+    # Filter by location.
+  %>
   <% form_for @restaurant do |f| %>
     <%= f.error_messages.gsub(/(restaurant)/, @topic.name.humanize) %>
     <%= render :partial => 'restaurants/parts/form_attributes_based', :locals => {:f => f} %>
     <%= f.submit 'create', :class => 'submit' %>
   <% end %>
-
 </div>

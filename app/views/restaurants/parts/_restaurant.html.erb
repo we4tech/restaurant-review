@@ -43,8 +43,12 @@
 
     <% if !restaurant.tags.empty? %>
       <div class="associated_tags">
-        <b><%= tt('Cuisines') %>:</b>
-        <%= restaurant.tags.collect {|tag| link_to(tag.name, tag_details_url(:label => 'cuisines-tags', :tag => tag.name))}.join(', ') %>
+        <b><%= tt('Features') %>:</b>
+        <%= restaurant.tags.collect {|tag|
+          link_to(tag.name, tag_details_url(
+              :label => 'cuisines-tags', :tag => tag.name),
+                  :class => "#{@tag_ids && @tag_ids.include?(tag.id) ? 'selectedTag' : ''}")
+        }.join(', ') %>
       </div>
     <% end %>
 

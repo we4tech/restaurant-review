@@ -1,0 +1,38 @@
+<div class="grid_12">
+  <h4>
+    <%= link_to 'Administration panel', admin_url %> &raquo;
+    <% if @tag_group %>
+      <%= link_to @tag_group.name, tag_groups_path %> &raquo;
+    <% end %>
+    Manage Tags
+  </h4>
+  <div class="break"></div>
+
+  <div class="clear"></div>
+  <div class="break"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topics'>
+    <% if @tag_group %>
+      <% if !@tag_group.tags.empty? %>
+        <b>Selected tags: </b>
+        <% @tag_group.tag_group_mappings.each do |tag_group_mapping| %>
+          <span>
+            [<%= tag_group_mapping.tag.name %>
+            <%= link_to 'x', tag_group_mapping_path(tag_group_mapping),
+                        :method => :delete,
+                        :confirm => 'Do you really want to remove this item?' %>]
+          </span>
+        <% end %>
+      <% else %>
+        No tag was associated!
+      <% end %>
+    <% end %>
+
+    <% if @tag_group %>
+      <%= render :partial => 'checkable_tags_for_association' %>
+    <% else %>
+      <%= render :partial => 'tags' %>
+    <% end %>
+  </div>
+</div>

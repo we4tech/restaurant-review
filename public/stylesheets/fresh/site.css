@@ -52,7 +52,9 @@ h1, h2, h3, h4, h5, h6 {
 #site_logo {
   padding: 10px;
   margin-top: 40px;
-  margin-bottom: 40px;
+  background: url(/images/promotion/reviewer-asif.png) no-repeat;
+  background-position: 100% 100%;
+  height: 300px;
 }
 
 #site_logo h1 {
@@ -371,7 +373,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .site_icon_info {
   margin-top: 25px;
-  font-size: 190%;
+  font-size: 120%;
+  line-height: 30px;
   color: #666666;
   font-family: verdana;
 }
@@ -698,7 +701,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .weeeFeatureBox .side-overlay p.description {
-  line-height: 25px;
+  line-height: 25px!important;
   font-size: 140%;
   font-family: monospace
 }
@@ -786,4 +789,50 @@ h1, h2, h3, h4, h5, h6 {
 .bottom_box h4 {
   border-bottom: 1px solid #ccc;
   margin-bottom: 10px;
+}
+
+.hreview-aggregate, .vcard {display: none;}
+
+.admin_topics {
+  margin: 10px;
+}
+
+.admin_topics .tags {
+  margin-top: 20px;
+  background: lightYellow;
+  list-style-type: none;
+}
+
+.admin_topics .tags .tag {
+  float: left;
+  width: 200px;
+  font-size: 80%;
+  background: inherit;
+  margin-bottom: 5px;
+}
+
+.recommendRestaurants {
+  margin: 10px 10px 20px 30px;
+  padding-bottom: 10px;
+  font-size: 160%;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+}
+
+.recommendRestaurants select, .recommendRestaurants input {
+  font-size: 120%;
+}
+
+.filter_box .tags {
+  font-size: 80%;
+}
+
+.inlineTag {
+  float: left;
+}
+
+.selectedTag {
+  border-bottom: 2px solid red;
+  font-size: 120%;
+  font-weight: bold;
 }

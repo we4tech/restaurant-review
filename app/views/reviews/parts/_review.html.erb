@@ -10,7 +10,7 @@
                             :login => review.user.login),
               :class => 'image_small' %>
 </<%= tag_name %>>
-<<%= tag_name %> class="review <%= grid_class %>">
+<<%= tag_name %> class="review <%= grid_class %> hreview">
   <a name="review-<%= review.id %>"></a>
   <% if !review.comment.blank? %>
     <span class="content"><%= simple_format h(review.comment) %> - </span>

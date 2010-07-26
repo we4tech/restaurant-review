@@ -1,0 +1,14 @@
+<div class='recommendRestaurants'>
+  <form action="<%= recommend_restaurants_url %>">
+    Where do you wanna eat TODAY ?
+    <select name='tag_ids[]'>
+      <% if @location_tag_group %>
+        <% @location_tag_group.tags.each do |tag| %>
+          <option value='<%= tag.id %>'><%= tag.name %></option>
+        <% end %>
+      <% end %>
+    </select>
+    <input type='submit' value='Find!'/>
+  </form>
+</div>
+<div class='clear'></div>

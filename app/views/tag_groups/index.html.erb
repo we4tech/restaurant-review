@@ -1,0 +1,29 @@
+<div class="grid_12">
+  <h4><%= link_to 'Administration panel', admin_url %> &raquo; Manage Tag Groups</h4>
+  <div class="break"></div>
+
+  <%= link_to 'Create Tag Group', new_tag_group_path %>
+  <div class="clear"></div>
+  <div class="break"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topics'>
+    <% if !@tag_groups.empty? %>
+      <% @tag_groups.each do |tag_group| %>
+        <div class='admin_topic'>
+          <b>#<%= tag_group.id %> Group: </b> <%= tag_group.name %>
+          [
+          <%= link_to 'edit', edit_tag_group_path(tag_group.id) %> |
+          <%= link_to 'manage tags', tag_group_tags_path(tag_group.id) %> |
+          <%= link_to 'delete', tag_group_path(tag_group.id),
+                      :method => :delete,
+                      :confirm => 'Do you really want to remove this tag group?' %>
+          ]
+        </div>
+      <% end %>
+    <% else %>
+      No tag group was created!
+    <% end %>
+
+  </div>
+</div>

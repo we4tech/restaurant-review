@@ -1,0 +1,23 @@
+<div class='tags'>
+  <% @tags.each do |tag| %>
+    <div class='tag'>
+      <%= tag.name %>
+    </div>
+  <% end %>
+  <div class='clear'></div>
+</div>
+<div class='break'></div>
+<div class='space_10'></div>
+
+<div>
+  <% form_tag sync_tags_url, :method => :post do %>
+    <select name='tags'>
+      <% @topic.form_attribute.fields.collect{|f| [f['label'], f['default_value']]}.each do |label, value| %>
+        <% if value && !value.empty? %>
+          <option value="<%= CGI.escape(value) %>"><%= label %></option>
+        <% end %>
+      <% end %>
+    </select>
+    <input type='submit' value='Sync tags!'/>
+  <% end %>
+</div>

@@ -1,4 +1,7 @@
 <% if @topic.name == 'restaurant' %>
+  <div class='grid_12' id='recommendBox'>
+    <%= render :partial => 'restaurants/parts/recommend' %>  
+  </div>
   <div class='grid_12' id='featureBox'>
     <%= render :partial => 'restaurants/parts/top_rated_slider' %>
   </div>

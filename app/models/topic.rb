@@ -10,6 +10,8 @@ class Topic < ActiveRecord::Base
   has_many :related_images
   has_many :restaurants
   has_many :reviews
+  has_many :tags
+  has_many :tag_groups
   has_one  :form_attribute
 
   validates_presence_of :name, :label

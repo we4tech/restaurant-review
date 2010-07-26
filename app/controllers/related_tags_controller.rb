@@ -1,0 +1,2 @@
+class RelatedTagsController < ApplicationController
+end

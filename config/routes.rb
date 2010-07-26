@@ -1,11 +1,17 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :tag_group_mappings
+
+  map.resources :related_tags
+
+  map.resources :tag_groups, :has_many => :tags, :member => {:associate => :post}
+
   map.resources :treat_requests, :member => {:accept => :get, :deny => :get}
 
   map.resources :photo_comments
 
   map.facebook_resources :tag_mappings
 
-  map.resources :tags
+  map.resources :tags, :collection => {:sync => :post}
 
   map.facebook_resources :games
 
@@ -46,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users, :member => { :suspend => :put, :unsuspend => :put, :purge => :delete }
   map.resource  :session
-  map.resources :restaurants
+  map.resources :restaurants, :collection => {:recommend => :get}
   map.resources :images
   map.resources :reviews
   map.resources :contributed_images

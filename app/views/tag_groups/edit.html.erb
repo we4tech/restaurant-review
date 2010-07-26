@@ -1,0 +1,22 @@
+<div class="grid_12">
+  <h4>
+    <%= link_to 'Administration panel', admin_url %> &raquo;
+    <%= link_to 'Manage Tag Groups', tag_groups_url %> &raquo; New
+  </h4>
+  <div class="break"></div>
+
+  <div class="clear"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topic_new'>
+    <% form_for @tag_group do |f| %>
+      <%= render :partial => 'tag_groups/parts/form', :locals => {:f => f} %>
+      <div class="clear"></div>
+      <div class="space_5"></div>
+
+      <label class="grid_4">&nbsp;</label>
+      <%= f.submit 'Update' %>
+
+    <% end %>
+  </div>
+</div>

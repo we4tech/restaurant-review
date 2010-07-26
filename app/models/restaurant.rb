@@ -31,6 +31,7 @@ class Restaurant < ActiveRecord::Base
   attr_accessor :hit_count
 
   NO_LIMIT = -1
+  RATING_LIMIT = 5
 
   def author?(p_user)
     return p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
@@ -117,6 +118,12 @@ class Restaurant < ActiveRecord::Base
               :conditions => ["#{p_column.to_s} <> '' AND topic_id = ?", p_topic.id],
               :order => 'hit_count DESC',
               :group => p_column)
+  end
+
+  def rating_out_of(p_scale = 5.0)
+    total_loves = self.reviews.loved.count.to_f
+    total_reviews = self.reviews.count.to_f
+    (total_loves / total_reviews) * p_scale
   end
 
   private

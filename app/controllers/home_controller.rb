@@ -27,6 +27,7 @@ class HomeController < ApplicationController
     @title = 'Recently added restaurants!'
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => params[:page])
     @top_rated_restaurants = Restaurant.most_loved(@topic, 5)
+    @location_tag_group = TagGroup.of('locations')
 
     # pending module - :render_recently_added_pictures
     load_module_preferences

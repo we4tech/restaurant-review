@@ -25,4 +25,12 @@ class FormAttribute < ActiveRecord::Base
         end
     end
   end
+
+  def find_field(search_keyword)
+    self.fields.each do |field|
+      if (field['label'] || '').match(/#{search_keyword}/)
+        return field
+      end
+    end
+  end
 end
