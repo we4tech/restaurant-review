@@ -1,0 +1,50 @@
+<div class="grid_8" id="site_center_list">
+  <h1>
+    <% @breadcrumbs.each do |link| %>
+      <%= link_to link.first, link.last %> &raquo;
+    <% end %><%= tt(@title) %>
+  </h1>
+  <div class="break space_5"></div>
+  <% if !@restaurants.empty? %>
+    <% @restaurants.each_with_index do |restaurant, index| %>
+      <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :index => index} %>
+    <% end %>
+
+    <div class='pagination'>
+      <%= will_paginate @restaurants %>
+    </div>
+  <% else %>
+    <h4>Nothing matched! with your requirements!, please try again! :)_)</h4>
+  <% end %>
+</div>
+
+<div class="grid_4" id="site_center_boxes">
+  <div class='site_simple_box filter_box'>
+    <h4>Filter results by -</h4>
+    <div class='space_10'></div>
+    <form action="<%= recommend_restaurants_url %>">
+      <div class='tags'>
+        <% @topic.tag_groups.each do |tag_group| %>
+          <b><%= tag_group.name %></b>
+          <div class='clear'></div>
+          <% tag_group.tags.each do |tag| %>
+            <div class='tag inlineTag'>
+              <input id='<%= element_id = "tag_#{tag.id}" %>'
+                     type='checkbox' name='tag_ids[]'
+                     <%= @tag_ids.include?(tag.id) ? 'checked="checked"' : '' %>
+                     value='<%= tag.id %>'/>
+              <label for='<%= element_id %>'><%= tag.name %></label>
+            </div>
+          <% end %>
+          <div class='clear'></div>
+          <div class='space_10'></div>
+        <% end %>
+      </div>
+      <input type='submit' value='Search again!'/>
+    </form>
+    <div class='space_10'></div>
+    <div class='clear'></div>
+  </div>
+  <div class='space_10'></div>
+  
+</div>
