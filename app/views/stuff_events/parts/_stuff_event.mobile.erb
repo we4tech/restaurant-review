@@ -1,0 +1,64 @@
+<%
+   grid_class = grid_class || 'grid_6'
+%>
+<table cellspacing="5px" class="updates_item <%= (@user_log && stuff_event.created_at > @user_log.updated_at) ? 'highlight' : '' %>">
+  <tbody>
+  <td valign="top">
+    <%= link_to image_tag(stuff_event.user.display_picture,
+                          :width => '40px', :alt => 'N/A'),
+                user_long_url(:id => stuff_event.user.id,
+                              :login => stuff_event.user.login),
+                :class => 'image_small' %>
+  </td>
+
+  <td valign="top">
+    <%= stuff_event.user.login %>
+    <% if stuff_event.event_type == StuffEvent::TYPE_REVIEW %>
+      reviewed on
+      <%= link_to stuff_event.restaurant.name,
+                  "#{restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id)}#review-#{stuff_event.review.id}" %>
+
+    <% elsif stuff_event.event_type == StuffEvent::TYPE_REVIEW_UPDATE %>
+      updated review on
+      <%= link_to stuff_event.restaurant.name,
+                  "#{restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id)}#review-#{stuff_event.review.id}" %>
+
+
+    <% elsif stuff_event.event_type == StuffEvent::TYPE_REVIEW_COMMENT %>
+      commented on
+      <%= link_to "#{stuff_event.review.user.login.camelize}'s review",
+                  "#{restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id)}#review-#{stuff_event.review.id}" %>
+      at
+      <%= link_to stuff_event.restaurant.name,
+                  restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id) %>
+
+    <% elsif stuff_event.event_type == StuffEvent::TYPE_RESTAURANT %>
+      created
+      <%= link_to stuff_event.restaurant.name,
+                  restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id) %>
+      <%= @topic.name %>
+
+    <% elsif stuff_event.event_type == StuffEvent::TYPE_RESTAURANT_UPDATE %>
+      updated
+      <%= link_to stuff_event.restaurant.name,
+                  restaurant_long_url(
+                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :id => stuff_event.restaurant.id) %>
+      <%= @topic.name %>
+    <% end %>
+    <acronym class="date" title="<%= stuff_event.created_at %>">
+      - <%= distance_of_time_in_words(Time.now, stuff_event.created_at) %>
+      ago</acronym>
+  </td>
+  </tbody>
+</table>

@@ -1,0 +1,69 @@
+<div class="grid_8" id="site_center_list">
+  <h1>
+    <% @breadcrumbs.each do |link| %>
+      <%= link_to link.first, link.last %> &raquo;
+      <% end %><%= tt(@title) %>
+  </h1>
+
+  <div class="break space_5"></div>
+
+  <div class="space_10"></div>
+  <div class='pagination'>
+    <%= will_paginate @stuff_events %>
+  </div>
+
+  <table class='stuff_events'>
+    <tbody>
+    <% @stuff_events.each do |stuff_event| %>
+      <tr class='image'>
+        <td>
+          <% if stuff_event.image %>
+            <%
+               url_title = stuff_event.image.caption
+               if url_title.nil? || url_title.blank?
+                 url_title = stuff_event.restaurant.name
+               end
+               url_title = url_title.parameterize
+            %>
+
+            <%= link_to image_tag(stuff_event.image.public_filename(:large), :alt => 'N/A'),
+                        display_photo_url(url_title, stuff_event.id, :page => params[:page]),
+                        :class => 'pic_link',
+                        :title => "#{stuff_event.image.caption} @#{link_to(
+                            stuff_event.restaurant.name,
+                            restaurant_long_url(:name => stuff_event.restaurant.name.parameterize.to_s,
+                                                :id => stuff_event.restaurant.id))}",
+                        :rel => 'prettyPhoto[pics]' %>
+          <% else %>
+            N/A
+          <% end %>
+        </td>
+      </tr>
+      <tr class='stuff_event'>
+        <td class='info'>
+          <% if stuff_event.event_type == StuffEvent::TYPE_CONTRIBUTED_IMAGE %>
+            <%= link_to stuff_event.user.login,
+                        user_long_url(:id => stuff_event.user.id,
+                                      :login => stuff_event.user.login.parameterize) %>
+            contributed to
+          <% else %>
+            Attached with
+          <% end %>
+          <%= link_to stuff_event.restaurant.name, restaurant_long_url(
+              :name => stuff_event.restaurant.name.parameterize.to_s,
+              :id => stuff_event.restaurant.id) %>
+          <span class='date'>
+              <% comments_count = stuff_event.image.photo_comments_count %>
+            Comments (<%= comments_count %>)
+            </span>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class="clear"></div>
+  <div class='pagination'>
+    <%= will_paginate @stuff_events %>
+  </div>
+</div>

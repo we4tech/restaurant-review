@@ -1,0 +1,105 @@
+<%
+   text_area_included = false
+   location_included = false
+%>
+
+<% @form_fields.each do |field| %>
+
+  <%
+     field_type = field['type']
+     text_field = field_type == 'text_field'
+     text_area = field_type == 'text_area'
+     combobox = field_type == 'combobox'
+     checkbox = field_type == 'checkbox'
+     options = field_type == 'options'
+
+     field_name = field['field']
+     address_field = field_name == 'address'
+     required = field['required']
+     field_label = field['label']
+     default_value = field['default_value']
+  %>
+  <% if text_field && !address_field %>
+    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <%= f.text_field field_name, :class => field_type %>
+    <%= f.error_message_on field_name %>
+    <br/>
+  <% elsif text_area && !address_field %>
+    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <%= f.text_area field_name, :class => field_type %>
+    <%= f.error_message_on field_name %>
+    <% text_area_included = true %>
+    <br/>
+  <% elsif text_field && address_field %>
+    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <div class="grid_6">
+      <div>
+        <div id="google_map_canvas" title="<%= "#{@restaurant.lat},#{@restaurant.lng}" %>" style="width: 300px; height: 300px"></div>
+      </div>
+      <div>
+        <%= f.text_field field_name,
+                         :class => field_type,
+                         :onkeyup => 'App.MapWidget.displayOnKeyPress(this, \'google_map_canvas\')' %>
+        <%= f.error_message_on field_name %>
+        <br/>
+        <%= f.hidden_field :lat %>
+        <%= f.hidden_field :lng %>
+      </div>
+    </div>
+    <div class="clear"></div>
+    <% location_included = true %>
+
+  <% elsif combobox %>
+    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <%= f.select field_name, default_value.split('|'), {}, :class => field_type %>
+    <%= f.error_message_on field_name %>
+    <br/>
+
+  <% elsif checkbox %>
+    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <%= f.check_box field_name, :class => field_type %>
+    <%= f.error_message_on field_name %>
+    <br/>
+
+  <% elsif options %>
+    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <div class='options_box'>
+      <% existing_value = @restaurant.send(field_name) || []  %>
+
+      <% (default_value || '').split(/\|/).sort.each do |option| %>
+        <% option.strip! %>
+        <div class='option'>
+          <input id='<%= option_field_id = "option_#{option}" %>'
+                 type='checkbox' name='restaurant[<%= field_name %>][]'
+                 value="<%= option %>" class="<%= field_type %>"
+                 <%= existing_value.include?(option) ? 'checked="checked"' : '' %>
+                 />
+          <label for="<%= option_field_id %>"><%= option %></label>
+        </div>
+      <% end %>
+    </div>
+    <%= f.error_message_on field_name %>
+    <br clear="all"/>
+
+  <% else %>
+    <b style='color:red; background: lightYellow'>Not matched type!</b><br/>
+  <% end %>
+<% end %>
+
+
+<% if location_included && params[:no_script].nil? %>
+  <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= MAP_API_KEY %>&hl=en"></script>
+  <script type="text/javascript">
+    App.MapWidget.initMap($('#google_map_canvas'), function(pPlacemark) {
+      $('#restaurant_address').val(pPlacemark.address);
+      $('#restaurant_lat').val(pPlacemark.Point.coordinates[1]);
+      $('#restaurant_lng').val(pPlacemark.Point.coordinates[0]);
+    });
+  </script>
+<% end %>
+
+<script type="text/javascript">
+  $('input, textarea').bind('keypress', function(pEvent) {
+    mFormContentChanged = true;  
+  });
+</script>

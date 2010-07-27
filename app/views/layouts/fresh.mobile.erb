@@ -1,0 +1,98 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title>
+    Mobile: <%= @topic.site_title %> <%= @site_title ? "&raquo; #{@site_title}" : '' %>
+  </title>
+
+  <%= stylesheet_link_tag 'fresh/site.mobile.css' %>
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application',
+                             :cache => 'cache_all.js' %>
+
+  <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+
+  <meta NAME="Robots" content="index,follow"/>
+  <meta NAME="Description" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+  <meta NAME="Keywords" content="Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
+
+  <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
+
+</head>
+
+<body>
+<div class='mobileContainer'>
+  <div class='top'>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <div class='logo'>
+              <% if @topic.banner_image_path %>
+                <%= link_to image_tag(@topic.banner_image_path), root_url %>
+              <% else %>
+                No banner SET!
+              <% end %>
+            </div>
+          </td>
+          <td>
+            <div class='navigation'>
+              <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+  <div class='clear'></div>
+
+  <div class='contentArea'>
+    <%
+       flash_message = flash[:notice] || flash[:error] || flash[:success] || ''
+    %>
+    <% if !flash_message.blank? %>
+      <div class="siteMessage">
+        <%= flash_message %>
+      </div>
+    <% end %>
+
+    <div class='content'>
+      <%= yield %>
+    </div>
+  </div>
+  <div class='clear'></div>
+
+  <div class='bottom'>
+    <div class='siteInfo'>
+      <%= @topic.description %>
+    </div>
+    <div class='copyrights'>
+      &copy; Well Treat Us, All rights reserved! 
+    </div>
+  </div>
+</div>
+
+<% if params[:no_script].nil? %>
+  <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+    try {
+      var pageTracker = _gat._getTracker("UA-12009085-1");
+      pageTracker._setDomainName(".welltreat.us");
+      pageTracker._trackPageview();
+    } catch(err) {
+    }</script>
+
+  <script type="text/javascript" charset="utf-8">
+    var is_ssl = ("https:" == document.location.protocol);
+    var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
+    document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+<% end %>
+
+
+</body>
+</html>

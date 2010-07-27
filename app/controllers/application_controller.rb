@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include UrlOverrideHelper
   include FacebookConnectHelper
+  include MobileHelper
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -19,6 +20,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :detect_topic_or_forward_to_default_one
   before_filter :check_facebook_connect_session
+  before_filter :detect_mobile_view
 
   protected
     def notify(type, redirect)

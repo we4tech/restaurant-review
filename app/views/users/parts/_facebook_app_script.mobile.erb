@@ -1,0 +1,50 @@
+<script type="text/javascript">
+  $(function() {
+    App.Facebook = {
+      UID: null,
+      SID: null,
+      API: null,
+      SESSION: null
+    }
+
+    App.Facebook.Events = {
+      onloggedin: function(session) {
+        if (session) {
+          var uid = App.Facebook.UID = session.uid;
+
+          if ($('#info_before').length > 0) {
+            $('#info_before, #facebook_connect_button').hide();
+            $('#info_after, #facebook_profile_box').show();
+            $.get('<%= facebook_connect_update_url %>', {'uid': uid, 'sid': session.session_key});
+          }
+
+        }
+      },
+
+      onloggedout: function() {
+        if ($('#info_before').length > 0) {
+          $('#info_before, #facebook_connect_button').show();
+          $('#info_after, #facebook_profile_box').hide();
+          $.get('<%= facebook_connect_update_url %>', {'sid': ''});
+        }
+      }
+    }
+
+
+    FB.getLoginStatus(function(r) {
+      if (r.session) {
+        App.Facebook.Events.onloggedin(r.session);
+      } else {
+        App.Facebook.Events.onloggedout();
+      }
+    });
+
+    FB.Event.subscribe('auth.sessionChange', function(response) {
+      if (response.session) {
+        App.Facebook.Events.onloggedin(response.session);
+      } else {
+        App.Facebook.Events.onloggedout();
+      }
+    });
+  });
+</script>

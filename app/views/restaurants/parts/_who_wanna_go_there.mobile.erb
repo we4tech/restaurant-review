@@ -1,0 +1,33 @@
+<% if !reviews.empty? %>
+  <h4><%= tt(title) %></h4>
+  <table class="site_simple_box">
+    <tbody>
+    <tr>
+      <% reviews.each_with_index do |review, index| %>
+        <td>
+          <% if review.user.image %>
+            <%= link_to image_tag(review.user.image.public_filename(:very_small),
+                                  :height => '20px', :alt => 'n/a'),
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login),
+                        :class => 'image_small',
+                        :title => "#{review.user.login}" %>
+          <% else %>
+            <%= link_to(image_tag('fresh/user.png', :width => '20px'),
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login),
+                        :class => 'image_small') %>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <tr>
+      <td colspan="<%= reviews.length %>">
+        <div class="small">
+          <%= link_to "#{tt('see all interested people')} &raquo;", more_link %>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+<% end %>

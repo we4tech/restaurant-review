@@ -1,0 +1,32 @@
+<div class="reviews">
+  <% reviews = restaurant.reviews %>
+
+  <% if !reviews.empty? %>
+    <%
+       total_reviews_count = restaurant.reviews.count
+       loved_count = restaurant.reviews.loved.count
+       loved_percentage = (100 / total_reviews_count) * loved_count
+    %>
+    <div>
+      <b>Review status - </b>
+      <span class="stat_item icon_review"><%= total_reviews_count %> review<%= total_reviews_count > 1 ? 's' : '' %></span>
+      <span class="stat_item icon_loved"><%= loved_count %> love<%= loved_count > 1 ? 's' : '' %></span>
+    </div>
+    <div class="break"></div>
+    <div class="clear space_10"></div>
+
+    <table>
+      <tbody>
+        <% reviews.each do |review| %>
+          <tr class='reviewBox'>
+            <%= render :partial => 'reviews/parts/review',
+                     :locals => {:tag_name => 'td', :review => review} %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <h4>No review added yet!</h4>
+  <% end %>
+</div>
+<div class="clear"></div>

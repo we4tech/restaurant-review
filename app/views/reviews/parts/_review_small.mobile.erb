@@ -1,0 +1,14 @@
+<a name="review-<%= review.id %>"></a>
+<span class="reviewer">
+  <% if review.loved? %>
+    <span class="highlight"><%= tt('loved') %></span> and reviewed
+  <% elsif review.hated? %>
+    <span class="highlight"><%= tt('hated') %></span> and reviewed
+  <% elsif review.wanna_go? %>
+    <span class="highlight"><%= tt('wanna go to') %></span>
+  <% end %>
+  <%= link_to review.restaurant.name, restaurant_long_url(:id => review.restaurant.id, :name => review.restaurant.name.parameterize.to_s) if review.restaurant %>
+</span>
+<span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">
+  updated <%= distance_of_time_in_words(review.updated_at, Time.now) %> ago.
+</span>

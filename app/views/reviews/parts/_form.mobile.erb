@@ -1,0 +1,9 @@
+<div class="review_form">
+  <% form_for Review.new, :html => {:method => :post} do |f| %>
+    <h4>My review</h4>
+    <%= render :partial => 'reviews/parts/fields', :locals => {:f => f} %>
+    <%= f.hidden_field :restaurant_id, :value => restaurant.id %>
+
+    <%= f.submit 'add my review!' %>
+  <% end %>
+</div>

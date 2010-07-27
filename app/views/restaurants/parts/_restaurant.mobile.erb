@@ -1,0 +1,79 @@
+<%
+   images = restaurant.images
+   if images.empty?
+     images = restaurant.other_images
+   end
+   index = index || 0
+   grid_class = grid_class || 'grid_6'
+%>
+<table class='restaurant'>
+  <tbody>
+    <tr>
+      <td valign="top">
+        <% if !images.empty? %>
+          <div class="grid_1">
+            <%= image_tag(images.rand.public_filename(:small), :alt => '') %>
+          </div>
+        <% end %>
+      </td>
+      <td>
+        <div class="<%= grid_class %>">
+          <h4>
+            <%= link_to restaurant.name, restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
+          </h4>
+
+          <div class="site_list_item_rating">
+            <%= render_restaurant_review_stats(restaurant) %>
+            <% if current_user && !restaurant.reviewed?(current_user) %>
+              <%= link_to '[review now!]',
+                          "#{restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id)}#new_review",
+                          :class => 'link_emp' %>
+            <% end %>
+            <% if restaurant.author?(current_user) %>
+              | <%= link_to 'edit', edit_restaurant_url(restaurant) %>
+            <% end %>
+          </div>
+
+          <div class="summary">
+            <% words = (restaurant.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
+            <%= words[0..20].join(' ') %>
+            <% if words.length > 20 %>...
+            <% end %>
+            <%= link_to 'more', restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
+            <% if !(restaurant.address || '').blank? %>
+              <br/>
+              <b><%= tt('Address') %>:</b>
+              <%= restaurant.address %>
+            <% end %>
+          </div>
+
+          <% if !restaurant.tags.empty? %>
+            <div class="associated_tags">
+              <b><%= tt('Features') %>:</b>
+              <%= restaurant.tags.collect {|tag|
+                link_to(tag.name, tag_details_url(
+                    :label => 'cuisines-tags', :tag => tag.name),
+                        :class => "#{@tag_ids && @tag_ids.include?(tag.id) ? 'selectedTag' : ''}")
+              }.join(', ') %>
+            </div>
+          <% end %>
+
+          <% if @display_last_review %>
+            <% last_review = restaurant.last_review %>
+            <% if last_review %>
+              <div class='review_quote'>
+                <%= render :partial => 'reviews/parts/review',
+                           :locals => {:review => last_review, :tag_name => 'span', :grid_class => ''} %>
+                <div class="clear"></div>
+                <div class="space_5"></div>
+                <div class="break"></div>
+                <div class="space_5"></div>
+                <%= link_to tt('check rest of the reviews...'), restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

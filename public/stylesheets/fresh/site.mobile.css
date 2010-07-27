@@ -1,0 +1,137 @@
+body {
+  margin: 0;
+}
+
+a {
+  color: #0066cc;
+}
+
+a:hover {
+  color: red;
+}
+
+a:visited {
+  color: gray;
+}
+
+a img { border: 0; }
+
+.clear { clear: both; }
+
+.mobileContainer {
+  padding: 5px;
+  font-family: verdana, serif;
+  font-size: 15px;
+  background: #6CCAC7 url(/images/fresh/gradient_black_blue.png) repeat-x;
+}
+
+.top {
+  margin-bottom: 10px;
+}
+
+.logo {
+  
+}
+
+.logo a img {
+  width: 200px;
+}
+
+.navigation {
+  color: #fff;
+}
+
+.navigation a {
+  color: crimson;
+
+}
+
+.siteMessage {
+  display: block;
+  background: lightYellow;
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 1px solid orange;
+}
+
+.contentArea {
+  background: #fff;
+  padding: 5px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+h1 {
+  border-bottom: 1px solid #ccc;
+  font-size: 120%;
+}
+
+.restaurant {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.bottom {
+  padding: 10px;
+  text-align: center;
+}
+
+.copyrights {
+  font-size: 80%;
+  color: #222;
+}
+
+.image_gallery {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.space_10 {
+  margin-top: 10px;
+}
+
+.reviewBox td.review {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.reviewBox td.review p {
+  margin: 0;
+}
+
+.reviewBox td {
+  font-weight: bold;
+}
+
+.review_comments {
+  margin-top: 5px;
+  padding: 5px;
+  border-left: 2px solid #ccc;
+  background: #f0f0f0;
+}
+
+.review_comments td {
+  vertical-align: top;
+  border-bottom: 1px dotted #ccc;
+  font-weight: normal;
+  padding: 5px;
+}
+
+textarea {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 5px;
+}
+
+.updates_item tr td {
+  border-bottom: 1px solid #ccc;
+}
+
+.pagination {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

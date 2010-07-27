@@ -1,0 +1,178 @@
+<div id="site_center">
+  <div class="grid_8 restaurant_details">
+    <div class="breadcrumbs">
+      <%= link_to @topic.name.humanize.pluralize, root_url %> &raquo;
+      <span class="review_tools">
+        <% if @restaurant.author?(current_user) %>
+          (<%= link_to 'edit', edit_restaurant_url(:id => @restaurant.id) %>)
+        <% end %>
+      </span>
+    </div>
+    <div class="break space_5"></div>
+
+    <div class="restaurant_details">
+      <h1><%= @restaurant.name %></h1>
+      <p>
+        <%= render :partial => 'images/parts/image_gallery' %>
+        <%= simple_format @restaurant.description %>
+      </p>
+
+      <div class='properties'>
+        <% @form_fields.each do |field| %>
+          <%
+             field_label = field['label']
+             field_name = field['field']
+             field_type = field['type']
+             display = field['display']
+             field_value = field_name ? @restaurant.send(field_name) : nil
+          %>
+          <% if field_value && display %>
+            <div class="grid_2">
+              <strong><%= tt(field_label, :group => :view) %></strong>
+            </div>
+            <div class="grid_4">
+              <% if field_type == 'checkbox' %>
+                <%= field_value == true ? 'yes' : 'no' %>
+              <% elsif field_type == 'options' %>
+                <%= (field_value || []).collect{|t|
+                  link_to(t, tag_details_url(
+                      :label => 'tag-cloud',
+                      :tag => url_escape(t)))
+                }.join(', ')
+                %>
+              <% else %>
+                <%= h field_value %>
+              <% end %>
+            </div>
+            <div class="clear"></div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="clear"></div>
+      <div class="space_10"></div>
+
+      <% if !(@restaurant.address || '').blank? %>
+        <div class="site_simple_box restaurant_address">
+          <h4>
+            Address
+          </h4>
+          <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
+            <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
+                "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
+                "sensor=false&markers=color:green|label:R|" +
+                "#{@restaurant.lat},#{@restaurant.lng}&key=#{MAP_API_KEY}&size="
+               details_link = "http://maps.google.com/maps?f=q&" +
+                   "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
+                   "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"
+            %>
+
+            <div class="space_5"></div>
+            <%= link_to image_tag(map_url + "200x200"), "#{map_url}500x500",
+                        :class => 'openUpinLightBox',
+                        :title => link_to("Browse on google map", details_link) %>
+          <% end %>
+          <address><%= @restaurant.address %></address>
+        </div>
+      <% end %>
+
+      <div class="space_10"></div>
+
+      <div class="clear"></div>
+      <div class="bookmark_tools">
+        <%= distance_of_time_in_words(@restaurant.created_at, Time.now) %>
+        ago added by <%= link_to @restaurant.user.login, user_long_url(:id => @restaurant.user.id, :login => @restaurant.user.login) %>.
+
+        <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech"><img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech"></script>
+      </div>
+      <div class="break"></div>
+      <div class="space_5"></div>
+    </div>
+    <div class="clear"></div>
+
+    <% if current_user && @allow_contributed_image_upload %>
+      <%= render :partial => 'contributed_images/parts/add'%>
+    <% end %>
+
+    <%= render :partial => 'contributed_images/parts/image_gallery' %>
+
+    <div class="clear space_10"></div>
+    <%= render :partial => 'reviews/parts/restaurant_review', :locals => {:restaurant => @restaurant} %>
+
+    <div class="space_10"></div>
+    <% if current_user %>
+      <% if !(user_review = current_user.reviews.restaurant(@restaurant.id).first) %>
+        <%= render :partial => 'reviews/parts/form', :locals => {:restaurant => @restaurant} %>
+      <% else %>
+        <div class='highlight'>
+          You have reviewed <%= tt('this place') %> before!,
+          do you think <%= tt('this place') %> is no longer cOoL ?? why don't you change it right here!
+          say your strong opinion :)_) <br/> - 
+
+          <a href='javascript: void(0)' onclick="$('#edit_review_<%= user_review.id %>').show()">edit your existing review!</a>
+        </div>
+        <%= render :partial => 'reviews/parts/edit_form', :locals => {:review => user_review} %>
+      <% end %>
+    <% else %>
+      Please <%= link_to 'login', login_url %> to review this place! 
+    <% end %>
+    <div class="space_10"></div>
+  </div>
+
+  <div class="grid_4" id="site_center_boxes">
+
+    <% if @topic.name == 'restaurant' %>
+      <div class="site_simple_box restaurant_address" align="center">
+        <a href='mailto:biz@welltreat.us?subject=[BIZ knock knock]'
+           title="Do you own this restaurant?">
+          <%= image_tag('fresh/button_do_u_own_this.png')%>
+        </a>
+      </div>
+      <div class="clear"></div>
+      <div class="space_10"></div>
+    <%end %>
+
+    
+    <div class="clear"></div>
+    <%= render_who_wanna_go_there(@restaurant) %>
+    <div class="space_10"></div>
+
+  </div>
+</div>
+
+<div class="hreview-aggregate">
+   <span class="item">
+      <span class="<%= I18n.locale.to_s %>"><%= @restaurant.name %></span>
+   </span>
+   <span class="rating">
+      <span class="average"><%= @restaurant.rating_out_of(Restaurant::RATING_LIMIT) %></span> out of
+      <span class="best"><%= Restaurant::RATING_LIMIT %></span>
+   </span>
+   based on
+   <span class="count"><%= @restaurant.reviews.loved.count %></span> ratings.
+   <span class="votes"><%= @restaurant.reviews.count %></span> user reviews.
+</div>
+
+<div class="vcard">
+  <span class="<%= I18n.locale.to_s %> org"><%= @restaurant.name %></span>
+  Located at
+  <div class="adr">
+    <%= @restaurant.address %>
+  </div>
+   <span class="geo">
+      <span class="latitude">
+         <span class="value-title" title="<%= @restaurant.lat %>"></span>
+      </span>
+      <span class="longitude">
+         <span class="value-title" title="<%= @restaurant.lng %>"></span>
+      </span>
+   </span>
+</div>
+
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".openUpinLightBox").prettyPhoto();
+  });
+</script>
+

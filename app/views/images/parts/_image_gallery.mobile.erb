@@ -1,0 +1,37 @@
+<% images = @restaurant.images %>
+<% if !images.empty? %>
+  <%
+     images = images.shuffle
+     first_image = images.first
+  %>
+  <table class="image_gallery">
+    <tbody>
+      <tr>
+        <td align="center">
+          <%= link_to(image_tag(first_image.public_filename(:large),
+                                :class => 'large_image',
+                                :alt => 'N/A'),
+                      "#{root_url}#{first_image.public_filename(:very_large)}",
+                      :title => first_image.caption,
+                      :rel => 'prettyPhoto[gallery]') %>
+
+        </td>
+      </tr>
+
+      <tr align="center">
+        <% rest_images = images[1..images.length] %>
+        <% if !rest_images.empty? %>
+          <td class="gallery_links">
+            <% rest_images.each do |image| %>
+              <%= link_to(image_tag(image.public_filename(:small),
+                                    :alt => 'N/A'),
+                          "#{root_url}#{image.public_filename(:very_large)}",
+                          :rel => 'prettyPhoto[gallery]',
+                          :title => image.caption) %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
