@@ -3,4 +3,6 @@ class TagMapping < ActiveRecord::Base
   belongs_to :restaurant
   belongs_to :user
   belongs_to :topic
+
+  validates_uniqueness_of :tag_id, :scope => :restaurant_id
 end

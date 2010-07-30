@@ -4,7 +4,8 @@
       <%= link_to @topic.name.humanize.pluralize, root_url %> &raquo;
       <span class="review_tools">
         <% if @restaurant.author?(current_user) %>
-          (<%= link_to 'edit', edit_restaurant_url(:id => @restaurant.id) %>)
+          (<%= link_to 'edit', edit_restaurant_url(:id => @restaurant.id) %>,
+          <%= link_to 'edit tags', edit_tags_restaurant_url(@restaurant) %>)
         <% end %>
       </span>
     </div>

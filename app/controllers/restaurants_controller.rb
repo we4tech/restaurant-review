@@ -134,7 +134,47 @@ class RestaurantsController < ApplicationController
     redirect_to edit_restaurant_url(:id => current_user.restaurants.by_topic(@topic.id).first.id)
   end
 
+  def edit_tags
+    @restaurant = Restaurant.find(params[:id].to_i)
+    @tags = @topic.tags
+    session[:last_url] = request.env['HTTP_REFERER']
+  end
+
+  #
+  # TODO: It has hard coded binding with long_array
+  #
+  def save_tags
+    @restaurant = Restaurant.find(params[:id].to_i)
+
+    tag_ids = (params[:tag_ids] || []).collect(&:to_i).compact
+    if tag_ids.empty?
+      flash[:notice] = 'No tags were selected!'
+      redirect_to edit_tags_restaurant_path(@restaurant)
+    else
+      @restaurant.tag_mappings.destroy_all
+      update_tag_mappings(tag_ids, @restaurant)
+
+      flash[:success] = 'Stored tag maps!'
+      redirect_to session[:last_url] || restaurant_long_route_url(
+          url_escape(@topic.name.pluralize),
+          url_escape(@restaurant.name), @restaurant.id)
+    end
+
+  end
+
   private
+    def update_tag_mappings(tag_ids, restaurant)
+      tags = Tag.find(tag_ids)
+      tags.each do |tag|
+        TagMapping.create(
+            :topic => @topic,
+            :restaurant => restaurant,
+            :tag => tag,
+            :user => restaurant.user)
+      end
+
+      restaurant.update_attribute(:long_array, tags.collect(&:name))
+    end
 
     def topic_imposed_limit_allows?
       form_attribute = @topic.form_attribute

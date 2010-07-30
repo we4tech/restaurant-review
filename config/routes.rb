@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users, :member => { :suspend => :put, :unsuspend => :put, :purge => :delete }
   map.resource  :session
-  map.resources :restaurants
+  map.resources :restaurants, :member => {:edit_tags => :get, :save_tags => :post}
   map.resources :images
   map.resources :reviews
   map.resources :contributed_images

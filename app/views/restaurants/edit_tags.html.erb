@@ -1,0 +1,38 @@
+<%
+   tag_ids = @tags.collect(&:id)
+   restaurant_tag_ids = @restaurant.tags.collect(&:id)
+%>
+
+<div id="site_center">
+  <div class="grid_16">
+    <h1>Edit tags &raquo; <%= @restaurant.name %></h1>
+
+    <% form_tag save_tags_restaurant_path(@restaurant) do %>
+      <div class='space_10'></div>
+      <input type='submit' value='Update tags' class='submit' style='float: right'/>
+
+      <div class='clear'></div>
+      <div class='space_10'></div>
+      <div class='break'></div>
+      <div class='space_10'></div>
+      <div class='tags'>
+        <% @tags.each do |tag| %>
+          <div class='tag' style='float: left; border: 1px solid #ccc; margin: 5px; padding: 5px;'>
+            <input type='checkbox'
+                   name='tag_ids[]' value='<%= tag.id %>'
+                   id='tag_<%= tag.id %>'
+                   <%= restaurant_tag_ids.include?(tag.id) ? 'checked="checked"' : '' %>/>
+            <label for='tag_<%= tag.id %>'><%= tag.name %></label>
+          </div>
+        <% end %>
+        <div class='clear'></div>
+      </div>
+      <div class='space_10'></div>
+      <div class='break'></div>
+      <div class='space_10'></div>
+      <input type='submit' value='Update tags' class='submit' style='float: right'/>
+
+      <div class='clear'></div>
+    <% end %>
+  </div>
+</div>

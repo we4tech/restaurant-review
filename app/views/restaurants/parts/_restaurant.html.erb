@@ -27,6 +27,7 @@
       <% end %>
       <% if restaurant.author?(current_user) %>
         | <%= link_to 'edit', edit_restaurant_url(restaurant) %>
+        | <%= link_to 'edit tags', edit_tags_restaurant_url(restaurant) %>
       <% end %>
     </div>
 
