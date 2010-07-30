@@ -1,6 +1,8 @@
-<div class='site_simple_box'>
-  <fb:like href="<%= request.url %>"></fb:like>
-</div>
+<% if ViewContext::CONTEXT_RESTAURANT_DETAILS != @view_context %>
+  <div class='site_simple_box'>
+    <fb:like href="<%= request.url %>" width='310'></fb:like>
+  </div>
+<% end %>
 <div class='space_10'></div>
 
 <% (@left_modules || []).each do |module_name| %>

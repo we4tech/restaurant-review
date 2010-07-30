@@ -55,6 +55,7 @@ class RestaurantsController < ApplicationController
                      " community".gsub('"', '\'')
 
     load_module_preferences
+    @view_context = ViewContext::CONTEXT_RESTAURANT_DETAILS
     @left_modules = [
         :render_tagcloud,
         :render_search,
