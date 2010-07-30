@@ -1,9 +1,10 @@
-<fb:tabs>
-  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>' title="Today's treat" <%= @selected_tab_index.to_i == 0 ? 'selected="true"' : '' %>/>
-  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/my_requests' title='My requests' <%= @selected_tab_index.to_i == 1 ? 'selected="true"' : '' %>/>
-  <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/accepted_my_request' title='Gonna treat me' <%= @selected_tab_index.to_i == 2 ? 'selected="true"' : '' %>/>
-</fb:tabs>
-
+<% if !@tab_mode %>
+  <fb:tabs>
+    <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>' title="Today's treat" <%= @selected_tab_index.to_i == 0 ? 'selected="true"' : '' %>/>
+    <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/my_requests' title='My requests' <%= @selected_tab_index.to_i == 1 ? 'selected="true"' : '' %>/>
+    <fb:tab-item href='<%= Facebooker.facebook_path_prefix %>/accepted_my_request' title='Gonna treat me' <%= @selected_tab_index.to_i == 2 ? 'selected="true"' : '' %>/>
+  </fb:tabs>
+<% end %>
 <div style="margin-top: 10px"></div>
 <% if flash[:notice] %>
   <fb:error>

@@ -1,8 +1,9 @@
 class GamesController < ApplicationController
 
 
-  ensure_authenticated_to_facebook
-  before_filter :ensure_enough_permission
+  ensure_authenticated_to_facebook :except => [:accepted_my_request]
+  before_filter :detect_fb_session, :only => [:accepted_my_request]
+  before_filter :ensure_enough_permission, :except => [:accepted_my_request]
 
   layout 'facebook'
 
@@ -188,6 +189,17 @@ class GamesController < ApplicationController
     def ensure_enough_permission
       if !@facebook_session.user.has_permission?('publish_stream')
         redirect_to after_facebook_login_url
+      end
+    end
+
+    def detect_fb_session
+      @facebook_session = Facebooker::Session.create
+      @facebook_session.secure_with!(
+          params[:fb_sig_profile_session_key] || params[:fb_sig_session_key],
+          params[:fb_sig_profile_user] || params[:fb_sig_user])
+
+      if params[:fb_sig_in_profile_tab].to_i == 1
+        @tab_mode = true
       end
     end
 end
