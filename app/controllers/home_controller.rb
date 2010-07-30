@@ -113,7 +113,7 @@ class HomeController < ApplicationController
   def tag_details
     label = params[:label]
     label = label.gsub('-', ' ').downcase
-    tag_string = URI.unescape(params[:tag])
+    tag_string = (URI.unescape(params[:tag]) || '').gsub('-', ' ').downcase
     tag = Tag.find_by_name_and_topic_id(tag_string, @topic.id)
 
     # Find out associated label

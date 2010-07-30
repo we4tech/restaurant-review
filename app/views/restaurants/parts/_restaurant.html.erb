@@ -46,7 +46,7 @@
         <b><%= tt('Features') %>:</b>
         <%= restaurant.tags.collect {|tag|
           link_to(tag.name, tag_details_url(
-              :label => 'cuisines-tags', :tag => tag.name),
+              :label => 'cuisines-tags', :tag => url_escape(tag.name)),
                   :class => "#{@tag_ids && @tag_ids.include?(tag.id) ? 'selectedTag' : ''}")
         }.join(', ') %>
       </div>

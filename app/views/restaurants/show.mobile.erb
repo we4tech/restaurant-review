@@ -36,7 +36,7 @@
               <% elsif field_type == 'options' %>
                 <%= (field_value || []).collect{|t|
                   link_to(t, tag_details_url(
-                      :label => 'tag-cloud',
+                      :label => 'cuisines-tags',
                       :tag => url_escape(t)))
                 }.join(', ')
                 %>
