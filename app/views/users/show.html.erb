@@ -20,6 +20,8 @@
         Already <span class="icon_loved">loved</span> <span class="highlight"><%= @user.reviews.loved.count %></span> and
         <span class="icon_hated">hated</span> <span class="highlight"><%= @user.reviews.hated.count %></span> <%= @topic.label.pluralize %>.<br/>
         Already showed interest <span class="highlight">to visit <%= @user.reviews.wanna_go.count %></span> <%= @topic.label.pluralize %>.<br/>
+
+        <div class='space_10'></div>
         <a href='#'><%= tt('Ask him/her to treat you!') %></a>
         <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech"><img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech"></script>
       </div>
@@ -49,6 +51,10 @@
   </div>
 
   <div class="grid_6" id="site_center_boxes">
+    <div class='space_10'></div>
+    <fb:like href="<%= request.url %>"></fb:like>
+    <div class='space_10'></div>
+    
     <% if !@reviews.empty? %>
       <h4><%= tt('Recently reviewed restaurants!') %></h4>
       <div class="break"></div>

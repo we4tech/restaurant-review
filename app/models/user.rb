@@ -142,7 +142,7 @@ class User < ActiveRecord::Base
     else
       # Do something else let's log him out from facebook
       raise 'Durrr! you are one of those unlucky person for whom we haven\'t fixed this bug!
-            please let me know that i told you this crap!' 
+            please let me know that i told you this crap!' + " data - #{user_attributes.inspect}" 
     end
   end
 
