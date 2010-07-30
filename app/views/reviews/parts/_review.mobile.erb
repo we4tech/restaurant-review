@@ -33,7 +33,7 @@
     <% if logged_in? %>
       [<a class="date add_comment_link" href='javascript: void(0)'
           rel='<%= review.id %>'
-          id="add_comment_link_<%= review.id %>">add your comment!</a>]
+          id="add_comment_link_<%= review.id %>">reply!</a>]
     <% end %>
     <% if hide_comment && review.review_comments.count > 0 %>
       <a href='javascript:void(0)'>show comments</a>
