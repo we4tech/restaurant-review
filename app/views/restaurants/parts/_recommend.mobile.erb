@@ -1,7 +1,7 @@
 <div class='recommendRestaurants'>
-  <form action="<%= recommend_restaurants_url %>" id='recommend_form'>
+  <form action="<%= recommend_url %>" id='recommend_form'>
     Where do you wanna eat TODAY ?
-    <select name='tag_ids[]' onchange="$('#recommend_form').submit()">
+    <select name='tag_ids[]' onchange="document.getElementById('recommend_form').submit()">
       <% if @location_tag_group %>
         <% @location_tag_group.tags.each do |tag| %>
           <option value='<%= tag.id %>'><%= tag.name %></option>

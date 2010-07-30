@@ -52,7 +52,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :users, :member => { :suspend => :put, :unsuspend => :put, :purge => :delete }
   map.resource  :session
-  map.resources :restaurants, :collection => {:recommend => :get}
+  map.resources :restaurants
   map.resources :images
   map.resources :reviews
   map.resources :contributed_images
@@ -103,6 +103,7 @@ ActionController::Routing::Routes.draw do |map|
   map.display_photo '/photos/:title/:id', :controller => 'home',
                     :action => 'show_photo',
                     :requirements => {:title => /[\w\d\.\-]+/}
+  map.recommend '/recommend', :controller => 'home', :action => 'recommend'
 
   map.treat_me '/games/treat_me', :controller => 'games', :action => 'treat_me'
   map.accept_treat_request '/games/accept_request/:id', :controller => 'games', :action => 'accept_request'
