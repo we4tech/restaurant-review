@@ -12,6 +12,7 @@
 
     <div class="restaurant_details">
       <h1><%= @restaurant.name %></h1>
+      <fb:like href="<%= request.url %>"></fb:like>
       <p>
         <%= render :partial => 'images/parts/image_gallery' %>
         <%= simple_format @restaurant.description %>
