@@ -1,3 +1,8 @@
+<div class='site_simple_box'>
+  <fb:like href="<%= request.url %>"></fb:like>
+</div>
+<div class='space_10'></div>
+
 <% (@left_modules || []).each do |module_name| %>
   <% mod_pref = @modules_pref[module_name] %>
   <% if mod_pref && mod_pref['enabled'] %>
