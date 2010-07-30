@@ -2,6 +2,13 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+
+  include ExceptionNotification::ExceptionNotifiable
+
+  if Rails.env != 'development' && Rails.env != 'test'
+    alias :rescue_action_locally :rescue_action_in_public
+  end
+
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
   include ApplicationHelper
