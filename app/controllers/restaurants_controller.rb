@@ -44,6 +44,15 @@ class RestaurantsController < ApplicationController
     @form_fields = @topic.form_attribute.fields
     @allow_image_upload = @topic.form_attribute.allow_image_upload
     @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+    @meta_description = "Read unbiased and friendly user reviews of " +
+                        "#{@restaurant.rating_out_of(Restaurant::RATING_LIMIT)}" + 
+                        " out #{Restaurant::RATING_LIMIT} rated "
+                        "'#{@restaurant.name}' from #{@restaurant.address}. " +
+                        " #{@restaurant.reviews.loved.count} out of " +
+                        "#{@restaurant.reviews.count} people loved this restaurant!"
+    @meta_keywords = "#{@restaurant.tags.collect(&:name).join(', ')} " +
+                     "#{@restaurant.address}, Bangladeshi, restaurant, review," +
+                     " community".gsub('"', '\'')
 
     load_module_preferences
     @left_modules = [
