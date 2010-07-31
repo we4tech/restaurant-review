@@ -4,4 +4,6 @@
 # User-Agent: *
 # Disallow: /
 User-agent: *
+Disallow: /tags/cuisines/
+Disallow: /tags/tag-cloud/
 Allow: /

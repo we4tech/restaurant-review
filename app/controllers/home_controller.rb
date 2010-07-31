@@ -124,6 +124,11 @@ class HomeController < ApplicationController
       end
     end
 
+    if !selected_module
+      render :status => 404, :text => 'This url doesn\'t exists'
+      return
+    end
+
     if tag
       @restaurants = tag.restaurants.paginate :page => params[:page]
       load_module_preferences
@@ -134,7 +139,7 @@ class HomeController < ApplicationController
       render :action => :index
     else
       flash[:notice] = "Invalid tag label - #{label}"
-      redirect_to :back
+      redirect_to root_url
     end
   end
 
