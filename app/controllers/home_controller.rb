@@ -200,6 +200,9 @@ class HomeController < ApplicationController
 
   def recommend
     @tag_ids = params[:tag_ids] || []
+    if @tag_ids.is_a?(Hash)
+      @tag_ids = @tag_ids.values
+    end
 
     if @tag_ids.empty?
       @restaurants = []
