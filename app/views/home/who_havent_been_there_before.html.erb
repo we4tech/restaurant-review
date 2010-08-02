@@ -2,7 +2,7 @@
   <h1>
     <% @breadcrumbs.each do |link| %>
       <%= link_to link.first, link.last %> &raquo;
-    <% end %><%= tt(@title) %>
+    <% end %><%= @title %>
   </h1>
   <div class="break space_5"></div>
   

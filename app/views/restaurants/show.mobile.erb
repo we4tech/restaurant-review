@@ -4,7 +4,8 @@
       <%= link_to @topic.name.humanize.pluralize, root_url %> &raquo;
       <span class="review_tools">
         <% if @restaurant.author?(current_user) %>
-          (<%= link_to 'edit', edit_restaurant_url(:id => @restaurant.id) %>)
+          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>
+          , <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(@restaurant) %>)
         <% end %>
       </span>
     </div>
@@ -54,7 +55,7 @@
       <% if !(@restaurant.address || '').blank? %>
         <div class="site_simple_box restaurant_address">
           <h4>
-            Address
+            <%= t('fields.address') %>
           </h4>
           <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
             <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
@@ -69,7 +70,7 @@
             <div class="space_5"></div>
             <%= link_to image_tag(map_url + "200x200"), "#{map_url}500x500",
                         :class => 'openUpinLightBox',
-                        :title => link_to("Browse on google map", details_link) %>
+                        :title => link_to(t('fields.map'), details_link) %>
           <% end %>
           <address><%= @restaurant.address %></address>
         </div>
@@ -80,9 +81,19 @@
       <div class="clear"></div>
       <div class="bookmark_tools">
         <%= distance_of_time_in_words(@restaurant.created_at, Time.now) %>
-        ago added by <%= link_to @restaurant.user.login, user_long_url(:id => @restaurant.user.id, :login => @restaurant.user.login) %>.
+        <%= t('label.ago') %> <%= t('label.added_by') %>
+        <%= link_to @restaurant.user.login, user_long_url(
+            :id => @restaurant.user.id, :login => @restaurant.user.login) %>.
 
-        <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech"><img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech"></script>
+        <a class="addthis_button"
+           href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech">
+          <img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif"
+               width="125" height="16" alt="Bookmark and Share"
+               style="border:0"/>
+        </a>
+        <script type="text/javascript"
+                src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech">
+        </script>
       </div>
       <div class="break"></div>
       <div class="space_5"></div>
@@ -104,16 +115,16 @@
         <%= render :partial => 'reviews/parts/form', :locals => {:restaurant => @restaurant} %>
       <% else %>
         <div class='highlight'>
-          You have reviewed <%= tt('this place') %> before!,
-          do you think <%= tt('this place') %> is no longer cOoL ?? why don't you change it right here!
-          say your strong opinion :)_) <br/> - 
-
-          <a href='javascript: void(0)' onclick="$('#edit_review_<%= user_review.id %>').show()">edit your existing review!</a>
+          <%= t('label.existing_review_edit', :place => t('label.this_place'))%>
+          <a href='javascript: void(0)'
+             onclick="$('#edit_review_<%= user_review.id %>').show()">
+            <%= t('nav.edit_existing_review') %></a>
         </div>
-        <%= render :partial => 'reviews/parts/edit_form', :locals => {:review => user_review} %>
+        <%= render :partial => 'reviews/parts/edit_form',
+                   :locals => {:review => user_review} %>
       <% end %>
     <% else %>
-      Please <%= link_to 'login', login_url %> to review this place! 
+      <%= t('label.login_required_to_review', :link => link_to(t('nav.login'), login_url)) %>
     <% end %>
     <div class="space_10"></div>
   </div>
@@ -123,7 +134,7 @@
     <% if @topic.name == 'restaurant' %>
       <div class="site_simple_box restaurant_address" align="center">
         <a href='mailto:biz@welltreat.us?subject=[BIZ knock knock]'
-           title="Do you own this restaurant?">
+           title="<%= t('title.own_this') %>">
           <%= image_tag('fresh/button_do_u_own_this.png')%>
         </a>
       </div>

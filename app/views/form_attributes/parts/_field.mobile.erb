@@ -1,0 +1,48 @@
+<%
+   field = field || false
+%>
+<div class='field' id="<%= field_id = "field_#{rand}".gsub('.', '') %>">
+  <div class='label grid_10'>
+    <input type='text' name="site_fields[][index]" size="1" value="<%= field ? field['index'] : 0 %>"/>
+    <select name="site_fields[][type]">
+      <% @field_types.each do |field_type| %>
+        <% if field && field['type'] == field_type.to_s %>
+          <option value="<%= field_type.to_s %>" selected="selected"><%= field_type.to_s.humanize %></option>
+        <% else %>
+          <option value="<%= field_type.to_s %>"><%= field_type.to_s.humanize %></option>
+        <% end %>
+      <% end %>
+    </select>
+
+    <select name="site_fields[][field]">
+      <% @available_fields.each do |column_name| %>
+        <% if field && field['field'] == column_name.to_s %>
+          <option value="<%= column_name %>" selected="selected"><%= column_name.humanize %></option>
+        <% else %>
+          <option value="<%= column_name %>"><%= column_name.humanize %></option>
+        <% end %>
+      <% end %>
+    </select>
+
+    <input type='text' name="site_fields[][label]" value="<%= field ? field['label'] : '' %>" />
+    <input type='text' name="site_fields[][default_value]" value="<%= field ? field['default_value'] : '' %>" />
+
+    <% if field && field['required'] %>
+      <input type='checkbox' name="site_fields[][required]" value="1" checked="checked"/>
+    <% else %>
+      <input type='checkbox' name="site_fields[][required]" value="1" />
+    <% end %>
+    required?
+
+    <% if field && field['display'] %>
+      <input type='checkbox' name="site_fields[][display]" value="1" checked="checked"/>
+    <% else %>
+      <input type='checkbox' name="site_fields[][display]" value="1" />
+    <% end %>
+    display?
+
+    <a href='javascript: void(0)'
+       onclick="$('#<%= field_id %>, #<%= field_id %>_br').remove()">(X)</a>
+  </div>
+</div>
+<br clear="all" id='<%= field_id %>_br'/>

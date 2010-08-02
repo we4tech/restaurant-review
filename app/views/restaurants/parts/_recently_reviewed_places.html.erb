@@ -1,6 +1,6 @@
 <% if !reviews.empty? %>
   <div class="site_simple_box">
-    <h4><%= tt(config['label']) %></h4>
+    <h4><%= tt("module.#{config['label']}") %></h4>
     <div class="space_5"></div>
 
     <% reviews.each_with_index do |review, index| %>
@@ -22,11 +22,11 @@
                       user_long_url(:login => review.user.login,
                                     :id => review.user.id) %>
           <% if review.loved? %>
-            <%= tt('loved') %>
+            <%= tt('label.loved') %>
           <% elsif review.hated? %>
-            <%= tt('disliked') %>
+            <%= tt('label.disliked') %>
           <% elsif review.wanna_go? %>
-            <%= tt('wanna go to') %>
+            <%= tt('label.wannago') %>
           <% end %>
           <%= link_to review.restaurant.name, restaurant_long_url(
               :name => review.restaurant.name.parameterize.to_s, 
@@ -38,7 +38,7 @@
       <div class="clear space_5"></div>
     <% end %>
     <div class="small">
-      <%= link_to "#{tt('more places')} &raquo;", more_link %>
+      <%= link_to tt('nav.more_places'), more_link %>
     </div>
   </div>
 <% end %>

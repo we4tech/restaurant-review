@@ -5,7 +5,7 @@
   <div class="space_10"></div>
 
   <div class="contributed_image_gallery">
-    <h6>User contributed image<%= contributed_images.length > 1 ? 's' : '' %></h6>
+    <h6><%= t('subheader.contributed_images') %></h6>
     <div class="break"></div>
     <div class="space_10"></div>
     <% contributed_images.each do |image| %>
@@ -16,7 +16,8 @@
                     :class => 'pic_link',
                     :title => image.caption) %>
         <div class="contributor">
-          <%= link_to image.user.login, '#' %>
+          <%= link_to image.user.login, user_long_url(
+              :login => image.user.login, :id => image.user.id) %>
         </div>
       </div>
     <% end %>

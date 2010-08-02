@@ -1,22 +1,27 @@
 <div class="grid_12">
-  <h1><%= link_to @restaurant.name, restaurant_url(@restaurant) %> &raquo; Edit</h1>
+  <h1><%= t('header.restaurant_show_page', :link => link_to(
+      @restaurant.name, restaurant_url(@restaurant))) %></h1>
   <div class="break"></div>
 
   <% form_for @restaurant do |f| %>
     <%= f.error_messages.gsub(/(restaurant)/, @topic.name.humanize) %>
     <%= f.hidden_field :id, :value => @restaurant.id %>
-    <%= render :partial => 'restaurants/parts/form_attributes_based', :locals => {:f => f} %>
-    <%= f.submit 'update', :class => 'submit' %> |
-    <%= link_to 'show', restaurant_long_url(:name => @restaurant.name.parameterize.to_s, :id => @restaurant.id) %>
+    <%= render :partial => 'restaurants/parts/form_attributes_based',
+               :locals => {:f => f} %>
+    <%= f.submit t('button.update'), :class => 'submit' %> |
+    <%= link_to t('nav.show'), restaurant_long_url(
+        :name => url_escape(@restaurant.name), :id => @restaurant.id) %>
     <% if @restaurant.author?(current_user) %>
-      | <%= link_to 'delete', restaurant_url(@restaurant), :method => :delete, :confirm => 'do you really want to remove this entry?' %>
+      | <%= link_to t('nav.delete'), restaurant_url(@restaurant),
+                    :method => :delete,
+                    :confirm => t('confirm.delete_entry') %>
     <% end %>
   <% end %>
 
   <div class="clear space_10"></div>
   <% if @allow_image_upload %>
     <div class="edit_image_gallery">
-      <h3>Attach related images</h3>
+      <h3><%= t('subheader.upload_pictures') %></h3>
       <div class="break"></div>
       <div class="space_5 break"></div>
       <% form_for Image.new, :html => {:multipart => true} do |f| %>
@@ -24,7 +29,7 @@
 
         <%= f.file_field :uploaded_data %>
         <%= f.text_field :caption %>
-        <%= f.submit 'upload' %>
+        <%= f.submit t('button.upload') %>
       <% end %>
       <div class="clear"></div>
       <div class="space_10"></div>
@@ -35,29 +40,38 @@
         <div class="image_preview">
           <% @restaurant.images.each do |image| %>
             <div class="image grid_1">
-              <%= image_tag image.public_filename(:small), :alt => 'N/A', :width => '60px' %>
+              <%= image_tag image.public_filename(:small),
+                            :alt => t('label.not_available'),
+                            :width => '60px' %>
               <div class="tools">
-                <%= link_to 'delete', image_url(image), :method => :delete, :confirm => 'do you want to delete this image?' %>
+                <%= link_to 'delete', image_url(image),
+                            :method => :delete,
+                            :confirm => t('confirm.delete_image') %>
               </div>
             </div>
           <% end %>
           <div class="clear"></div>
         </div>
       <% else %>
-        No image added!
+        <%= t('label.no_image_added') %>
       <% end %>
 
       <div class="space_10"></div>
-      <h3>User contributed images</h3>
+      <h3><%= t('subheader.contributed_images') %></h3>
       <div class="break"></div>
 
       <% if !@restaurant.other_images.empty? %>
         <div class="image_preview">
           <% @restaurant.other_images.each do |image| %>
             <div class="image grid_1">
-              <%= image_tag image.public_filename(:small), :alt => 'N/A', :width => '60px' %>
+              <%= image_tag image.public_filename(:small),
+                            :alt => t('label.not_available'),
+                            :width => '60px' %>
               <div class="tools">
-                <%= link_to 'delete', image_url(image, :restaurant_id => @restaurant.id), :method => :delete, :confirm => 'do you want to delete this image?' %>
+                <%= link_to t('nav.delete'), image_url(
+                    image, :restaurant_id => @restaurant.id),
+                            :method => :delete,
+                            :confirm => t('confirm.delete_image') %>
               </div>
             </div>
           <% end %>

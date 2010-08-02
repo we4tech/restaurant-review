@@ -1,0 +1,36 @@
+<div class="grid_12">
+  <h4>
+    <%= link_to 'Administration panel', admin_url %> &raquo;
+    <%= link_to 'Manage translations', translations_path %>
+  </h4>
+
+  <div class="break"></div>
+
+  <div class="clear"></div>
+  <div class="break"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topics'>
+    <% form_tag translation_path(params[:id]), :method => :put do %>
+      <input type='submit' value='Update translations'/>
+
+      <div class='space_10'></div>
+      <%= render :partial => 'translations', :locals => {:map => @translation_map, :name_prefix => ''} %>
+      <div class='space_10'></div>
+      <input type='submit' value='Update translations'/>
+    <% end %>
+    <div class='clear'></div>
+  </div>
+</div>
+<script type="text/javascript" src="http://www.somewhereinbangladesh.net/community/jscript/web/keyboard/jquery.domec.js"></script>
+<script type="text/javascript" src="http://www.somewhereinbangladesh.net/community/jscript/web/keyboard/main.js"></script>
+<script type="text/javascript" src="http://www.somewhereinbangladesh.net/community/jscript/web/keyboard/bijoyunicode.js"></script>
+<script type="text/javascript" src="http://www.somewhereinbangladesh.net/community/jscript/web/keyboard/phoneticunicode.js"></script>
+<script type="text/javascript" src="http://www.somewhereinbangladesh.net/community/jscript/web/keyboard/bangla.js"></script>
+<link rel="stylesheet" type="text/css" href="http://www.somewhereinbangladesh.net/community/jscript/web/keyboard/layout.css"/>
+<script type="text/javascript">
+  $(document).ready(function() {
+    KeyboardOptions.debug = function() {}
+    KeyboardOptions.startBanglaSupport();
+  });
+</script>

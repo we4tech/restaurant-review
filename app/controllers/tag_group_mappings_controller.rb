@@ -1,4 +1,6 @@
 class TagGroupMappingsController < ApplicationController
+  before_filter :login_required
+  before_filter :authorize, :except => []
 
   def destroy
     tag_group_mapping = TagGroupMapping.find(params[:id].to_i)

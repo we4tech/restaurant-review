@@ -1,11 +1,12 @@
 <div class="grid_4 grid_box bottom_box">
   <h4><%= label %></h4>
+
   <div class='clear'></div>
   <% users.each do |user| %>
     <% if user.image %>
       <div class="item">
         <%= link_to(image_tag(user.image.public_filename(:very_small),
-                              :title => user.login,:alt => 'N/A'),
+                              :title => user.login, :alt => t('label.not_available')),
                     user_long_url(:id => user.id, :login => user.login)) %>
       </div>
     <% end %>

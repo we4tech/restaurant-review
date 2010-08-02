@@ -3,9 +3,9 @@ module TopicBasedTranslationHelper
   def tt(text, options = {})
     translation = @topic.translate_label(text, options)
     if !translation
-      return text
+      I18n.t(text)
     else
-      translation
+      I18n.t(translation)
     end
   end
 end

@@ -1,0 +1,20 @@
+<% map.each do |key, value| %>
+  <% field_name = name_prefix.blank? ? key : "#{name_prefix}:#{key}" %>
+
+  <div class='translations'>
+    <strong><%= key %></strong>
+
+    <div class='value'>
+      <% if value && value.is_a?(Hash) %>
+        <%= render :partial => 'translations',
+                   :locals => {:map => value,
+                               :name_prefix => field_name} %>
+      <% elsif value %>
+        <textarea lang='bangla' id='id_<%= rand(100) %>' 
+                  name='translations<%= field_name.split(':').collect{|i| "[#{i}]"} %>'><%= value %></textarea>
+      <% end %>
+    </div>
+
+    <div class='clear'></div>
+  </div>
+<% end %>

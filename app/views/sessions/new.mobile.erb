@@ -1,33 +1,33 @@
 <div class="grid_12">
-  <h1>Log In</h1>
+  <h1><%= t('header.login') %></h1>
   <% form_tag session_path do -%>
     <table>
       <tbody>
       <tr>
-        <td><%= label_tag 'login' %></td>
+        <td><%= label_tag 'login', t('fields.login') %></td>
         <td><%= text_field_tag 'login', @login %></td>
       </tr>
 
       <tr>
-        <td><%= label_tag 'password' %></td>
+        <td><%= label_tag 'password', t('fields.password') %></td>
         <td><%= password_field_tag 'password', nil %></td>
       </tr>
 
       <tr>
-        <td><%= label_tag 'remember_me', 'Remember me' %></td>
+        <td><%= label_tag 'remember_me', t('fields.remember') %></td>
         <td><%= check_box_tag 'remember_me', '1', @remember_me %></td>
       </tr>
 
       <tr>
         <td colspan="2">
-          <%= submit_tag 'Log in' %>
+          <%= submit_tag t('button.login') %>
         </td>
       </tr>
 
       <tr>
         <td colspan="2">
-          <%= link_to 'Did you forget your password?', reset_password_url %><br/>
-          Or <%= link_to 'Are you new user?', signup_url %>
+          <%= link_to t('nav.did_you_forgot'), reset_password_url %><br/>
+          Or <%= link_to t('nav.are_you_new_user'), signup_url %>
         </td>
       </tr>
       </tbody>

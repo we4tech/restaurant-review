@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :tags, :collection => {:sync => :post}
 
+  map.resources :translations
+
   map.facebook_resources :games
 
 

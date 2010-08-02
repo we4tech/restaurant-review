@@ -1,17 +1,17 @@
 <div class="clear"></div>
 <div class="space_10"></div>
 <div class="contributed_image_form">
-  <h6>Contribute by uploading your related picture</h6>
+  <h6><%= t('subheader.user_contributed_pictures') %></h6>
   <% form_for Image.new, :html => {:multipart => true} do |f| %>
     <input type="hidden" name="restaurant_id" value="<%= @restaurant.id %>"/>
     <input type="hidden" name="return_to" value="<%= restaurant_url(@restaurant) %>">
 
     <%= f.file_field :uploaded_data %>
 
-    <% caption_default_text = 'Write image caption....' %>
+    <% caption_default_text = t('label.image_caption') %>
     <%= f.text_field :caption,
                      :onclick => "$(this).val() == '#{caption_default_text}' ? $(this).val('') : ''", 
                      :onblur => "$(this).val().length == 0 ? $(this).val('#{caption_default_text}') : ''" %>
-    <%= f.submit 'upload' %>
+    <%= f.submit t('button.upload') %>
   <% end %>
 </div>

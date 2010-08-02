@@ -1,5 +1,5 @@
 <div class="grid_12">
-  <h1><%= tt('Create new restaurant') %></h1>
+  <h1><%= tt('header.restaurant_create') %></h1>
   <div class="break"></div>
 
   <%
@@ -8,7 +8,8 @@
   %>
   <% form_for @restaurant do |f| %>
     <%= f.error_messages.gsub(/(restaurant)/, @topic.name.humanize) %>
-    <%= render :partial => 'restaurants/parts/form_attributes_based', :locals => {:f => f} %>
-    <%= f.submit 'create', :class => 'submit' %>
+    <%= render :partial => 'restaurants/parts/form_attributes_based',
+               :locals => {:f => f} %>
+    <%= f.submit t('button.create'), :class => 'submit' %>
   <% end %>
 </div>

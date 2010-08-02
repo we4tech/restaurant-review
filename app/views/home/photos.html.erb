@@ -2,7 +2,7 @@
   <h1>
     <% @breadcrumbs.each do |link| %>
       <%= link_to link.first, link.last %> &raquo;
-    <% end %><%= tt(@title) %>
+    <% end %><%= @title %>
   </h1>
   <div class="break space_5"></div>
 
@@ -42,14 +42,14 @@
                         user_long_url(:id => stuff_event.user.id,
                                       :login => stuff_event.user.login.parameterize)  %> contributed to
           <% else %>
-            Attached with
+            <%= t('label.attached_with') %>
           <% end %>
           <%= link_to stuff_event.restaurant.name, restaurant_long_url(
             :name => stuff_event.restaurant.name.parameterize.to_s,
             :id => stuff_event.restaurant.id) %>
           <span class='date'>
             <% comments_count = stuff_event.image.photo_comments_count %>
-            Comments (<%= comments_count %>)
+            <%= t('fields.comments_count', :count => comments_count) %>
           </span>
         </div>
         <div class="clear"></div>

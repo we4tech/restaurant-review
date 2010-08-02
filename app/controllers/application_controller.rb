@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   include FacebookConnectHelper
   include MobileHelper
   include StringHelper
+  include LocaleHelper
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -29,8 +30,16 @@ class ApplicationController < ActionController::Base
   before_filter :detect_topic_or_forward_to_default_one
   before_filter :check_facebook_connect_session
   before_filter :detect_mobile_view
+  before_filter :detect_locale
 
   protected
+    def authorize
+      if !current_user || !current_user.admin?
+        flash[:notice] = 'You are not authorized to access this url.'
+        redirect_to root_url
+      end
+    end
+  
     def notify(type, redirect)
       case type
         when :success

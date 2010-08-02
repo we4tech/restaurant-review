@@ -1,0 +1,49 @@
+<div class="grid_8" id="site_center_list">
+  <h1>
+    <% @breadcrumbs.each do |link| %>
+      <%= link_to link.first, link.last %> &raquo;
+      <% end %><%= @title %>
+  </h1>
+
+  <div class="break space_5"></div>
+
+  <div class="space_10"></div>
+  <table class='user_list'>
+    <tbody>
+    <% @reviews.each_with_index do |review, index| %>
+      <tr>
+        <% if review.user.image %>
+          <td>
+            <%= link_to image_tag(review.user.image.public_filename(:small),
+                                  :height => '40px',
+                                  :alt => 'n/a'),
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login),
+                        :title => "#{review.user.login}" %>
+            <br/>
+            <%= link_to review.user.login,
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login) %>
+          </td>
+        <% else %>
+          <td>
+            <%= link_to image_tag('fresh/user.png',
+                                  :alt => 'n/a'),
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login),
+                        :title => "#{review.user.login}" %>
+            <br/>
+            <%= link_to review.user.login,
+                        user_long_url(:id => review.user.id,
+                                      :login => review.user.login) %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <div class='pagination'>
+    <%= will_paginate @reviews %>
+  </div>
+</div>

@@ -2,7 +2,7 @@
   <h1>
     <% @breadcrumbs.each do |link| %>
       <%= link_to link.first, link.last %> &raquo;
-      <% end %><%= @title ? @title : tt('full view') %>
+      <% end %><%= @title ? @title : tt('label.full_view') %>
   </h1>
 
   <div class="break space_5"></div>
@@ -18,9 +18,9 @@
         <%= link_to @stuff_event.user.login,
                     user_long_url(:id => @stuff_event.user.id,
                                   :login => @stuff_event.user.login.parameterize) %>
-        has contributed to
+        <%= t('label.contributed_to') %>
       <% else %>
-        author has added this picture on
+        <%= t('label.author_added_on') %>
       <% end %>
       <%= link_to @stuff_event.restaurant.name, restaurant_long_url(
           :name => @stuff_event.restaurant.name.parameterize.to_s,
@@ -37,7 +37,7 @@
         <%= f.hidden_field :image_id, :value => @stuff_event.image_id %>
         <%= f.hidden_field :restaurant_id, :value => @stuff_event.restaurant_id %>
         <input type="hidden" name="stuff_event_id" value="<%= @stuff_event.id %>"/>
-        <%= f.submit 'Add comment' %>
+        <%= f.submit t('button.add_comment') %>
       <% end %>
     </div>
     <% if !@related_image.photo_comments.empty? %>
@@ -55,12 +55,12 @@
                 <%= simple_format("#{link_to comment.user.login, user_long_url(
                     :id => comment.user.id,
                     :login => comment.user.login.parameterize)} #{auto_link(h(comment.content))}
-                      <span class='date'>#{distance_of_time_in_words(Time.now, comment.created_at)} ago</span>") %>
+                      <span class='date'>#{distance_of_time_in_words(Time.now, comment.created_at)} #{t('label.ago')}</span>") %>
 
                 <% if current_user && current_user.admin? %>
-                  <%= link_to 'Do you want to DELETE this comment ?', photo_comment_url(:id => comment.id),
+                  <%= link_to t('label.delete_comment'), photo_comment_url(:id => comment.id),
                               :class => 'date',
-                              :method => :delete, :confirm => 'Do you want to remove this comment?' %>
+                              :method => :delete, :confirm => t('confirm.delete_comment') %>
                 <% end %>
               </td>
             </tr>

@@ -8,7 +8,7 @@ class HomeController < ApplicationController
   #} 
 
   def index
-    @title = 'Recently added restaurants!'
+    @title = I18n.t('header.recent_restaurants')
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => params[:page])
     
     # pending module - :render_recently_added_pictures
@@ -24,7 +24,7 @@ class HomeController < ApplicationController
   end
 
   def frontpage
-    @title = 'Recently added restaurants!'
+    @title = I18n.t('header.recent_restaurants')
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => params[:page])
     @top_rated_restaurants = Restaurant.most_loved(@topic, 5)
     @location_tag_group = TagGroup.of('locations')
@@ -57,7 +57,9 @@ class HomeController < ApplicationController
 
     load_module_preferences
     
-    @title = 'Most loved places!'
+    @title = I18n.t('header.loved_places')
+    @site_title = @title
+
     @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
@@ -79,7 +81,9 @@ class HomeController < ApplicationController
 
     load_module_preferences
     
-    @title = 'Recently reviewed places!'
+    @title = I18n.t('header.reviewed_places')
+    @site_title = @title
+
     @display_last_review = true
     @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places]
     @breadcrumbs = [['All', root_url]]
@@ -104,7 +108,9 @@ class HomeController < ApplicationController
 
     load_module_preferences
     
-    @title = "Who else wanna visit this place!"
+    @title = I18n.t("header.wannago")
+    @site_title = @title
+
     @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_url(restaurant)]]
     @restaurant = restaurant
@@ -133,18 +139,21 @@ class HomeController < ApplicationController
       @restaurants = tag.restaurants.paginate :page => params[:page]
       load_module_preferences
 
-      @title = "#{selected_module['label']} » #{tag.name}"
-      @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_recently_added_places]
+      @title = I18n.t('header.tag_details', :tag => tag.name)
+      @site_title = @title
+      @left_modules = [:render_topic_box, :render_search,
+                       :render_tagcloud, :render_recently_added_places]
       @breadcrumbs = [['All', root_url]]
       render :action => :index
     else
-      flash[:notice] = "Invalid tag label - #{label}"
+      flash[:notice] = I18n.t('errors.invalid_tag', :tag => label)
       redirect_to root_url
     end
   end
 
   def search
-    @title = 'Search results!'
+    @title = I18n.t('header.search_results')
+    @site_title = @title
     @restaurants = WillPaginate::Collection.create(1, Restaurant::per_page) do |pager|
       pager.replace([])
       pager.total_entries = 0
@@ -174,8 +183,11 @@ class HomeController < ApplicationController
 
     load_module_preferences
 
-    @title = "Pictures from restaurants!"
-    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @title = I18n.t('header.photos')
+    @site_title = @title
+    @left_modules = [:render_topic_box, :render_search,
+                     :render_tagcloud, :render_most_lovable_places,
+                     :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
   end
 
@@ -212,7 +224,8 @@ class HomeController < ApplicationController
     end
 
     @breadcrumbs = [['Home', root_url]]
-    @title = 'Recommend restaurants!'
+    @title = I18n.t('header.recommend')
+    @site_title = @title
 
     # pending module - :render_recently_added_pictures
     load_module_preferences

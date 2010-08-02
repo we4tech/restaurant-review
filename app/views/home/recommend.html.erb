@@ -2,25 +2,26 @@
   <h1>
     <% @breadcrumbs.each do |link| %>
       <%= link_to link.first, link.last %> &raquo;
-    <% end %><%= tt(@title) %>
+    <% end %><%= @title %>
   </h1>
   <div class="break space_5"></div>
   <% if !@restaurants.empty? %>
     <% @restaurants.each_with_index do |restaurant, index| %>
-      <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :index => index} %>
+      <%= render :partial => 'restaurants/parts/restaurant',
+                 :locals => {:restaurant => restaurant, :index => index} %>
     <% end %>
 
     <div class='pagination'>
       <%= will_paginate @restaurants %>
     </div>
   <% else %>
-    <h4>Nothing matched! with your requirements!, please try again! :)_)</h4>
+    <h4><%= t('subheader.no_recommendation_found') %></h4>
   <% end %>
 </div>
 
 <div class="grid_4" id="site_center_boxes">
   <div class='site_simple_box filter_box'>
-    <h4>Filter results by -</h4>
+    <h4><%= t('label.filter_by') %></h4>
     <div class='space_10'></div>
     <form action="<%= recommend_url %>">
       <div class='tags'>
@@ -40,7 +41,7 @@
           <div class='space_10'></div>
         <% end %>
       </div>
-      <input type='submit' value='Search again!'/>
+      <input type='submit' value='<%= t('button.search_again') %>'/>
     </form>
     <div class='space_10'></div>
     <div class='clear'></div>

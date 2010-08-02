@@ -2,7 +2,7 @@
   <div class="grid_6 restaurant_details">
     <div class="breadcrumbs">
       <%= link_to @topic.label, root_url %> &raquo;
-      Contributors &raquo; <%= @user.login.camelcase %>
+      <%= t('label.contributors')%> &raquo; <%= @user.login.camelcase %>
     </div>
     <div class="break space_5"></div>
 
@@ -12,17 +12,17 @@
       </div>
       <div class="grid_4 user_profile_facts">
         <h4>Facts:</h4>
-        <%= @user.login.camelcase %> has joined our community about 
-        <span class="highlight"><%= distance_of_time_in_words(Time.now, @user.created_at) %></span> back.<br/>
-        Already added <span class="highlight"><%= @user.restaurants.count %></span> <%= @topic.name.pluralize %>.<br/>
-        Already reviewed <span class="highlight"><%= @user.reviews.count %></span> <%= @topic.name.pluralize %>. <br/>
-        Already commented <span class="highlight"><%= @user.review_comments.count %> times</span> on other's reviews.<br/>
-        Already <span class="icon_loved">loved</span> <span class="highlight"><%= @user.reviews.loved.count %></span> and
-        <span class="icon_hated">hated</span> <span class="highlight"><%= @user.reviews.hated.count %></span> <%= @topic.label.pluralize %>.<br/>
-        Already showed interest <span class="highlight">to visit <%= @user.reviews.wanna_go.count %></span> <%= @topic.label.pluralize %>.<br/>
+        <%= @user.login.camelcase %> <%= t('label.joined_our_community') %>
+        <span class="highlight"><%= distance_of_time_in_words(Time.now, @user.created_at) %></span> <%= t('label.ago') %>.<br/>
+        <%= t('label.already_added') %> <span class="highlight"><%= @user.restaurants.count %></span> <%= @topic.name.pluralize %>.<br/>
+        <%= t('label.already_reviewed') %> <span class="highlight"><%= @user.reviews.count %></span> <%= @topic.name.pluralize %>. <br/>
+        <%= t('label.already_commented')%> <span class="highlight"><%= @user.review_comments.count %> <%= t('label.times')%></span> <%= t('label.on_other_reviews')%><br/>
+        <%= t('label.already') %> <span class="icon_loved"><%= t('label.loved') %></span> <span class="highlight"><%= @user.reviews.loved.count %></span> <%= t('label.and') %>
+        <span class="icon_hated"><%= t('label.disliked') %></span> <span class="highlight"><%= @user.reviews.hated.count %></span> <%= @topic.label.pluralize %>.<br/>
+        <%= t('label.already_showed_interest') %> <span class="highlight"><%= t('label.to_visit') %> <%= @user.reviews.wanna_go.count %></span> <%= @topic.label.pluralize %>.<br/>
 
         <div class='space_10'></div>
-        <a href='#'><%= tt('Ask him/her to treat you!') %></a>
+        <a href='#'><%= tt('label.ask_for_treat') %></a>
         <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech"><img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech"></script>
       </div>
       <div class="clear"></div>
@@ -34,7 +34,7 @@
 
     <div class="user_profile_activities">
       <% if !@restaurants.empty? %>
-        <h4><%= tt('Recently added restaurants!') %></h4>
+        <h4><%= tt('header.recent_restaurants') %></h4>
         <div class="break"></div>
         <% @restaurants.each do |restaurant| %>
           <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :grid_class => 'grid_4'} %>
@@ -56,7 +56,7 @@
     <div class='space_10'></div>
     
     <% if !@reviews.empty? %>
-      <h4><%= tt('Recently reviewed restaurants!') %></h4>
+      <h4><%= tt('header.reviewed_places') %></h4>
       <div class="break"></div>
       <div class="space_10"></div>
       <% @reviews.each do |review| %>
@@ -70,7 +70,7 @@
     <% end %>
 
     <% if !@review_comments.empty? %>
-      <h4><%= tt('Recently commented on reviews') %></h4>
+      <h4><%= tt('subheader.recently_commented_on_reviews') %></h4>
       <div class="break"></div>
       <div class="space_10"></div>
       <% @review_comments.each do |review_comment| %>

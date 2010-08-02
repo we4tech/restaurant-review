@@ -4,16 +4,17 @@
       <%= link_to link.first, link.last %> &raquo;
     <% end %>
     <% if current_user %>
-      <%= tt('Activities on my participated restaurants') %>
+      <%= tt('subheader.activities') %>
     <% else %>
-      <%= tt('On going activities') %>
+      <%= t('subheader.ongoing_activities') %>
     <% end %>
   </h4>
   <div class="break space_5"></div>
 
   <% if !@stuff_events.empty? %>
     <% @stuff_events.each do |stuff_event| %>
-      <%= render :partial => 'stuff_events/parts/stuff_event', :locals => {:stuff_event => stuff_event} %>
+      <%= render :partial => 'stuff_events/parts/stuff_event',
+                 :locals => {:stuff_event => stuff_event} %>
     <% end %>
 
     <div class='pagination'>
@@ -21,6 +22,6 @@
       <%= will_paginate @stuff_events %>
     </div>
   <% else %>
-    <%= tt('Hola! you haven\'t reviewed any ' + @topic.name.humanize + ' yet!')%>
+    <%= t('label.no_review', :name => @topic.name.humanize) %>
   <% end %>
-</div>                            
+</div>

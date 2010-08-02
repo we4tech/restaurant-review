@@ -3,6 +3,6 @@
     <%= render :partial => 'reviews/parts/fields', :locals => {:f => f} %>
     <%= f.hidden_field :restaurant_id, :value => review.restaurant.id %>
 
-    <%= f.submit 'update your review!' %>
+    <%= f.submit t('button.update_review') %>
   </div>
 <% end %>

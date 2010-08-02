@@ -9,19 +9,23 @@
     <li style="display:<%= index == 0 ? 'block' : 'none' %>">
       <%= link_to image_tag(selected_image.public_filename(:very_large), :class => 'featureImage'), link %>
       <div class="side-overlay">
-        <small>address: <%= (restaurant.address || '').blank? ? '' : "@#{restaurant.address}" %></small>
+        <small><%= t('featurebox.address') %> <%= (restaurant.address || '').blank? ? '' : "@#{restaurant.address}" %></small>
         <h2><%= link_to restaurant.name, link %></h2>
         <div class='restaurant-rate'>
-          <%= restaurant.reviews.loved.count %> people <span class='icon_loved'>loved</span> it!
+          <%= t('featurebox.rating', :loves_count => restaurant.reviews.loved.count) %>
         </div>
         <p class='description'>
           <%= truncate strip_tags(restaurant.description), :length => 200 %>
-          <%= link_to 'read more...', link %>
+          <%= link_to t('featurebox.readmore'), link %>
           <fb:like href='<%= link %>'></fb:like>
           <% if !restaurant.tags.empty? %>
             <div class="associated_tags">
-              <strong><%= tt('Cuisines') %>:</strong>
-              <%= restaurant.tags.collect {|tag| link_to(tag.name, tag_details_url(:label => 'cuisines-tags', :tag => tag.name))}.join(', ') %>
+              <strong><%= tt('fields.features') %>:</strong>
+              <%= restaurant.tags.collect {|tag|
+                link_to(tag.name,
+                        tag_details_url(
+                            :label => 'cuisines-tags',
+                            :tag => tag.name))}.join(', ') %>
             </div>
           <% end %>
         </p>
@@ -43,14 +47,14 @@
                               "geocode=&sll=#{restaurant.lat},#{restaurant.lng}"
             %>
             <%= link_to image_tag(map_url + "60x45"), "#{map_url}800x800",
-                        :title => link_to("Browse on google map", details_link) %>
+                        :title => link_to(t("fields.map"), details_link) %>
           <% end %>
 
         </div>
 
         <div class='featureNav'>
-          <a href='javascript:void(0)' class='btnNext'>Next &raquo;</a>
-          <a href='javascript:void(0)' class='btnPrevious'>&laquo; Previous</a>
+          <a href='javascript:void(0)' class='btnNext'><%= t('nav.next')%></a>
+          <a href='javascript:void(0)' class='btnPrevious'><%= t('nav.previous') %></a>
         </div>
       </div>
     </li>

@@ -1,6 +1,6 @@
 <div class='recommendRestaurants'>
   <form action="<%= recommend_url %>" id='recommend_form'>
-    Where do you wanna eat TODAY ?
+    <%= t('frontpage.recommend') %>
     <select name='tag_ids[]' onchange="$('#recommend_form').submit()">
       <% if @location_tag_group %>
         <% @location_tag_group.tags.each do |tag| %>
@@ -8,7 +8,7 @@
         <% end %>
       <% end %>
     </select>
-    <input type='submit' value='Find!'/>
+    <input type='submit' value='<%= t('button.find') %>'/>
   </form>
 </div>
 <div class='clear'></div>

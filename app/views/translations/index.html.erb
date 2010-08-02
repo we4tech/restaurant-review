@@ -1,0 +1,27 @@
+<div class="grid_12">
+  <h4><%= link_to 'Administration panel', admin_url %> &raquo; Manage translations</h4>
+  <div class="break"></div>
+
+  <% link_to 'Create translation', new_translation_path %>
+  <div class="clear"></div>
+  <div class="break"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topics'>
+    <% if !@locales.empty? %>
+      <% @locales.each do |locale| %>
+        <div class='admin_topic'>
+          <b><%= locale %></b>
+          [
+          <%= link_to 'edit', edit_translation_path(locale) %> |
+          <%= link_to 'delete', translations_path(:locale => locale), :method => :delete,
+                      :confirm => 'Do you really want to remove this locale?' %>
+          ]
+        </div>
+      <% end %>
+    <% else %>
+      No locale file was created!
+    <% end %>
+
+  </div>
+</div>

@@ -1,24 +1,43 @@
 <div id="site_top">
   <div class="grid_2 site_quote">
-    <%= tt('passionate food lovers community!') %>
+    <%= tt('layout.passionate_food_lovers_community') %>
   </div>
 
   <div id="site_top_navigation">
-    <span> <%= link_to 'home', root_url %> | </span>
+    <%
+       current_url = request.url.clone
+       if current_url.match(/l=(\w+)/)
+         current_url = current_url.gsub(/l=(\w+)/, 'l=:V:')
+       else
+         if current_url.match(/\?/)
+           current_url = current_url << '&l=:V:'
+         else
+           current_url = current_url << '?l=:V:'
+         end
+       end
+    %>
+
+    <select onchange="window.location='<%= current_url %>'.replace(/:V:/, this.value)">
+      <option value='en' <%= I18n.locale.to_s == 'en' ? 'selected="selected"' : '' %>>English</option>
+      <option value='bn' <%= I18n.locale.to_s == 'bn' ? 'selected="selected"' : '' %>>বাংলা</option>
+    </select> |
+    <span> <%= link_to t('layout.links.home'), root_url %> | </span>
     <% if not logged_in? %>
-      <%= link_to tt('login'), login_url %> OR 
-      <fb:login-button perms="email,publish_stream,create_event,rsvp_event">Login with facebook</fb:login-button> |
-      <%= link_to tt('register'), signup_url %> |
-      <%= link_to tt('photos'), photos_url %>
+      <%= link_to tt('layout.links.login'), login_url %> OR
+      <fb:login-button perms="email,publish_stream,create_event,rsvp_event">
+        <%= t('layout.links.fb_login') %>
+      </fb:login-button> |
+      <%= link_to tt('layout.links.register'), signup_url %> |
+      <%= link_to tt('layout.links.photos'), photos_url %>
     <% else %>
       <% if !@record_already_added %>
-        <%= link_to tt('add restaurant'), new_restaurant_url %> |
+        <%= link_to tt('layout.links.add'), new_restaurant_url %> |
       <% else %>
-        <%= link_to tt('update your record'), update_your_record_url %> |
+        <%= link_to tt('layout.links.update_record'), update_your_record_url %> |
       <% end %>
       <%= render_activities_link %> |
-      <%= link_to tt('my page'), user_long_url(:login => current_user.login, :id => current_user.id) %> |
-      <%= link_to tt('photos'), photos_url %> | 
+      <%= link_to tt('layout.links.my_page'), user_long_url(:login => current_user.login, :id => current_user.id) %> |
+      <%= link_to tt('layout.links.photos'), photos_url %> |
       <% if current_user.facebook_session_exists? %>
         <span class='facebook_connect_control'>
           <% form_tag facebook_account_status_update_url, :id => 'facebook_connect_control_form' do %>
@@ -34,25 +53,27 @@
                    name='status'
                    onclick="$('#facebook_connect_control_form').submit()" />
           <% end %>
-          <label for="facebook_share_checkbox">share on facebook</label>
+          <label for="facebook_share_checkbox">
+            <%= t('layout.links.share_on_facebook') %>
+          </label>
           <% end %>
         </span> |
       <% else %>
         <fb:login-button perms="email,publish_stream,create_event,rsvp_event"
                          onlogin='window.location.reload()'>
-          Auto share on Facebook
+          <%= t('layout.links.auto_share_on_facebook') %>
         </fb:login-button> |
       <% end %>
 
       <% if current_user.admin? %>
-        <%= link_to 'admin', admin_url %> |
+        <%= link_to t('layout.links.admin'), admin_url %> |
       <% end %>
       
-      <%= link_to 'edit account', edit_user_url(current_user) %> |
+      <%= link_to t('layout.links.edit_user'), edit_user_url(current_user) %> |
       <% if current_user.facebook_session_exists? %>
-        <%= link_to 'logout', fb_logout_url %>
+        <%= link_to t('layout.links.logout'), fb_logout_url %>
       <% else %>
-        <%= link_to 'logout', logout_url %>
+        <%= link_to t('layout.links.logout'), logout_url %>
       <% end %>
     <% end %>
   </div>

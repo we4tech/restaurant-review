@@ -1,8 +1,9 @@
 <span class="stat_item icon_review">
   <i class="UIImageBlock_Image UIImageBlock_ICON_Image img spritemap_5azbqq sx_341a9a"></i>
-  <%= total_reviews_count %> review<%= total_reviews_count > 1 ? 's' : '' %>
+  <%= t('label.reviews_count', :count => total_reviews_count)%>
+
 </span>
 <span class="stat_item icon_loved">
   <i title="Click here to like this item" class="img spritemap_5azbqq sx_f7df39"></i>
-  <%= loved_count %> love<%= loved_count > 1 ? 's' : '' %>
+  <%= t('label.loves_count', :count => loved_count)%>
 </span>

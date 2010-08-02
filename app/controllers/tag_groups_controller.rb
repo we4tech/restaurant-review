@@ -1,6 +1,7 @@
 class TagGroupsController < ApplicationController
 
   before_filter :login_required
+  before_filter :authorize, :except => []
   before_filter :log_new_feature_visiting_status
 
   def index

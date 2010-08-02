@@ -1,5 +1,5 @@
 <div class="grid_12">
-  <h4>Upload your avatar</h4>
+  <h4><%= t('subheader.upload_avatar') %></h4>
   <div class="break"></div>
   <div class="space_10"></div>
   <div class="highlight">
@@ -13,20 +13,19 @@
       <input type="hidden" name="user_id" value="<%= current_user.id %>"/>
 
       <%= f.file_field :uploaded_data %>
-      <%= f.submit 'upload' %>
+      <%= f.submit t('button.upload') %>
     <% end %>
     <div class="clear"></div>
   </div>
   <div class="clear"></div>
   <div class="space_5"></div>
 
-  <h4>Active share with friends!</h4>
+  <h4><%= t('subheader.active_share') %></h4>
   <div class="break"></div>
   <div class="space_10"></div>
   <% if current_user.facebook_session_exists? %>
-    You have connected your account with your facebook account!  
+    <%= t('label.fb_connected') %>
   <% else %>
-    You haven't yet connected your account with your facebook account.
-    please click on "Auto share on Facebook" button on the top of the page
+    <%= t('label.fb_not_connected')%>
   <% end %>
 </div>

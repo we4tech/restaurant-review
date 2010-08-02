@@ -1,13 +1,16 @@
 <a name="review-<%= review_comment.id %>"></a>
 <span class="reviewer">
   <% if review_comment.loved? %>
-    <span class="highlight"><%= tt('liked') %></span> and
+    <span class="highlight"><%= tt('label.loved') %></span> <%= t('label.and') %>
   <% elsif review_comment.hated? %>
-    <span class="highlight"><%= tt('disliked') %></span> and
+    <span class="highlight"><%= tt('label.disliked') %></span> <%= t('label.and') %>
   <% end %>
-
-  commented a review of <%= link_to review_comment.restaurant.name, restaurant_long_url(:id => review_comment.restaurant.id, :name => review_comment.restaurant.name.parameterize.to_s)%>
+  <%= t('label.review_of', :link =>
+      link_to(review_comment.restaurant.name,
+              restaurant_long_url(
+                  :id => review_comment.restaurant.id,
+                  :name => url_escape(review_comment.restaurant.name)))) %>
 </span>
 <span class="date" title="<%= review_comment.updated_at.strftime('%d %b %Y') %>">
-  - added <%= distance_of_time_in_words(review_comment.updated_at, Time.now) %> ago.
+  - <%= t('label.added') %> <%= distance_of_time_in_words(review_comment.updated_at, Time.now) %> <%= t('label.ago') %>
 </span>

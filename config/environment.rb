@@ -52,3 +52,5 @@ Rails::Initializer.run do |config|
     ActionController::Base.cache_store = :file_store, File.join(RAILS_ROOT, 'tmp', 'cache')
   end
 end
+
+require File.join(RAILS_ROOT, 'lib', 'rails_ext')

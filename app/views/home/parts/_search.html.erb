@@ -1,5 +1,5 @@
 <div class="site_simple_box">
-  <h4><%= tt(title) %></h4>
+  <h4><%= tt("module.#{title}") %></h4>
   <div class="space_5"></div>
   <style type="text/css">
   @import url(http://www.google.com/cse/api/branding.css);
@@ -20,7 +20,7 @@
       <img src="http://www.google.com/images/poweredby_transparent/poweredby_FFFFFF.gif" alt="Google" />
     </div>
     <div class="cse-branding-text">
-      Custom Search
+      <%= t('label.custom_search') %>
     </div>
   </div>
 </div>

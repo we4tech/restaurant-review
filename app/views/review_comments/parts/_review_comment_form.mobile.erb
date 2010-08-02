@@ -3,16 +3,16 @@
     <%= f.hidden_field :review_id, :value => review.id %>
     <span class="group_buttons">
       <%= f.radio_button :loved, 1, :checked => true %>
-      <label for="review_comment_loved_1">i like</label>
+      <label for="review_comment_loved_1"><%= t('label.i_like') %></label>
     </span>
     /
     <span class="group_buttons"><%= f.radio_button :loved, 0 %>
-      <label for="review_comment_loved_0">i dislike</label>
-    </span>this review.<br/>
+      <label for="review_comment_loved_0"><%= t('label.i_dislike') %></label>
+    </span><%= t('label.this_review') %><br/>
 
     <%= f.text_area :content %>
     <div class="button_group align_right">
-      <%= f.submit 'add your comment' %>
+      <%= f.submit t('button.add_comment') %>
       <input type='button' onclick="$('#review_comment_form_<%= review.id %>').hide();" value='hide'/>
     </div>
   <% end %>
