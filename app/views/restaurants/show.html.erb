@@ -32,7 +32,7 @@
           %>
           <% if field_value && display %>
             <div class="grid_2">
-              <strong><%= tt(field_label, :group => :view) %></strong>
+              <strong><%= tt("fields.#{field_label}", :group => :view) %></strong>
             </div>
             <div class="grid_4">
               <% if field_type == 'checkbox' %>

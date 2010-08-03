@@ -11,7 +11,7 @@
           <%= link_to(image_tag(first_image.public_filename(:large),
                                 :class => 'large_image',
                                 :alt => 'N/A'),
-                      "#{root_url}#{first_image.public_filename(:very_large)}",
+                      "#{root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')}#{first_image.public_filename(:very_large)}",
                       :title => first_image.caption,
                       :rel => 'prettyPhoto[gallery]') %>
 
@@ -25,7 +25,7 @@
             <% rest_images.each do |image| %>
               <%= link_to(image_tag(image.public_filename(:small),
                                     :alt => 'N/A'),
-                          "#{root_url}#{image.public_filename(:very_large)}",
+                          "#{root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')}#{image.public_filename(:very_large)}",
                           :rel => 'prettyPhoto[gallery]',
                           :title => image.caption) %>
             <% end %>
