@@ -842,3 +842,12 @@ h1, h2, h3, h4, h5, h6 {
 .translations textarea {
   width: 100%;
 }
+
+.emphasis {
+  padding: 10px;
+  border: 1px solid orange;
+}
+
+.emphasis * {
+  font-size: 110%;
+}

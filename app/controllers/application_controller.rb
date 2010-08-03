@@ -31,8 +31,21 @@ class ApplicationController < ActionController::Base
   before_filter :check_facebook_connect_session
   before_filter :detect_mobile_view
   before_filter :detect_locale
+  before_filter :detect_fake_email
 
   protected
+    def detect_fake_email
+      if request.url != edit_user_url(current_user) && request.url != user_url(current_user) 
+        if logged_in?
+          if current_user.fake_email?
+            flash[:notice] = 'Please enter your email address'
+            @fake_email = true
+            redirect_to edit_user_url(current_user)
+          end
+        end
+      end
+    end
+
     def authorize
       if !current_user || !current_user.admin?
         flash[:notice] = 'You are not authorized to access this url.'

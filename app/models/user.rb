@@ -81,6 +81,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def fake_email?
+    self.email.match(/^fake@/)
+  end
+
   def self.top_contributors(p_topic, p_limit = 10)
     User.find(
         :all,
@@ -108,7 +112,7 @@ class User < ActiveRecord::Base
   def self.register_by_facebook_account(fb_session, fb_uid)
     api = FacebookGraphApi.new(fb_session.auth_token, fb_uid)
     user_attributes = api.find_user(fb_uid)
-    email = user_attributes['email'] || ''
+    email = user_attributes['email'] || 'FAKE'
     name = user_attributes['name'] || ''
 
     if !email.blank? && !name.blank?
@@ -126,7 +130,7 @@ class User < ActiveRecord::Base
         attributes = {
             :login => find_or_build_unique_user_name(name),
             :name => name,
-            :email => email,
+            :email => find_or_build_unique_fake_email(email),
             :facebook_uid => fb_uid,
             :facebook_sid => fb_session.session_key,
             :activated_at => Time.now,
@@ -159,6 +163,16 @@ class User < ActiveRecord::Base
         name
       else
         "#{name}-#{Time.now.to_i.to_s[6..10].to_i}"
+      end
+    end
+
+    def find_or_build_unique_fake_email(email)
+      if email.downcase != 'fake' && self.unique?(:email, email)
+        email
+      elsif email.downcase == 'fake'
+        "#{email}@#{Time.now.to_i.to_s[6..10].to_i}.com"
+      else
+        email
       end
     end
 
