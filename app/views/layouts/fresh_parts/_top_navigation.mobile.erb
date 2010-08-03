@@ -4,6 +4,7 @@
   </div>
 
   <div id="site_top_navigation">
+    <%= link_to 'বাংলা', root_url(:l => :bn) %> . 
     <span> <%= link_to t('layout.links.home'), root_url %> . </span>
     <% if not logged_in? %>
       <%= link_to tt('layout.links.login'), login_url %> OR
