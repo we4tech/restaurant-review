@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   layout 'fresh'
-  
+
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   filter_parameter_logging :fb_sig_friends, :password
@@ -35,11 +35,14 @@ class ApplicationController < ActionController::Base
 
   protected
     def detect_fake_email
-      if request.url != edit_user_url(current_user) && request.url != user_url(current_user) 
-        if logged_in?
-          if current_user.fake_email?
+      if logged_in?
+        if current_user.fake_email?
+          if request.url != edit_user_url(current_user) &&
+              request.url != user_url(current_user) &&
+              request.url != logout_url &&
+              request.url != fb_logout_url
             flash[:notice] = 'Please enter your email address'
-            @fake_email = true
+            session[:fake_email] = true
             redirect_to edit_user_url(current_user)
           end
         end
@@ -52,7 +55,7 @@ class ApplicationController < ActionController::Base
         redirect_to root_url
       end
     end
-  
+
     def notify(type, redirect)
       case type
         when :success
@@ -86,11 +89,11 @@ class ApplicationController < ActionController::Base
 
       "#{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}!"
     end
-  
+
     def remove_html_entities(p_str)
       (p_str || '').gsub(/<[\/\w\d\s="\/\/\.:'@#;\-]+>/, '')
     end
-  
+
     def log_last_visiting_time
       if current_user
         @user_log = current_user.user_logs.by_topic(@topic.id).first
@@ -129,5 +132,5 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-  
+
 end

@@ -71,10 +71,10 @@ class UsersController < ApplicationController
   
   def edit
     find_user
-    authorized?
+    owner?
   end
 
-  def authorized?
+  def owner?
     if @user.id != current_user.id
       flash[:notice] = 'You are not authorized to access this page!'
       redirect_to root_url
@@ -86,8 +86,9 @@ class UsersController < ApplicationController
 
   def update
     find_user
-    if authorized?
+    if owner?
       if @user.update_attributes(params[:user])
+        session[:fake_email] = nil
         notify :success, root_url
       else
         notify :failure, :edit

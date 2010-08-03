@@ -1,23 +1,27 @@
 <div class="grid_12">
-  <h4>Correct your email address</h4>
-  <div class="break"></div>
-  <div class="space_10"></div>
-  <div class="space_10"></div>
-  <div class='highlight emphasis'>
-    <% form_for @user do |f| %>
-      <%= f.label :email, t('label.enter_email') %>
-      <%= f.text_field :email,
-                       :value => t('label.enter_email'),
-                       :onfocus => "this.value == '#{t('label.enter_email')}' ? this.value = '' : true" %>
-      <%= f.submit t('button.update') %>
-      <br/>
-      <%= f.error_message_on :email %>
+  <% if session[:fake_email] %>
+    <h4><%= t('label.enter_email') %></h4>
+
+    <div class="break"></div>
+    <div class="space_10"></div>
+    <div class="space_10"></div>
+    <div class='highlight emphasis'>
+      <% form_for @user do |f| %>
+        <%= f.label :email, t('label.enter_email') %>
+        <%= f.text_field :email,
+                         :value => t('label.enter_email'),
+                         :onfocus => "this.value == '#{t('label.enter_email')}' ? this.value = '' : true" %>
+        <%= f.submit t('button.update') %>
+        <br/>
+        <%= f.error_message_on :email %>
+      <% end %>
+    </div>
+
+    <div class="space_10"></div>
   <% end %>
-  </div>
-
-  <div class="space_10"></div>
-
+  
   <h4><%= t('subheader.upload_avatar') %></h4>
+
   <div class="break"></div>
   <div class="space_10"></div>
   <div class="highlight">
@@ -39,11 +43,12 @@
   <div class="space_5"></div>
 
   <h4><%= t('subheader.active_share') %></h4>
+
   <div class="break"></div>
   <div class="space_10"></div>
   <% if current_user.facebook_session_exists? %>
     <%= t('label.fb_connected') %>
   <% else %>
-    <%= t('label.fb_not_connected')%>
+    <%= t('label.fb_not_connected') %>
   <% end %>
 </div>
