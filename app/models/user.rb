@@ -115,13 +115,9 @@ class User < ActiveRecord::Base
     email = user_attributes['email'] || 'FAKE'
     name = user_attributes['name'] || ''
 
-    puts ":: Register by fb account"
-
     if !email.blank? && !name.blank?
       existing_user = User.find_by_email(email)
       existing_user = User.find_by_facebook_uid(fb_uid) if existing_user.nil?
-
-      puts ":: Register by fb account: Existing user - #{existing_user.inspect}"
 
       if existing_user
         existing_user.facebook_uid = fb_uid
@@ -130,7 +126,6 @@ class User < ActiveRecord::Base
         existing_user.save(false)
 
         existing_user.update_attribute(:state, 'active')
-        puts ":: Register by fb account: Update attribute"
       else
         attributes = {
             :login => find_or_build_unique_user_name(name),
@@ -147,7 +142,6 @@ class User < ActiveRecord::Base
         user.save(false)
 
         user.update_attribute(:state, 'activate')
-        puts ":: Register by fb account: Create new - #{user.errors.inspect}"
       end
     else
       # Do something else let's log him out from facebook
