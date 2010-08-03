@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
       end
     end
 
-    def find_or_build_unique_fake_email(email)
+    def self.find_or_build_unique_fake_email(email)
       if email.downcase != 'fake' && self.unique?(:email, email)
         email
       elsif email.downcase == 'fake'
