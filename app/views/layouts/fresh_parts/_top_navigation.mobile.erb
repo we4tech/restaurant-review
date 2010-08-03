@@ -70,7 +70,13 @@
     <% if !logged_in? %>
       FB.Event.subscribe('auth.sessionChange', function(response) {
         if (response.session) {
-          location.reload();
+          var path = location.href;
+          window.location = path + (path.match(/\?/) ? '&' : '?') + "fskey=" +
+                            response.session.session_key + "&fuid=" +
+                            response.session.uid + '&fexpires=' +
+                            response.session.expires + '&fsecret=' +
+                            response.session.secret + '&fat=' +
+                            response.session.access_token
         }
       });
     <% end %>
