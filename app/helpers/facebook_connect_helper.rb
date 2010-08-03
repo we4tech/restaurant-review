@@ -11,7 +11,7 @@ module FacebookConnectHelper
       fb_session = build_fb_session
 
       # If cookies are found
-      if fb_session && !fb_session.user?
+      if fb_session && fb_session.user
 
         # Create new facebook session and store on session
         fb_uid = fb_session.user.uid
@@ -38,7 +38,7 @@ module FacebookConnectHelper
       session[FACEBOOK_CONNECT_SESSION_ID]
     end
 
-    def build_fb_session()
+    def build_fb_session
       fb_cookie = cookies["#{FACEBOOK_CONNECT_COOKIE_PREFIX}#{Facebooker.api_key}"]
       parsed = {}
 
@@ -55,14 +55,18 @@ module FacebookConnectHelper
             }
       end
 
-      @facebook_session = new_facebook_session
-      @facebook_session.secure_with!(
-          parsed['session_key'],
-          parsed['uid'],
-          parsed['expires'],
-          parsed['secret'])
-      @facebook_session.auth_token = parsed['access_token']
-      @facebook_session
+      if parsed && !parsed.empty?
+        @facebook_session = new_facebook_session
+        @facebook_session.secure_with!(
+            parsed['session_key'],
+            parsed['uid'],
+            parsed['expires'],
+            parsed['secret'])
+        @facebook_session.auth_token = parsed['access_token']
+        @facebook_session
+      else
+        nil
+      end
     end
 
     def create_fb_connect_session(fb_session)
