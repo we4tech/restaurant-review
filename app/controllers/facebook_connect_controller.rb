@@ -75,11 +75,12 @@ class FacebookConnectController < ApplicationController
     images = restaurant.images
     images = restaurant.other_images if images.empty?
 
+    url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
     if images && !images.empty?
       images.shuffle.each do |image|
         attached_images << {
             :type => 'image',
-            :src => "#{root_url[0..root_url.length - 2]}#{image.public_filename(:large)}",
+            :src => "#{url[0..url.length - 2]}#{image.public_filename(:large)}",
             :href => link
         }
       end
@@ -112,6 +113,7 @@ class FacebookConnectController < ApplicationController
       message = 'contributed by uploading a new image of'
     end
 
+    url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
     FacebookerPublisher::deliver_publish_stream(
         user, user, {
         :attachment =>  {
@@ -120,7 +122,7 @@ class FacebookConnectController < ApplicationController
           :description => remove_html_entities(p_restaurant.description),
           :media => [{
             :type => 'image',
-            :src => "#{root_url[0..root_url.length - 2]}#{p_image.public_filename(:large)}",
+            :src => "#{url[0..url.length - 2]}#{p_image.public_filename(:large)}",
             :href => link
           }]},
         :action_links => {
@@ -138,7 +140,8 @@ class FacebookConnectController < ApplicationController
     images = p_restaurant.images
     images = p_restaurant.other_images if images.empty?
     if !images.empty?
-      url_base = root_url[0..root_url.length - 2]
+      url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
+      url_base = url[0..url.length - 2]
       images.each do |image|
         images << {
           :type => 'image',
