@@ -139,10 +139,11 @@ class GamesController < ApplicationController
       images = restaurant.other_images if images.empty?
 
       if images && !images.empty?
+        url = root_url(:canvas => false).gsub(/(\?l=#{I18n.locale.to_s})/, '')
         images.shuffle.each do |image|
           attached_images << {
               :type => 'image',
-              :src => "#{root_url(:canvas => false)[0..root_url(:canvas => false).length - 2]}#{image.public_filename(:large)}",
+              :src => "#{url[0..url.length - 2]}#{image.public_filename(:large)}",
               :title => "#{image.caption}",
               :href => restaurant_url
           }
