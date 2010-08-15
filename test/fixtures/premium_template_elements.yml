@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  premium_template_id: 1
+  restaurant_id: 1
+  user_id: 1
+  element_type: MyString
+  element_key: MyString
+  data: MyText
+
+two:
+  premium_template_id: 1
+  restaurant_id: 1
+  user_id: 1
+  element_type: MyString
+  element_key: MyString
+  data: MyText

@@ -1,0 +1,22 @@
+<div class='module videoGallery' id="<%= element_id = "videoGallery_#{rand(10000) * Time.now.to_i}" %>">
+  <h3>Video Clips</h3>
+  <% (object.data || []).each_with_index do |video, index| %>
+    <div class='embeddableVideo'
+         id='<%= item_id = "#{element_id}_video_#{index}" %>'>
+      <h5 onclick="$('#<%= element_id %> .videoEmbedCode').hide(); $('#<%= item_id %> .videoEmbedCode').show()" class='pointer_cursor'>
+        Video - <%= video['title'] %>
+      </h5>
+
+      <div class='videoEmbedCode'
+           style="display:<%= index == 0 ? 'block' : 'none' %>">
+        <%= video['html'] %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<style type="text/css">
+  .videoGallery .videoEmbedCode {
+    
+  }
+</style>

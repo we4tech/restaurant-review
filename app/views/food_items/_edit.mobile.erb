@@ -1,0 +1,24 @@
+<div class='breadcrumbs'>
+  <%= link_to @restaurant.name, restaurant_long_url(
+      :id => @restaurant.id,
+      :name => url_escape(@restaurant.name)) %> &raquo;
+  <%= link_to 'Food Menu', restaurant_food_items_path(@restaurant) %> &raquo;
+</div>
+
+<h1>
+  Edit Food Menu Item
+</h1>
+<div class='break'></div>
+<div class='space_10'></div>
+<% form_for @food_item do |f| %>
+  <%= f.hidden_field :restaurant_id %>
+
+  <table class='formTable' cellspacing="10">
+    <%= render :partial => 'food_items/parts/form', :locals => {:f => f} %>
+    <tr>
+      <td colspan="2">
+        <%= f.submit t('button.update') %>
+      </td>
+    </tr>
+  </table>
+<% end %>

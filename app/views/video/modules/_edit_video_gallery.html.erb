@@ -1,0 +1,90 @@
+<div class='edit_module videoGallery'>
+  <h5>Edit video gallery</h5>
+
+  <% form_for object do |f| %>
+    <input type='hidden' name="emptyCheckThrough" value='title'/>
+    
+    <div class='existingVideos'>
+      <% (object.data || []).each do |video| %>
+        <% element_id = "video_#{video['title'].parameterize.to_s}_#{Time.now.to_i.to_s.gsub(/\./, '')}" %>
+
+        <a href='javascript:void(0)' class='showHide<%= element_id %>'
+           onclick="$('#<%= element_id %>').toggle(); $('.showHide<%= element_id %>').toggle()">Show : <%= video['title'] %></a>
+
+        <a href='javascript:void(0)' class='showHide<%= element_id %>'
+           onclick="$('#<%= element_id %>').toggle(); $('.showHide<%= element_id %>').toggle()" style='display: none'>Hide : <%= video['title'] %></a>
+
+        <div class='space_5'></div>
+
+        <div class='addGroup' style='display: none' id="<%= element_id %>">
+          <table>
+            <tr>
+              <th>
+                Title
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <input type='text' name='premium_template_element[data][][title]'
+                       value="<%= video['title'] %>"/>
+              </td>
+            </tr>
+            <tr>
+              <th>Embed HTML</th>
+            </tr>
+            <tr>
+              <td>
+                <%= video['html'] %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <textarea style='width: 100%; height: 100px;'
+                          name="premium_template_element[data][][html]"><%= video['html'] %></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td><%= f.submit 'Update' %></td>
+            </tr>
+          </table>
+        </div>
+        <div class='addGroup'>
+          <%= f.submit 'Delete', :onclick => "$('##{element_id}').remove();" %>
+        </div>
+      <% end %>
+    </div>
+    <div class='space_10'></div>
+
+    <h5>Add new</h5>
+    
+    <div class='addGroup'>
+      <table>
+        <tr>
+          <th>Title</th>
+        </tr>
+        <tr>
+          <td>
+            <input type='text' style='width: 100%'
+                   name='premium_template_element[data][][title]'/>
+          </td>
+        </tr>
+        <tr>
+          <th>Embed HTML</th>
+        </tr>
+        <tr>
+          <td>
+            <textarea style='width: 100%; height: 100px;'
+                      name='premium_template_element[data][][html]'></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td><%= f.submit 'Add video' %></td>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+</div>
+
+<style type="text/css">
+
+</style>

@@ -1,0 +1,90 @@
+<div class='edit_module'>
+  <h5 class='bigImageHeader'
+      onclick='$(".bigImageHeader").toggle();$("#bigImageSettings").toggle()'>Expand: Edit feature images</h5>
+  <h5 class='bigImageHeader' style='display:none'
+      onclick='$(".bigImageHeader").toggle();$("#bigImageSettings").toggle()'>Collapse: Edit feature images</h5>
+
+  <div id='bigImageSettings' style='display: none'>
+    <% images = @restaurant.related_images.
+        by_group(PremiumTemplate::GROUP_FEATURE_IMAGE).collect(&:image) %>
+    <ul class='images'>
+      <% images.each do |image| %>
+        <li>
+          <%= link_to(image_tag(image.public_filename(:small)), image.public_filename) %>
+          <br/>
+          <%= link_to t('nav.delete'), image_url(image),
+                      :method => :delete, :confirm => t('confirm.delete_image') %> |
+          <%= link_to t('nav.edit'), edit_image_url(image) %>
+        </li>
+      <% end %>
+    </ul>
+    <div class='clear'></div>
+
+    <h5>Add new image</h5>
+    <% form_for Image.new, :html => {:multipart => true} do |f| %>
+      <input type="hidden" name="restaurant_id"
+             value="<%= @restaurant.id %>"/>
+
+      <%= f.hidden_field :group, :value => PremiumTemplate::GROUP_FEATURE_IMAGE %>
+      <input type='hidden' name='fb_share_off' value='true'/>
+      <input type='hidden' name='return_to' value="<%= design_premium_template_url(@premium_template.id) %>"/>
+
+      <table align="left" class='addGroup'>
+        <tr>
+          <th>Select file</th>
+          <th>Write image caption</th>
+          <th>&nbsp;</th>
+        </tr>
+        <tr>
+          <td>
+            <%= f.file_field :uploaded_data %>
+          </td>
+          <td>
+            <%= f.text_field :caption %>
+          </td>
+        </tr>
+        <tr>
+          <th colspan="3">Description</th>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <%= f.text_area :description, :style => 'width: 100%; height: 100px;' %>
+          </td>
+        </tr>
+        <tr>
+          <th colspan='3'>Link</th>
+        </tr>
+        <tr>
+          <td colspan='3'>
+            <%= f.text_field :link, :style => 'width: 100%' %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <%= f.submit t('button.upload') %>
+          </td>
+        </tr>
+      </table>
+      <div class="clear"></div>
+    <% end %>
+  </div>
+</div>
+
+<style type="text/css">
+  .images {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .images li {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 10px;
+    height: 80px;
+  }
+
+
+</style>

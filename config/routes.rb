@@ -1,4 +1,19 @@
 ActionController::Routing::Routes.draw do |map|
+
+  map.resources :food_items, :has_many => [:food_items], :member => {
+      :add_image => :get, :save_image => :post}
+
+  map.resources :messages
+
+  map.resources :pages
+
+
+  map.root :controller => "home", :action => 'frontpage'
+
+  map.resources :premium_template_elements
+
+  map.resources :premium_templates, :member => {:design => :get, :save_designed => :post}
+
   map.resources :tag_group_mappings
 
   map.resources :related_tags
@@ -17,49 +32,29 @@ ActionController::Routing::Routes.draw do |map|
 
   map.facebook_resources :games
 
-
-  # The priority is based upon order of creation: first created -> highest priority.
-
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => "home", :action => 'frontpage'
-
-  map.resources :users, :member => { :suspend => :put, :unsuspend => :put, :purge => :delete }
+  map.resources :users, :member => {:suspend => :put,
+                                    :unsuspend => :put,
+                                    :purge => :delete }
   map.resource  :session
-  map.resources :restaurants, :member => {:edit_tags => :get, :save_tags => :post}
+
+  map.resources :restaurants, :member => {:edit_tags => :get,
+                                          :save_tags => :post,
+                                          :premium => :get,
+                                          :featured => :get},
+                :has_many => [:premium_templates,
+                              :pages, :messages,
+                              :food_items, :reviews]
+
   map.resources :images
+
   map.resources :reviews
+
   map.resources :contributed_images
+
   map.resources :topics
+
   map.resources :review_comments
+
   map.resources :form_attributes
 
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
@@ -68,16 +63,19 @@ ActionController::Routing::Routes.draw do |map|
   map.login_as '/login_as/:user', :controller => 'sessions', :action => 'login_as'
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
-  map.activate "/activate/:activation_code", :controller => "users", :action => "activate", :activation_code => nil
-  map.reset_password "/user/reset_password", :controller => "users", :action => "reset_password"
-  map.process_reset_password "/user/process/reset_password/", :controller => "users", :action => "process_reset_password"
+  map.activate "/activate/:activation_code", :controller => "users",
+               :action => "activate", :activation_code => nil
+  map.reset_password "/user/reset_password", :controller => "users",
+                     :action => "reset_password"
+  map.process_reset_password "/user/process/reset_password/",
+                             :controller => "users",
+                             :action => "process_reset_password"
   map.change_password "/user/change_password/:token", :controller => "users", :action => "change_password", :token => nil
   map.save_new_password "/user/save_new_password/", :controller => "users", :action => "save_new_password"
 
   map.restaurant_long_route '/t/:topic_name/:name/:id', :controller => 'restaurants',
                             :action => 'show',
                             :requirements => {:topic_name => /[\w\d\.\-]+/}
-  map.common '/restaurants/:name/:id', :controller => 'restaurants', :action => 'show'
   map.most_loved_places '/at_most_loved_places', :controller => 'home', :action => 'most_loved_places'
   map.recently_reviewed_places '/at_recently_reviewed_places', :controller => 'home', :action => 'recently_reviewed_places'
   map.who_wanna_go_place '/at/:name/and_see_who_havent_been_there_before/:id', :controller => 'home', :action => 'who_havent_been_there_before'
@@ -109,8 +107,11 @@ ActionController::Routing::Routes.draw do |map|
 
   map.treat_me '/games/treat_me', :controller => 'games', :action => 'treat_me'
   map.accept_treat_request '/games/accept_request/:id', :controller => 'games', :action => 'accept_request'
-  map.static_page '/static/:page_name', :controller => 'home', :action => 'static_page', 
+  map.static_page '/static/:page_name', :controller => 'home', :action => 'static_page',
                   :requirements => {:page_name => /[\d\w\.\-\s]/}
+
+  map.readable_page '/r/:restaurant_id/pages/:page_name',
+                    :controller => 'pages', :action => 'show'
 
   # See how all your routes lay out with "rake routes"
 

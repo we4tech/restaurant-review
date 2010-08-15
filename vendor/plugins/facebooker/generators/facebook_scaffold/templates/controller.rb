@@ -5,7 +5,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     @<%= table_name %> = <%= class_name %>.find(:all)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # _index.html.erb
       format.fbml # index.fbml.erb
       format.xml  { render :xml => @<%= table_name %> }
     end

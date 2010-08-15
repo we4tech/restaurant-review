@@ -1,6 +1,6 @@
 <div class="grid_12">
   <h1><%= t('header.restaurant_show_page',
-            :link => link_to(@restaurant.name, restaurant_url(@restaurant))) %></h1>
+            :link => link_to(@restaurant.name, restaurant_long_url(@restaurant))) %></h1>
   <div class="break"></div>
 
   <% form_for @restaurant do |f| %>

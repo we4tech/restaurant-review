@@ -3,7 +3,10 @@ ActionView::Helpers::UrlHelper.module_eval do
 
   def url_for(options = {})
     if options.is_a?(Hash)
-      options.merge!({'l' => I18n.locale.to_s})
+      if !options.stringify_keys.include?('l')
+        options.merge!({'l' => I18n.locale.to_s})
+      end
+      
       __url_for(options)
 
     elsif options.is_a?(String)

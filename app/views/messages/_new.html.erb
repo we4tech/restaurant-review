@@ -1,0 +1,9 @@
+<h1>Create new news</h1>
+<div class='space_10'></div>
+<div class='break'></div>
+<div class='space_10'></div>
+<% form_for @message do |f| %>
+  <%= f.hidden_field :restaurant_id, :value => @restaurant.id %>
+  <%= render :partial => 'messages/parts/form', :locals => {:f => f} %>
+  <%= f.submit t('button.create') %>
+<% end %>

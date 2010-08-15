@@ -139,5 +139,10 @@
     var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
   </script>
 <% end %>
+
+<% if params[:_test] || session[:_test] %>
+  <% session[:_test] = true %>
+  <%= javascript_include_tag 'test.js' %>
+<% end %>
 </body>
 </html>

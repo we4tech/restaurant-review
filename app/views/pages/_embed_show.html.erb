@@ -1,0 +1,23 @@
+<% if @page %>
+  <div class='breadcrumbs'>
+    <%= link_to @restaurant.name, premium_restaurant_path(@restaurant.id) %> &raquo;
+  </div>
+  <h1 class='floatHeader'>
+    <%= @page.title %>
+  </h1>
+  <% if @page.author?(current_user) %>
+    <div class='pageTools'>
+      (<%= link_to t('nav.edit'), edit_page_path(@page.id) %>)
+    </div>
+  <% end %>
+  <div class='clear'></div>
+
+  <%= simple_format @page.content %>
+<% else %>
+  <h1>No page found</h1>
+  <p>
+    You can create a new
+    page <%= link_to "Create #{params[:page_name].gsub(/\-/, ' ').humanize}",
+                     new_restaurant_page_path(@restaurant, :page_name => params[:page_name]) %>
+  </p>
+<% end %>

@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
 
-  before_filter :login_required
+  before_filter :login_required, :except => [:show]
 
   def create
     @image_file, @group = prepare_image_object
@@ -9,8 +9,10 @@ class ImagesController < ApplicationController
       object_id, field_name, return_url = create_image_relation
 
       flash[:notice] = 'Successfully added your image!'
-      if current_user.share_on_facebook? && field_name == :restaurant_id
+      if params[:fb_share_off].nil? && current_user.share_on_facebook? && field_name == :restaurant_id
         redirect_to facebook_publish_url('new_image', @image_file.id, :restaurant_id => object_id, :next_to => return_url)
+      elsif return_url
+        redirect_to return_url
       else
         redirect_to :back
       end
@@ -39,6 +41,40 @@ class ImagesController < ApplicationController
     end
 
     redirect_to :back
+  end
+
+  def edit
+    @image = Image.find(params[:id].to_i)
+    if_permits?(@image) do
+      @restaurant = @image.discover_relation_with_restaurant
+      if @restaurant
+        render_view('images/edit')
+      end
+    end
+  end
+
+  def update
+    @image = Image.find(params[:id].to_i)
+    if_permits?(@image) do
+      attributes = params[:image]
+      attributes.delete(:user_id)
+      attributes.delete(:restaurant_id)
+      attributes.delete(:parent_id)
+      attributes.delete(:topic_id)
+      if @image.update_attributes(attributes)
+        notify :success, params[:ref]
+      else
+        notify :failure, params[:ref]
+      end
+    end
+  end
+
+  def show
+    @image = Image.find(params[:id].to_i)
+    @restaurant = @image.discover_relation_with_restaurant
+    if @restaurant
+      render_view('images/show')
+    end
   end
 
   private
@@ -85,6 +121,7 @@ class ImagesController < ApplicationController
     object_id = nil
     return_url = nil
 
+    # Initial mapping
     if params[:restaurant_id]
       object_id = Restaurant.find(params[:restaurant_id].to_i).id
       field_name = :restaurant_id
@@ -94,9 +131,33 @@ class ImagesController < ApplicationController
       field_name = :user_id
       if current_user.image
         current_user.image.destroy
-        current_user.related_image.destroy
+        if current_user.reload.related_image
+          current_user.related_image.destroy
+        end
       end
+      
       return_url = edit_user_url(object_id)
+    end
+
+    # Override mapping with :food_item_id
+    if params[:food_item_id]
+      food_item = FoodItem.find(params[:food_item_id].to_i)
+      object_id = food_item.id
+      field_name = :food_item_id
+      if food_item.image
+        food_item.image.destroy
+
+        if food_item.reload.related_image
+          food_item.related_image.destroy
+        end
+      end
+
+      return_url = restaurant_food_items_path(food_item.restaurant)
+    elsif params[:message_id]
+      message = Message.find(params[:message_id].to_i)
+      object_id = message.id
+      field_name = :message_id
+      return_url = edit_restaurant_message_path(message.restaurant, message)
     end
 
     if params[:return_to]

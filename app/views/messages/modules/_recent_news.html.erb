@@ -1,0 +1,40 @@
+<div class='module recentNews'>
+  <h3>Recent news</h3>
+  <% messages.each do |message| %>
+    <div class='message'>
+      <% if message.images.length > 0 %>
+        <div class='thumbnail'>
+          <%= image_tag message.images.first.public_filename(:small) %>
+        </div>
+      <% end %>
+
+      <div class='content'>
+        <h6>
+          <%= link_to message.title, restaurant_message_url(message.restaurant, message.id) %>
+        </h6>
+
+        <small>
+          <%= Message::type_label(message.type_id) %> was added
+          about <%= distance_of_time_in_words(message.created_at, Time.now) %>
+          ago.
+          <% if message.author?(current_user) %>
+            <br/>
+            <%= link_to t('nav.edit'), edit_restaurant_message_path(message.restaurant, message.id) %>
+            ,
+            <%= link_to t('nav.delete'), restaurant_message_path(message.restaurant, message.id),
+                        :method => :delete,
+                        :confirm => t('confirm.delete_entry') %>
+          <% end %>
+        </small>
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div class='space_10'></div>
+    <div class='break'></div>
+  <% end %>
+  <div class='space_10'></div>
+  <div class='linkMore'>
+    <%= link_to t('nav.more'), restaurant_messages_url(@restaurant) %>
+  </div>
+  <div class='space_10'></div>
+</div>

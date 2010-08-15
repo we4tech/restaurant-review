@@ -15,12 +15,16 @@ class ReviewCommentsController < ApplicationController
       flash[:notice] = "You have added a comment on review - ##{@review.id}"
       redirect_to "#{restaurant_long_url(
           :name => @review.restaurant.name.parameterize.to_s,
-          :id => @review.restaurant.id)}#review-#{@review.id}"
+          :id => @review.restaurant.id,
+          :premium_check => true,
+          :page => :reviews)}#review-#{@review.id}"
     else
       flash[:notice] = "Failed to add comment on review - ##{@review.id}"
       redirect_to "#{restaurant_long_url(
           :name => @review.restaurant.name.parameterize.to_s,
-          :id => @review.restaurant.id)}#review-#{@review.id}" 
+          :id => @review.restaurant.id,
+          :premium_check => true,
+          :page => :reviews)}#review-#{@review.id}"
     end
   end
 
@@ -43,6 +47,8 @@ class ReviewCommentsController < ApplicationController
 
     redirect_to "#{restaurant_long_url(
           :name => @review_comment.restaurant.name.parameterize.to_s,
-          :id => @review_comment.restaurant.id)}#review-#{@review_comment.review_id}"
+          :id => @review_comment.restaurant.id,
+          :premium_check => true,
+          :page => :reviews)}#review-#{@review_comment.review_id}"
   end
 end

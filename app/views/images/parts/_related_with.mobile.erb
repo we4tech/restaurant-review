@@ -1,0 +1,30 @@
+<div class='attachedWithObjects'>
+  <%
+     possible_keys = RelatedImage.new.attributes.keys.collect{|k| k if k.to_s.match(/_id/)}.compact
+     possible_keys.delete('user_id')
+     possible_keys.delete('image_id')
+     possible_keys.delete('topic_id')
+
+     attached_objects = []
+
+     @image.related_images.each do |related_image|
+       possible_keys.each do |key|
+         if related_image.respond_to?(key)
+           attached_objects << related_image.send(key.gsub(/_id/, ''))
+         end
+       end
+     end
+
+     attached_objects.compact!
+  %>
+  
+  <% attached_objects.each do |object| %>
+    <div class='attachedWithObject'>
+      <% if object.is_a?(Restaurant) %>
+        <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => object} %>
+      <% elsif object.is_a?(Message) %>
+        <%= render :partial => 'messages/parts/message', :object => object %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

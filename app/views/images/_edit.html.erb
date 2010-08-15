@@ -1,0 +1,37 @@
+<div class='grid_7'>
+  <h1>Edit image</h1>
+  <div class='break'></div>
+  <div class='space_10'></div>
+  
+  <% form_for @image, :html => {:multipart => true} do |f| %>
+
+    <div class='grid_1'>
+      <%= image_tag @image.public_filename(:small) %>
+    </div>
+    <div class='grid_10'>
+      You are editing details for this image which was last
+      <span class='date'>updated <%= distance_of_time_in_words_to_now(@image.updated_at) %> ago.</span>
+    </div>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+    <div class='break'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :caption %><br/>
+    <%= f.text_field :caption, :style => 'width:100%' %><br/>
+
+    <%= f.label :link %><br/>
+    <%= f.text_field :link, :style => 'width:100%'  %><br/>
+
+    <%= f.label :description %><br/>
+    <%= f.text_area :description, :style => 'width:100%'  %><br/>
+
+    <% if request.headers['REFERER'] %>
+      <input type='hidden' name='ref' value="<%= request.headers['REFERER'] %>"/>
+    <% end %>
+
+    <div class='space_10'></div>
+    <%= f.submit t('button.update') %>
+
+  <% end %>
+</div>

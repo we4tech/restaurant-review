@@ -1,0 +1,72 @@
+<div class='breadcrumbs'>
+  <%= link_to @restaurant.name, restaurant_long_url(
+      :id => @restaurant.id,
+      :name => url_escape(@restaurant.name)) %> &raquo;
+  <%= link_to 'Food Menu', restaurant_food_items_path(@restaurant) %> &raquo;
+</div>
+
+<h1>
+  Add Image
+</h1>
+
+<div class='break'></div>
+<div class='space_10'></div>
+
+<% if @food_item.image %>
+  <div class='grid_1'>
+    <%= image_tag @food_item.image.public_filename(:small) %>
+  </div>
+  <div class='grid_6'>
+    <%= @food_item.image.caption %>
+  </div>
+  <div class='clear'></div>
+  <div class='space_10'></div>
+  <div class='break'></div>
+<% end %>
+
+<% form_for Image.new, :html => {:multipart => true} do |f| %>
+  <input type='hidden' name='fb_share_off' value='true'/>
+  <input type='hidden' name='return_to' value="<%= restaurant_food_items_path(@restaurant) %>" />
+
+  <table class='formTable'>
+    <tr>
+      <th>Food Menu</th>
+    </tr>
+    <tr>
+      <td>
+        <select name='food_item_id'>
+          <% @restaurant.food_items.each do |food_item| %>
+            <option value='<%= food_item.id %>' <%= food_item.id == @food_item.id ? 'selected="selected"' : '' %>>
+              <%= food_item.name %>
+            </option>
+          <% end %>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th>Caption</th>
+    </tr>
+    <tr>
+      <td>
+        <%= f.text_field :caption %>
+      </td>
+    </tr>
+    <tr>
+      <th>Select file</th>
+    </tr>
+    <tr>
+      <td>
+        <%= f.file_field :uploaded_data %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= f.submit t('button.upload') %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+<script type="text/javascript">
+  $('#image_caption').focus();
+</script>

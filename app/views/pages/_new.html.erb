@@ -1,0 +1,38 @@
+<div class='breadcrumbs'>
+  <%= link_to @restaurant.name, restaurant_long_url(
+      :id => @restaurant.id,
+      :name => url_escape(@restaurant.name)) %> &raquo;
+</div>
+
+<h1>Create new page</h1>
+<div class='space_10'></div>
+<div class='break'></div>
+<div class='space_10'></div>
+
+<% form_for @page do |f| %>
+  <%= f.hidden_field :restaurant_id, :value => @restaurant.id %>
+
+  <%= f.label :url %>
+  <div class='space_10'></div>
+  <%= f.text_field :url, :value => params[:page_name] ? params[:page_name] : '' %>
+  <div class='space_10'></div>
+
+  <%= f.label :title %>
+  <div class='space_10'></div>
+
+  <%= f.text_field :title, :value => params[:page_name] ? (params[:page_name].gsub(/\-/, ' ')).humanize : '' %>
+  <div class='space_10'></div>
+
+  <%= f.label :content %>
+  <div class='space_10'></div>
+
+  <%= f.text_area :content, :style => 'width: 100%' %>
+  <div class='space_10'></div>
+
+  <%= f.submit t('button.create') %>
+<% end %>
+
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script type="text/javascript">
+  new nicEditor({buttonList : ['bold','italic','underline','left','center','right','ol','ul','fontFormat','indent','outdent','link','unlink','image','upload','xhtml']}).panelInstance('page_content');
+</script>

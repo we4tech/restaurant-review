@@ -1,0 +1,94 @@
+<div id="site_center">
+  <div class="grid_8 restaurant_details">
+    <div class="restaurant_details">
+      <%= render :partial => 'pages/parts/links' %>
+      <div class='space_10'></div>
+
+      <%= render :partial => @content_template %>
+
+    </div>
+    <div class="clear"></div>
+
+    <div class="space_10"></div>
+  </div>
+
+  <div class="grid_4" id="site_center_boxes">
+
+    <% if @topic.name == 'restaurant' %>
+      <div class="site_simple_box restaurant_address" align="center">
+        <a href='mailto:biz@welltreat.us?subject=[BIZ knock knock]'
+           title="<%= t('title.own_this') %>">
+          <%= image_tag('fresh/button_do_u_own_this.png') %>
+        </a>
+      </div>
+      <div class="clear"></div>
+      <div class="space_10"></div>
+    <% end %>
+
+    <% if !(@restaurant.address || '').blank? %>
+      <div class="site_simple_box restaurant_address">
+        <h4>
+          <%= t('fields.address') %>
+        </h4>
+        <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
+          <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
+              "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
+              "sensor=false&markers=color:green|label:R|" +
+              "#{@restaurant.lat},#{@restaurant.lng}&key=#{MAP_API_KEY}&size="
+             details_link = "http://maps.google.com/maps?f=q&" +
+                 "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
+                 "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"
+          %>
+
+          <div class="space_5"></div>
+          <%= link_to image_tag(map_url + "300x300"), "#{map_url}800x800",
+                      :class => 'openUpinLightBox',
+                      :title => link_to(t('fields.map'), details_link) %>
+        <% end %>
+        <address><%= @restaurant.address %></address>
+      </div>
+    <% end %>
+    <div class="clear"></div>
+
+    <%= render_who_wanna_go_there(@restaurant) %>
+    <%= render :partial => 'layouts/fresh_parts/modules' %>
+  </div>
+</div>
+
+<div class="hreview-aggregate">
+   <span class="item">
+      <span class="<%= I18n.locale.to_s %>"><%= @restaurant.name %></span>
+   </span>
+   <span class="rating">
+      <span class="average"><%= @restaurant.rating_out_of(Restaurant::RATING_LIMIT) %></span> out of
+      <span class="best"><%= Restaurant::RATING_LIMIT %></span>
+   </span>
+   based on
+   <span class="count"><%= @restaurant.reviews.loved.count %></span> ratings.
+   <span class="votes"><%= @restaurant.reviews.count %></span> user reviews.
+</div>
+
+<div class="vcard">
+  <span class="<%= I18n.locale.to_s %> org"><%= @restaurant.name %></span>
+  Located at
+  <div class="adr">
+    <%= @restaurant.address %>
+  </div>
+   <span class="geo">
+      <span class="latitude">
+         <span class="value-title" title="<%= @restaurant.lat %>"></span>
+      </span>
+      <span class="longitude">
+         <span class="value-title" title="<%= @restaurant.lng %>"></span>
+      </span>
+   </span>
+</div>
+
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".openUpinLightBox").prettyPhoto();
+  });
+</script>
+

@@ -17,6 +17,10 @@ class Restaurant < ActiveRecord::Base
   has_many :subscribers, :source => :user, :through => :stuff_events
   has_many :tag_mappings, :dependent => :destroy
   has_many :tags, :through => :tag_mappings
+  has_many :premium_templates
+  has_many :pages
+  has_many :messages
+  has_many :food_items
 
   validates_presence_of :name, :topic_id
   validates_uniqueness_of :name
@@ -24,9 +28,10 @@ class Restaurant < ActiveRecord::Base
 
   named_scope :recent, :order => 'created_at DESC'
   named_scope :by_topic, lambda{|topic_id| {:conditions => {:topic_id => topic_id}}}
+  named_scope :featured, :conditions => {:featured => true}
 
-  cattr_reader :per_page
   @@per_page = 20
+  cattr_reader :per_page
 
   attr_accessor :hit_count
 
@@ -35,6 +40,10 @@ class Restaurant < ActiveRecord::Base
 
   def author?(p_user)
     return p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
+  end
+
+  def selected_premium_template
+    self.premium_templates.published.first || self.premium_templates.first
   end
 
   #

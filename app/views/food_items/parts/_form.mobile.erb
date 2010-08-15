@@ -1,0 +1,29 @@
+<tr>
+  <th><%= f.label :food_item_id, 'Parent menu' %></th>
+  <th><%= f.label :name %></th>
+  <th><%= f.label :price %></th>
+</tr>
+<tr>
+  <td>
+    <%= f.select :food_item_id, @restaurant.food_items.
+        collect{|fi| [fi.name, fi.id]}, :include_blank => 'Select parent menu' %>
+    <%= f.error_message_on :food_item_id %>
+  </td>
+  <td>
+    <%= f.text_field :name %>
+    <%= f.error_message_on :name %>
+  </td>
+  <td>
+    <%= f.text_field :price, :style => 'width: 60px; text-align: right' %>
+    <%= f.error_message_on :price %>
+  </td>
+</tr>
+<tr>
+  <th colspan="3"><%= f.label :description, 'Description' %></th>
+</tr>
+<tr>
+  <td colspan="3">
+    <%= f.text_area :description, :style => 'width: 100%; height: 100px;' %>
+    <%= f.error_message_on :description %>
+  </td>
+</tr>

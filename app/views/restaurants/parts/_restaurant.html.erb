@@ -16,7 +16,7 @@
   <div class="<%= grid_class %>">
     <h4>
       <%= link_to restaurant.name, restaurant_long_url(
-          :name => url_escape(restaurant.name), :id => restaurant.id) %>
+          :name => url_escape(restaurant.name), :id => restaurant.id, :d => false) %>
     </h4>
 
     <div class="site_list_item_rating">
@@ -32,17 +32,26 @@
         | <%= link_to t('nav.edit'), edit_restaurant_url(restaurant) %>
         | <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(restaurant) %>
       <% end %>
+      <% if logged_in? && current_user.admin? %>
+        <% if restaurant.featured? %>
+          | <%= link_to t('label.remove_from_featured'), featured_restaurant_path(restaurant.id) %>
+        <% else %>
+          | <%= link_to t('label.make_as_featured'), featured_restaurant_path(restaurant.id) %>
+        <% end %>
+      <% end %>
     </div>
 
     <div class="summary">
       <% words = (restaurant.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
-      <%= words[0..20].join(' ') %><% if words.length > 20 %>...<% end %>
+      <%= words[0..20].join(' ') %>
+      <% if words.length > 20 %>...
+      <% end %>
       <%= link_to t('nav.more'), restaurant_long_url(
           :name => url_escape(restaurant.name), :id => restaurant.id) %>
       <% if !(restaurant.address || '').blank? %>
-      <br/>
-      <b><%= tt('fields.address') %>:</b>
-      <%= restaurant.address %>
+        <br/>
+        <b><%= tt('fields.address') %>:</b>
+        <%= restaurant.address %>
       <% end %>
     </div>
 

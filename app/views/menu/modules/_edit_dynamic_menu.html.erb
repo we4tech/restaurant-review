@@ -1,0 +1,136 @@
+<div class='edit_module'>
+  <%
+     suffix = "#{rand(10000) * Time.now.to_i}".to_s
+  %>
+  <h5 class='editMenuEditor<%= suffix %>'>Expand: Menu editor</h5>
+  <h5 class='editMenuEditor<%= suffix %>' style="display: none">Collapse: Menu
+    editor</h5>
+
+  <div id="menu<%= suffix %>" style='display: none'>
+    <% form_for object do |f| %>
+      <input type='hidden' name="emptyCheckThrough" value='label'/>
+      <input type='hidden' name="orderBy" value='index'/>
+
+      <ul class='menu'>
+        <% object.data.each_with_index do |menu_ref, index| %>
+          <li id='<%= li_id = "li_#{index}" %>'>
+            <table cellspacing="5">
+              <tr>
+                <th>Index</th>
+                <th>Label</th>
+                <th>
+                  &nbsp;
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <input type='text' name='premium_template_element[data][][index]'
+                         value='<%= menu_ref['index'] || 0 %>' size="2" align="right"/>
+                </td>
+                <td>
+                  <input type='text' name='premium_template_element[data][][label]'
+                         value='<%= menu_ref['label'] %>'/>
+                </td>
+                <td>
+                  <a href='javascript:void(0)'
+                     onclick="$('#<%= li_id %>_ext').toggle();">Add External
+                    Link</a>
+
+                  <input type='text' name='premium_template_element[data][][ext_href]'
+                         id='<%= li_id %>_ext'
+                         style='display: <%= (menu_ref['ext_href'] || '').blank? ? 'none' : 'inline' %>'
+                         value='<%= menu_ref['ext_href'] %>'/>
+                  Or
+                  <select name='premium_template_element[data][][int_href]'>
+                    <option value=''>Select</option>
+                    <% ModuleMenuHelper::INTERNAL_LINKS.each do |link| %>
+                      <option value="<%= link %>" <%= menu_ref['int_href'] == link ? 'selected="selected"' : '' %>><%= link.humanize %></option>
+                    <% end %>
+                  </select>
+                </td>
+                <td>
+                  <a href='javascript:void(0)'
+                     onclick="confirm('Do you really want to remove it?') ? $('#<%= li_id %>').remove() : ''">Remove</a>
+                </td>
+              </tr>
+            </table>
+
+          </li>
+        <% end %>
+        <li class='new'>
+          <table cellspacing="5">
+            <tr>
+              <th>Index</th>
+              <th>Label</th>
+              <th>
+                External link
+              </th>
+              <th>Or Internal link</th>
+            </tr>
+            <tr>
+              <td>
+                <input type='text' name='premium_template_element[data][][index]'
+                       value='0' size='2' align="right"/>
+              </td>
+              <td>
+                <input type='text' name='premium_template_element[data][][label]' value=''/>
+              </td>
+              <td>
+                <input type='text' name='premium_template_element[data][][ext_href]' value=''/>
+              </td>
+              <td>
+                <select name='premium_template_element[data][][int_href]'>
+                  <option>Select</option>
+                  <% ModuleMenuHelper::INTERNAL_LINKS.each do |link| %>
+                    <option value="<%= link %>"><%= link.humanize %></option>
+                  <% end %>
+                </select>
+              </td>
+            </tr>
+          </table>
+
+        </li>
+
+        <li class='buttons'>
+          <%= f.submit 'Save' %>
+        </li>
+      </ul>
+
+
+    <% end %>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(".editMenuEditor<%= suffix %>").click(function() {
+    $(".editMenuEditor<%= suffix %>").toggle();
+    $("#menu<%= suffix %>").toggle();
+  });
+</script>
+
+<style type="text/css">
+  .menu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .menu li {
+    background: #ffff99;
+    margin-bottom: 5px;
+  }
+
+  .menu li table {
+    border: 0;
+  }
+
+  .menu li table tr {
+    font-size: 10px;
+    color: #888;
+  }
+
+  .menu li table tr th {
+    font-weight: normal;
+  }
+</style>

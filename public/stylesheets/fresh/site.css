@@ -596,12 +596,13 @@ h1, h2, h3, h4, h5, h6 {
 .stuff_event {
   float: left;
   margin: 20px 20px 20px 0;
-  width: 290px;
+  width: 240px;
+  height: 250px
 }
 .stuff_event .image {
   border: 1px solid #ccc;
   background: #fff;
-  width: 286px;
+  width: 240px;
   overflow: hidden;
 }
 .stuff_event .info {
@@ -613,6 +614,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .stuff_event img {
   padding: 10px;
+  max-width: 220px;
+  max-height: 250px;
 }
 .options_box {
   width: 500px;
@@ -648,36 +651,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 80%;
 }
 
-.comments {
-  background:#ddeef6;
-  padding: 30px;
-}
-
-.comments label {
-  display: block;
-}
-
-.comments textarea {
-  width: 100%;
-  height: 100px;
-  margin-bottom: 5px;
-}
-
-.comments .comment {
-  margin-top: 10px;
-  border-top: 2px solid #fff;
-  padding-top: 10px;
-}
-
-.comments .comment .avatar {
-  float: left;
-}
-
-.comments .comment .content {
-  float: left;
-  width: 450px;
-  padding-left: 10px;
-}
 
 .weeeFeatureBox {
   padding: 0;
@@ -851,3 +824,87 @@ h1, h2, h3, h4, h5, h6 {
 .emphasis * {
   font-size: 110%;
 }
+
+.formTable {
+
+}
+
+.formTable tr th {
+  font-size: 70%;
+  color: #888;
+  text-align: left;
+  padding: 0 5px;
+}
+
+.formTable tr td {
+  padding: 5px;
+}
+
+.relatedImages {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.relatedImages img {
+  height: 50px;
+}
+
+.floatHeader {
+  float: left;
+}
+
+.pageTools {
+  float: left;
+  margin-top: 5px;
+  margin-left: 10px;
+  font-size: 10px;
+}
+
+.pageTools a {
+  color: darkred;
+}
+
+.breadcrumbs {
+  font-size: 10px;
+  color: #888;
+  font-style: italic;
+}
+.bigImage {
+  text-align: center;
+}
+
+.bigImage img {
+  border: 10px solid #ccc;
+  max-width: 600px;
+}
+
+.bigImageContainer .comments .form {
+  background: lightYellow;
+  padding: 10px;
+}
+
+.bigImageContainer .comments .form textarea {
+  display: block;
+  width: 100%;
+  height: 70px;
+}
+
+.bigImageContainer .comments .avatar {
+  float: left;
+  width: 60px;
+}
+
+.bigImageContainer .comments .avatar .content {
+  background: red;
+  width: 538px;
+}
+
+.bigImageContainer .description {
+
+}
+
+.breadcrumbs a {
+  color: #888;
+  text-decoration: none;
+}
+

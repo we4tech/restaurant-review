@@ -1,0 +1,29 @@
+<div class="grid_12">
+  <h1>
+    <%= @restaurant.name %> &raquo;
+    <%= link_to 'Manage premium themes', restaurant_premium_templates_path(@restaurant) %> &raquo; New
+  </h1>
+
+  <div class='premium_templates'>
+    <% form_for @premium_template do |f| %>
+      <%= f.hidden_field :restaurant_id %>
+
+      <%= f.label :name, t('fields.name') %><br/>
+      <%= f.text_field :name %>
+      <%= f.error_message_on :name %><br/>
+
+      <%= f.label :site_title %><br/>
+      <%= f.text_field :site_title %>
+      <%= f.error_message_on :site_title %><br/>
+
+      <%= f.label :meta_tags %><br/>
+      <%= f.text_area :meta_tags %><br/>
+
+      <%= f.label :template %>: <%= f.select :template, @templates %>
+      <%= f.error_message_on :template %><br/>
+
+      <div class='space_10'></div>
+      <%= f.submit t('button.create') %>
+    <% end %>
+  </div>
+</div>

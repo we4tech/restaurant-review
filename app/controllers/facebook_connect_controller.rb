@@ -17,22 +17,25 @@ class FacebookConnectController < ApplicationController
         status = false
 
         case story_type
-        when 'new_restaurant'
-          restaurant = Restaurant.find(params[:id].to_i)
-          status = publish_story_of_restaurant(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
-        when 'updated_restaurant'
-          restaurant = Restaurant.find(params[:id].to_i)
-          status = publish_story_of_restaurant(RESTAURANT_UPDATED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
-        when 'new_image'
-          image = Image.find(params[:id].to_i)
-          restaurant = Restaurant.find(params[:restaurant_id].to_i)
-          status = publish_story_on_image_added(IMAGE_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant, image)
-        when 'new_review'
-          review = Review.find(params[:id].to_i)
-          status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
-        when 'updated_review'
-          review = Review.find(params[:id].to_i)
-          status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
+          when 'new_restaurant'
+            restaurant = Restaurant.find(params[:id].to_i)
+            status = publish_story_of_restaurant(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
+          when 'updated_restaurant'
+            restaurant = Restaurant.find(params[:id].to_i)
+            status = publish_story_of_restaurant(RESTAURANT_UPDATED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
+          when 'new_image'
+            image = Image.find(params[:id].to_i)
+            restaurant = Restaurant.find(params[:restaurant_id].to_i)
+            status = publish_story_on_image_added(IMAGE_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant, image)
+          when 'new_review'
+            review = Review.find(params[:id].to_i)
+            status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
+          when 'updated_review'
+            review = Review.find(params[:id].to_i)
+            status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
+          when 'new_photo_comment'
+            photo_comment = PhotoComment.find(params[:id].to_i)
+            status = publish_story_of_photo_comment(facebook_session, photo_comment)
         end
 
         if status
@@ -89,15 +92,57 @@ class FacebookConnectController < ApplicationController
     user = p_facebook_session.user
     FacebookerPublisher::deliver_publish_stream(
         user, user, {
-        :attachment =>  {
-          :name => "#{restaurant_review(p_review)} '#{restaurant.name}'",
-          :href => link,
-          :caption => restaurant_review_stat(p_review),
-          :description => remove_html_entities(p_review.comment),
-          :media => attached_images},
-        :action_links => {
-            'text' => 'add your review!',
-            'href' => link}});
+            :attachment => {
+                :name => "#{restaurant_review(p_review)} '#{restaurant.name}'",
+                :href => link,
+                :caption => restaurant_review_stat(p_review),
+                :description => remove_html_entities(p_review.comment),
+                :media => attached_images},
+            :action_links => {
+                'text' => 'add your review!',
+                'href' => link}});
+  end
+
+  def publish_story_of_photo_comment(facebook_session, photo_comment)
+    restaurant = photo_comment.restaurant
+    url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
+
+    user = facebook_session.user
+    FacebookerPublisher::deliver_publish_stream(
+        user, user, {
+            :attachment => {
+                :name => "Added a comment on a image of '#{restaurant.name}'",
+                :href => image_url(photo_comment.image_id),
+                :caption => restaurant_review_stat(restaurant),
+                :description => remove_html_entities(photo_comment.content),
+                :media => [{
+                    :type => 'image',
+                    :src => "#{url[0..url.length - 2]}#{photo_comment.image.public_filename(:large)}",
+                    :href => image_url(photo_comment.image_id)
+                }]},
+            :action_links => {
+                'text' => 'add your review!',
+                'href' => restaurant_long_url(restaurant)}});
+  end
+
+  def collect_attached_images(restaurant)
+    attached_images = []
+    images = restaurant.images
+    images = restaurant.other_images if images.empty?
+
+    url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
+
+    if images && !images.empty?
+      images.shuffle.each do |image|
+        attached_images << {
+            :type => 'image',
+            :src => "#{url[0..url.length - 2]}#{image.public_filename(:large)}",
+            :href => link
+        }
+      end
+    end
+
+    attached_images
   end
 
   def publish_story_on_image_added(p_bundle_id, p_facebook_session, p_restaurant, p_image)
@@ -116,18 +161,18 @@ class FacebookConnectController < ApplicationController
     url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
     FacebookerPublisher::deliver_publish_stream(
         user, user, {
-        :attachment =>  {
-          :name => "#{message} '#{p_restaurant.name}'",
-          :href => link,
-          :description => remove_html_entities(p_restaurant.description),
-          :media => [{
-            :type => 'image',
-            :src => "#{url[0..url.length - 2]}#{p_image.public_filename(:large)}",
-            :href => link
-          }]},
-        :action_links => {
-            'text' => 'add your review!',
-            'href' => link}});
+            :attachment => {
+                :name => "#{message} '#{p_restaurant.name}'",
+                :href => link,
+                :description => remove_html_entities(p_restaurant.description),
+                :media => [{
+                    :type => 'image',
+                    :src => "#{url[0..url.length - 2]}#{p_image.public_filename(:large)}",
+                    :href => link
+                }]},
+            :action_links => {
+                'text' => 'add your review!',
+                'href' => link}});
   end
 
   def publish_story_of_restaurant(p_bundle_id, p_facebook_session, p_restaurant)
@@ -144,9 +189,9 @@ class FacebookConnectController < ApplicationController
       url_base = url[0..url.length - 2]
       images.each do |image|
         images << {
-          :type => 'image',
-          :src => "#{url_base}#{image.public_filename(:large)}",
-          :href => link
+            :type => 'image',
+            :src => "#{url_base}#{image.public_filename(:large)}",
+            :href => link
         }
       end
     end
@@ -157,15 +202,15 @@ class FacebookConnectController < ApplicationController
     user = p_facebook_session.user
     FacebookerPublisher::deliver_publish_stream(
         user, user, {
-        :attachment =>  {
-          :name => "#{verb} '#{p_restaurant.name}'",
-          :href => link,
-          :caption => "Address: #{p_restaurant.address || 'no where!!'}",
-          :description => remove_html_entities(p_restaurant.description),
-          :media => images},
-        :action_links => {
-            'text' => 'add your review!',
-            'href' => link}});
+            :attachment => {
+                :name => "#{verb} '#{p_restaurant.name}'",
+                :href => link,
+                :caption => "Address: #{p_restaurant.address || 'no where!!'}",
+                :description => remove_html_entities(p_restaurant.description),
+                :media => images},
+            :action_links => {
+                'text' => 'add your review!',
+                'href' => link}});
   end
 
   def build_facebook_session

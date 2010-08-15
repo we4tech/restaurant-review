@@ -34,6 +34,16 @@ class ApplicationController < ActionController::Base
   before_filter :detect_fake_email
 
   protected
+
+    def if_permits? (object)
+      if object && object.author?(current_user)
+        yield
+      else
+        flash[:notice] = 'You are not authorized!'
+        redirect_to root_url
+      end
+    end
+
     def detect_fake_email
       if logged_in?
         if current_user.fake_email?
@@ -64,7 +74,7 @@ class ApplicationController < ActionController::Base
 
         when :failure
           flash[:notice] = 'Failed to complete!'
-          if redirect.is_a?(Symbol)
+          if redirect.is_a?(Symbol) && redirect != :back
             render :action => redirect
           else
             redirect_to redirect
@@ -83,11 +93,17 @@ class ApplicationController < ActionController::Base
     end
 
     def restaurant_review_stat(p_review)
-      total_reviews_count = p_review.restaurant.reviews.count
-      loved_count = p_review.restaurant.reviews.loved.count
-      loved_percentage = (100 / total_reviews_count) * loved_count
+      restaurant = nil
 
-      "#{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}!"
+      if p_review.is_a?(Review)
+        restaurant = p_review.restaurant
+      elsif p_review.is_a?(Restaurant)
+        restaurant = p_review
+      end
+
+      total_reviews_count = restaurant.reviews.count
+      loved_count = restaurant.reviews.loved.count
+      "#{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}, #{restaurant.rating_out_of(5).round} out of 5 ratings!"
     end
 
     def remove_html_entities(p_str)

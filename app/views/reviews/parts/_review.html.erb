@@ -3,82 +3,84 @@
    grid_class = grid_class || 'grid_6'
    hide_comment = hide_comment || false
 %>
-<<%= tag_name %>>
-  <%= link_to image_tag(review.user.display_picture,
-                        :width => '40px', :alt => 'DP'),
-              user_long_url(:id => review.user.id,
-                            :login => review.user.login),
-              :class => 'image_small' %>
-</<%= tag_name %>>
-<<%= tag_name %> class="review <%= grid_class %> hreview">
-  <a name="review-<%= review.id %>"></a>
-  <% if !review.comment.blank? %>
-    <span class="content"><%= simple_format h(review.comment) %> - </span>
-  <% end %>
-
-  <span class="reviewer">
-    <%= link_to review.user.login, user_long_url(
-        :id => review.user.id, :login => review.user.login) %>
-    <% if review.loved? %>
-      <%= tt('label.loved') %>
-    <% elsif review.hated? %>
-      <%= tt('label.disliked') %>
-    <% elsif review.wanna_go? %>
-      <%= tt('label.wannago') %>
+<div class='reviewContainer' id='review-<%= review.id %>'>
+  <<%= tag_name %> class='userImage'>
+    <%= link_to image_tag(review.user.display_picture,
+                          :width => '40px', :alt => 'DP'),
+                user_long_url(:id => review.user.id,
+                              :login => review.user.login),
+                :class => 'image_small' %>
+  </<%= tag_name %>>
+  <<%= tag_name %> class="review <%= grid_class %> hreview">
+    <% if !review.comment.blank? %>
+      <span class="content"><%= simple_format h(review.comment) %> - </span>
     <% end %>
-    <%= tt('label.this_place') %>
-  </span>
-  <span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">
-    <%= t('label.updated') %> <%= distance_of_time_in_words(review.updated_at, Time.now) %> <%= t('label.ago') %>.
-    <% if logged_in? %>
-      [<a class="date add_comment_link" href='javascript: void(0)'
-          rel='<%= review.id %>'
-          id="add_comment_link_<%= review.id %>"><%= t('nav.reply') %></a>]
-    <% end %>
-    <% if hide_comment && review.review_comments.count > 0 %>
-      <a href='javascript:void(0)'><%= t('nav.show_comments') %></a>
-    <% end %>
-  </span>
-  <div class="clear"></div>
-  <div class="space_10"></div>
 
-  <%= render :partial => 'review_comments/parts/review_comment_form', :locals => {:review => review} %>
-
-  <% comments = review.review_comments %>
-  <% if !comments.empty? %>
-    <div class='review_comments' style="display:<%= hide_comment ? 'none' : 'block' %>">
-      <% comments.each do |comment| %>
-        <div class='review_comment'>
-          <span class='review_comment_author'>
-            <%= link_to "#{image_tag(comment.user.display_picture, 
-                                     :width => '40px', :alt => t('label.not_available'))} #{comment.user.login}",
-                        user_long_url(:login => comment.user.login,
-                                      :id => comment.user.id) %> -
-          </span>
-          <em><%= h(comment.content) %></em> 
-          <span class="date" title="<%= comment.updated_at.strftime('%d %b %Y') %>">
-            - 
-            <%= distance_of_time_in_words(comment.updated_at, Time.now) %> <%= t('label.ago') %>.
-            <% if comment.loved? %>
-              [<span class='icon_loved'><%= tt('label.loved') %></span>]
-            <% else %>
-              [<span class='icon_hated'><%= tt('label.disliked') %></span>]
-            <% end %>
-
-            <% if comment.author?(current_user) && comment.can_delete? %>
-              [<%= link_to(t('nav.delete'), review_comment_url(:id => comment.id),
-                           :method => 'DELETE',
-                           :confirm => t('confirm.delete_comment'),
-                           :title => t('title.image_delete_message')) %>]
-            <% end %>
-          </span>
-        </div>
-        <div class="clear"></div>
-        <div class="space_10"></div>
+    <span class="reviewer">
+      <%= link_to review.user.login, user_long_url(
+          :id => review.user.id, :login => review.user.login) %>
+      <% if review.loved? %>
+        <%= tt('label.loved') %>
+      <% elsif review.hated? %>
+        <%= tt('label.disliked') %>
+      <% elsif review.wanna_go? %>
+        <%= tt('label.wannago') %>
       <% end %>
-    </div>
-  <% end %>
-</<%= tag_name %>>
+      <%= tt('label.this_place') %>
+    </span>
+    <span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">
+      <%= t('label.updated') %> <%= distance_of_time_in_words(review.updated_at, Time.now) %> <%= t('label.ago') %>.
+      <% if logged_in? %>
+        [<a class="date add_comment_link" href='javascript: void(0)'
+            rel='<%= review.id %>'
+            id="add_comment_link_<%= review.id %>"><%= t('nav.reply') %></a>]
+      <% end %>
+      <% if hide_comment && review.review_comments.count > 0 %>
+        <a href='javascript:void(0)'><%= t('nav.show_comments') %></a>
+      <% end %>
+    </span>
+    <div class="clear"></div>
+    <div class="space_10"></div>
+
+    <%= render :partial => 'review_comments/parts/review_comment_form', :locals => {:review => review} %>
+
+    <% comments = review.review_comments %>
+    <% if !comments.empty? %>
+      <div class='review_comments' style="display:<%= hide_comment ? 'none' : 'block' %>">
+        <% comments.each do |comment| %>
+          <div class='review_comment'>
+            <span class='review_comment_author'>
+              <%= link_to "#{image_tag(comment.user.display_picture,
+                                       :width => '40px', :alt => t('label.not_available'))} #{comment.user.login}",
+                          user_long_url(:login => comment.user.login,
+                                        :id => comment.user.id) %> -
+            </span>
+            <em><%= h(comment.content) %></em>
+            <span class="date" title="<%= comment.updated_at.strftime('%d %b %Y') %>">
+              -
+              <%= distance_of_time_in_words(comment.updated_at, Time.now) %> <%= t('label.ago') %>.
+              <% if comment.loved? %>
+                [<span class='icon_loved'><%= tt('label.loved') %></span>]
+              <% else %>
+                [<span class='icon_hated'><%= tt('label.disliked') %></span>]
+              <% end %>
+
+              <% if comment.author?(current_user) && comment.can_delete? %>
+                [<%= link_to(t('nav.delete'), review_comment_url(:id => comment.id),
+                             :method => 'DELETE',
+                             :confirm => t('confirm.delete_comment'),
+                             :title => t('title.image_delete_message')) %>]
+              <% end %>
+            </span>
+          </div>
+          <div class="clear"></div>
+          <div class="space_10"></div>
+        <% end %>
+      </div>
+    <% end %>
+  </<%= tag_name %>>
+  <div class='clear'></div>
+</div>
 
 <script type="text/javascript">
   $('.add_comment_link').each(function() {

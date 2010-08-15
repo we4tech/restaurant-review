@@ -1,0 +1,22 @@
+<%= f.label :type_id, 'News type' %>
+<div class='space_10'></div>
+<%= f.select :type_id, @message_types %>
+<%= f.error_message_on :type_id %>
+<div class='space_10'></div>
+
+<%= f.label :title %>
+<div class='space_10'></div>
+<%= f.text_field :title, :style => 'width: 100%' %>
+<%= f.error_message_on :title %>
+<div class='space_10'></div>
+
+<%= f.label :content %>
+<div class='space_10'></div>
+<%= f.text_area :content, :style => 'width: 100%; height:400px' %>
+<%= f.error_message_on :content %>
+<div class='space_10'></div>
+
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script type="text/javascript">
+  new nicEditor({buttonList : ['bold','italic','underline','left','center','right','ol','ul','fontFormat','indent','outdent','link','unlink','image','upload','xhtml']}).panelInstance('message_content');
+</script>

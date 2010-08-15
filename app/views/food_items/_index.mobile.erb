@@ -1,0 +1,21 @@
+<div class='breadcrumbs'>
+  <%= link_to @restaurant.name, restaurant_long_url(
+      :id => @restaurant.id,
+      :name => url_escape(@restaurant.name)) %> &raquo;
+</div>
+
+<h1 class='floatHeader'><%= t('nav.food_menu') %></h1>
+<% if @restaurant.author?(current_user) %>
+  <div class='pageTools'>
+    (<%= link_to t('nav.add_new_food_menu'), new_restaurant_food_item_path %>)
+  </div>
+<% end %>
+<div class='clear'></div>
+
+<div class='space_10'></div>
+<div class='break'></div>
+<div class='space_10'></div>
+<div class='food_items_started'>
+  <%= render :partial => 'food_items/parts/food_items',
+             :locals => {:food_items => @restaurant.food_items.collect{|fi| fi if fi.food_item_id.nil? }.compact} %>
+</div>

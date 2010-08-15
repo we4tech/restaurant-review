@@ -1,0 +1,51 @@
+<% if food_items && !food_items.empty? %>
+  <div class='food_items'>
+    <ol class='food_item'>
+      <% food_items.sort_by{|i| (i.price || 0)}.each do |food_item| %>
+        <li>
+          <% if food_item.image %>
+            <div class='grid_1'>
+              <%= image_tag food_item.image.public_filename(:small) %>
+            </div>
+          <% end %>
+          <div class='grid_5'>
+            <h6><%= food_item.name -%></h6>
+            <% if food_item.price.to_f > 0 %>
+              <div class='price'>price: <%= food_item.price %></div>
+            <% end %>
+
+            <%- if @restaurant.author?(current_user) -%>
+              <div class='adminTools'>[
+              <%= link_to 'Add Menu', new_restaurant_food_item_path(@restaurant, :parent => food_item.id) %>,
+              <%= link_to 'Add Image', add_image_food_item_path(food_item, :restaurant_id => @restaurant.id) %>,
+              <%= link_to t('nav.edit'),
+                          edit_restaurant_food_item_path(@restaurant, food_item) %>,
+              <%= link_to t('nav.delete'),
+                          restaurant_food_item_path(@restaurant, food_item),
+                          :method => :delete,
+                          :confirm => t('confirm.delete_entry') %>
+              ]</div>
+            <% end %>
+
+            <% if !(food_item.description || '').blank? %>
+              <p>
+                <%= food_item.description %>
+              </p>
+            <% end %>
+          </div>
+          <div class='clear'></div>
+          <div class='space_10'></div>
+          <div class='break'></div>
+          <div class='space_10'></div>
+
+          <% if !food_item.food_items.empty? %>
+            <div class='sub_menu'>
+              <%= render :partial => 'food_items/parts/food_items',
+                         :locals => {:food_items => food_item.food_items} %>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+<% end %>

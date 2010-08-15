@@ -1,0 +1,9 @@
+<div class='module'>
+  <ul class='menu'>
+    <% menu.each do |menu_ref| %>
+      <li>
+        <%= link_to menu_ref[:label], menu_ref[:link] %>
+      </li>
+    <% end %>
+  </ul>
+</div>

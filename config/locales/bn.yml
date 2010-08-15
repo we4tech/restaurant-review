@@ -1,34 +1,62 @@
 --- !map:HashWithIndifferentAccess 
 bn: !map:HashWithIndifferentAccess 
   label: !map:HashWithIndifferentAccess 
+    this_place: !binary |
+      4KaP4KaHIOCmuOCnjeCmpeCmvuCmqOCmn+Cmv+CmpOCnhw==
+
+    login: !binary |
+      4Kay4KaX4KaH4Kao
+
+    updated: !binary |
+      4Kaq4Kaw4Ka/4Kau4Ka+4Kaw4KeN4Kac4Ka/4KakIOCmueCnn+Cnh+Cmm+Cn
+      hw==
+
+    located_at: !binary |
+      4KaP4KaH4Kaf4Ka+IOCmquCmvuCmk+Cnn+CmviDgpq/gpr7gpqzgp4c=
+
+    contributors: !binary |
+      4KaF4Kao4KeB4Kam4Ka+4Kao4KaV4Ka+4Kaw4KeA
+
+    loves_count: !binary |
+      e3tjb3VudH19IOCmnOCmqOCnh+CmsCDgpqrgppvgpqjgp43gpqbgpqjgp4Dg
+      p58=
+
+    already_added: !binary |
+      4KaP4Kaq4Kaw4KeN4Kav4Kao4KeN4KakIOCmj+CnjeCmr+CmvuCmoSDgppXg
+      prDgp4fgppvgp4fgpqg=
+
     back: !binary |
       4Kar4Ka/4Kaw4KeHIOCmnOCmvuCmqA==
-
-    sync_tags: !binary |
-      4Kaf4KeN4Kav4Ka+4KaXIOCmuOCmv+CmqOCnjeCmlSDgppXgprDgp4Hgpqg=
-
-    no_review: !binary |
-      4Ka54KeL4Kay4Ka+ISDgpobgpqrgpqjgpr8g4KaV4KeL4KaoIHt7bmFtZX19
-      IOCmsOCmv+CmreCmv+CmiSDgppXgprDgp4fgpqgg4Kao4Ka/IQ==
-
-    and_reviewed: !binary |
-      4KaP4Kas4KaCIOCmsOCmv+CmreCmv+CmiSDgppXgprDgpr4g4Ka54Kav4Ka8
-      4KeH4Kab4KeH
-
-    added: !binary |
-      4Ka44KaC4Kav4KeL4Kac4Ka/4Kak
 
     disliked: !binary |
       4KaF4Kaq4Kab4Kao4KeN4Kam4Kao4KeA4Kef
 
-    i_wannago: !binary |
-      4KaG4Kau4Ka/IOCmr+Cnh+CmpOCnhyDgpprgpr7gpoc=
-
     wannago: !binary |
       4Kav4KeH4Kak4KeHIOCmmuCmvuCmqA==
 
-    on_other_reviews: !binary |
-      4KaF4Kao4KeN4Kav4Kam4KeH4KawIOCmsOCmv+CmreCmv+CmieCmpOCnhyA=
+    message_meta_info: !binary |
+      e3t0eXBlfX0g4Kaf4Ka/IHt7bGlua319IOCmquCnjeCmsOCmvuCnnyB7e2Rh
+      eXN9fSDgpobgppfgp4cg4Ka44KaC4Kav4KeL4Kac4KaoIOCmleCmsOCnh+Cm
+      m+Cnh+CmqA==
+
+    password_change_error: !binary |
+      4Kao4Kak4KeB4KaoIOCmquCmvuCmuOCmk+Cmr+CmvOCmvuCmsOCnjeCmoSDg
+      prjgp4fgpp8g4KaV4Kaw4KeB4KaoLCDgprjgp4fgpp8g4KaV4Kaw4Kak4KeH
+      IOCmleCni+CmqCDgprjgpq7gprjgp43gpq/gpr4g4Ka54Kay4KeHIOCmhuCm
+      ruCmvuCmpuCnh+CmsCDgppXgp4cg4Kas4Kay4KeB4Kao
+
+    fb_connected: !binary |
+      4Kar4KeH4KaH4Ka44Kas4KeB4KaV4KeH4KawIOCmuOCmvuCmpeCnhyDgpobg
+      pqrgpqjgpr7gprAg4KaP4KaV4Ka+4KaJ4Kao4KeN4Kaf4Ka/IOCmuOCmguCm
+      r+Cni+CmnOCmv+CmpCE=
+
+    confirm_password: !binary |
+      4Kaq4Ka+4Ka44KaT4Kef4Ka+4Kaw4KeN4KahIOCmqOCmv+CmtuCnjeCmmuCm
+      v+CmpCDgppXgprDgp4Hgpqg=
+
+    related_images: !binary |
+      4Ka44Kau4KeN4Kaq4KeD4KaV4KeN4KakIOCmm+CmrOCmv+CmuOCmruCnguCm
+      uQ==
 
     reset_password_description: !binary |
       4KaG4Kaq4Kao4Ka+4KawIOCmleCmvuCmm+CnhyDgpo/gppXgpp/gpr8g4Kau
@@ -43,115 +71,34 @@ bn: !map:HashWithIndifferentAccess
       4KaV4KeL4KaoIOCmsOCmv+CmreCmv+CmiSDgprjgpoLgpq/gp4vgppzgpr/g
       pqQg4Ka54KefIOCmqOCmvyE=
 
-    review_of: !binary |
-      e3tsaW5rfX0g4KaP4KawIOCmsOCmv+CmreCmv+CmieCmpOCnhyDgppXgpq7g
-      p4fgpqjgp43gpp8g4KaV4Kaw4KeB4Kao
+    email: !binary |
+      4KaH4Kau4KeH4KaH4Kay
 
-    and: !binary |
-      4KaP4Kas4KaC
+    pages: !binary |
+      4Kaq4KeD4Ka34KeN4Kag4Ka+4Ka44Kau4KeC4Ka5
 
-    no_image_added: !binary |
-      4KaV4KeL4KaoIOCmm+CmrOCmvyDgprjgpoLgpq/gp4vgppzgpr/gpqQg4Ka5
-      4KefIOCmqOCmvyE=
-
-    attached_with: !binary |
-      4Ka44KaC4Kav4KeB4KaV4KeN4KakIOCmueCnn+Cnh+Cmm+Cnhw==
-
-    joined_our_community: !binary |
-      4KaG4Kau4Ka+4Kam4KeH4KawIOCmreCmnOCmqCDgppXgpq7gpr/gpongpqjg
-      pr/gpp/gpr/gpqTgp4cg4Kav4KeL4KaXIOCmpuCmv+Cnn+Cnh+Cmm+Cnh+Cm
-      qA==
-
-    i_like: !binary |
-      4KaG4Kau4Ka+4KawIOCmquCmm+CmqOCnjeCmpuCnh+CmsA==
-
-    based_on: !binary |
-      4Kat4Ka/4Kak4KeN4Kak4Ka/IOCmleCmsOCnhw==
-
-    added_by: !binary |
-      4Ka44KaC4Kav4KeL4Kac4KaoIOCmleCmsOCnh+Cmm+Cnh+CmqA==
-
-    reviews_count: !binary |
-      e3tjb3VudH19IOCmsOCmv+CmreCmv+CmiQ==
-
-    custom_search: !binary |
-      4Kau4Ka+4Kaw4KeN4Kac4Ka/4KakIOCmheCmqOCngeCmuOCmqOCnjeCmp+Cm
-      vuCmqA==
-
-    this_review: !binary |
-      4KaP4KaHIOCmsOCmv+CmreCmv+CmiSDgpp/gpr8=
-
-    contributed_to: !binary |
-      4KaF4Kao4KeB4Kam4Ka+4KaoIOCmleCmsOCnh+Cmm+Cnhw==
-
-    already: !binary |
-      4Kaq4KeC4Kaw4KeN4Kas4KeH4KaH
-
-    contributors: !binary |
-      4KaF4Kao4KeB4Kam4Ka+4Kao4KaV4Ka+4Kaw4KeA
-
-    confirm_password: !binary |
-      4Kaq4Ka+4Ka44KaT4Kef4Ka+4Kaw4KeN4KahIOCmqOCmv+CmtuCnjeCmmuCm
-      v+CmpCDgppXgprDgp4Hgpqg=
-
-    enter_password: !binary |
-      4Kaq4Ka+4Ka44KaT4Kef4Ka+4Kaw4KeN4KahIOCmpuCmv+CmqAk=
-
-    not_logged_in: !binary |
-      4Kay4KaX4KaH4KaoIOCmleCmsOCnh+CmqCDgpqjgpr7gpoc=
-
-    i_dislike: !binary |
-      4KaG4Kau4Ka+4KawIOCmheCmquCmm+CmqOCnjeCmpuCnh+CmsA==
-
-    located_at: !binary |
-      4KaP4KaH4Kaf4Ka+IOCmquCmvuCmk+Cnn+CmviDgpq/gpr7gpqzgp4c=
-
-    delete_comment: !binary |
-      4KaP4KaHIOCmleCmruCnh+CmqOCnjeCmn+Cmn+CmvyDgpq7gp4Hgppvgp4cg
-      4Kam4Ka/4Kak4KeHIOCmmuCmvuCmqCA/
-
-    write_comment: !binary |
-      4KaG4Kaq4Kao4Ka+4KawIOCmruCmqOCnjeCmpOCmrOCnjeCmryDgprLgpr/g
-      ppbgp4Hgpqg=
-
-    image_caption: !binary |
-      4Kab4Kas4Ka/4KawIOCmuOCmruCnjeCmquCmsOCnjeCmleCnhyDgprLgpr/g
-      ppbgp4HgpqguLi4u
+    times: !binary |
+      4Kas4Ka+4Kaw
 
     already_commented: !binary |
       4KaP4Kaq4Kaw4KeN4Kav4Kao4KeN4KakIOCmruCmqOCnjeCmpOCmrOCnjeCm
       ryDgppXgprDgp4fgppvgp4fgpqg=
 
-    times: !binary |
-      4Kas4Ka+4Kaw
+    enter_password: !binary |
+      4Kaq4Ka+4Ka44KaT4Kef4Ka+4Kaw4KeN4KahIOCmpuCmv+CmqAk=
 
-    fb_not_connected: !binary |
-      4KaG4Kaq4Kao4Ka+4KawIOCmj+CmleCmvuCmieCmqOCnjeCmn+CmvyDgpo/g
-      ppbgpqjgp4sg4Kar4KeH4KaH4Ka44Kas4KeB4KaV4KeH4KawIOCmuOCmvuCm
-      peCnhyDgpq/gp4HgppXgp43gpqQg4Ka54Kav4Ka84Kao4Ka/LCBhdXRvIHNo
-      YXJlIG9uIGZhY2Vib29rIOCmjyDgppXgp43gprLgpr/gppUg4KaV4Kaw4KeH
-      IOCmuOCmguCmr+CngeCmleCnjeCmpCDgppXgprDgp4Hgpqgg4KWk
+    custom_search: !binary |
+      4Kau4Ka+4Kaw4KeN4Kac4Ka/4KakIOCmheCmqOCngeCmuOCmqOCnjeCmp+Cm
+      vuCmqA==
 
-    fb_connected: !binary |
-      4Kar4KeH4KaH4Ka44Kas4KeB4KaV4KeH4KawIOCmuOCmvuCmpeCnhyDgpobg
-      pqrgpqjgpr7gprAg4KaP4KaV4Ka+4KaJ4Kao4KeN4Kaf4Ka/IOCmuOCmguCm
-      r+Cni+CmnOCmv+CmpCE=
+    not_available: !binary |
+      4KaP4KaW4KaoIOCmhuCmsCDgpqjgpr7gpoc=
 
     logged_in_as: !binary |
       4Kay4KaX4KaH4KaoIOCmleCmsOCngeCmqCDgprngp5/gp4c=
 
-    already_added: !binary |
-      4KaP4Kaq4Kaw4KeN4Kav4Kao4KeN4KakIOCmj+CnjeCmr+CmvuCmoSDgppXg
-      prDgp4fgppvgp4fgpqg=
-
-    password_change_error: !binary |
-      4Kao4Kak4KeB4KaoIOCmquCmvuCmuOCmk+Cmr+CmvOCmvuCmsOCnjeCmoSDg
-      prjgp4fgpp8g4KaV4Kaw4KeB4KaoLCDgprjgp4fgpp8g4KaV4Kaw4Kak4KeH
-      IOCmleCni+CmqCDgprjgpq7gprjgp43gpq/gpr4g4Ka54Kay4KeHIOCmhuCm
-      ruCmvuCmpuCnh+CmsCDgppXgp4cg4Kas4Kay4KeB4Kao
-
-    logout_in_progress: !binary |
-      4Kay4KaX4KaG4KaJ4KafIOCmueCmmuCnjeCmm+Cnhy4uLi4=
+    i_love: !binary |
+      4KaG4Kau4Ka+4KawIOCmquCmm+CmqOCnjeCmpuCnh+CmsA==
 
     existing_review_edit: !binary |
       4KaG4Kaq4Kao4Ka+4KawIOCmpuCnh+Cmr+CmvOCmviB7e3BsYWNlfX0g4KaP
@@ -162,78 +109,151 @@ bn: !map:HashWithIndifferentAccess
     loved: !binary |
       4Kaq4Kab4Kao4KeN4KamIOCmleCmsOCnh+Cmm+Cnh+CmqA==
 
-    weee: !binary |
-      4KaJ4KaH4KaH4KaH4KaHISE=
+    already_showed_interest: !binary |
+      4KaPIOCmquCmsOCnjeCmr+CmqOCnjeCmpCDgpq/gpr7gprDgpr4g4KaG4KaX
+      4KeN4Kaw4Ka5IOCmpuCnh+CmluCmv+Cnn+Cnh+Cmm+Cnh+CmqA==
 
-    user_contributed_on: !binary |
-      4Kas4KeN4Kav4Kas4Ka54Ka+4Kaw4KaV4Ka+4Kaw4KeAIOCmheCmqOCngeCm
-      p+CmvuCmqCDgppXgprDgp4fgppvgp4fgpqg=
+    based_on: !binary |
+      4Kat4Ka/4Kak4KeN4Kak4Ka/IOCmleCmsOCnhw==
 
-    author_added_on: !binary |
-      4KaP4KaHIOCmm+CmrOCmv+Cmn+CmvyDgprjgpoLgpq/gp4vgppfgppzgpr/g
-      pqQg4KaV4Kaw4KeH4Kab4KeH4Kao
+    added_by: !binary |
+      4Ka44KaC4Kav4KeL4Kac4KaoIOCmleCmsOCnh+Cmm+Cnh+CmqA==
 
     ask_for_treat: !binary |
       4KaJ4Kao4Ka+4KaV4KeHIOCmluCmvuCmk+Cnn+CmvuCmpOCnhyDgpqzgprLg
       p4Hgpqgh
 
-    i_love: !binary |
-      4KaG4Kau4Ka+4KawIOCmquCmm+CmqOCnjeCmpuCnh+CmsA==
+    logout_in_progress: !binary |
+      4Kay4KaX4KaG4KaJ4KafIOCmueCmmuCnjeCmm+Cnhy4uLi4=
 
-    filter_by: !binary |
-      4Kar4Kay4Ka+4Kar4KayIOCmq+CmsuCnjeCmn+CmvuCmsCDgppXgprDgp4Hg
-      pqg=
+    weee: !binary |
+      4KaJ4KaH4KaH4KaH4KaHISE=
+
+    contributed_to: !binary |
+      4KaF4Kao4KeB4Kam4Ka+4KaoIOCmleCmsOCnh+Cmm+Cnhw==
+
+    no_image_added: !binary |
+      4KaV4KeL4KaoIOCmm+CmrOCmvyDgprjgpoLgpq/gp4vgppzgpr/gpqQg4Ka5
+      4KefIOCmqOCmvyE=
+
+    this_review: !binary |
+      4KaP4KaHIOCmsOCmv+CmreCmv+CmiSDgpp/gpr8=
+
+    and: !binary |
+      4KaP4Kas4KaC
+
+    and_reviewed: !binary |
+      4KaP4Kas4KaCIOCmsOCmv+CmreCmv+CmiSDgppXgprDgpr4g4Ka54Kav4Ka8
+      4KeH4Kab4KeH
+
+    full_view: !binary |
+      4Kaq4KeC4Kaw4KeN4Kao4Ka+4KaZ4KeN4KaXIOCmreCmvuCmrOCnhyDgpqbg
+      p4fgppbgp4Hgpqg=
+
+    enter_email: !binary |
+      4KaG4Kaq4Kao4Ka+4KawIOCmh+CmruCnh+Cmh+CmsiDgpo/gpqHgp43gprDg
+      p4fgprjgpp/gpr8g4Kam4Ka/4Kao
+
+    not_logged_in: !binary |
+      4Kay4KaX4KaH4KaoIOCmleCmsOCnh+CmqCDgpqjgpr7gpoc=
+
+    remove_from_featured: Remove from featured
+    attached_with: !binary |
+      4Ka44KaC4Kav4KeB4KaV4KeN4KakIOCmueCnn+Cnh+Cmm+Cnhw==
+
+    i_wannago: !binary |
+      4KaG4Kau4Ka/IOCmr+Cnh+CmpOCnhyDgpprgpr7gpoc=
 
     to_visit: !binary |
       4KaY4KeB4Kec4Kak4KeH
 
-    login: !binary |
-      4Kay4KaX4KaH4Kao
+    author_added_on: !binary |
+      4KaP4KaHIOCmm+CmrOCmv+Cmn+CmvyDgprjgpoLgpq/gp4vgppfgppzgpr/g
+      pqQg4KaV4Kaw4KeH4Kab4KeH4Kao
 
-    updated: !binary |
-      4Kaq4Kaw4Ka/4Kau4Ka+4Kaw4KeN4Kac4Ka/4KakIOCmueCnn+Cnh+Cmm+Cn
-      hw==
+    write_comment: !binary |
+      4KaG4Kaq4Kao4Ka+4KawIOCmruCmqOCnjeCmpOCmrOCnjeCmryDgprLgpr/g
+      ppbgp4Hgpqg=
 
-    review_stat: !binary |
-      4Kas4KeN4Kav4Kas4Ka54Ka+4Kaw4KaV4Ka+4Kaw4KeA4KawIOCmsOCmv+Cm
-      reCmv+CmiSDgpo/gpqzgpoIg4KaP4KawIOCmhuCmrOCmuOCnjeCmpeCmvuCm
-      qCAt
+    joined_our_community: !binary |
+      4KaG4Kau4Ka+4Kam4KeH4KawIOCmreCmnOCmqCDgppXgpq7gpr/gpongpqjg
+      pr/gpp/gpr/gpqTgp4cg4Kav4KeL4KaXIOCmpuCmv+Cnn+Cnh+Cmm+Cnh+Cm
+      qA==
+
+    fb_not_connected: !binary |
+      4KaG4Kaq4Kao4Ka+4KawIOCmj+CmleCmvuCmieCmqOCnjeCmn+CmvyDgpo/g
+      ppbgpqjgp4sg4Kar4KeH4KaH4Ka44Kas4KeB4KaV4KeH4KawIOCmuOCmvuCm
+      peCnhyDgpq/gp4HgppXgp43gpqQg4Ka54Kav4Ka84Kao4Ka/LCBhdXRvIHNo
+      YXJlIG9uIGZhY2Vib29rIOCmjyDgppXgp43gprLgpr/gppUg4KaV4Kaw4KeH
+      IOCmuOCmguCmr+CngeCmleCnjeCmpCDgppXgprDgp4Hgpqgg4KWk
+
+    delete_comment: !binary |
+      4KaP4KaHIOCmleCmruCnh+CmqOCnjeCmn+Cmn+CmvyDgpq7gp4Hgppvgp4cg
+      4Kam4Ka/4Kak4KeHIOCmmuCmvuCmqCA/
+
+    no_review: !binary |
+      4Ka54KeL4Kay4Ka+ISDgpobgpqrgpqjgpr8g4KaV4KeL4KaoIHt7bmFtZX19
+      IOCmsOCmv+CmreCmv+CmiSDgppXgprDgp4fgpqgg4Kao4Ka/IQ==
 
     login_required_to_review: !binary |
       4KaP4KaHIOCmuOCnjeCmpeCmvuCmqOCmn+CmvyDgprDgpr/gpq3gpr/gpokg
       4KaV4Kaw4Ka+4KawIOCmnOCmqOCnjeCmryB7e2xpbmt9fSDgppXgprDgp4Hg
       pqg=
 
-    ago: !binary |
-      4Kaq4KeC4Kaw4KeN4Kas4KeH
+    filter_by: !binary |
+      4Kar4Kay4Ka+4Kar4KayIOCmq+CmsuCnjeCmn+CmvuCmsCDgppXgprDgp4Hg
+      pqg=
 
-    not_available: !binary |
-      4KaP4KaW4KaoIOCmhuCmsCDgpqjgpr7gpoc=
+    user_contributed_on: !binary |
+      4Kas4KeN4Kav4Kas4Ka54Ka+4Kaw4KaV4Ka+4Kaw4KeAIOCmheCmqOCngeCm
+      p+CmvuCmqCDgppXgprDgp4fgppvgp4fgpqg=
 
-    already_showed_interest: !binary |
-      4KaPIOCmquCmsOCnjeCmr+CmqOCnjeCmpCDgpq/gpr7gprDgpr4g4KaG4KaX
-      4KeN4Kaw4Ka5IOCmpuCnh+CmluCmv+Cnn+Cnh+Cmm+Cnh+CmqA==
+    already: !binary |
+      4Kaq4KeC4Kaw4KeN4Kas4KeH4KaH
+
+    image_caption: !binary |
+      4Kab4Kas4Ka/4KawIOCmuOCmruCnjeCmquCmsOCnjeCmleCnhyDgprLgpr/g
+      ppbgp4HgpqguLi4u
+
+    i_like: !binary |
+      4KaG4Kau4Ka+4KawIOCmquCmm+CmqOCnjeCmpuCnh+CmsA==
+
+    make_as_featured: !binary |
+      4Kar4Ka/4Kaa4Ka+4Kaw4KeN4KahIOCmueCmv+CmuOCmvuCmrOCnhyDgpo/g
+      pqEg4KaV4Kaw4KeB4Kao
 
     already_reviewed: !binary |
       4Kaw4Ka/4Kat4Ka/4KaJIOCmleCmsOCnh+Cmm+Cnh+CmqA==
 
-    enter_email: !binary |
-      4KaG4Kaq4Kao4Ka+4KawIOCmh+CmruCnh+Cmh+CmsiDgpo/gpqHgp43gprDg
-      p4fgprjgpp/gpr8g4Kam4Ka/4Kao
+    ago: !binary |
+      4Kaq4KeC4Kaw4KeN4Kas4KeH
 
-    email: !binary |
-      4KaH4Kau4KeH4KaH4Kay
+    on_other_reviews: !binary |
+      4KaF4Kao4KeN4Kav4Kam4KeH4KawIOCmsOCmv+CmreCmv+CmieCmpOCnhyA=
 
-    this_place: !binary |
-      4KaP4KaHIOCmuOCnjeCmpeCmvuCmqOCmn+Cmv+CmpOCnhw==
+    added: !binary |
+      4Ka44KaC4Kav4KeL4Kac4Ka/4Kak
 
-    loves_count: !binary |
-      e3tjb3VudH19IOCmnOCmqOCnh+CmsCDgpqrgppvgpqjgp43gpqbgpqjgp4Dg
-      p58=
+    reviews_count: !binary |
+      e3tjb3VudH19IOCmsOCmv+CmreCmv+CmiQ==
 
-    full_view: !binary |
-      4Kaq4KeC4Kaw4KeN4Kao4Ka+4KaZ4KeN4KaXIOCmreCmvuCmrOCnhyDgpqbg
-      p4fgppbgp4Hgpqg=
+    wanna_go: !binary |
+      e3tjb3VudH19IOCmnOCmqCDgpq/gp4fgpqTgp4cg4Kaa4Ka+4Kef
+
+    review_stat: !binary |
+      4Kas4KeN4Kav4Kas4Ka54Ka+4Kaw4KaV4Ka+4Kaw4KeA4KawIOCmsOCmv+Cm
+      reCmv+CmiSDgpo/gpqzgpoIg4KaP4KawIOCmhuCmrOCmuOCnjeCmpeCmvuCm
+      qCAt
+
+    i_dislike: !binary |
+      4KaG4Kau4Ka+4KawIOCmheCmquCmm+CmqOCnjeCmpuCnh+CmsA==
+
+    review_of: !binary |
+      e3tsaW5rfX0g4KaP4KawIOCmsOCmv+CmreCmv+CmieCmpOCnhyDgppXgpq7g
+      p4fgpqjgp43gpp8g4KaV4Kaw4KeB4Kao
+
+    sync_tags: !binary |
+      4Kaf4KeN4Kav4Ka+4KaXIOCmuOCmv+CmqOCnjeCmlSDgppXgprDgp4Hgpqg=
 
   button: !map:HashWithIndifferentAccess 
     add_review: !binary |
@@ -472,6 +492,14 @@ bn: !map:HashWithIndifferentAccess
       pr8g4KaV4Kaw4KeB4Kao
 
   nav: !map:HashWithIndifferentAccess 
+    add_new_food_menu: !binary |
+      4Kao4Kak4KeB4KaoIOCmluCmvuCmrOCmvuCmsOCnh+CmsCDgpq7gp4fgpqjg
+      p43gpq/gp4Eg4Ka44KaC4Kav4KeL4Kac4Kao
+
+    add_news: !binary |
+      4Kao4Kak4KeB4KaoIOCmuOCmguCmrOCmvuCmpiDgprjgpoLgpq/gp4vgppcg
+      4KaV4Kaw4KeB4Kao
+
     logout: !binary |
       4Kay4KaX4KaG4KaJ4Kaf
 
@@ -484,6 +512,13 @@ bn: !map:HashWithIndifferentAccess
 
     previous: !binary |
       wqsg4Kaq4KeC4Kaw4KeN4Kas4Kas4Kaw4KeN4Kak4KeA
+
+    add_images: !binary |
+      4Kab4Kas4Ka/IOCmuOCmguCmr+Cni+CmnOCmqCDgppXgprDgp4Hgpqg=
+
+    food_menu: !binary |
+      4KaW4Ka+4Kas4Ka+4Kaw4KeH4KawIOCmruCnh+CmqOCnjeCmr+CngSDgprjg
+      pq7gp4Hgprk=
 
     show_comments: !binary |
       4Ka44KasIOCmruCmqOCnjeCmpOCmrOCnjeCmryDgpqbgp4fgppbgp4Hgpqg=
@@ -525,9 +560,15 @@ bn: !map:HashWithIndifferentAccess
     edit_tags: !binary |
       4Kaf4KeN4Kav4Ka+4KaXIOCmquCmsOCmv+CmruCmvuCmsOCnjeCmnOCmqA==
 
+    add_page: !binary |
+      4KaP4KaV4Kaf4Ka+IOCmquCnh+Cmh+CmnCDgpo/gpqEg4KaV4Kaw4KeB4Kao
+
     show: !binary |
       4Ka44Kau4KeN4Kaq4KeB4Kaw4KeN4Kao4Kaf4Ka+IOCmpuCnh+CmluCngeCm
       qA==
+
+    news: !binary |
+      4Ka44KaC4Kas4Ka+4Kam
 
     read_more_reviews: !binary |
       4KaF4Kao4KeN4Kav4Ka+4Kao4KeN4KavIOCmsOCmv+CmreCmv+CmieCml+Cn

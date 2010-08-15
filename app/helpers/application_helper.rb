@@ -29,4 +29,43 @@ module ApplicationHelper
       @modules_pref[module_pref['name'].to_sym] = module_pref
     end
   end
+
+  def load_right_modules
+    load_module_preferences
+    @left_modules = [
+        :render_tagcloud,
+        :render_search,
+        :render_most_lovable_places,
+        :render_recently_added_places,
+        :render_topic_box]
+  end
+
+  def render_view(partial_template)
+    @premium_template = @restaurant.selected_premium_template
+    @context = :inner_page
+
+    if !params[:d] && @premium_template
+      @inner_page = partial_template
+
+      if !File.exists?(File.join(RAILS_ROOT, 'app', 'views', "templates/#{@premium_template.template}/layout.#{params[:format]}.erb"))
+        params[:format] = :html  
+      end
+
+      render :layout => false, :template => "templates/#{@premium_template.template}/layout"
+    else
+      load_right_modules
+      @content_template = partial_template
+      render :template => 'layouts/fresh_inner_layout'
+    end
+  end
+
+  def detect_name(object)
+    if object.respond_to?(:name)
+      object.name
+    elsif object.respond_to?(:title)
+      object.title
+    else
+      object.type.name.humanize
+    end
+  end
 end

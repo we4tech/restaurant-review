@@ -1,0 +1,51 @@
+<div class='breadcrumbs'>
+  <%= link_to @restaurant.name, restaurant_long_url(
+      :id => @restaurant.id, :name => url_escape(@restaurant.name),
+      :premium_check => true) %> &raquo;
+  <%= link_to 'News', restaurant_messages_path(@restaurant) %> &raquo;
+</div>
+<h1>
+  <%= link_to @message.title, restaurant_message_url(@message.restaurant, @message.id) %>
+</h1>
+
+<div class='space_10'></div>
+<div class='break'></div>
+<div class='space_10'></div>
+<small class='small'>
+  <%= t('label.message_meta_info',
+        :type => Message::type_label(@message.type_id),
+        :link => link_to(@message.user.login, user_long_url(:id => @message.user.id, :login => @message.user.login)),
+        :days => distance_of_time_in_words(@message.created_at, Time.now)) %>
+
+  <% if @message.author?(current_user) %>
+    [<%= link_to t('nav.edit'), edit_restaurant_message_path(@message.restaurant, @message.id) %>
+    ,
+    <%= link_to t('nav.delete'), restaurant_message_path(@message.restaurant, @message.id),
+                :method => :delete,
+                :confirm => t('confirm.delete_entry') %>]
+  <% end %>
+</small>
+<div class='space_10'></div>
+<div class='break'></div>
+<div class='space_10'></div>
+
+<%= @message.content %>
+<div class='clear'></div>
+<div class='space_10'></div>
+
+<% if !@message.images.blank? %>
+  <div class='relatedImages'>
+    <h5><%= t('label.related_images') %></h5>
+
+    <div class='space_10'></div>
+    <% @message.images.each do |image| %>
+      <%= link_to image_tag(image.public_filename(:small)),
+                  image_url(image.id),
+                  :alt => 'Image',
+                  :title => image.caption %>
+    <% end %>
+  </div>
+<% end %>
+
+
+<div class='clear'></div>

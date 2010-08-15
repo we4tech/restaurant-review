@@ -4,7 +4,11 @@
   </div>
 
   <div id="site_top_navigation">
-    <%= link_to 'বাংলা', root_url(:l => :bn) %> . 
+    <% if I18n.locale.to_s == 'en' %>
+      <%= link_to 'বাংলা', root_url(:l => 'bn') %> .
+    <% else %>
+      <%= link_to 'English', root_url(:l => 'en') %> .
+    <% end %>
     <span> <%= link_to t('layout.links.home'), root_url %> . </span>
     <% if not logged_in? %>
       <%= link_to tt('layout.links.login'), login_url %> OR

@@ -1,6 +1,6 @@
 class RestaurantsController < ApplicationController
 
-  before_filter :login_required, :except => [:show]
+  before_filter :login_required, :except => [:show, :premium]
   before_filter :log_new_feature_visiting_status
 
   def new
@@ -62,6 +62,19 @@ class RestaurantsController < ApplicationController
         :render_most_lovable_places,
         :render_recently_added_places,
         :render_topic_box]
+  end
+
+  def premium
+    @restaurant = Restaurant.find(params[:id].to_i)
+
+    if @restaurant.premium?
+      @premium_template = @restaurant.selected_premium_template
+      @context = :home
+      render :template => 'templates/basic/layout', :layout => false
+    else
+      flash[:notice] = 'this is not a premium restaurant!'
+      redirect_to root_url
+    end
   end
 
   def edit
@@ -160,6 +173,12 @@ class RestaurantsController < ApplicationController
           url_escape(@restaurant.name), @restaurant.id)
     end
 
+  end
+
+  def featured
+    restaurant = Restaurant.find(params[:id].to_i)
+    restaurant.update_attribute(:featured, !restaurant.featured?)
+    notify :success, :back
   end
 
   private

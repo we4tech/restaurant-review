@@ -26,7 +26,7 @@ class HomeController < ApplicationController
   def frontpage
     @title = I18n.t('header.recent_restaurants')
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => params[:page])
-    @top_rated_restaurants = Restaurant.most_loved(@topic, 5)
+    @top_rated_restaurants = Restaurant.featured
     @location_tag_group = TagGroup.of('locations')
 
     # pending module - :render_recently_added_pictures
@@ -112,7 +112,7 @@ class HomeController < ApplicationController
     @site_title = @title
 
     @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
-    @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_url(restaurant)]]
+    @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_long_url(:id => restaurant.id, :name => url_escape(restaurant.name))]]
     @restaurant = restaurant
   end
 
@@ -176,7 +176,8 @@ class HomeController < ApplicationController
         :conditions => {
             :topic_id => @topic.id,
             :event_type => [StuffEvent::TYPE_RELATED_IMAGE,
-                            StuffEvent::TYPE_CONTRIBUTED_IMAGE]},
+                            StuffEvent::TYPE_CONTRIBUTED_IMAGE],
+            },
         :order => 'created_at DESC',
         :include => [:image, :restaurant],
         :page => params[:page])

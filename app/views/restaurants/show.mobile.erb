@@ -4,15 +4,23 @@
       <%= link_to @topic.name.humanize.pluralize, root_url %> &raquo;
       <span class="review_tools">
         <% if @restaurant.author?(current_user) %>
-          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>
-          , <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(@restaurant) %>)
+          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>,
+          <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(@restaurant) -%>
+          <%- if current_user.admin? -%>,
+            <%= link_to 'Premium', restaurant_premium_templates_path(@restaurant) -%>
+          <%- end -%>)
         <% end %>
-      </span>
+      </span> 
     </div>
     <div class="break space_5"></div>
+    <%= render :partial => 'pages/parts/links' %>
+    <div class='space_10'></div>
 
     <div class="restaurant_details">
       <h1><%= @restaurant.name %></h1>
+      <div class='space_10'></div>
+      <fb:like href="<%= request.url %>"></fb:like>
+
       <p>
         <%= render :partial => 'images/parts/image_gallery' %>
         <%= simple_format @restaurant.description %>
@@ -178,12 +186,4 @@
       </span>
    </span>
 </div>
-
-
-
-<script type="text/javascript">
-  $(document).ready(function(){
-    $(".openUpinLightBox").prettyPhoto();
-  });
-</script>
 

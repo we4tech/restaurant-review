@@ -1,0 +1,112 @@
+<html>
+<head>
+  <title>
+    <%= @premium_template.site_title %>
+    <% if @site_title %>
+      :: <%= @site_title %>
+    <% end %>
+  </title>
+
+  <%= @premium_template.meta_tags %>
+
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application',
+                             :cache => 'cache_all.js' %>
+
+  <%= stylesheet_link_tag 'templates/basic/site' %>
+  <%= stylesheet_link_tag 'fresh/premium_admin' %>
+</head>
+
+<body>
+
+<div class='container'>
+  <div class='top'>
+    <div class='bannerImage'>
+      <%= render_module :banner_image %>
+    </div>
+
+    <div class='menuHolder'>
+      <%= render_module :dynamic_menu %>
+    </div>
+  </div>
+
+  <div class='body'>
+    <% if @context == :home || @context == :design %>
+      <div class='featureBox'>
+        <%= render_module :big_image_gallery %>
+      </div>
+    <% end %>
+
+    <div class='contentArea'>
+      <% if flash[:notice] || flash[:success] %>
+        <div class='highlight'>
+          <%= (flash[:notice] || flash[:success]) %>
+        </div>
+        <div class='space_10'></div>
+      <% end %>
+      <div class='left'>
+        <% if @context == :home || @context == :design %>
+          <%= render_module :rich_text, :key => :home %>
+        <% elsif @context == :inner_page && @inner_page %>
+          <%= render :partial => @inner_page %>
+        <% else %>
+          <h3>No @inner_page was defined</h3>
+        <% end %>
+      </div>
+      <div class='right'>
+        <div class='box'>
+          <%= render_module :video_gallery %>
+        </div>
+
+        <div class='box'>
+          <h5>Become a Franchise partner</h5>
+
+          <div class='content'>
+          </div>
+        </div>
+
+        <div class='box'>
+          <%= render_module :recent_news %>
+        </div>
+
+        <div class='box'>
+          <iframe src="http://www.facebook.com/plugins/activity.php?site=restaurant.welltreat.us&amp;width=300&amp;height=300&amp;header=true&amp;colorscheme=light&amp;recommendations=true" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:300px;" allowTransparency="true"></iframe>
+        </div>
+
+        <div class='box'>
+          <h5>Bookmark</h5>
+          <a class="addthis_button"
+             href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech">
+            <img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif"
+                 width="125" height="16" alt="Bookmark and Share"
+                 style="border:0"/>
+          </a>
+          <script type="text/javascript"
+                  src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech">
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='clear'></div>
+
+  <div class='footer'>
+    <%= render_module :rich_text, :key => :copyrights %>
+  </div>
+</div>
+
+<style type="text/css">
+
+</style>
+
+<script type="text/javascript">
+  $(function() {
+    var href = location.href;
+    var parts = href.split('#');
+    if (parts.length > 1) {
+      var elementId = parts[parts.length - 1];
+      $('#' + elementId).highlight(2000);
+    }
+  })
+</script>
+</body>
+</html>

@@ -2,20 +2,27 @@
   <% @top_rated_restaurants.shuffle.each_with_index do |restaurant, index| %>
     <%
        link = restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id)
-       all_images = restaurant.all_images
+       all_images = (restaurant.all_images || [])[0..5]
        selected_image = all_images.rand
     %>
 
     <li style="display:<%= index == 0 ? 'block' : 'none' %>">
-      <%= link_to image_tag(selected_image.public_filename(:very_large), :class => 'featureImage'), link %>
+      <% if selected_image %>
+        <%= link_to image_tag(selected_image.public_filename(:very_large), :class => 'featureImage'), link %>
+      <% end %>
+      
       <div class="side-overlay">
+        <%= image_tag "/images/fresh/featured_restaurant_#{I18n.locale.to_s}.png", :alt => 'Featured Restaurant' %>
         <small><%= t('featurebox.address') %> <%= (restaurant.address || '').blank? ? '' : "@#{restaurant.address}" %></small>
         <h2><%= link_to restaurant.name, link %></h2>
-        <div class='restaurant-rate'>
-          <%= t('featurebox.rating', :loves_count => restaurant.reviews.loved.count) %>
-        </div>
+        <% if restaurant.reviews.loved.count > 0 %>
+          <div class='restaurant-rate'>
+            <%= t('featurebox.rating', :loves_count => restaurant.reviews.loved.count) %>
+          </div>
+        <% end %>
+        
         <p class='description'>
-          <%= truncate strip_tags(restaurant.description), :length => 200 %>
+          <%= truncate strip_tags(restaurant.description), :length => 100 %>
           <%= link_to t('featurebox.readmore'), link %>
           <fb:like href='<%= link %>'></fb:like>
           <% if !restaurant.tags.empty? %>

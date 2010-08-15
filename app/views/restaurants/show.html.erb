@@ -4,18 +4,23 @@
       <%= link_to @topic.name.humanize.pluralize, root_url %> &raquo;
       <span class="review_tools">
         <% if @restaurant.author?(current_user) %>
-          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>
-          ,
-          <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(@restaurant) %>
-          )
+          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>,
+          <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(@restaurant) -%>
+          <%- if current_user.admin? -%>,
+            <%= link_to 'Premium', restaurant_premium_templates_path(@restaurant) -%>
+          <%- end -%>)
         <% end %>
       </span>
     </div>
     <div class="break space_5"></div>
+    <%= render :partial => 'pages/parts/links' %>
+    <div class='space_10'></div>
 
     <div class="restaurant_details">
       <h1><%= @restaurant.name %></h1>
+      <div class='space_10'></div>
       <fb:like href="<%= request.url %>"></fb:like>
+
       <p>
         <%= render :partial => 'images/parts/image_gallery' %>
         <%= simple_format @restaurant.description %>
@@ -82,30 +87,17 @@
     <% end %>
 
     <%= render :partial => 'contributed_images/parts/image_gallery' %>
-
     <div class="clear space_10"></div>
+
+    <div class="break"></div>
+    <div class='space_10'></div>
+    <%= render :partial => 'reviews/parts/review_editor' %>
+    <div class='break'></div>
+    <div class='clear'></div>
+    <div class='space_10'></div>
     <%= render :partial => 'reviews/parts/restaurant_review',
                :locals => {:restaurant => @restaurant} %>
-
-    <div class="space_10"></div>
-    <% if current_user %>
-      <% if !(user_review = current_user.reviews.restaurant(@restaurant.id).first) %>
-        <%= render :partial => 'reviews/parts/form', :locals => {:restaurant => @restaurant} %>
-      <% else %>
-        <div class='highlight'>
-          <%= t('label.existing_review_edit', :place => tt('label.this_place')) %>
-          <a href='javascript: void(0)'
-             onclick="$('#edit_review_<%= user_review.id %>').show()">
-            <%= t('nav.edit_existing_review')%>
-          </a>
-        </div>
-        <%= render :partial => 'reviews/parts/edit_form',
-                   :locals => {:review => user_review} %>
-      <% end %>
-    <% else %>
-      <%= t('label.login_required_to_review',
-            :link => link_to(t('nav.login'), login_url))%>
-    <% end %>
+    
     <div class="space_10"></div>
   </div>
 

@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   has_many :stuff_events
   has_many :subscribed_restaurants, :source => :restaurant, :through => :stuff_events
   has_many :user_logs
+  has_many :messages
   has_one :related_image
   has_one :image, :through => :related_image
 

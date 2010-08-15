@@ -1,0 +1,37 @@
+<div class="site_list_item">
+  <% if !object.images.blank? %>
+    <div class='grid_1'>
+      <%= image_tag object.images.first.public_filename(:small) %>
+    </div>
+  <% end %>
+
+  <div class="grid_6">
+    <h4>
+      <%= link_to object.title, restaurant_message_url(object.restaurant, object.id) %>
+    </h4>
+    <p>
+      <% words = (object.content || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
+      <%= words[0..20].join(' ') %>
+      <% if words.length > 20 %>...
+      <% end %>
+      <%= link_to t('nav.more'), restaurant_message_url(object.restaurant, object.id) %>
+    </p>
+    <div class='clear'></div>
+    <small class='small'>
+      <%= t('label.message_meta_info',
+            :type => Message::type_label(object.type_id),
+            :link => link_to(object.user.login, user_long_url(:id => object.user.id, :login => object.user.login)),
+            :days => distance_of_time_in_words(object.created_at, Time.now))%>
+      <% if object.author?(current_user) %>
+        <div class='adminTools'>
+          [<%= link_to t('nav.add_images'), edit_restaurant_message_path(object.restaurant, object.id) %>,
+          <%= link_to t('nav.edit'), edit_restaurant_message_path(object.restaurant, object.id) %>,
+          <%= link_to t('nav.delete'), restaurant_message_path(object.restaurant, object.id),
+                      :method => :delete,
+                      :confirm => t('confirm.delete_entry') %>]
+        </div>
+      <% end %>
+    </small>
+  </div>
+  <div class="clear"></div>
+</div>

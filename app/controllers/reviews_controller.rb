@@ -10,7 +10,13 @@ class ReviewsController < ApplicationController
     if @review.save
       flash[:notice] = 'Successfully added your review!'
       if current_user.share_on_facebook?
-        redirect_to facebook_publish_url('new_review', @review.id, :next_to => restaurant_url(@review.restaurant_id))
+        redirect_to facebook_publish_url(
+            'new_review', @review.id,
+            :next_to => restaurant_long_url(
+                :id => @review.restaurant.id,
+                :name => url_escape(@review.restaurant.name),
+                :premium_check => true,
+                :page => :reviews))
       else
         redirect_to :back
       end
@@ -29,7 +35,13 @@ class ReviewsController < ApplicationController
     if @review.update_attributes(attributes)
       flash[:notice] = 'Successfully updated your review!'
       if current_user.share_on_facebook?
-        redirect_to facebook_publish_url('updated_review', @review.id, :next_to => restaurant_url(@review.restaurant_id))
+        redirect_to facebook_publish_url(
+            'updated_review', @review.id,
+            :next_to => restaurant_long_url(
+                :id => @review.restaurant.id,
+                :name => url_escape(@review.restaurant.name),
+                :premium_check => true,
+                :page => :reviews))
       else
         redirect_to :back
       end
@@ -37,6 +49,12 @@ class ReviewsController < ApplicationController
       flash[:notice] = 'Failed to update your review!'
       redirect_to :back
     end
+  end
+
+  def index
+    @restaurant = Restaurant.find(params[:restaurant_id].to_i)
+    @site_title = 'Reviews'
+    render_view('reviews/index')
   end
 
 end

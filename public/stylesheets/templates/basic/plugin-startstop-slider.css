@@ -1,0 +1,86 @@
+.pl_startstop * {
+  margin: 0;
+  padding: 0;
+}
+
+.pl_startstop {
+  font-family: "Lucida Grande", Arial, Sans-Serif;
+  background: #222;
+}
+
+.pl_startstop a {
+  text-decoration: none;
+  outline: none;
+}
+
+.pl_startstop a img {
+  border: none;
+}
+
+.pl_startstop h2 {
+  font-family: Georgia, Serif;
+  font-size: 36px;
+  text-align: center;
+  font-weight: normal;
+}
+
+#page-wrap {
+  background: white;
+  width: 960px;
+  margin: 0 auto;
+  padding: 50px 0;
+}
+
+#slider {
+  background: white url(/images/templates/basic/slider-bg.jpg);
+  height: 227px;
+  overflow: hidden;
+  position: relative;
+  margin: 0;
+}
+
+/* DEFAULT is for three panels in width, adjust as needed
+This only matters if JS is OFF, otherwise JS sets this. */
+#mover {
+  width: 2880px;
+  position: relative;
+}
+
+.pl_startstop .slide {
+  padding: 40px 30px;
+  width: 900px;
+  float: left;
+  position: relative;
+}
+
+.pl_startstop .slide h1 {
+  font-family: Helvetica, Sans-Serif;
+  font-size: 30px;
+  letter-spacing: -1px;
+  color: #ac0000;
+}
+
+.pl_startstop .slide p {
+  color: #999;
+  font-size: 12px;
+  line-height: 22px;
+  width: 300px;
+}
+
+.pl_startstop .slide img {
+  position: absolute;
+  top: 20px;
+  left: 400px;
+}
+
+#slider-stopper {
+  position: absolute;
+  top: 1px;
+  right: 20px;
+  background: #ac0000;
+  color: white;
+  padding: 3px 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  z-index: 1000;
+}

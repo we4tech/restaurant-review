@@ -1,0 +1,22 @@
+<div class='edit_module'>
+  <h5>Edit banner image</h5>
+  <% form_for Image.new, :html => {:multipart => true} do |f| %>
+    <input type="hidden" name="restaurant_id"
+           value="<%= @restaurant.id %>"/>
+
+    <%= f.hidden_field :group,
+                       :value => PremiumTemplate::GROUP_BANNER_IMAGE %>
+    <input type='hidden' name='fb_share_off' value='true'/>
+    <%= f.file_field :uploaded_data %>
+    <%= f.text_field :caption %>
+    <%= f.submit t('button.upload') %>
+  <% end %>
+
+  <h5>Banner Image Preference</h5>
+  <% form_for object do |f| %>
+    <label>Background color</label>
+    <input type='text' name='premium_template_element[data][][bgcolor]'
+           value="<%= object.data.first ? object.data.first['bgcolor'] : '' %>"/>
+    <%= f.submit t('button.update') %>
+  <% end %>
+</div>

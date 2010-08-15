@@ -60,6 +60,12 @@ en:
     logout: "Logout"
     signup: "Signup"
     updates: "updates ({{count}})"
+    manage_news: "Manage News"
+    add_page: "Add page"
+    news: "News"
+    food_menu: "Food menu"
+    add_news: "Add news"
+    add_new_food_menu: "Add new food menu"
   header:
     recent_restaurants: "Recently added restaurants!"
     loved_places: "Most loved places!"
@@ -76,6 +82,7 @@ en:
   errors:
     invalid_tag: "Invalid tag label - {{tag}}"
     no_matched_type: "Not matched type!"
+    authorization: "You are not authorized"
   footer:
     copyrights: "&copy; Well Treat Us, All rights reserved!"
     links:
@@ -166,6 +173,12 @@ en:
     already_showed_interest: "Already showed interest"
     to_visit: "to visit"
     ask_for_treat: "Ask him/her to treat you!"
+    wanna_go: "{{count}} wanna go"
+    remove_from_featured: "Remove from featured"
+    make_as_featured: "Make as featured"
+    pages: "Pages -"
+    message_meta_info: "{{type}} was added by {{link}} about {{days}} ago"
+    related_images: "Related images"
   button:
     upload: "Upload"
     search_again: "Search again!"

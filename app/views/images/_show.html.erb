@@ -1,0 +1,87 @@
+<div class='breadcrumbs'>
+  <%= link_to @restaurant.name, restaurant_long_url(
+      :id => @restaurant.id,
+      :name => url_escape(@restaurant.name),
+      :premium_check => true) %> &raquo;
+</div>
+
+<h1 class='floatHeader'><%= (@image.caption || '').blank? ? "Image" : @image.caption %></h1>
+
+<% if @image.author?(current_user) %>
+  <div class='pageTools'>
+    (<%= link_to t('nav.edit'), edit_image_path(@image.id) %>)
+  </div>
+<% end %>
+
+<div class='clear'></div>
+<div class='space_10'></div>
+<div class='break'></div>
+<div class='space_10'></div>
+<div class='bigImageContainer'>
+  <div class='bigImage'>
+    <%= link_to image_tag(@image.public_filename(:very_large)),
+                @image.public_filename,
+                :alt => 'Image',
+                :title => @image.caption %>
+  </div>
+  <% if (@image.description || '').length > 0 %>
+    <div class='description'>
+      <%= simple_format @image.description %>
+    </div>
+  <% end %>
+  <div class='space_10'></div>
+    <h5>This image is attached with</h5>
+    <%= render :partial => 'images/parts/related_with' %>
+  <div class='space_10'></div>
+  <div class='comments'>
+    <% if logged_in? %>
+      <div class='form'>
+        <% form_for PhotoComment.new do |f| %>
+          <%= f.label t('label.write_comment') %>
+          <%= f.text_area :content %>
+          <%= f.hidden_field :image_id, :value => @image.id %>
+          <% if @restaurant %>
+            <%= f.hidden_field :restaurant_id, :value => @restaurant.id %>
+          <% end %>
+
+          <div class='space_10'></div>
+          <%= f.submit t('button.add_comment') %>
+        <% end %>
+      </div>
+    <% else %>
+      You need to <%= link_to t('nav.login'), login_url %> to post your comment 
+    <% end %>
+    
+    <% if !@image.photo_comments.empty? %>
+      <div class='space_10'></div>
+      <div class='break'></div>
+      <div class='space_10'></div>
+      <% @image.photo_comments.each do |comment| %>
+        <div class='comment'>
+          <div class='avatar'>
+            <%= link_to(image_tag(comment.user.display_picture,
+                                  :height => '40px', :alt => 'n/a'),
+                        user_long_url(:id => comment.user.id, :login => comment.user.login),
+                        :title => "#{comment.user.login}") %>
+          </div>
+          <div class='content'>
+            <%= simple_format("#{link_to comment.user.login, user_long_url(
+                :id => comment.user.id,
+                :login => comment.user.login.parameterize)} #{auto_link(h(comment.content))}
+                  <span class='date'>#{distance_of_time_in_words(Time.now, comment.created_at)} #{t('label.ago')}</span>") %>
+
+            <% if @image.author?(current_user) %>
+              <%= link_to t('label.delete_comment'), photo_comment_url(:id => comment.id),
+                          :class => 'date',
+                          :method => :delete, :confirm => t('confirm.delete_comment') %>
+            <% end %>
+          </div>
+        </div>
+        <div class="clear"></div>
+        <div class="space_10"></div>
+        <div class="break"></div>
+        <div class="space_10"></div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -12,6 +12,7 @@ class Topic < ActiveRecord::Base
   has_many :reviews
   has_many :tags
   has_many :tag_groups
+  has_many :messages
   has_one  :form_attribute
 
   validates_presence_of :name, :label

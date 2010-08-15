@@ -1,0 +1,51 @@
+<h1>Edit news</h1>
+<div class='space_10'></div>
+<div class='break'></div>
+<div class='space_10'></div>
+<div class='relatedImages'>
+  <% if !@message.images.empty? %>
+    <% @message.images.each do |image| %>
+      <div class='grid_1'>
+        <%= image_tag image.public_filename(:small) %>
+      </div>
+    <% end %>
+
+    <div class='clear'></div>
+    <div class='space_10'></div>
+    <div class='break'></div>
+    <div class='space_10'></div>
+  <% end %>
+
+  <% form_for Image.new, :html => {:multipart => true} do |f| %>
+    <input type='hidden' name='fb_share_off' value='true'/>
+    <input type='hidden' name='message_id' value="<%= @message.id %>"/>
+
+    <table class='formTable highlight'>
+      <tr>
+        <th><%= f.label :caption %></th>
+        <th>Select file</th>
+      </tr>
+      <tr>
+        <td>
+          <%= f.text_field :caption %>
+        </td>
+        <td>
+          <%= f.file_field :uploaded_data %>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <%= f.submit t('button.upload') %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+
+<div class='space_10'></div>
+<% form_for @message do |f| %>
+  <%= f.hidden_field :restaurant_id, :value => @restaurant.id %>
+  <%= render :partial => 'messages/parts/form', :locals => {:f => f} %>
+  <%= f.submit t('button.update') %>
+<% end %>
+

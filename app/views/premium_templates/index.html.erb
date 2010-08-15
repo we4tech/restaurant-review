@@ -1,0 +1,23 @@
+<div class="grid_12">
+  <h1><%= @restaurant.name %> &raquo; Manage premium themes</h1>
+  <div class='space_10'></div>
+  <div class='break'></div>
+  <div class='space_10'></div>
+
+  <div class='premium_templates'>
+    <div class='navigation'>
+      <%= link_to 'Add premium template', new_restaurant_premium_template_path %>
+    </div>
+    <% @premium_templates.each do |template| %>
+      <div class='premium_template'>
+        <%= template.name %> -
+        <%= link_to t('nav.edit'), edit_restaurant_premium_template_path(@restaurant, template) %> .
+        <%= link_to t('nav.delete'), restaurant_premium_template_path(@restaurant, template),
+                    :method => :delete,
+                    :confirm => t('confirm.delete_entry') %> .
+        <%= link_to 'Design', design_premium_template_path(template) %> .
+        <%= link_to 'Preview', premium_restaurant_path(@restaurant) %>
+      </div>
+    <% end %>
+  </div>
+</div>

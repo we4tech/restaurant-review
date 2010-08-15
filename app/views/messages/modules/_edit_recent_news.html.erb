@@ -1,0 +1,23 @@
+<div class='edit_module recentNews'>
+  <% suffix = "#{rand(1000) * Time.now.to_i}" %>
+  
+  <h5 class='a<%= suffix %>'>Expand: Configure recent news</h5>
+  <h5 class='a<%= suffix %>' style='display: none'>Collapse: Configure recent news</h5>
+  
+  <div id='edit<%= suffix %>' style='display: none'>
+    <% form_for config do |f| %>
+      <label>How many news to be displayed?</label>
+      <div class='space_10'></div>
+      <%= pte_text_field(:max, config.data.first) %>
+      <div class='space_10'></div>
+      <%= f.submit t('button.update') %>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.a<%= suffix %>').click(function() {
+    $('.a<%= suffix %>').toggle();
+    $('#edit<%= suffix %>').toggle();
+  });
+</script>

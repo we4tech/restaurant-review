@@ -1,0 +1,384 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+  margin: 0 auto;
+  width: 1000px;
+  border: 1px solid #ccc;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-size: 12px;
+}
+
+.top .bannerImage .bgcolor {
+  background: #2D2E7D;
+  text-align: center;
+}
+
+.pl_startstop .slide {
+  width: 1000px!important;
+}
+
+.pl_startstop .slide p {
+  width: 550px!important;
+}
+
+.pl_startstop .slide img {
+  left: 650px!important;
+}
+
+.top .menuHolder {
+  background: beige;
+  padding: 10px;
+  font-size: 10px;
+  border-bottom: 2px solid #ccc;
+}
+
+.top .menuHolder li a {
+  color: #888;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.top .menuHolder li a:hover {
+  color: #000;
+}
+
+.menuHolder .module .menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menuHolder .module .menu li {
+  display: inline;
+  margin-right: 10px
+}
+
+.featureBox {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.contentArea {
+  padding: 20px;
+}
+
+.contentArea .left {
+  float: left;
+  width: 65%;
+  margin-right: 10px;
+}
+
+.contentArea .right {
+  float: left;
+  width: 31%;
+  padding: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h5 {
+  font-size: 12px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  background: #ccc;
+  padding: 5px;
+}
+
+h3 {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 5px;
+  font-size: 15px;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+}
+
+h4 {
+  font-size: 13px;
+}
+
+.pointer_cursor {
+  cursor: pointer;
+}
+
+.videoEmbedCode object embed {
+  width: 100%!important;
+  height: auto!important;
+  margin-bottom: 10px;
+}
+
+.footer {
+  background: #f0f0f0;
+  font-size: 80%;
+  padding: 20px;
+  color: #999;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.clear {
+  clear: both
+}
+
+.recentNews {
+}
+
+.recentNews .message {
+  margin-top: 10px;
+}
+
+.recentNews .message .thumbnail {
+  float: left;
+  margin-right: 10px;
+}
+
+.recentNews .message .thumbnail img {
+  width: 50px;
+}
+
+.recentNews .message .content {
+  float: left;
+}
+
+.box .recentNews .message .content {
+  width: 235px;
+}
+
+.linkMore {
+  text-align: right;
+}
+
+.breadcrumbs {
+  font-size: 10px;
+  color: #888;
+  font-style: italic;
+}
+
+.breadcrumbs a {
+  color: #888;
+  text-decoration: none;
+}
+
+a {
+  color: #000;
+}
+
+a:hover {
+  color: #999;
+}
+
+.grid_1, .grid_5, .grid_6 {
+  float: left;
+}
+
+.grid_1 {
+  width: 70px;
+}
+
+.grid_1 img {
+  width: 50px;
+  border: 5px solid #ccc;
+}
+
+.grid_6 {
+  width: 550px;
+}
+
+.site_list_item {
+  margin-bottom: 20px;
+}
+
+h6 {
+  font-size: 10px;
+}
+
+.food_items h6, .food_items .price {
+  float: left;
+}
+
+.food_items .price {
+  margin-left: 10px;
+  background: lightYellow;
+}
+
+.food_items .adminTools {
+  clear: both;
+}
+
+.food_items .adminTools {
+  font-size: 9px;
+}
+
+.floatHeader {
+  float: left;
+}
+
+.pageTools {
+  float: left;
+  margin-top: 20px;
+  margin-left: 10px;
+  font-size: 10px;
+}
+
+.pageTools a {
+  color: darkred;
+}
+
+.icon_review {
+  background: url(/images/fresh/review.png) no-repeat;
+  padding-left: 20px;
+}
+
+.icon_loved {
+  background: url(/images/fresh/loved.png) no-repeat;
+  padding-left: 20px;
+}
+
+.icon_hated {
+  background: url(/images/fresh/hated.png) no-repeat;
+  padding-left: 20px;
+}
+
+.reviewContainer {
+  
+  margin-bottom: 10px;
+}
+
+.reviewContainer .userImage {
+  float: left;
+  width: 50px;
+  margin-right: 10px;
+}
+
+a img {
+  border: 0;
+}
+
+.reviewContainer .userImage img {
+  border: 5px solid #ccc;
+}
+
+.reviewContainer .review {
+  top: -12px;
+  position: relative;
+}
+
+.reviewContainer .review_comments {
+  background: lightYellow;
+  padding: 10px;
+  border: 2px solid #ccc;
+}
+
+.reviewContainer .review_comment {
+  line-height: 22px;
+}
+
+.date {
+  color: #888;
+}
+
+.date a {
+  color: red;
+  font-weight: bold;
+}
+
+.reviewer {
+  font-weight: bold;
+}
+
+.reviewContainer .review_comment .review_comment_author {
+  margin-bottom: 5px;
+}
+
+.reviewContainer .review_comment .review_comment_author a {
+  padding: 2px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.reviewContainer .review_comment .review_comment_author img {
+  margin-right: 10px;
+
+}
+
+.reviewOptions {
+  background: #ffff99;
+  padding: 5px;
+  font-size: 120%;
+  margin-bottom: 10px;
+}
+
+.reviewOptions label {
+  font-weight: bold;
+}
+
+.reviewContainer .review_comment_form label {
+  font-weight: bold;
+}
+
+.reviewContainer .review_comment_form textarea {
+  width: 100%;
+  height: 70px;
+}
+
+.highlight {
+  padding: 10px;
+  line-height: 22px;
+  background: #ffff99;
+  border: 4px solid #ccc;
+}
+
+.highlight a {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+textarea {
+  padding: 2px;
+}
+
+.bigImage {
+  text-align: center;
+}
+
+.bigImage img {
+  border: 10px solid #ccc;
+  max-width: 600px;
+}
+
+.bigImageContainer .comments .form {
+  background: lightYellow;
+  padding: 10px;
+}
+
+.bigImageContainer .comments .form textarea {
+  display: block;
+  width: 100%;
+  height: 70px;
+}
+
+.bigImageContainer .comments .avatar {
+  float: left;
+  width: 60px;
+}
+
+.bigImageContainer .comments .avatar .content {
+  background: red;
+  width: 538px;
+}
+
+.bigImageContainer .description {
+  
+}

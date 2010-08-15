@@ -1,0 +1,62 @@
+.edit_module {
+  padding: 10px;
+  border: 2px solid gold;
+  background: lightYellow;
+  font-size: 12px;
+}
+
+.edit_module h5 {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+  color: #888;
+  cursor: pointer;
+  background: none;
+  text-align: left;
+}
+
+.edit_module a {
+  color: #888;
+}
+
+.edit_module a:hover {
+  color: #000;
+}
+
+.edit_module .buttons {
+  padding: 10px;
+}
+
+.edit_module .buttons * {
+  font-size: 15px;
+  padding: 5px;
+}
+
+.clear {
+  clear: both;
+}
+
+.addGroup, .formTable {
+  background: #ffff99;
+  padding: 5px;
+}
+
+.addGroup tr th, .formTable tr th {
+  font-size: 10px;
+  color: #888;
+  font-weight: normal;
+  text-align: left;
+}
+
+.space_10 {
+  margin-top: 10px;
+}
+
+.space_5 {
+  margin-top: 5px;
+}
+
+.break {
+  border-bottom: 1px solid #ccc;
+}

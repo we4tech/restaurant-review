@@ -1,0 +1,17 @@
+top:
+  banner_image: true
+  dynamic_menu: true
+
+left:
+  big_image_gallery: true
+  rich_text: true
+
+right:
+  video_gallery: true
+  dynamic_menu: true
+  recent_news:
+    count: 5
+  bookmarklet: true
+
+footer:
+  rich_text: true

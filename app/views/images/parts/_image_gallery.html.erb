@@ -1,4 +1,6 @@
-<% images = @restaurant.images %>
+<%
+   images = @restaurant.related_images.by_group(nil).collect(&:image)
+%>
 <% if !images.empty? %>
   <%
      images = images.shuffle
@@ -8,9 +10,8 @@
     <%= link_to(image_tag(first_image.public_filename(:large),
                           :class => 'large_image',
                           :alt => 'N/A'),
-                "#{root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')}#{first_image.public_filename(:very_large)}",
-                :title => first_image.caption,
-                :rel => 'prettyPhoto[gallery]') %>
+                image_url(first_image.id, :d => true),
+                :title => first_image.caption) %>
     
     <% rest_images = images[1..images.length] %>
     <% if !rest_images.empty? %>
@@ -18,17 +19,10 @@
         <% rest_images.each do |image| %>
           <%= link_to(image_tag(image.public_filename(:small),
                                 :alt => 'N/A'),
-                      "#{root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')}#{image.public_filename(:very_large)}",
-                      :rel => 'prettyPhoto[gallery]',
+                      image_url(image.id, :d => true),
                       :title => image.caption) %>
         <% end %>
       </div>
     <% end %>
   </div>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $(".image_gallery a").prettyPhoto();
-    });
-  </script>
 <% end %>
