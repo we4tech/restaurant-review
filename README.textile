@@ -1,89 +1,156 @@
 h2. WellTreat.US release change logs.
 
+h4. Release - 0.14.
+
+* 161. Design template for restaurant page
+* 162. Provide option to choose template from the template gallery
+* 164. Have option for adding extra page
+* 166. Have food menu browser
+* 168. Make featured restaurants by administration selection
+* 171. Review page for premium restaurant
+* 172. Fix links on FB app
+* 126. Add recipe
+* 84. beta logo
+* 108. Add meta tag og: for facebook like (http://developers.facebook.com/docs/reference/plugins/like)
+* 83. make map clickable anyplace and put marker
+* 79. Should have option to share a specific picture
+* 55. Fix duplicate review related issue
+* 43. error reporting
+* 27. Add Featured restaurant options
+* 12. Facebook connect as default authentication
+* 121. Show recent reviews
+* 140. On restaurant details page, add full image url instead of light box view
+
+h4. Release - 0.13.
+
+* 66. Make bangla support
+* 159. Fix FB Durr! with email authorization related bug
+* 160. Fixed infinite loop related issue with Facebook connect
+
+h4. Release - 0.9.
+* 95. Add comment on photo
+
+h4. Release - 0.11.
+
+* 101. FB game : Treat me!
+* 111. Add foods picture slide show on front page
+* 123. Add top restaurants on top of the page in a slide
+* 109. Add location in front page listing view
+* 107. Display google map while clicked on static map
+* 93. Search box on other page
+* 134. Fix broken tag details link on front page listing
+* 132. Changed feature box's navigation design
+* 131. Remove suggested friends restriction from FB game
+* 124. Use facebook connect as an alternative of registration
+* 134. User facebook DP if no DP is uploaded
+
+h4. Release - 0.12.
+
+* 127. Suggest me the best restaurant
+* 131. Search tags
+* 139. Add location tag
+* 106. Geo tagging for restaurant page
+* 130. Branch locator
+* 143. Add mobile based view
+* 148. Add Meta description for each restaurants
+* 147. Add FB like button on review
+* 141. Support facebook profile Tab
+* 138. FB page on received approved treat
+* 149. fix fb like button width
+* 150. remove fb like button from show restaurant page
+* 152. Fixed broken tag details page url
+* 151. Fix shucmon bhai's page 
+* 133. Add "reply" button on every comments on reviews 
+* 153. Added Tag editor
+* 154. Added random top featured restaurants
+* 155. Improve feature box navigation
+* 156. Fix bugs with hash on recommend box
+* 157. Fixed mobile registration problem
+
 h4. Release - 0.8.
 
-* 69.  [DONE] change FBConnect path to welltreat.us
-* 96.  [DONE] Add multiple selection of field type for fields
-* 100. [DONE] Option for act as super admin to edit other's content
-* 102. [DONE] Dont ask refresh warning on update page if there is no change
-* 103. [DONE] Keep dedicated page for image
+* 69.  change FBConnect path to welltreat.us
+* 96.  Add multiple selection of field type for fields
+* 100. Option for act as super admin to edit other's content
+* 102. Dont ask refresh warning on update page if there is no change
+* 103. Keep dedicated page for image
 
 h4. Release - 0.7.
 
-* 92. [DONE] show randomized photo gallery
-* 85. [DONE] Dont send email if the comment or review writer is the author himself
-* 54. [DONE] send email notification to everyone
-* 61. [DONE] add multiple image in fb share
-* 90. [DONE] FIX link while sharing over Facebook
-* 85. [DONE] Email should include the comment content
-* 86. [DONE] Email should include the review content
-* 88. [DONE] Fix duplicate ids in Query of Recent stuffs
-* 92. [DONE] Use H1 on each page
-* 94. [DONE] Photo gallery page
-* 38. [DONE] Add button 'do u own this restaurant?, transfer ownership just only 2K per month'
+* 92. show randomized photo gallery
+* 85. Dont send email if the comment or review writer is the author himself
+* 54. send email notification to everyone
+* 61. add multiple image in fb share
+* 90. FIX link while sharing over Facebook
+* 85. Email should include the comment content
+* 86. Email should include the review content
+* 88. Fix duplicate ids in Query of Recent stuffs
+* 92. Use H1 on each page
+* 94. Photo gallery page
+* 38. Add button 'do u own this restaurant?, transfer ownership just only 2K per month'
 
 h4. Release - (0.1 - 0.6).
 
-* 2. [DONE] enable disable facebook 6. [DONE] Image title feature
-*  7. [DONE] new reviews list on front page 
-* 9. [DONE] formatted text 
-* 10. [DONE] Recently reviewed list should be sorted by date 
-* 13. [DONE] Rich text editor 
-* 16. [DONE] Organize hate n love options while reviewing and add option for i wanna go!
-*  17. [DONE] add feedback button 
-* 18. [DONE] remove html while publishing on facebook 
-* 19. [DONE] add missing image 
+* 2. enable disable facebook 6. Image title feature
+*  7. new reviews list on front page 
+* 9. formatted text 
+* 10. Recently reviewed list should be sorted by date 
+* 13. Rich text editor 
+* 16. Organize hate n love options while reviewing and add option for i wanna go!
+*  17. add feedback button 
+* 18. remove html while publishing on facebook 
+* 19. add missing image 
 * 23. [DONE} on front page recently reviewed section should handle wanna go 
-* 25. [DONE] add reset password
-* 26. [DONE] Map searching option
-* 30. [DONE] Topic management tool
-* 37. [DONE] Admin flag for user
-* 42. [DONE] Bug on FB Connect
-* 3. [DONE] comment on review
-* 37. [DONE] Admin flag for user
-* 30. [DONE] Topic management tool
+* 25. add reset password
+* 26. Map searching option
+* 30. Topic management tool
+* 37. Admin flag for user
+* 42. Bug on FB Connect
+* 3. comment on review
+* 37. Admin flag for user
+* 30. Topic management tool
 * 23. [DONE} on front page recently reviewed section should handle wanna go
 *  24. [NOT issue] Fixed descending order prob on recent review 
-* 25. [DONE] add reset password
-* 26. [DONE] Map searching option
-* 2. [DONE] enable disable facebook
-*  6. [DONE] Image title feature 
-* 7. [DONE] new reviews list on front page 
-* 9. [DONE] formatted text
-*  10. [DONE] Recently reviewed list should be sorted by date 
-* 16. [DONE] Organize hate n love options while reviewing and add option for i wanna go! 
-* 17. [DONE] add feedback button 
-* 18. [DONE] remove html while publishing on facebook 
-* 19. [DONE] add missing image 
-* 13. [DONE] Rich text editor
-* 21. [DONE] add profile page
-* 49. [DONE] comment after my comment notification
-* 31. [DONE] Set default topic
-* 51. [DONE] not reviewed mark
-* 28. [DONE] Add bubble to guide new visitor
-* 39. [DONE] Dashboard (who replied)
-* 32. [DONE] Topic based subdomain
-* 33. [DONE] Topic URL forwarding
-* 34. [DONE] Topic properties (for extra variable)
-* 33. [DONE] Topic property should have option to declare input required flag
-* 34. [DONE] Topic relation with all models
-* 35. [DONE] Topic migration for existing data
-* 56. [DONE] FIx 'dot' (.) related issue while serving user profile
-* 57. [DONE] show attributes on show restaurant page
-* 58. [DONE] Remove i wanna go from review box
-* 71. [DONE] Display tag
-* 72. [DONE] On welltreat.us it should redirect to the default topic, topic name "_" should be translated as "."
-* 62. [DONE] make generic url for edit profile
-* 60. [DONE] Stop back button while creating new restaurant
-* 78. [DONE] PUblic time line
-* 79. [DONE] Setting up activites as default after log in
-* 76. [DONE] change hate to dislike
-* 36. [DONE] Topic theme management
-* 63. [DONE] Fix labels
-* 68. [DONE] FIX sub domain in email
-* 64. [DONE] Detect topic from action mailer
-* 82. [DONE] add searching option
-* 65. [DONE] Write test case for registration
-* 66. [DONE] Write test case for checking email
-* 86. [DONE] Don't display delete button for other's comment
+* 25. add reset password
+* 26. Map searching option
+* 2. enable disable facebook
+*  6. Image title feature 
+* 7. new reviews list on front page 
+* 9. formatted text
+*  10. Recently reviewed list should be sorted by date 
+* 16. Organize hate n love options while reviewing and add option for i wanna go! 
+* 17. add feedback button 
+* 18. remove html while publishing on facebook 
+* 19. add missing image 
+* 13. Rich text editor
+* 21. add profile page
+* 49. comment after my comment notification
+* 31. Set default topic
+* 51. not reviewed mark
+* 28. Add bubble to guide new visitor
+* 39. Dashboard (who replied)
+* 32. Topic based subdomain
+* 33. Topic URL forwarding
+* 34. Topic properties (for extra variable)
+* 33. Topic property should have option to declare input required flag
+* 34. Topic relation with all models
+* 35. Topic migration for existing data
+* 56. FIx 'dot' (.) related issue while serving user profile
+* 57. show attributes on show restaurant page
+* 58. Remove i wanna go from review box
+* 71. Display tag
+* 72. On welltreat.us it should redirect to the default topic, topic name "_" should be translated as "."
+* 62. make generic url for edit profile
+* 60. Stop back button while creating new restaurant
+* 78. PUblic time line
+* 79. Setting up activites as default after log in
+* 76. change hate to dislike
+* 36. Topic theme management
+* 63. Fix labels
+* 68. FIX sub domain in email
+* 64. Detect topic from action mailer
+* 82. add searching option
+* 65. Write test case for registration
+* 66. Write test case for checking email
+* 86. Don't display delete button for other's comment
 * 67. Function Test case for reset password
