@@ -12,7 +12,7 @@
       <% end %>
       
       <div class="side-overlay">
-        <%= image_tag "/images/fresh/featured_restaurant_#{I18n.locale.to_s}.png", :alt => 'Featured Restaurant' %>
+        <%= image_tag "/images/fresh/featured_restaurant_#{I18n.locale.to_s}.png", :alt => 'Featured Restaurant' %><br/>
         <small><%= t('featurebox.address') %> <%= (restaurant.address || '').blank? ? '' : "@#{restaurant.address}" %></small>
         <h2><%= link_to restaurant.name, link %></h2>
         <% if restaurant.reviews.loved.count > 0 %>

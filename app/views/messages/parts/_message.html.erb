@@ -1,3 +1,10 @@
+<%
+   options = {}
+   if params[:d]
+     options[:d] = true
+   end
+%>
+
 <div class="site_list_item">
   <% if !object.images.blank? %>
     <div class='grid_1'>
@@ -7,7 +14,7 @@
 
   <div class="grid_6">
     <h4>
-      <%= link_to object.title, restaurant_message_url(object.restaurant, object.id) %>
+      <%= link_to object.title, restaurant_message_url(object.restaurant, object.id, options) %>
     </h4>
     <p>
       <% words = (object.content || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>

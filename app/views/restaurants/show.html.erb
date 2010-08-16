@@ -4,7 +4,8 @@
       <%= link_to @topic.name.humanize.pluralize, root_url %> &raquo;
       <span class="review_tools">
         <% if @restaurant.author?(current_user) %>
-          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>,
+          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>
+          ,
           <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(@restaurant) -%>
           <%- if current_user.admin? -%>,
             <%= link_to 'Premium', restaurant_premium_templates_path(@restaurant) -%>
@@ -23,13 +24,26 @@
 
     <div class="restaurant_details">
       <h1><%= @restaurant.name %></h1>
+
       <div class='space_10'></div>
       <fb:like href="<%= request.url %>"></fb:like>
 
-      <p>
+      <div class='contentDetails'>
         <%= render :partial => 'images/parts/image_gallery' %>
         <%= simple_format @restaurant.description %>
-      </p>
+      </div>
+
+      <% if @restaurant.description.length > 400 %>
+        <div class='clear space_10'></div>
+        <div class='redBreak'></div>
+        <div class='contentDetailsTools'>
+          <a href='javascript:void(0)' class='readMoreLess'
+             onclick='$(".contentDetails").css("max-height", "inherit").css("overflow-y", "visible"); $(".readMoreLess").toggle()'><%= t('nav.more') %></a>
+          <a href='javascript:void(0)' class='readMoreLess readLess'
+             style='display:none' onclick='$(".contentDetails").css("max-height", "200px").css("overflow-y", "hidden"); $(".readMoreLess").toggle()'><%= t('nav.less') %></a>
+        </div>
+        <div class='clear space_10'></div>
+      <% end %>
 
       <div class='properties'>
         <% @form_fields.each do |field| %>
@@ -102,7 +116,7 @@
     <div class='space_10'></div>
     <%= render :partial => 'reviews/parts/restaurant_review',
                :locals => {:restaurant => @restaurant} %>
-    
+
     <div class="space_10"></div>
   </div>
 
@@ -158,9 +172,9 @@
       <span class="average"><%= @restaurant.rating_out_of(Restaurant::RATING_LIMIT) %></span> out of
       <span class="best"><%= Restaurant::RATING_LIMIT %></span>
    </span>
-   based on
-   <span class="count"><%= @restaurant.reviews.loved.count %></span> ratings.
-   <span class="votes"><%= @restaurant.reviews.count %></span> user reviews.
+  based on
+  <span class="count"><%= @restaurant.reviews.loved.count %></span> ratings.
+  <span class="votes"><%= @restaurant.reviews.count %></span> user reviews.
 </div>
 
 <div class="vcard">

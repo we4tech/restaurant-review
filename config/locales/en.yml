@@ -46,7 +46,7 @@ en:
     review_now: "[review now!]"
     edit: "Edit"
     edit_tags: "Edit tags"
-    more: "more"
+    more: "Read more"
     read_more_reviews: "check rest of the reviews..."
     interested_people: "see all interested people &raquo;"
     show: "Show"
@@ -66,6 +66,7 @@ en:
     food_menu: "Food menu"
     add_news: "Add news"
     add_new_food_menu: "Add new food menu"
+    less: "Read less"
   header:
     recent_restaurants: "Recently added restaurants!"
     loved_places: "Most loved places!"

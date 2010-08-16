@@ -7,12 +7,12 @@ body {
 }
 
 a {
-  color: #0066cc!important;
-  text-decoration: none!important;
+  color: #0066cc !important;
+  text-decoration: none !important;
 }
 
 a:hover {
-  color: red!important;
+  color: red !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,9 +28,11 @@ h1, h2, h3, h4, h5, h6 {
 .space_10 {
   margin-bottom: 10px;
 }
+
 .align_right {
   text-align: right;
 }
+
 .break {
   border-top: 1px solid #ccc;
 }
@@ -46,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Top style starts */
 #site_top {
-  
+
 }
 
 #site_logo {
@@ -63,6 +65,7 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   font-size: 25px;
 }
+
 #site_logo h4 {
   font-size: 15px;
   margin: 0;
@@ -82,19 +85,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #site_top_navigation a {
-  font-size: 15px!important;
+  font-size: 15px !important;
   padding-left: 5px;
   padding-right: 5px;
   color: crimson !important;
 }
 
 #site_top_navigation a:hover {
-  color: #fff!important;
+  color: #fff !important;
 }
 
 #site_top_navigation a.fb_button {
-  font-size: 11px!important;
-  padding: 0!important;
+  font-size: 11px !important;
+  padding: 0 !important;
 }
 
 /* Top style ends */
@@ -129,9 +132,11 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   font-size: 10px;
 }
+
 .tags {
   font-weight: bold;
 }
+
 .tags .tag {
   background: #f0f0f0;
   margin-left: 2px;
@@ -139,11 +144,13 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 12px;
   font-family: courier;
 }
+
 /* Center style ends */
 
 /* right style starts */
 .site_simple_box {
 }
+
 .site_simple_box h4 {
   margin: 0;
   padding: 0;
@@ -165,7 +172,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .site_simple_box .break {
   border: 0;
-  border-bottom: 1px solid #eee!important;
+  border-bottom: 1px solid #eee !important;
 }
 
 .tag_cloud {
@@ -176,6 +183,7 @@ h1, h2, h3, h4, h5, h6 {
 .tag_cloud li {
   display: inline;
 }
+
 /* right style ends */
 
 /* bottom style starts */
@@ -189,13 +197,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .grid_box {
-  
+
 }
+
 .grid_box .item img {
   height: 40px;
   padding: 2px;
   border: 1px solid #ccc;
 }
+
 .grid_box .item {
   display: inline;
 }
@@ -214,8 +224,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #site_bottom_navigation li a {
-  
+
 }
+
 /* bottom style ends */
 
 .image_gallery {
@@ -259,7 +270,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .restaurant_details .review_tools a {
-  color: crimson!important;
+  color: crimson !important;
 }
 
 .reviews .review {
@@ -288,14 +299,17 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #ccc;
   padding: 5px;
 }
+
 .image_preview .image {
   border: 1px solid #ccc;
   padding: 2px;
   text-align: center;
 }
+
 .image_preview .image img {
   height: 40px;
 }
+
 .image_preview .image .tools {
   background: #fff;
 }
@@ -335,6 +349,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 10px;
   text-align: center;
 }
+
 .stat_item {
   padding: 0px 5px 5px 5px;
   margin-right: 3px;
@@ -413,7 +428,7 @@ h1, h2, h3, h4, h5, h6 {
 .site_quote {
   color: #ccc;
   margin-top: 8px;
-  font-style:italic;
+  font-style: italic;
 }
 
 .site_item_even {
@@ -431,6 +446,7 @@ h1, h2, h3, h4, h5, h6 {
 .facebook_connect_control {
   display: inline;
 }
+
 .facebook_connect_control form {
   margin: 0;
   padding: 0;
@@ -446,7 +462,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .fieldWithErrors input {
-  border: 2px solid red;  
+  border: 2px solid red;
 }
 
 .formError {
@@ -501,7 +517,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .review_comment_form {
-  
+
 }
 
 .review_comment_form textarea {
@@ -525,11 +541,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .link_emp {
-  color: red!important;
+  color: red !important;
 }
 
 .link_emp:hover {
-  color: #000!important;
+  color: #000 !important;
 }
 
 .errorExplanation {
@@ -584,6 +600,7 @@ h1, h2, h3, h4, h5, h6 {
 .tag_size_4 {
   font-size: 25px;
 }
+
 .tag_size_5 {
   font-size: 30px;
 }
@@ -599,27 +616,32 @@ h1, h2, h3, h4, h5, h6 {
   width: 240px;
   height: 250px
 }
+
 .stuff_event .image {
   border: 1px solid #ccc;
   background: #fff;
   width: 240px;
   overflow: hidden;
 }
+
 .stuff_event .info {
   font-size: 80%;
   font-weight: bold;
   text-align: right;
-  font-style:italic;
+  font-style: italic;
   color: crimson;
 }
+
 .stuff_event img {
   padding: 10px;
   max-width: 220px;
   max-height: 250px;
 }
+
 .options_box {
   width: 500px;
 }
+
 .options_box .option {
   background: lightYellow;
   margin: 5px;
@@ -651,7 +673,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 80%;
 }
 
-
 .weeeFeatureBox {
   padding: 0;
   margin: 0;
@@ -674,7 +695,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .weeeFeatureBox .side-overlay p.description {
-  line-height: 25px!important;
+  line-height: 25px !important;
   font-size: 140%;
   font-family: monospace
 }
@@ -696,8 +717,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 10px;
   font-family: 'Tahoma'
 }
-
-
 
 .weeeFeatureBox .side-overlay .featureNav a.btnNext {
   position: absolute;
@@ -740,8 +759,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .grid_8 {
-  width: 575px!important;
-  padding-left: 35px!important;
+  width: 575px !important;
+  padding-left: 35px !important;
 }
 
 .weeeFeatureBox .restaurant-rate {
@@ -762,7 +781,9 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 10px;
 }
 
-.hreview-aggregate, .vcard {display: none;}
+.hreview-aggregate, .vcard {
+  display: none;
+}
 
 .admin_topics {
   margin: 10px;
@@ -869,6 +890,7 @@ h1, h2, h3, h4, h5, h6 {
   color: #888;
   font-style: italic;
 }
+
 .bigImage {
   text-align: center;
 }
@@ -908,3 +930,25 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: none;
 }
 
+.contentDetails {
+  max-height: 200px;
+  overflow-y: hidden;
+}
+
+.redBreak {
+  border-bottom: 4px solid crimson;
+}
+
+.contentDetailsTools a {
+  padding: 5px 10px;
+  background: crimson;
+  color: #fff !important;
+}
+
+.readLess {
+  border-color: darkred;
+  border-style: solid;
+  border-width: 0 1px 3px 3px;
+  position: relative;
+  top: 3px;
+}
