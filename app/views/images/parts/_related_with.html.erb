@@ -27,4 +27,10 @@
       <% end %>
     </div>
   <% end %>
+
+  <% @image.contributed_images.each do |contributed_image| %>
+    <div class='attachedWithObject'>
+      <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => contributed_image.restaurant} %>
+    </div>
+  <% end %>
 </div>

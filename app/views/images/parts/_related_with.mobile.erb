@@ -17,7 +17,7 @@
 
      attached_objects.compact!
   %>
-  
+
   <% attached_objects.each do |object| %>
     <div class='attachedWithObject'>
       <% if object.is_a?(Restaurant) %>
@@ -25,6 +25,12 @@
       <% elsif object.is_a?(Message) %>
         <%= render :partial => 'messages/parts/message', :object => object %>
       <% end %>
+    </div>
+  <% end %>
+
+  <% @image.contributed_images.each do |contributed_image| %>
+    <div class='attachedWithObject'>
+      <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => contributed_image.restaurant} %>
     </div>
   <% end %>
 </div>
