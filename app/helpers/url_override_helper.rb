@@ -1,5 +1,19 @@
 module UrlOverrideHelper
 
+  def user_long_url(p_options)
+    if p_options.is_a?(User)
+      user = p_options
+      user_long_route_url(:login => url_escape(user.login),
+                          :id => user.id)
+    else
+      user_long_route_url(p_options)
+    end
+  end
+
+  def user_link(user)
+    link_to user.login.humanize, user_long_url(user)
+  end
+
   def restaurant_long_url(p_options)
     topic = @topic
     topic = Topic.default if topic.nil?
@@ -34,6 +48,10 @@ module UrlOverrideHelper
           premium_restaurant_url(restaurant_id)
       end
     end
+  end
+
+  def restaurant_link(restaurant)
+    link_to restaurant.name, restaurant_long_url(restaurant)
   end
 
   def discover_url(object)

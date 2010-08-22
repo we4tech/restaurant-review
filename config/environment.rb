@@ -22,6 +22,7 @@ Rails::Initializer.run do |config|
   config.gem "rubyist-aasm", :version => '2.1.1', :lib => 'aasm'
   config.gem "will_paginate"
   config.gem 'super_exception_notifier', :lib => "exception_notification"
+  config.gem "mail_style"
   
   #config.gem 'jammit', :version => '0.5.1'
 

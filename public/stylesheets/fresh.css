@@ -1,0 +1,96 @@
+.wrapper {
+  background: #6CCAC7 url('/images/fresh/gradient_black_blue.png') repeat-x;
+  padding: 40px;
+}
+
+.mailLogo {
+  border-right: 1px solid #888;
+  width: 280px;
+  float: left;
+}
+
+.mailTag {
+  font-size: 30px;
+  float: left;
+  color: #fff;
+  font-family: serif;
+  font-style: italic;
+  margin-left: 20px;
+  width: 100px;
+}
+
+.mailContent {
+  background: #fff;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.mailContent blockquote {
+  border-left: 2px solid #888;
+  margin-left: 15px;
+  padding-left: 20px;
+  color: #888
+}
+
+h3 {
+  border-bottom: 1px solid #ccc;
+  color: #fff;
+}
+
+.restaurant {
+  margin-right: 20px;
+}
+
+.restaurant .image {
+  float: left;
+  width: 70px;
+  margin-right: 10px;
+}
+
+.restaurant .content {
+  float: left;
+  width: 100px;
+}
+
+.clear {
+  clear: both;
+}
+
+.space_10 {
+  margin-top: 10px;
+}
+
+.break {
+  border-bottom: 1px solid #ccc;
+}
+
+.site_list_item {
+  border: 4px solid #ccc;
+  padding: 10px;
+  background: #f0f0f0;
+}
+
+.site_list_item .grid_1 {
+  float: left;
+  width: 60px;
+  margin-right: 10px;
+}
+
+h4 {
+  margin: 0;
+  padding: 0;
+}
+
+.site_list_item .grid_6 {
+  float: left;
+  width: 500px;
+}
+
+.mailActions {
+  background: lightYellow;
+  padding: 10px;
+}
+
+a img {
+  border: 0;
+}

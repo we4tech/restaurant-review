@@ -1,10 +1,9 @@
 Hi <%= @review.restaurant.user.login.humanize %>,
-
 "<%= @review.user.login.humanize %>" just reviewed "<%= @review.restaurant.name %>".
 
-<%= @review.comment %>
+"<%= h @review.comment %>"
 
-To comment on the reply follow the link below -
+To reply on the comment follow the link below -
 <%= h @url %>
 
-<%= @topic.email_footer %>---------------------------------
+<%= @topic.email_footer %>

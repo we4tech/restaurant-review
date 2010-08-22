@@ -1,0 +1,18 @@
+<div class="weeeFeatureBox">
+  <h3>Featured bangladeshi restaurants</h3>
+  <% @top_rated_restaurants.shuffle.each_with_index do |restaurant, index| %>
+    <div class='restaurant'>
+      <div class='image'>
+        <%= link_to image_tag(restaurant.all_images.shuffle.first.public_filename(:small),
+                              :style => 'border: 5px solid #f0f0f0;'),
+                    restaurant_long_url(restaurant) %>
+      </div>
+      <div class="content">
+        <%= link_to restaurant.name, restaurant_long_url(restaurant) %>
+      </div>
+    </div>
+  <% end %>
+  <div class='clear'></div>
+</div>
+<div class="clear"></div>
+<div class='space_10'></div>

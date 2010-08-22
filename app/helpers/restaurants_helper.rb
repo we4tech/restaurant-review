@@ -66,4 +66,9 @@ module RestaurantsHelper
   def render_related_restaurants(p_config)
     "Hola"
   end
+
+  def render_feature_restaurants_box(options = {})
+    @top_rated_restaurants = Restaurant.featured
+    render :partial => 'restaurants/parts/featured_restaurants_for_mail'  
+  end
 end

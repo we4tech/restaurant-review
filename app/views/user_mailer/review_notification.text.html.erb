@@ -1,0 +1,41 @@
+<div class='wrapper'>
+  <div class='mailTop'>
+    <div class='mailLogo'>
+      <%= link_to image_tag('/images/fresh/icon.png'), root_url %>
+    </div>
+    <div class='mailTag'>
+      <%= @topic.site_title %>
+    </div>
+    <br clear='all'/>
+  </div>
+
+  <div class='mailContent'>
+    <h1 style="margin: 0;">Hi <%= link_to @review.restaurant.user.login.humanize, user_long_url(:login => url_escape(@review.restaurant.user.login), :id => @review.restaurant.user_id) %>,</h1>
+    <h4 style="margin: 0">"<%= link_to @review.user.login.humanize, user_long_url(:login => url_escape(@review.user.login), :id => @review.user_id) %>" just reviewed
+      "<%= link_to @review.restaurant.name, restaurant_long_url(@review.restaurant) %>".</h4>
+
+    <blockquote><%= h @review.comment %></blockquote>
+
+    <div class='mailActions'>
+      To reply on the comment follow the link below -
+      <%= link_to 'Click here', @url %>
+      <br/>
+      Plain url: <%= h @url %>
+    </div>
+    <div class='space_10'></div>
+
+    Related restaurant -
+    <div class='break'></div>
+    <div class='space_10'></div>
+    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => @review.restaurant} %>
+    <div class='space_10'></div>
+
+    <pre class='footer'><%= @topic.email_footer %></pre>
+  </div>
+  <div class='mailFooter'>
+    <%= render_feature_restaurants_box %>
+    <p>
+      <%= @topic.description %>
+    </p>
+  </div>
+</div>

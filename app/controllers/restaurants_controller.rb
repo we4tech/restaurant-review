@@ -181,6 +181,24 @@ class RestaurantsController < ApplicationController
     notify :success, :back
   end
 
+  def test_email_template
+    args = []
+    params[:args].each do |arg|
+      case arg
+        when 'user'
+          args << User.first
+        when 'restaurant'
+          args << Restaurant.first
+        when 'review'
+          args << Review.first
+        when 'review_comment'
+          args << ReviewComment.first
+      end
+    end
+    mail = UserMailer.send("create_#{params[:m]}", args.length > 1 ? args : args.first)
+    render :inline => "#{mail.body}"
+  end
+
   private
     def update_tag_mappings(tag_ids, restaurant)
       tags = Tag.find(tag_ids)

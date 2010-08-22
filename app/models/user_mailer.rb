@@ -1,5 +1,11 @@
 class UserMailer < ActionMailer::Base
+
   include UrlOverrideHelper
+  helper :restaurants
+  helper :url_override
+  helper :topic_based_translation
+  helper :string
+  helper :mail_supporting
 
   def signup_notification(user)
     setup_email(user, Topic.default)
@@ -35,6 +41,8 @@ class UserMailer < ActionMailer::Base
   end
 
   def comment_notification(review_comment)
+    css :fresh
+    
     setup_email(review_comment.review.user, review_comment.topic)
     @subject += "#{review_comment.user.login.humanize} has commented on your review at '#{review_comment.restaurant.name}'"
     @body[:review_comment] = review_comment
@@ -47,6 +55,8 @@ class UserMailer < ActionMailer::Base
   end
 
   def comment_participants_notification(participant, review_comment)
+    css :fresh
+
     setup_email(participant, review_comment.topic)
     @subject += "#{review_comment.user.login.humanize} has commented after your comment at '#{review_comment.restaurant.name}'"
     @body[:review_comment] = review_comment
@@ -60,6 +70,8 @@ class UserMailer < ActionMailer::Base
   end
 
   def review_notification(review)
+    css :fresh
+    
     setup_email(review.restaurant.user, review.topic)
     @subject += "#{review.user.login.humanize} has reviewed your #{review.topic.subdomain} '#{review.restaurant.name}'"
     @body[:review] = review

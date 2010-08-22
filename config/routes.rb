@@ -40,7 +40,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :restaurants, :member => {:edit_tags => :get,
                                           :save_tags => :post,
                                           :premium => :get,
-                                          :featured => :get},
+                                          :featured => :get,
+                                          :test_email_template => :get},
                 :has_many => [:premium_templates,
                               :pages, :messages,
                               :food_items, :reviews]
@@ -87,7 +88,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.admin '/dashboard', :controller => 'admin', :action => 'index'
 
-  map.user_long '/users/:login/:id', :controller => 'users', :action => 'show',
+  map.user_long_route '/users/:login/:id', :controller => 'users', :action => 'show',
                 :requirements => {:login => /[\w\d\.\-]+/}
   map.updates '/activities', :controller => 'stuff_events', :action => 'show'
 
