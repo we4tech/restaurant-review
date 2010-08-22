@@ -1,7 +1,7 @@
 <% pages = @restaurant.pages %>
 <% if !pages.empty? %>
   <div class='menu'>
-    <b><%= t('label.pages') %> <%= @restaurant.author?(current_user) ? "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id, :d => true))})" : '' %> - </b>
+    <b><%= t('label.pages') %> <%= @restaurant.author?(current_user) ? "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id, :d => true))})" : '' %></b>
     <%= link_to t('nav.news'), restaurant_messages_path(@restaurant, :d => true) %> .
     <%= link_to t('nav.food_menu'), restaurant_food_items_path(@restaurant, :d => true) %> .
 
