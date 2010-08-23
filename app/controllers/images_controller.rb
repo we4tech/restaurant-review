@@ -77,7 +77,8 @@ class ImagesController < ApplicationController
         render_view('images/show')
       end
     else
-      render :status => 404, :inline => 'Image not found'
+      flash[:notice] = 'Image not found'
+      redirect_to root_url
     end
   end
 
