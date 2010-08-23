@@ -70,10 +70,14 @@ class ImagesController < ApplicationController
   end
 
   def show
-    @image = Image.find(params[:id].to_i)
-    @restaurant = @image.discover_relation_with_restaurant
-    if @restaurant
-      render_view('images/show')
+    @image = Image.find_by_id(params[:id].to_i)
+    if @image
+      @restaurant = @image.discover_relation_with_restaurant
+      if @restaurant
+        render_view('images/show')
+      end
+    else
+      render :status => 404, :inline => 'Image not found'
     end
   end
 
