@@ -56,6 +56,19 @@ class Image < ActiveRecord::Base
       end
     end
 
+    applicable_keys = StuffEvent.new.attributes.keys.collect{|key| key if key.to_s.match(/_id/)}
+    applicable_keys.delete('user_id')
+    applicable_keys.delete('image_id')
+    applicable_keys.delete('topic_id')
+    applicable_keys.compact!
+
+    self.stuff_events.each do |stuff_event|
+      related_object = detect_related_object(applicable_keys, stuff_event)
+      if related_object
+        return related_object
+      end
+    end
+
     return nil
   end
 

@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  topic_id: 1
-  fields: MyText
-
-two:
-  topic_id: 1
-  fields: MyText
