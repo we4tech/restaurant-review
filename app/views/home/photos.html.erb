@@ -25,7 +25,7 @@
             %>
 
             <%= link_to image_tag(stuff_event.image.public_filename(:large), :alt => 'N/A'),
-                        image_url(stuff_event.image_id, :page => params[:page]),
+                        image_url(stuff_event.image_id, :page => params[:page], :d => true),
                         :class => 'pic_link',
                         :title => "#{stuff_event.image.caption} @#{link_to(
                             stuff_event.restaurant.name, 
