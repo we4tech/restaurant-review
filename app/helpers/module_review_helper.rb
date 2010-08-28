@@ -20,7 +20,12 @@ module ModuleReviewHelper
   private
     def load_recent_reviews(options)
       element = template_element(options, KEY_RECENT_REVIEWS)
-      max = (element.data || [{}]).first['max'].to_i
+      data = element.data.first
+      max = 4
+
+      if data && data['max'].to_i > 0
+        max = data['max']
+      end
 
       @restaurant.reviews.all(:limit => max)
     end
