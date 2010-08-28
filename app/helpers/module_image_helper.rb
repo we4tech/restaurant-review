@@ -4,20 +4,17 @@ module ModuleImageHelper
 
   #
   # Render banner image editor
-  def edit_banner_image(options = {})
-    key = options.stringify_keys['key'] || DEFAULT_BANNER_IMAGE_KEY
-
-    editor = render :partial => 'images/modules/edit_banner_image',
-                    :object => @premium_template.find_or_create_element(key)
-    viewable = banner_image(options)
+  def edit_uploaded_image(options = {})
+    editor = render :partial => 'images/modules/edit_uploaded_image',
+                    :object => template_element(options, DEFAULT_BANNER_IMAGE_KEY)
+    viewable = uploaded_image(options)
     "#{editor}<div class='space_5 break'></div>#{viewable}"
   end
 
   #
   # Render user uploaded image
-  def banner_image(options = {})
-    key = options.stringify_keys['key'] || DEFAULT_BANNER_IMAGE_KEY
-    element = @premium_template.find_or_create_element(key)
+  def uploaded_image(options = {})
+    element = template_element(options, DEFAULT_BANNER_IMAGE_KEY)
 
     related_image = @restaurant.related_images.
         by_group(PremiumTemplate::GROUP_BANNER_IMAGE).first
@@ -37,7 +34,9 @@ module ModuleImageHelper
   #
   # Render big image gallery for edit
   def edit_big_image_gallery(options = {})
-    editor = render :partial => 'images/modules/edit_big_image_gallery'
+    element = template_element(options, PremiumTemplate::GROUP_FEATURE_IMAGE)
+    editor = render :partial => 'images/modules/edit_big_image_gallery',
+                    :locals => {:key => element.element_key, :config => element}
     viewable = big_image_gallery(options)
     "#{editor}<div class='space_5 break'></div>#{viewable}"
   end
@@ -45,6 +44,8 @@ module ModuleImageHelper
   #
   # Render big image gallery
   def big_image_gallery(options = {})
+    config = template_element(options, PremiumTemplate::GROUP_FEATURE_IMAGE)
+
     images = @restaurant.related_images.
         by_group(PremiumTemplate::GROUP_FEATURE_IMAGE).collect(&:image)
 
@@ -52,9 +53,12 @@ module ModuleImageHelper
       first_image = images.first
       remaining_images = images - [first_image]
       render :partial => 'images/modules/big_image_gallery', :locals => {
-          :images => images,
-          :first_image => first_image,
-          :remaining_images => remaining_images}
+          :config => config,
+          :values => {
+              :images => images,
+              :first_image => first_image,
+              :remaining_images => remaining_images,
+              :config => config}}
     else
       'No Images were added!'
     end

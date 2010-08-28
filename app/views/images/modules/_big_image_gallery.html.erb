@@ -1,30 +1,7 @@
-<div class='pl_startstop'>
-  <div id="slider">
+<% slider_type = config.data.first ? config.data.first['slider_type'] : '' %>
 
-    <div id="mover">
-      <% images.each_with_index do |image, index| %>
-        <div class="slide" id='slide-<%= index %>'>
-          <h1><%= image.caption %></h1>
-          <p>
-            <% if !(image.description || '').blank? %>
-              <%= image.description %>
-            <% else %>
-              No description was added!
-            <% end %>
-          </p>
-
-          <% if !(image.link || '').blank? %>
-            <%= link_to image_tag(image.public_filename(:large), :alt => image.caption), image.link %>
-          <% else %>
-            <%= image_tag image.public_filename(:large), :alt => image.caption %>
-          <% end %>
-
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
-
-
-<%= javascript_include_tag 'templates/basic/startstop-slider/startstop-slider' %>
-<%= stylesheet_link_tag 'templates/basic/plugin-startstop-slider' %>
+<% if slider_type == 'easy_slide'%>
+  <%= render :partial => "images/modules/sliders/#{slider_type}", :locals => values %>
+<% else %>
+  <%= render :partial => 'images/modules/sliders/double_fade', :locals => values %>
+<% end %>

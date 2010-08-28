@@ -3,6 +3,7 @@ class Review < ActiveRecord::Base
   HATED = 0
   LOVED = 1
   WANNA_GO = 2
+  MODULE_DEFAULT_LIST_ITEMS = 4
 
   belongs_to :user
   belongs_to :restaurant

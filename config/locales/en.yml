@@ -67,6 +67,7 @@ en:
     add_news: "Add news"
     add_new_food_menu: "Add new food menu"
     less: "Read less"
+    more_tags: "More tags"
   header:
     recent_restaurants: "Recently added restaurants!"
     loved_places: "Most loved places!"

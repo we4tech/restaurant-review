@@ -1,4 +1,4 @@
-<div class='edit_module'>
+<div class='edit_module' id='<%= element_id = "edit_module_#{object.id}" %>'>
   <%
      suffix = "#{rand(10000) * Time.now.to_i}".to_s
   %>
@@ -6,12 +6,12 @@
   <h5 class='editMenuEditor<%= suffix %>' style="display: none">Collapse: Menu
     editor</h5>
 
-  <div id="menu<%= suffix %>" style='display: none'>
+  <div id="menu<%= suffix %>" style='display: <%= @in_edit ? 'block' : 'none' %>'>
     <% form_for object do |f| %>
       <input type='hidden' name="emptyCheckThrough" value='label'/>
       <input type='hidden' name="orderBy" value='index'/>
 
-      <ul class='menu'>
+      <ul class='editMenu'>
         <% object.data.each_with_index do |menu_ref, index| %>
           <li id='<%= li_id = "li_#{index}" %>'>
             <table cellspacing="5">
@@ -100,37 +100,47 @@
     <% end %>
 
   </div>
+
+<div class='clear'></div>
 </div>
+<div class='clear'></div>
 
 <script type="text/javascript">
   $(".editMenuEditor<%= suffix %>").click(function() {
     $(".editMenuEditor<%= suffix %>").toggle();
     $("#menu<%= suffix %>").toggle();
   });
+
+  $('#<%= element_id %>').ajaxify()
 </script>
 
 <style type="text/css">
-  .menu {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+  .editMenu {
+    clear: both!important;
+    margin: 0!important;
+    padding: 0!important;
+    list-style-type: none!important;
+    float:none!important;
+    height:auto!important;
   }
 
-  .menu li {
-    background: #ffff99;
-    margin-bottom: 5px;
+  .editMenu li {
+    background: #ffff99!important;
+    margin:0!important;
+    margin-bottom: 5px!important;
+    float: none!important;
   }
 
-  .menu li table {
+  .editMenu li table {
     border: 0;
   }
 
-  .menu li table tr {
+  .editMenu li table tr {
     font-size: 10px;
     color: #888;
   }
 
-  .menu li table tr th {
+  .editMenu li table tr th {
     font-weight: normal;
   }
 </style>

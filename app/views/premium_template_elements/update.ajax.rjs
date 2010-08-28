@@ -1,0 +1,9 @@
+page.replace "in_edit_#{@premium_template_element.id}", render_module(:dynamic_menu, :key => @premium_template_element.element_key)
+page << %{
+  $(".editMenuEditor<%= suffix %>").click(function() {
+    $(".editMenuEditor<%= suffix %>").toggle();
+    $("#menu<%= suffix %>").toggle();
+  });
+
+  $('##{"in_edit_#{@premium_template_element.id}"}').ajaxify();
+}

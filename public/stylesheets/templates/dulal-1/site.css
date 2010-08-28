@@ -1,0 +1,388 @@
+body {
+  background: #4C4646;
+  font-size: 14px;
+  font-family: arial;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline
+}
+
+.wrapper {
+  width: 980px;
+  margin: 0 auto;
+  background: #fff;
+  margin-top: 30px;
+}
+
+.space_10 {
+  margin-top: 10px;
+}
+
+.clear {
+  clear: both;
+}
+
+.break {
+  border-bottom: 1px solid #ccc;
+}
+
+.top {
+  margin-bottom: 10px;
+  height: 159px;
+}
+
+.top .logo {
+  float: left;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.top .searchForm {
+  float: right;
+  margin-top: 70px;
+  margin-right: 10px;
+}
+
+.navigation {
+  background: #e4e5e6;
+  border-bottom: 4px solid #971f67;
+}
+
+.navigation ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  float: right;
+  height: 36px;
+  margin-right: 0px;
+}
+
+.navigation ul li {
+  float:left;
+  margin-top: 11px;
+}
+
+.navigation ul li a {
+  color: #971f67;
+  padding: 10px 14px;
+  text-decoration: none;
+}
+
+.navigation ul li a:hover, .navigation .active a {
+  background: #971f67;
+  color: #fff;
+}
+
+.introductionArea {
+  background: #F5F1E3;
+  margin-top: -155px;
+  padding-top: 120px;
+  padding-left: 20px;
+}
+
+.introductionArea h1 {
+  color: #80754F;
+  text-align: right;
+}
+
+.introductionArea .content {
+  width: 832px;
+  line-height: 20px;
+}
+
+.overlayPicture img {
+  
+}
+.overlayPicture {
+  margin-top: -90px;
+}
+
+.overlayRightPicture {
+  float: right;
+  margin-top: -285px;
+}
+
+.contentArea {
+  padding: 20px;
+  background: #F5F1E3;
+}
+
+.contentArea .left {
+  width: 71%;
+  float: left;
+}
+
+.contentArea .right {
+  float: left;
+  width: 26.5%;
+  padding: 10px;
+}
+
+.contentArea .right h3 {
+  font-family: arial;
+  border-bottom: 1px solid #888;
+  margin: 0;
+  font-weight: normal;
+  font-style: normal;
+  color: #4B4646;
+}
+
+.contentArea .right .module h5 {
+
+}
+
+h2, h3 {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+  color: #80754F;
+  font-style: italic;
+  font-family: cursive
+}
+
+h1, h5, h4, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+.recentVideos h5 {
+  color: #888;
+  margin-top: 5px;
+  background: #f0f0f0;
+  padding: 5px;
+}
+
+ object embed {
+  width: 250px!important;
+  height: auto!important;
+}
+
+.right .module {
+  margin-top: 15px;
+}
+
+.linkMore {
+  text-align: right;
+  font-size: 10px;
+}
+
+.linkMore a {
+  color: #888;
+}
+
+.linkMore a:hover {
+  color: #000;
+}
+
+.message {
+  margin-top: 10px;
+}
+
+.message .thumbnail {
+  float: left;
+}
+
+.message .thumbnail img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.message .content {
+  float: left;
+  width: 198px;
+}
+
+.message .content h6 {
+  font-size: 80%;
+}
+
+.reviewContainer {
+  clear: both;
+  margin-bottom: 20px;
+}
+
+.reviewContainer .userImage {
+  float: left;
+  margin-right: 10px;
+}
+
+.reviewContainer .userImage {
+  border: 4px solid #CFC9B9;
+}
+
+.reviewContainer .review {
+  float: left;
+  width: 600px;
+  margin: 0;
+  margin-top: -15px;
+  color: #4B4646;
+  font-size: 80%;
+}
+
+.reviewContainer .content {
+  max-height: 65px;
+  overflow-y: hidden;
+}
+
+.reviewContainer .reviewer, .reviewContainer .reviewer * {
+  color: #000;
+  font-weight: bold;
+}
+
+a img {
+  border: 0;
+}
+
+.review_comments {
+  background: #fff;
+  padding: 10px;
+}
+
+.review_comment_author {
+  font-weight: bold;
+}
+
+.review_comment_author a {
+}
+
+.review_comment_author img {
+  width: 20px;
+  float: left;
+  margin-right: 5px;
+}
+
+.icon_review {
+  background: url(/images/fresh/review.png) no-repeat;
+  padding-left: 20px;
+}
+
+.icon_loved {
+  background: url(/images/fresh/loved.png) no-repeat;
+  padding-left: 20px;
+}
+
+.icon_hated {
+  background: url(/images/fresh/hated.png) no-repeat;
+  padding-left: 20px;
+}
+
+.recentReviews .linkMore {
+  font-size: 15px;
+}
+
+.review_comment_form textarea, .edit_review textarea  {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-top: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+  border-bottom: 0;
+  padding: 5px;
+}
+
+.review_comment_form .reviewOptions, .edit_review .reviewOptions  {
+  margin-bottom: 10px;
+  padding: 5px;
+  background: #f0f0f0;
+  border-left: 1px solid #ccc;
+  border-bottom: 2px solid #ccc;
+  border-right: 2px solid #ccc;
+}
+
+
+.edit_review textarea {
+  width: 100%;
+  height: 200px;
+  padding: 5px;
+}
+
+.floatHeader {
+  float:left;
+}
+
+.pageTools {
+  float: left;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.pageTools a {
+  color: #888;
+}
+
+.breadcrumbs, .breadcrumbs a {
+  color: #888;
+}
+
+.grid_1, .grid_5, .grid_6 {
+  float: left;
+}
+
+.grid_1 {
+  width: 70px;
+}
+
+.grid_1 img {
+  width: 50px;
+  border: 5px solid #ccc;
+}
+
+.grid_6 {
+  width: 550px;
+}
+
+.site_list_item {
+  margin-bottom: 20px;
+}
+
+h6 {
+  font-size: 10px;
+}
+
+.relatedImages {
+  max-width: 200px;
+}
+
+.relatedImages h5 {
+  margin: 0;
+}
+
+.bigImage {
+  text-align: center;
+}
+
+.bigImage img {
+  border: 10px solid #ccc;
+  max-width: 600px;
+}
+
+.bigImageContainer .comments .form {
+  background: lightYellow;
+  padding: 10px;
+}
+
+.bigImageContainer .comments .form textarea {
+  display: block;
+  width: 100%;
+  height: 70px;
+}
+
+.bigImageContainer .comments .avatar {
+  float: left;
+  width: 60px;
+}
+
+.bigImageContainer .comments .avatar .content {
+  background: red;
+  width: 538px;
+}
+
+.bigImageContainer .description {
+
+}

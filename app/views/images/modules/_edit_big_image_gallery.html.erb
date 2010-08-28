@@ -1,10 +1,12 @@
 <div class='edit_module'>
   <h5 class='bigImageHeader'
-      onclick='$(".bigImageHeader").toggle();$("#bigImageSettings").toggle()'>Expand: Edit feature images</h5>
+      onclick='$(".bigImageHeader").toggle();$("#bigImageSettings").toggle()'>Expand:
+    Edit feature images</h5>
   <h5 class='bigImageHeader' style='display:none'
-      onclick='$(".bigImageHeader").toggle();$("#bigImageSettings").toggle()'>Collapse: Edit feature images</h5>
+      onclick='$(".bigImageHeader").toggle();$("#bigImageSettings").toggle()'>Collapse:
+    Edit feature images</h5>
 
-  <div id='bigImageSettings' style='display: none'>
+  <div id='bigImageSettings' style='display: <%= params[:big_image_gallery_show] ? 'block' : 'none' %>'>
     <% images = @restaurant.related_images.
         by_group(PremiumTemplate::GROUP_FEATURE_IMAGE).collect(&:image) %>
     <ul class='images'>
@@ -13,21 +15,42 @@
           <%= link_to(image_tag(image.public_filename(:small)), image.public_filename) %>
           <br/>
           <%= link_to t('nav.delete'), image_url(image),
-                      :method => :delete, :confirm => t('confirm.delete_image') %> |
+                      :method => :delete, :confirm => t('confirm.delete_image') %>
+          |
           <%= link_to t('nav.edit'), edit_image_url(image) %>
         </li>
       <% end %>
     </ul>
     <div class='clear'></div>
+    <div class='break'></div>
+    <div class='space_10'></div>
+    <h5>Image slider configuration</h5>
+    <% form_for config do |f| %>
+      <label>Slider type</label>
+      <% existing_value = config.data.first ? config.data.first['slider_type'] : '' %>
+
+      <select name='premium_template_element[data][][slider_type]'>
+        <% %w{double_fade easy_slide}.each do |type| %>
+          <option value='<%= type %>'<%= type == existing_value ? ' selected="selected"' : '' %>><%= type.humanize %></option>
+        <% end %>
+      </select>
+
+      <%= f.submit t('button.update') %>
+    <% end %>
+
+    <div class='space_10'></div>
+    <div class='break'></div>
 
     <h5>Add new image</h5>
     <% form_for Image.new, :html => {:multipart => true} do |f| %>
       <input type="hidden" name="restaurant_id"
              value="<%= @restaurant.id %>"/>
 
-      <%= f.hidden_field :group, :value => PremiumTemplate::GROUP_FEATURE_IMAGE %>
       <input type='hidden' name='fb_share_off' value='true'/>
-      <input type='hidden' name='return_to' value="<%= design_premium_template_url(@premium_template.id) %>"/>
+      <input type='hidden' name='relate_through' value='related_image'/>
+      <%= f.hidden_field :group, :value => key %>
+      <input type='hidden' name='return_to'
+             value="<%= design_premium_template_url(@premium_template.id, :big_image_gallery_show => true) %>"/>
 
       <table align="left" class='addGroup'>
         <tr>

@@ -587,6 +587,8 @@ bn: !map:HashWithIndifferentAccess
     more: !binary |
       4KaG4Kaw4KeLIOCmquCnnOCngeCmqA==
 
+    more_tags: "More tags"
+
   module: !map:HashWithIndifferentAccess 
     Most loved places!: !binary |
       4Ka44Kas4Kaa4KeH4Kef4KeHIOCmquCmm+CmqOCnjeCmpuCmqOCngOCnnyDg

@@ -7,7 +7,16 @@ class PremiumTemplateElementsController < ApplicationController
     data = sort(data)
 
     if @premium_template_element.update_attribute(:data, data)
-      notify :success, :back
+      respond_to do |format|
+        format.html { notify :success, :back }
+        format.ajax do
+          @restaurant = @premium_template_element.restaurant
+          @premium_template = @premium_template_element.premium_template
+          @edit_mode = true
+          @in_edit = true
+          render :layout => false
+        end
+      end
     else
       notify :failure, :back
     end

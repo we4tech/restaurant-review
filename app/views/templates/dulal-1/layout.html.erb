@@ -1,0 +1,136 @@
+<html>
+<head>
+  <title>
+    <%= @premium_template.site_title %>
+    <% if @site_title %>
+      :: <%= @site_title %>
+    <% end %>
+  </title>
+
+  <%= @premium_template.meta_tags %>
+
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application',
+                             :cache => 'cache_all.js' %>
+
+  <%= javascript_include_tag 'jquery.ajaxify' %>
+
+  <%= stylesheet_link_tag 'templates/dulal-1/site' %>
+  <%= stylesheet_link_tag 'fresh/premium_admin' %>
+</head>
+
+<body>
+
+<div class='wrapper'>
+  <div class='top'>
+    <div class='logo'>
+      <%= render_module :uploaded_image %>
+    </div>
+    <div class='searchForm'>
+      <%= render_module :search %>
+    </div>
+    <div class='clear'></div>
+  </div>
+
+  <div class='navigation'>
+    <%= render_module :dynamic_menu %>
+    <div class='clear'></div>
+  </div>
+
+
+  <div class='overlayPicture'>
+    <%= image_tag 'templates/dulal-1/trans_top_pic.png' %>
+  </div>
+
+  <% if flash[:notice] || flash[:success] %>
+    <div class='siteMessage'>
+      <%= (flash[:notice] || flash[:success]) %>
+    </div>
+    <div class='space_10'></div>
+  <% end %>
+
+  <div class='introductionArea'>
+    <div class='content'>
+      <% if @context == :home || @context == :design %>
+        <%= render_module :rich_text %>
+      <% end %>
+    </div>
+
+    <% if @context == :home || @context == :design %>
+      <div class='overlayRightPicture'>
+        <%= image_tag 'templates/dulal-1/trans_right_pic.png' %>
+      </div>
+    <% end %>
+    <div class='clear'></div>
+  </div>
+
+  <div class='contentArea'>
+    <div class='left'>
+      <% if @context == :inner_page && @inner_page %>
+        <%= render :partial => @inner_page %>
+      <% else %>
+        <div class='hotItems'>
+          <h2>Hot items</h2>
+          <div class='staticSlide'>
+            <%= render_module :big_image_gallery %>
+          </div>
+          <div class='clear'></div>
+        </div>
+
+        <div class='recentReviews'>
+          <%= render_module :recent_reviews %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class='right'>
+      <div class='recentVideos module'>
+        <h3>Video Clips</h3>
+        <div class='space_10'></div>
+        <% render_module :video_gallery do |context, video| %>
+          <% if context == :view %>
+            <div class='recentVideo' style='display: none'>
+              <%= video.html %>
+            </div>
+          <% elsif context == :edit %>
+            <%= video.html %>
+          <% end %>
+        <% end %>
+        <div class='space_10'></div>
+        <div class='linkMore'>
+          <%= link_to 'More Videos', 'javascript:void(0)',
+                      :onclick => "$('.recentVideo').css('display', 'block')" %> 
+        </div>
+      </div>
+
+      <div class='recentNews module'>
+        <%= render_module :recent_news %>
+      </div>
+      <div class='clear'></div>
+    </div>
+    <div class='clear'></div>
+  </div>
+
+
+  <div class='clear'></div>
+  <div class='break'></div>
+  <div class='footer'>
+
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    var href = location.href;
+    var parts = href.split('#');
+    if (parts.length > 1) {
+      var elementId = parts[parts.length - 1];
+      $('#' + elementId).highlight(2000);
+    }
+
+    // Show first recent video
+    $('.recentVideo:first').toggle();
+  })
+</script>
+</body>
+</html>

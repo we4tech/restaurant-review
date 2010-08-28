@@ -1,0 +1,35 @@
+<div id='container'>
+  <div id='content'>
+    <div id="slider">
+      <ul>
+        <% images.each_with_index do |image, index| %>
+          <li>
+            <% if !(image.link || '').blank? %>
+              <%= link_to image_tag(image.public_filename(:large),
+                                    :alt => image.caption), image.link %>
+            <% else %>
+              <%= link_to image_tag(image.public_filename(:large),
+                                    :alt => image.caption), image_url(image.id) %>
+            <% end %>
+            <div class='slideDescription'>
+              <h4><%= image.caption %></h4>
+              <p><%= image.description %></p>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag '/javascripts/slider/easy/js/easySlider1.7.js' %>
+<%= stylesheet_link_tag '/javascripts/slider/easy/css/screen.css' %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#slider").easySlider({
+      auto: true,
+      continuous: true
+    });
+  });
+</script>

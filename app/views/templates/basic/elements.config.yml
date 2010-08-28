@@ -1,5 +1,5 @@
 top:
-  banner_image: true
+  uploaded_image: true
   dynamic_menu: true
 
 left:

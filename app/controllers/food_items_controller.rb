@@ -3,8 +3,11 @@ class FoodItemsController < ApplicationController
   before_filter :load_restaurant, :except => [:index]
 
   def index
-    @site_title = 'Food Menu'
     @restaurant = Restaurant.find(params[:restaurant_id].to_i)
+    @site_title = "#{@restaurant.name} &raquo; Food Menu"
+    @meta_description = "#{@restaurant.name} food menu".gsub(/"/, '')
+    @meta_keywords = @restaurant.food_items.collect(&:name).join(', ').gsub(/"/, '')
+    
     render_view 'food_items/index'
   end
 

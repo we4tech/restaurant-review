@@ -35,13 +35,8 @@
 <div class='space_10'></div>
 <div class='break'></div>
 <div class='space_10'></div>
-
-<%= @message.content %>
-<div class='clear'></div>
-<div class='space_10'></div>
-
 <% if !@message.images.blank? %>
-  <div class='relatedImages'>
+  <div class='relatedImages' style="float: right;">
     <h5><%= t('label.related_images') %></h5>
 
     <div class='space_10'></div>
@@ -53,6 +48,10 @@
     <% end %>
   </div>
 <% end %>
+<%= @message.content %>
+<div class='clear'></div>
+<div class='space_10'></div>
+
 
 
 <div class='clear'></div>

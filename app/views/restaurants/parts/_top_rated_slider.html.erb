@@ -1,7 +1,7 @@
 <ul id="topRatedRestaurants" class="weeeFeatureBox">
   <% @top_rated_restaurants.shuffle.each_with_index do |restaurant, index| %>
     <%
-       link = restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id)
+       link = restaurant_long_url(restaurant)
        all_images = (restaurant.all_images || [])[0..5]
        selected_image = all_images.rand
     %>

@@ -1,5 +1,5 @@
 <%
-   images = restaurant.images
+   images = restaurant.related_images.by_group(nil).collect(&:image)
    if images.empty?
      images = restaurant.other_images
    end
@@ -16,8 +16,7 @@
 
   <div class="<%= grid_class %>">
     <h4>
-      <%= link_to restaurant.name, restaurant_long_url(
-          :name => url_escape(restaurant.name), :id => restaurant.id, :d => false) %>
+      <%= link_to restaurant.name, restaurant_long_url(restaurant, :d => params[:d].nil? || params[:d]) %>
     </h4>
 
     <div class="site_list_item_rating">

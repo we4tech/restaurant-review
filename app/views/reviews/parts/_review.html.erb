@@ -13,7 +13,16 @@
   </<%= tag_name %>>
   <<%= tag_name %> class="review <%= grid_class %> hreview">
     <% if !review.comment.blank? %>
-      <span class="content"><%= simple_format h(review.comment) %> - </span>
+      <div class="content" id='<%= review_content_id = "review_#{review.id}_content" %>'>
+        <%= simple_format(h(review.comment)) %>
+      </div>
+
+      <% if review.comment.length > 300 %>
+        <a href='javascript:void(0)' class='readMoreLess'
+           onclick='$("#<%= review_content_id %>").css("max-height", "inherit").css("overflow-y", "visible"); $("#review-<%= review.id %> .readMoreLess").toggle()'><%= t('featurebox.readmore') %></a>
+        <a href='javascript:void(0)' class='readMoreLess readLess' style='display:none'
+           onclick='$("#<%= review_content_id %>").css("max-height", "65px").css("overflow-y", "hidden"); $("#review-<%= review.id %> .readMoreLess").toggle()'><%= t('nav.less') %></a>
+      <% end %>
     <% end %>
 
     <span class="reviewer">

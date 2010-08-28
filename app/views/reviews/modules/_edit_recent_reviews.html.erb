@@ -1,0 +1,10 @@
+<div class='edit_module'>
+  <h3>Recent reviews setting</h3>
+  <% form_for object do |f| %>
+    <label>How many recent reviews to be displayed?</label>
+    <div class='space_10'></div>
+    <%= pte_text_field(:max, object.data.first, Review::MODULE_DEFAULT_LIST_ITEMS) %>
+    <div class='space_10'></div>
+    <%= f.submit t('button.update') %>
+  <% end %>
+</div>

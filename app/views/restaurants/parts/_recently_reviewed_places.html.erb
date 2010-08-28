@@ -29,8 +29,7 @@
             <%= tt('label.wannago') %>
           <% end %>
           <%= link_to review.restaurant.name, restaurant_long_url(
-              :name => review.restaurant.name.parameterize.to_s, 
-              :id => review.restaurant.id)%>
+              review.restaurant, :d => params[:d].nil? || params[:d]) %>
         </span>
       </div>
       <div class="clear space_5"></div>

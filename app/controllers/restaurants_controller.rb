@@ -40,6 +40,11 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find(params[:id].to_i)
+
+    if redirected_to_long_url_if_its_not?
+      return true
+    end
+
     @site_title = "#{@restaurant.name} #{@restaurant.address.blank? ? '' : "@ #{@restaurant.address}"} "
     @form_fields = @topic.form_attribute.fields
     @allow_image_upload = @topic.form_attribute.allow_image_upload
@@ -64,13 +69,22 @@ class RestaurantsController < ApplicationController
         :render_topic_box]
   end
 
+  def redirected_to_long_url_if_its_not?
+    if params[:topic_name].nil?
+      redirect_to restaurant_long_route_url(
+          :topic_name => url_escape(@topic.name.pluralize), 
+          :name => url_escape(@restaurant.name),
+          :id => @restaurant.id)
+    end
+  end
+
   def premium
     @restaurant = Restaurant.find(params[:id].to_i)
 
     if @restaurant.premium?
       @premium_template = @restaurant.selected_premium_template
       @context = :home
-      render :template => 'templates/basic/layout', :layout => false
+      render :template => "templates/#{@premium_template.template}/layout", :layout => false
     else
       flash[:notice] = 'this is not a premium restaurant!'
       redirect_to root_url

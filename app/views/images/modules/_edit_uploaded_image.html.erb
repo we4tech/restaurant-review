@@ -8,6 +8,8 @@
                        :value => PremiumTemplate::GROUP_BANNER_IMAGE %>
     <input type='hidden' name='fb_share_off' value='true'/>
     <input type='hidden' name='return_to' value="<%= design_premium_template_url(@premium_template.id) %>"/>
+    <input type='hidden' name='relate_through' value='related_image'/>
+    <input type='hidden' name='override' value='true'/>
     <%= f.file_field :uploaded_data %>
     <%= f.text_field :caption %>
     <%= f.submit t('button.upload') %>

@@ -14,7 +14,7 @@ module UrlOverrideHelper
     link_to user.login.humanize, user_long_url(user)
   end
 
-  def restaurant_long_url(p_options)
+  def restaurant_long_url(p_options, options2 = {})
     topic = @topic
     topic = Topic.default if topic.nil?
 
@@ -24,28 +24,28 @@ module UrlOverrideHelper
     restaurant_id = p_options.is_a?(Restaurant) ? p_options.id : p_options[:id]
     restaurant = p_options.is_a?(Restaurant) ? p_options : Restaurant.find(restaurant_id)
 
-    if !restaurant.premium? || !options[:d]
+    if !restaurant.premium? || options[:d] || options2[:d] || params[:d]
       if p_options.is_a?(Restaurant)
         options[:id] = restaurant.id
         options[:name] = url_escape(restaurant.name)
-        restaurant_long_route_url(options)
+        restaurant_long_route_url(options.merge(options2))
       else
-        restaurant_long_route_url(options)
+        restaurant_long_route_url(options.merge(options2))
       end
 
     else
       case options[:page]
         when :reviews
-          restaurant_reviews_url(restaurant_id)
+          restaurant_reviews_url(restaurant_id, options2)
 
         when :news
-          restaurant_message_url(restaurant_id)
+          restaurant_message_url(restaurant_id, options2)
 
         when :food_items
-          restaurant_food_item_url(restaurant_id)
+          restaurant_food_item_url(restaurant_id, options2)
 
         else
-          premium_restaurant_url(restaurant_id)
+          premium_restaurant_url(restaurant_id, options2)
       end
     end
   end

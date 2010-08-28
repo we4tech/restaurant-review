@@ -1,0 +1,13 @@
+<div class='module reviews'>
+  <h2>Reviews</h2>
+  <div class='space_10'></div>
+  <div class='reviewList'>
+    <% recent_reviews.each do |review| %>
+      <%= render :partial => 'reviews/parts/review', :locals => {:review => review} %>
+    <% end %>
+  </div>
+
+  <div class='linkMore'>
+    <%= link_to t('nav.read_more_reviews'), restaurant_reviews_path(@restaurant.id) %>
+  </div>
+</div>

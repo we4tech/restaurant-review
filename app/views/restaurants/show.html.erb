@@ -30,7 +30,7 @@
 
       <div class='contentDetails'>
         <%= render :partial => 'images/parts/image_gallery' %>
-        <%= simple_format @restaurant.description %>
+        <%= @restaurant.description %>
       </div>
 
       <% if @restaurant.description.length > 400 %>
@@ -38,9 +38,9 @@
         <div class='redBreak'></div>
         <div class='contentDetailsTools'>
           <a href='javascript:void(0)' class='readMoreLess'
-             onclick='$(".contentDetails").css("max-height", "inherit").css("overflow-y", "visible"); $(".readMoreLess").toggle()'><%= t('nav.more') %></a>
+             onclick='$(".contentDetails").css("max-height", "inherit").css("overflow-y", "visible"); $(".contentDetailsTools .readMoreLess").toggle()'><%= t('nav.more') %></a>
           <a href='javascript:void(0)' class='readMoreLess readLess'
-             style='display:none' onclick='$(".contentDetails").css("max-height", "200px").css("overflow-y", "hidden"); $(".readMoreLess").toggle()'><%= t('nav.less') %></a>
+             style='display:none' onclick='$(".contentDetails").css("max-height", "200px").css("overflow-y", "hidden"); $(".contentDetailsTools .readMoreLess").toggle()'><%= t('nav.less') %></a>
         </div>
         <div class='clear space_10'></div>
       <% end %>
@@ -64,8 +64,8 @@
               <% elsif field_type == 'options' %>
                 <%= (field_value || []).collect{|t|
                   link_to(t, tag_details_url(
-                      :label => 'cuisines-tags',
-                      :tag => url_escape(t)))
+                      :label => 'cuisines-tags', :tag => url_escape(t),
+                      :d => params[:d].nil? || params[:d]))
                 }.join(', ')
                 %>
               <% else %>

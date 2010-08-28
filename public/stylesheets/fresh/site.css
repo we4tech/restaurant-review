@@ -286,6 +286,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .reviews .review .content {
+  max-height: 135px;
+  overflow-y: hidden;
 }
 
 .review_form {
@@ -945,10 +947,20 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff !important;
 }
 
-.readLess {
+.contentDetailsTools .readLess {
   border-color: darkred;
   border-style: solid;
   border-width: 0 1px 3px 3px;
   position: relative;
   top: 3px;
+}
+
+.restaurant_details {
+
+}
+
+
+.tagcloud {
+  max-height: 200px;
+  overflow-y: hidden;
 }

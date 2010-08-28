@@ -18,7 +18,7 @@
          a.tag_mappings_count.to_i <=> b.tag_mappings_count.to_i
        }.tag_mappings_count.to_i
     %>
-    <div class='tagcloud'>
+    <div class='tagcloud' id='siteTagCloud'>
       <% tags.shuffle.each do |tag| %>
         <%
            # Take from WIKI
@@ -31,11 +31,18 @@
         <div class='tag'>
           <%= link_to "#{tag.name}",
                       tag_details_url(:label => label.parameterize.to_s,
-                                      :tag => url_escape(tag.name)),
+                                      :tag => url_escape(tag.name),
+                                      :d => params[:d].nil? || params[:d]),
                       :title => "Total hit - #{hit_count}",
                       :class => "tag_size_#{font_size}" %>
         </div>
       <% end %>
+    </div>
+
+    <div class='break'></div>
+    <div class='small'>
+      <a href='javascript:void(0)'
+         onclick="$('#siteTagCloud').css('max-height', 'inherit').css('overflow-y', 'visible'); $(this).hide()"><%= t('nav.more_tags') %></a>
     </div>
 
     <div class="clear"></div>
