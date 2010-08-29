@@ -112,11 +112,17 @@ class ImagesController < ApplicationController
 
     def cleanup_image_relation(class_name, group)
       if params[:override]
+        other_options = {}
+
+        if params[:restaurant_id].to_i > 0
+          other_options[:restaurant_id] = params[:restaurant_id].to_i
+        end
+
         existing_relation = class_name.first(:conditions => {
             :topic_id => @topic.id,
             :model => Restaurant.name,
             :group => group,
-            :user_id => current_user.id})
+            :user_id => current_user.id}.merge(other_options))
         if existing_relation
           existing_relation.image.destroy
           existing_relation.destroy
