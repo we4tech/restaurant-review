@@ -19,7 +19,11 @@
       <td>
         <div class="<%= grid_class %>">
           <h4>
-            <%= link_to restaurant.name, restaurant_long_url(restaurant, :d => params[:d].nil? || params[:d]) %>
+            <% if @controller.is_a?(ActionController::Base) %>
+              <%= link_to restaurant.name, restaurant_long_url(restaurant, :d => params[:d].nil? || params[:d]) %>
+            <% else %>
+              <%= link_to restaurant.name, restaurant_long_url(restaurant) %>
+            <% end %>
           </h4>
 
           <div class="site_list_item_rating">
