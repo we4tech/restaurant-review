@@ -24,7 +24,11 @@ module UrlOverrideHelper
     restaurant_id = p_options.is_a?(Restaurant) ? p_options.id : p_options[:id]
     restaurant = p_options.is_a?(Restaurant) ? p_options : Restaurant.find(restaurant_id)
 
-    if !restaurant.premium? || options[:d] || options2[:d] || params[:d]
+    if @controller && @controller.is_a?(ActionController::Base)
+      options2[:d] = true if params[:d]
+    end
+
+    if !restaurant.premium? || options[:d] || options2[:d]
       if p_options.is_a?(Restaurant)
         options[:id] = restaurant.id
         options[:name] = url_escape(restaurant.name)
