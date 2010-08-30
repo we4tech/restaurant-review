@@ -1,7 +1,7 @@
 class UserObserver < ActiveRecord::Observer
   def after_create(user)
     if user.email && !user.email.match(/fake@/)
-      UserMailer.deliver_signup_notification(user)
+      UserMailer.deliver_signup_notification(user) rescue nil
     end
   end
 

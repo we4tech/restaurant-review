@@ -126,7 +126,7 @@ class UsersController < ApplicationController
     user = User.find_by_email(email)
     if user
       user.generate_remember_token
-      UserMailer.deliver_reset_password(user)
+      UserMailer.deliver_reset_password(user) rescue nil
       flash[:notice] = "Please check your '#{email}' email inbox."
       redirect_to login_url
     else

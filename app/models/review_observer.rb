@@ -3,7 +3,7 @@ class ReviewObserver < ActiveRecord::Observer
   def after_create(review)
     if review.restaurant.user_id != review.user_id &&
        review.restaurant.user.email_comment_notification
-      UserMailer.deliver_review_notification(review)
+      UserMailer.deliver_review_notification(review) rescue nil
     end
 
     StuffEvent.create(
