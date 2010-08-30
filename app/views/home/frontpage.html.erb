@@ -1,13 +1,18 @@
 <% if @topic.name == 'restaurant' %>
-  <div class='grid_12' id='recommendBox'>
-    <%= render :partial => 'restaurants/parts/recommend' %>
-  </div>
-
-  <% if params[:page].to_i < 2 %>
-    <div class='grid_12' id='featureBox'>
-      <%= render :partial => 'restaurants/parts/top_rated_slider' %>
+  <div style='background: #fff'>
+    <div class='grid_12' id='recommendBox'>
+      <%= render :partial => 'restaurants/parts/recommend' %>
+      <div class='clear'></div>
     </div>
-  <% end %>
+    <div class='clear'></div>
+
+    <% if params[:page].to_i < 2 %>
+      <div class='grid_12' id='featureBox'>
+        <%= render :partial => 'restaurants/parts/top_rated_slider' %>
+      </div>
+    <% end %>
+    <div class='clear'></div>
+  </div>
 <% end %>
 
 <div class="clear"></div>

@@ -36,6 +36,10 @@
 
   <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif" />
 
+  <!--[if IE]>
+    <%= stylesheet_link_tag 'fresh/ie.css' %>
+  <![endif]-->
+
   <style type="text/css">
     <%= @topic.css %>
   </style>
@@ -78,7 +82,7 @@
 
   <div class="site_center_head">
   </div>
-  <div id="site_center">
+  <div id="site_center" style='background: #fff;'>
     <%= yield %>
     <div class="clear"></div>
   </div>

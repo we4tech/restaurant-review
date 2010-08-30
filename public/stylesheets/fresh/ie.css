@@ -1,0 +1,32 @@
+.recommendRestaurants {
+  margin-bottom: -10px;
+}
+
+#recommendBox {
+  background: #fff;
+}
+
+#featureBox {
+}
+
+.weeeFeatureBox {
+
+}
+
+
+.site_center_head {
+  
+}
+
+.site_icon_info {
+
+}
+
+.weeeFeatureBox li a .featureImage {
+  width: expression(
+    document.body.clientWidth > (500/12) *
+    parseInt(document.body.currentStyle.fontSize) ?
+      "30em" :
+      "auto" );
+}
+
