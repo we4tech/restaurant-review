@@ -3,9 +3,7 @@ class HomeController < ApplicationController
   layout 'fresh'
 
   before_filter :log_new_feature_visiting_status
-  #caches_action :index, :if => Proc.new {|c|
-  #  c.send(:current_user).nil? && c.send(:flash)[:notice].nil?
-  #} 
+  before_filter :unset_premium_session 
 
   def index
     @title = I18n.t('header.recent_restaurants')

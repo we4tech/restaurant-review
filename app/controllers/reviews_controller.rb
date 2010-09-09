@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
 
-  before_filter :login_required 
+  before_filter :login_required
+  
 
   def create
     @review = Review.new(params[:review])
