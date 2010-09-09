@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+  <title>
+    <%= @premium_template.site_title %>
+    <% if @site_title %>
+      :: <%= @site_title %>
+    <% end %>
+  </title>
+
+  <%= @premium_template.meta_tags %>
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application',
+                             :cache => 'cache_all.js' %>
+  <%= javascript_include_tag 'jquery.ajaxify' %>
+
+  <%= stylesheet_link_tag 'templates/free-corporate/site' %>
+  <%= stylesheet_link_tag 'fresh/premium_admin' %>
+  <%= stylesheet_link_tag 'jquery-ui-lightness/jquery' %>
+</head>
+
+<body>
+<div id="topPan">
+  <div id="ImgPan"><a href="index.html">
+    <img src="/images/templates/free-corporate/logo.gif" title="Coporate Profiles" alt="Coporate Profiles" width="201" height="52" border="0"/></a>
+  </div>
+  <%= render_module :dynamic_menu %>
+  <div class='clear'></div>
+  <ul>
+    <li class="home">home</li>
+    <li><a href="#">about us</a></li>
+    <li><a href="#">support</a></li>
+    <li><a href="#">solutions</a></li>
+    <li><a href="#">testimonials</a></li>
+    <li><a href="#">contact</a></li>
+  </ul>
+</div>
+
+<div id="bodyPan">
+  <p class="toptextpadding">Corporate Profiles is a free, tableless,
+    W3C-compliant web design layout by Template World. This template has been
+    tested and proven compatible with all major browser environments and
+    operating systems. You are free to modify the design to suit your tastes in
+    any way you like. We only ask you to not remove
+    <span>"Design by Template World"</span> and the link
+    http://www.templateworld.com from the footer of the template.</p>
+
+  <p class="toptextpadding">If you are interested in seeing more of our free web
+    template designs feel free to visit our website, Template World. We intend
+    to add at least 25 new free templates in the coming month.</p>
+
+  <p class="more"><a href="#">read more</a></p>
+</div>
+
+<div id="bodyMiddlePan">
+  <div id="MiddleLeftPan">
+    <h2>best motivations<br/>
+      <span>dis parturient montes</span></h2>
+
+    <p>Lorem ipsum dolor sitconsectetuer adipiscing elit. Aliquam vehiculaqu.
+      Maecenas id dui a turpis venenatis placerat. Sed vel sapien nec minec
+      consequat mollis. Suspendissemollis condimentum augue a nisi.</p>
+
+    <p class="largegraytext">Maecenas id dui a turpis ven placerat. Sed vel
+      sapien</p>
+
+    <p>Lorem ipsum dolor sitconsectetuer adipiscing elit. Aliquam vehiculaqu.
+      Maecenas id dui a turpis venenatis placerat. Sed vel sapien nec minec
+      consequat mollis.Suspendissemollis condimentum augue a nisi.</p>
+
+    <p class="more"><a href="#">read more</a></p>
+
+    <p class="chat"><a href="#">24 hours chat</a></p>
+  </div>
+
+  <div id="MiddleRightPan">
+    <div id="MiddleRightTopPan">
+      <p class="fresh">fresh for </p>
+
+      <p class="business">business</p>
+    </div>
+    <h2>best services</h2>
+
+    <p>Lorem ipsum dolor sitconsectetuer adipiscing elit. Aliquam vehiculaqu.
+      Maecenas id dui a turpis venenatis placerat. Sed vel </p>
+
+    <div id="RightListfastPan">
+      <ul>
+        <li><a href="#">Lorem ipsum dolor </a></li>
+        <li><a href="#">sitconsectetuer adipiscing</a></li>
+        <li><a href="#">Aliquam vehiculaqu.</a></li>
+        <li><a href="#">Maecenas id dui a turpis</a></li>
+        <li><a href="#">venenatis</a></li>
+      </ul>
+    </div>
+    <div id="RightListnextPan">
+      <ul>
+        <li><a href="#">Lorem ipsum dolor </a></li>
+        <li><a href="#">sitconsectetuer adipiscin</a></li>
+        <li><a href="#">Aliquam vehiculaqu.</a></li>
+        <li><a href="#">Maecenas id dui a turpis</a></li>
+        <li><a href="#">venenatis</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="footermainPan">
+  <div id="footerPan">
+    <ul>
+      <li><a href="#">home</a>|</li>
+      <li><a href="#">about us</a> |</li>
+      <li><a href="#">support</a>|</li>
+      <li><a href="#">solution</a> |</li>
+      <li><a href="#">testimonials</a> |</li>
+      <li><a href="#">contact</a></li>
+    </ul>
+    <p class="copyright">�corporate profiles 2006 all right reaserved</p>
+
+    <div id="footerPanhtml">
+      <a href="http://validator.w3.org/check?uri=referer" target="_blank">XHTML</a>
+    </div>
+    <div id="footerPancss">
+      <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank">css</a>
+    </div>
+    <ul class="templateworld">
+      <li>Design by:</li>
+      <li><a href="http://www.templateworld.com" target="_blank">Template
+        World</a></li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

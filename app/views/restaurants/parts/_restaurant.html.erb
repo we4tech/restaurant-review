@@ -16,11 +16,7 @@
 
   <div class="<%= grid_class %>">
     <h4>
-      <% if @controller.is_a?(ActionController::Base) %>
-        <%= link_to restaurant.name, restaurant_long_url(restaurant, :d => params[:d].nil? || params[:d]) %>
-      <% else %>
-        <%= link_to restaurant.name, restaurant_long_url(restaurant) %>
-      <% end %>
+      <%= link_to restaurant.name, restaurant_long_url(restaurant) %>
     </h4>
 
     <div class="site_list_item_rating">
@@ -50,8 +46,7 @@
       <%= words[0..20].join(' ') %>
       <% if words.length > 20 %>...
       <% end %>
-      <%= link_to t('nav.more'), restaurant_long_url(
-          :name => url_escape(restaurant.name), :id => restaurant.id) %>
+      <%= link_to t('nav.more'), restaurant_long_url(restaurant) %>
       <% if !(restaurant.address || '').blank? %>
         <br/>
         <b><%= tt('fields.address') %>:</b>

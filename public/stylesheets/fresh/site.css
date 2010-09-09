@@ -939,17 +939,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .redBreak {
-  border-bottom: 4px solid crimson;
+  border-bottom: 4px solid #f0f0f0;
 }
 
 .contentDetailsTools a {
   padding: 5px 10px;
-  background: crimson;
-  color: #fff !important;
+  background: #f0f0f0;
+  font-weight: bold;
+  color: #999 !important;
 }
 
 .contentDetailsTools .readLess {
-  border-color: darkred;
+  border-color: #f0f0f0;
   border-style: solid;
   border-width: 0 1px 3px 3px;
   position: relative;

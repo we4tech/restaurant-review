@@ -10,7 +10,7 @@
     <%= link_to(image_tag(first_image.public_filename(:large),
                           :class => 'large_image',
                           :alt => 'N/A'),
-                image_url(first_image.id, :d => true),
+                image_url(first_image.id),
                 :title => first_image.caption) %>
     
     <% rest_images = images[1..images.length] %>
@@ -19,7 +19,7 @@
         <% rest_images.each do |image| %>
           <%= link_to(image_tag(image.public_filename(:small),
                                 :alt => 'N/A'),
-                      image_url(image.id, :d => true),
+                      image_url(image.id),
                       :title => image.caption) %>
         <% end %>
       </div>

@@ -20,7 +20,7 @@
         <div class="push_1">
           <h6>
             <%= link_to restaurant.name,
-                        restaurant_long_url(restaurant, :d => params[:d].nil? || params[:d]) %>
+                        restaurant_long_url(restaurant) %>
           </h6>
 
           <div class="site_list_item_rating"><%= render_restaurant_review_stats(restaurant) %></div>

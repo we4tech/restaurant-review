@@ -2,24 +2,22 @@
 <% if !pages.empty? %>
   <div class='menu'>
     <b><%= t('label.pages') %> <%= @restaurant.author?(current_user) ?
-        "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id, :d => true))})" :
+        "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id))})" :
         '' %></b>
-    <%= link_to t('nav.news'), restaurant_messages_path(@restaurant, :d => true) %> .
-    <%= link_to t('nav.food_menu'), restaurant_food_items_path(@restaurant, :d => true) %> .
+    <%= link_to t('nav.news'), restaurant_messages_path(@restaurant) %> .
+    <%= link_to t('nav.food_menu'), restaurant_food_items_path(@restaurant) %> .
     
     <% if @page %>
-      <%= link_to @restaurant.name, restaurant_long_url(
-          :name => url_escape(@restaurant.name),
-          :id => @restaurant.id) %> .
+      <%= link_to @restaurant.name, restaurant_long_url(@restaurant) %> .
 
       <%= pages.collect{ |apage|
         if @page && apage.id != @page.id
-          link_to(apage.title, readable_page_path(@restaurant, apage.url, :d => true))
+          link_to(apage.title, readable_page_path(@restaurant, apage.url))
         end}.compact.join(' . ')
       %>
     <% else %>
       <%= pages.collect{ |apage|
-          link_to(apage.title, readable_page_path(@restaurant, apage.url, :d => true))
+          link_to(apage.title, readable_page_path(@restaurant, apage.url))
         }.compact.join(' . ')
       %>
     <% end %>
@@ -29,9 +27,9 @@
 <% else %>
   <div class='menu'>
     <b><%= t('label.pages') %> <%= @restaurant.author?(current_user) ?
-        "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id, :d => true))})" : '' %></b>
-    <%= link_to t('nav.news'), restaurant_messages_path(@restaurant, :d => true) %> .
-    <%= link_to t('nav.food_menu'), restaurant_food_items_path(@restaurant, :d => true) %>
+        "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id))})" : '' %></b>
+    <%= link_to t('nav.news'), restaurant_messages_path(@restaurant) %> .
+    <%= link_to t('nav.food_menu'), restaurant_food_items_path(@restaurant) %>
   </div>
   <div class='space_10'></div>
   <div class='break'></div>

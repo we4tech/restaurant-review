@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   include MobileHelper
   include StringHelper
   include LocaleHelper
+  include PremiumHelper
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details

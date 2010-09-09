@@ -6,9 +6,7 @@
 %>
 
 <div class='breadcrumbs'>
-  <%= link_to @restaurant.name, restaurant_long_url(
-      :id => @restaurant.id, :name => url_escape(@restaurant.name),
-      :premium_check => true) %> &raquo;
+  <%= link_to @restaurant.name, restaurant_long_url(@restaurant) %> &raquo;
   <%= link_to 'News', restaurant_messages_path(@restaurant, options) %> &raquo;
 </div>
 <h1>

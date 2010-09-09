@@ -1,8 +1,7 @@
 <div class='breadcrumbs'>
   <%= link_to @restaurant.name, restaurant_long_url(
       :id => @restaurant.id,
-      :name => url_escape(@restaurant.name),
-      :premium_check => true) %> &raquo;
+      :name => url_escape(@restaurant.name)) %> &raquo;
 </div>
 
 <h1 class='floatHeader'><%= (@image.caption || '').blank? ? "Image" : @image.caption %></h1>

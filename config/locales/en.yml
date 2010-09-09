@@ -39,6 +39,7 @@ en:
     confirm_password: "Confirm password"
     "cuisine & tags": "cuisine & tags"
     "Branches Located at": "Branches Located at"
+    phone: phone
   nav:
     next: "Next &raquo;"
     previous: "&laquo; Previous"

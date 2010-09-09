@@ -54,7 +54,7 @@ class PagesController < ApplicationController
     @restaurant = @page.restaurant
 
     if @page.update_attributes(params[:page])
-      notify :success, readable_page_path(@restaurant.id, @page.url, :d => true)
+      notify :success, readable_page_path(@restaurant.id, @page.url)
     else
       notify :failure, :edit 
     end

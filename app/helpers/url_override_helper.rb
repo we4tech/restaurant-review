@@ -24,32 +24,20 @@ module UrlOverrideHelper
     restaurant_id = p_options.is_a?(Restaurant) ? p_options.id : p_options[:id]
     restaurant = p_options.is_a?(Restaurant) ? p_options : Restaurant.find(restaurant_id)
 
-    if @controller && @controller.is_a?(ActionController::Base)
-      options2[:d] = true if params[:d]
-    end
+    if p_options.is_a?(Restaurant)
+      options[:id] = restaurant.id
 
-    if !restaurant.premium? || options[:d] || options2[:d]
-      if p_options.is_a?(Restaurant)
-        options[:id] = restaurant.id
+      if premium?
+        premium_restaurant_url(options.merge(options2))
+      else
         options[:name] = url_escape(restaurant.name)
         restaurant_long_route_url(options.merge(options2))
+      end
+    else
+      if premium?
+        premium_restaurant_url(options.merge(options2))
       else
         restaurant_long_route_url(options.merge(options2))
-      end
-
-    else
-      case options[:page]
-        when :reviews
-          restaurant_reviews_url(restaurant_id, options2)
-
-        when :news
-          restaurant_message_url(restaurant_id, options2)
-
-        when :food_items
-          restaurant_food_item_url(restaurant_id, options2)
-
-        else
-          premium_restaurant_url(restaurant_id, options2)
       end
     end
   end

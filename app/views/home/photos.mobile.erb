@@ -27,13 +27,12 @@
             %>
 
             <%= link_to image_tag(stuff_event.image.public_filename(:large), :alt => 'N/A'),
-                        image_url(stuff_event.image_id, :page => params[:page], :d => true),
+                        image_url(stuff_event.image_id, :page => params[:page]),
                         :class => 'pic_link',
                         :title => "#{stuff_event.image.caption} @#{link_to(
                             stuff_event.restaurant.name,
                             restaurant_long_url(:name => stuff_event.restaurant.name.parameterize.to_s,
-                                                :id => stuff_event.restaurant.id,
-                                                :d => true))}",
+                                                :id => stuff_event.restaurant.id))}",
                         :rel => 'prettyPhoto[pics]' %>
           <% else %>
             <%= t('label.not_available') %>

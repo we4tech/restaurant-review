@@ -2,6 +2,7 @@ class RestaurantsController < ApplicationController
 
   before_filter :login_required, :except => [:show, :premium]
   before_filter :log_new_feature_visiting_status
+  before_filter :set_premium_session, :only => [:premium]
 
   def new
     if topic_imposed_limit_allows?

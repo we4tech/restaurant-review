@@ -15,7 +15,6 @@ class ReviewsController < ApplicationController
             :next_to => restaurant_long_url(
                 :id => @review.restaurant.id,
                 :name => url_escape(@review.restaurant.name),
-                :premium_check => true,
                 :page => :reviews))
       else
         redirect_to :back
@@ -40,7 +39,6 @@ class ReviewsController < ApplicationController
             :next_to => restaurant_long_url(
                 :id => @review.restaurant.id,
                 :name => url_escape(@review.restaurant.name),
-                :premium_check => true,
                 :page => :reviews))
       else
         redirect_to :back

@@ -31,8 +31,7 @@
         <div class='tag'>
           <%= link_to "#{tag.name}",
                       tag_details_url(:label => label.parameterize.to_s,
-                                      :tag => url_escape(tag.name),
-                                      :d => params[:d].nil? || params[:d]),
+                                      :tag => url_escape(tag.name)),
                       :title => "Total hit - #{hit_count}",
                       :class => "tag_size_#{font_size}" %>
         </div>

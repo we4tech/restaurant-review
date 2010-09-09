@@ -676,7 +676,9 @@ bn: !map:HashWithIndifferentAccess
       short: "%e de %b %H:%M"
       long: "%e de %B de %Y %H:%M"
     pm: pm
-  fields: !map:HashWithIndifferentAccess 
+  fields: !map:HashWithIndifferentAccess
+    phone: phone
+
     group_name: !binary |
       4Kam4Kay4KeH4KawIOCmqOCmvuCmrg==
 
