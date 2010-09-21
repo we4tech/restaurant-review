@@ -3,7 +3,7 @@ class ReviewCommentObserver < ActiveRecord::Observer
   def after_create(review_comment)
     if review_comment.review.user_id != review_comment.user_id &&
        review_comment.review.user.email_comment_notification
-      UserMailer.deliver_comment_notification(review_comment) rescue nil
+      UserMailer.deliver_comment_notification(review_comment)
     end
 
     notify_other_participants(review_comment)
@@ -34,7 +34,7 @@ class ReviewCommentObserver < ActiveRecord::Observer
 
     if !participants.empty?
       participants.each do |participant|
-        UserMailer.deliver_comment_participants_notification(participant, review_comment) rescue nil
+        UserMailer.deliver_comment_participants_notification(participant, review_comment)
       end
     end
   end

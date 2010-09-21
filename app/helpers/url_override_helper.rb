@@ -1,5 +1,7 @@
 module UrlOverrideHelper
 
+  include PremiumHelper 
+
   def user_long_url(p_options)
     if p_options.is_a?(User)
       user = p_options
