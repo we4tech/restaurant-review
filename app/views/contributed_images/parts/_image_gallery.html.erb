@@ -16,7 +16,7 @@
                     :class => 'pic_link',
                     :title => image.caption) %>
         <div class="contributor">
-          <%= link_to image.user.login, user_long_url(user) %>
+          <%= link_to image.user.login, user_long_url(image.user) %>
         </div>
       </div>
     <% end %>
