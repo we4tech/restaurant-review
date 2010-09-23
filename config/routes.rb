@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :premium_service_subscribers
+
 
   map.resources :food_items, :has_many => [:food_items], :member => {
       :add_image => :get, :save_image => :post}
@@ -41,6 +43,7 @@ ActionController::Routing::Routes.draw do |map|
                                           :save_tags => :post,
                                           :premium => :get,
                                           :featured => :get,
+                                          :coming_soon => :get,
                                           :test_email_template => :get},
                 :has_many => [:premium_templates,
                               :pages, :messages,
@@ -113,6 +116,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.readable_page '/r/:restaurant_id/pages/:page_name',
                     :controller => 'pages', :action => 'show'
+  map.site_reviews '/reviews', :controller => 'reviews', :action => 'index'
+  map.site_page '/p/:page_name', :controller => 'pages', :action => 'show'
 
   # See how all your routes lay out with "rake routes"
 

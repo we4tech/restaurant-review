@@ -26,3 +26,17 @@ ActionController::Base::class_eval do
     end
   end
 end
+
+ActionController::Session::CookieStore.class_eval do
+  alias_method :__build_cookie, :build_cookie
+  @@override_domain = nil
+  cattr_accessor :override_domain
+
+  def build_cookie(key, value)
+    if @@override_domain
+      value[:domain] = @@override_domain
+    end
+
+    __build_cookie(key, value)
+  end
+end

@@ -5,7 +5,7 @@ module UrlOverrideHelper
   def user_long_url(p_options)
     if p_options.is_a?(User)
       user = p_options
-      user_long_route_url(:login => url_escape(user.login),
+      user_long_route_url(:login => url_escape(user.login && !user.login.blank? ? user.login : 'fb_user'),
                           :id => user.id)
     else
       user_long_route_url(p_options)

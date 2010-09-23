@@ -1,0 +1,178 @@
+body, h1, h2, h3, h4, h5, h6, p, ul, li {
+  margin : 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Myriad pro", 'arial', sans-serif;
+  font-size: 16px;
+  
+}
+
+a img {
+  border: 0;
+}
+
+.mainSet {
+  background: #b90000 url(/images/templates/laalshop/flower_bg.png) 0 120px no-repeat ;
+}
+
+.navSet {
+  background: #fff;
+  border-bottom: 10px solid #dc7f7f;
+  height: 83px;
+}
+
+.navSet .logo {
+  float: left;
+  margin-top: 20px;
+  margin-left: 57px;
+}
+
+.navSet .nav {
+  float: right;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-right: 5px;
+
+}
+
+.navSet .nav ul {
+  list-style-type: none;
+  line-height: 55px;
+}
+
+.navSet .nav ul li {
+  display: inline;
+  margin: 10px; 
+}
+
+.navSet .nav ul li a {
+  color: #AEA99F;
+  text-decoration: none;
+}
+
+.navSet .nav ul li a:hover {
+  color: #B80000;
+}
+
+.footerSet {
+  padding: 20px;
+  text-align: right;
+}
+
+.bodySet {
+  margin-top: 5%;
+  float: right;
+}
+
+.bodySet .leftNav {
+  float: left;
+  margin-top: 200px;
+  width: 200px;
+
+}
+
+.bodySet .leftNav ul {
+  list-style-type: none;    
+}
+
+.bodySet .leftNav ul a {
+  color: #fff;
+  text-decoration: none;
+  line-height: 30px;
+}
+
+.bodySet .leftNav ul a:hover {
+  color: #DB7F7F;  
+}
+
+.bodySet .centerContent {
+  float: left;
+  border: 10px solid #fff;
+  width: 822px;
+}
+
+.slider .image {
+  z-index: 99;
+}
+
+.slider .image .displayImage {
+  float: left;
+}
+.slider .image .imageStuffs {
+  float: right;
+  margin-left: -310px;
+  width: 300px;
+  text-align: right;
+  color: #AEA99F;
+}
+
+.slider .image .imageStuffs .overlay {
+  margin-top: 330px;
+  margin-left: 30px;
+  text-align: left;
+}
+
+.slider .imageStuffs .overlay h4 a {
+  color: #B80000;
+  text-decoration: none;
+}
+
+.slider .imageStuffs .overlay h4 a:hover {
+  text-decoration: underline;
+}
+
+.slider .imageStuffs .overlay .description {
+  margin-bottom: 10px;
+}
+
+.slider .image .pagination {
+  margin-top: 10px;
+}
+
+.slider .image .pagination, .slider .image .pagination a {
+  color: #AEA99F;
+  text-decoration: none;
+}
+
+.slider .image .pagination .next {
+  margin-left: 30px;
+}
+
+.slider .image .pagination .prev {
+  margin-right: 30px;
+}
+
+.slider .image .pagination .next:hover, .slider .image .pagination .prev:hover {
+  text-decoration: underline;  
+}
+
+.slider .imagePagination {
+  margin-top: 18px;
+}
+
+.slider .imagePagination .thumb {
+  height: 64px;
+}
+
+.slider .imagePagination .navNext, .slider .imagePagination .navPrev {
+  margin-top: 26px;  
+}
+
+.slider .imagePagination .navNext:hover {
+  background: url(/images/templates/laalshop/snav-next-h.png);
+}
+
+.slider .imagePagination .navPrev:hover {
+  background: url(/images/templates/laalshop/snav-prev-h.png);
+}
+
+.slider .imagePagination ul {
+  list-style-type: none;
+}
+
+.slider .imagePagination ul li {
+  float: left;
+  margin-right: 10px;
+}

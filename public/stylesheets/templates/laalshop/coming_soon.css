@@ -1,0 +1,74 @@
+body {
+  background: #b90000 url(/images/templates/laalshop/flower_bg.png) 0 120px no-repeat ;
+  font-family: arial;
+  font-size: 12px;
+}
+
+.contentArea {
+  margin-left: 45%;
+  margin-top: 10%;
+}
+
+.comingSoon {
+  margin-top: 10%;
+}
+
+.subscribe {
+  margin-top: 7%;
+}
+
+.subscribe .emailAddress {
+  width: 378px;
+  padding: 5px;
+  float: left;
+}
+
+.subscribe button {
+  float: left;
+  background: transparent;
+  border: 0;
+  margin-top: -20px;
+}
+
+.followUs .label {
+  float:left;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.followUs {
+  margin-top: 60px;
+  color: #fff;
+}
+
+a img {
+  border: 0;
+}
+
+.followUs a img {
+  width: 20px;
+  float: left;
+  margin-right: 5px;
+}
+
+.fieldWithErrors input {
+  color: red;
+}
+
+#flashMsg h5 {
+  font-style: italic;
+  color: #888;
+}
+
+#flashMsg h2 {
+  font-size: 16px;
+  color: red;
+}
+
+.errorExplanation {
+  font-size: 80%;
+}
+
+.errorExplanation ul li {
+  margin-bottom: 10px;
+}

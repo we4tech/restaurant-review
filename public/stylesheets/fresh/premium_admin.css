@@ -60,3 +60,8 @@
 .break {
   border-bottom: 1px solid #ccc;
 }
+
+.edit_module_link {
+  color: #0066cc;
+  font-weight: bold;
+}
