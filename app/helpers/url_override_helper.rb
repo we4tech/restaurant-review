@@ -8,6 +8,7 @@ module UrlOverrideHelper
       user_long_route_url(:login => url_escape(user.login && !user.login.blank? ? user.login : 'fb_user'),
                           :id => user.id)
     else
+      p_options[:login] = p_options[:login] && !p_options[:login].blank? ? p_options[:login] : 'fb_user'
       user_long_route_url(p_options)
     end
   end
