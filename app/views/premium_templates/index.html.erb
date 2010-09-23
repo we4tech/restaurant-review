@@ -16,7 +16,8 @@
                     :method => :delete,
                     :confirm => t('confirm.delete_entry') %> .
         <%= link_to 'Design', design_premium_template_path(template) %> .
-        <%= link_to 'Preview', premium_restaurant_path(@restaurant) %>
+        <%= link_to 'Preview', premium_restaurant_path(@restaurant) %> .
+        <%= link_to 'Coming soon page', coming_soon_restaurant_path(@restaurant) %>
       </div>
     <% end %>
   </div>

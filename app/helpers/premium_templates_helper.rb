@@ -42,4 +42,27 @@ module PremiumTemplatesHelper
     key = options.stringify_keys['key'] || default_key
     @premium_template.find_or_create_element(key)
   end
+
+  def pt_render_template(file)
+    render :template => "templates/#{@premium_template.template}/#{file}", :layout => false
+  end
+
+  def pt_render_view
+    if @premium_template.activate_coming_soon?
+      @premium_service_subscriber = PremiumServiceSubscriber.new
+      pt_render_template('coming_soon')
+    elsif @premium_template.activate_under_construction?
+      pt_render_template('under_construction')
+    else
+      pt_render_template('layout')
+    end
+  end
+
+  def pt_stylesheet_link_tag(files)
+    if !files.is_a?(Array)
+      files = [files]
+    end
+
+    stylesheet_link_tag files.collect{|f| "templates/#{@premium_template.template}/#{f}"}
+  end
 end

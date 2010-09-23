@@ -13,8 +13,7 @@ class HomeController < ApplicationController
     load_module_preferences
 
     @left_modules = [
-        :render_topic_box,
-        :render_search, 
+        :render_search,
         :render_tagcloud,
         :render_most_lovable_places,
         :render_recently_added_places]
@@ -32,7 +31,6 @@ class HomeController < ApplicationController
     load_module_preferences
 
     @left_modules = [
-        :render_topic_box,
         :render_search,
         :render_tagcloud,
         :render_most_lovable_places,
@@ -59,7 +57,7 @@ class HomeController < ApplicationController
     @title = I18n.t('header.loved_places')
     @site_title = @title
 
-    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_recently_added_places]
+    @left_modules = [:render_search, :render_tagcloud, :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -84,7 +82,7 @@ class HomeController < ApplicationController
     @site_title = @title
 
     @display_last_review = true
-    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places]
+    @left_modules = [:render_search, :render_tagcloud, :render_most_lovable_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -110,7 +108,7 @@ class HomeController < ApplicationController
     @title = I18n.t("header.wannago")
     @site_title = @title
 
-    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_long_url(:id => restaurant.id, :name => url_escape(restaurant.name))]]
     @restaurant = restaurant
   end
@@ -140,7 +138,7 @@ class HomeController < ApplicationController
 
       @title = I18n.t('header.tag_details', :tag => tag.name)
       @site_title = @title
-      @left_modules = [:render_topic_box, :render_search,
+      @left_modules = [:render_search,
                        :render_tagcloud, :render_recently_added_places]
       @breadcrumbs = [['All', root_url]]
       render :action => :index
@@ -162,7 +160,6 @@ class HomeController < ApplicationController
     load_module_preferences
 
     @left_modules = [
-        :render_topic_box,
         :render_search,
         :render_tagcloud,
         :render_most_lovable_places,
@@ -185,7 +182,7 @@ class HomeController < ApplicationController
 
     @title = I18n.t('header.photos')
     @site_title = @title
-    @left_modules = [:render_topic_box, :render_search,
+    @left_modules = [:render_search,
                      :render_tagcloud, :render_most_lovable_places,
                      :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
@@ -201,7 +198,7 @@ class HomeController < ApplicationController
     @title = nil if @title.nil? || @title.blank?
 
     @site_title = @title
-    @left_modules = [:render_topic_box, :render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url],
                     ['Photos', photos_url(:page => params[:page])]]
   end
@@ -231,7 +228,6 @@ class HomeController < ApplicationController
     load_module_preferences
 
     @left_modules = [
-        :render_topic_box,
         :render_search,
         :render_tagcloud,
         :render_most_lovable_places,

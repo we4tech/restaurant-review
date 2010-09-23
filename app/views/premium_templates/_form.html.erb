@@ -1,0 +1,31 @@
+<%= f.hidden_field :restaurant_id %>
+
+<%= f.label :name, t('fields.name') %><br/>
+<%= f.text_field :name %>
+<%= f.error_message_on :name %><br/>
+
+<%= f.label :site_title %><br/>
+<%= f.text_field :site_title %>
+<%= f.error_message_on :site_title %><br/>
+
+<%= f.label :hosts %><br/>
+<%= f.text_field :hosts %>
+<%= f.error_message_on :hosts %>
+<span class='hints'>ie. www.abc.com, abc.com, subdomain.domain.com</span>
+<br/>
+<div class='space_10'></div>
+
+<%= f.check_box :activate_coming_soon %>
+<%= f.label :activate_coming_soon %>
+<%= f.error_message_on :activate_coming_soon %><br/>
+
+<%= f.check_box :activate_under_construction %>
+<%= f.label :activate_under_construction %>
+<%= f.error_message_on :activate_under_construction %><br/>
+
+<div class='space_10'></div>
+<%= f.label :meta_tags %><br/>
+<%= f.text_area :meta_tags %><br/>
+
+<%= f.label :template %>: <%= f.select :template, @templates %>
+<%= f.error_message_on :template %><br/>

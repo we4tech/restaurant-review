@@ -51,7 +51,7 @@ class ReviewsController < ApplicationController
   end
 
   def index
-    @restaurant = Restaurant.find(params[:restaurant_id].to_i)
+    @restaurant = @restaurant || Restaurant.find(params[:restaurant_id].to_i)
     @site_title = 'Reviews'
     render_view('reviews/index')
   end

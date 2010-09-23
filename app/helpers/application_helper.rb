@@ -1,12 +1,29 @@
-# Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  def detect_premium_site_or_topic_or_forward_to_default_one
+    if @premium_template = PremiumTemplate.match_host(request.host)
+      @restaurant = @premium_template.restaurant
+      @topic = @restaurant.topic
+      @context = :home
+      override_cookie_host_by(request.host)
+
+      pt_render_view
+    else
+      detect_topic_or_forward_to_default_one
+    end
+  end
+
+  def override_cookie_host_by(host)
+    host = host.downcase.gsub(/www\./, '')
+    ActionController::Session::CookieStore.override_domain = ".#{host}"
+  end
 
   def detect_topic_or_forward_to_default_one
     topic_hint = (request.subdomains || []).join("_")
     if topic_hint.empty? || topic_hint == 'www'
       topic = Topic.default
       path_prefix = (request.path || '')
-      path_prefix = path_prefix[1..path_prefix.length]
+      path_prefix = path_prefix[1..path_prefix.length]                                                            
       redirect_to "#{root_url(:subdomain => topic.subdomain)}#{path_prefix}"
       return
     else

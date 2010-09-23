@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   before_filter :login_required, :except => [:show]
 
   def show
-    @restaurant = Restaurant.find(params[:restaurant_id].to_i)
+    @restaurant = @restaurant || Restaurant.find(params[:restaurant_id].to_i)
     @premium_template = @restaurant.selected_premium_template
     @page = @restaurant.pages.by_url(params[:page_name]).first
 

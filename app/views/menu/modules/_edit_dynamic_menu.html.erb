@@ -1,12 +1,15 @@
-<div class='edit_module' id='<%= element_id = "edit_module_#{object.id}" %>'>
-  <%
-     suffix = "#{rand(10000) * Time.now.to_i}".to_s
-  %>
-  <h5 class='editMenuEditor<%= suffix %>'>Expand: Menu editor</h5>
-  <h5 class='editMenuEditor<%= suffix %>' style="display: none">Collapse: Menu
-    editor</h5>
+<%
+   suffix = "#{rand(10000) * Time.now.to_i}".to_s
+   element_id = "edit_module_#{object.id}"
+%>
 
-  <div id="menu<%= suffix %>" style='display: <%= @in_edit ? 'block' : 'none' %>'>
+<a href='javascript:void(0)'
+   onclick="$('#<%= element_id%>').dialog({width: 'auto', modal: true})"
+   class='edit_module_link'>Edit <%= object.element_key %> menu</a>
+
+<div class='edit_module' id='<%= element_id %>' style='display: none' title="Edit <%= object.element_key %> menu">
+
+  <div id="menu<%= suffix %>">
     <% form_for object do |f| %>
       <input type='hidden' name="emptyCheckThrough" value='label'/>
       <input type='hidden' name="orderBy" value='index'/>
@@ -101,7 +104,7 @@
 
   </div>
 
-<div class='clear'></div>
+  <div class='clear'></div>
 </div>
 <div class='clear'></div>
 
@@ -113,44 +116,45 @@
 
   $('#<%= element_id %>').ajaxify();
 
-    /*
-    $(".editMenuEditor<%= suffix %>").click(function() {
-    $('#menu<%= suffix %>').dialog();
-  });
+  //$('#<%= element_id%>').dialog({width: 'auto', modal: true});
+  /*
+   $(".editMenuEditor<%= suffix %>").click(function() {
+   $('#menu<%= suffix %>').dialog();
+   });
 
-  $('#<%= element_id %>').ajaxify();
+   $('#<%= element_id %>').ajaxify();
 
-     */
+   */
 </script>
 
 <style type="text/css">
   .editMenu {
-    clear: both!important;
-    margin: 0!important;
-    padding: 0!important;
-    list-style-type: none!important;
-    float:none!important;
-    height:auto!important;
-    width:auto!important;
-    position:inherit!important;
+    clear: both !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style-type: none !important;
+    float: none !important;
+    height: auto !important;
+    width: auto !important;
+    position: inherit !important;
   }
 
   .editMenu li {
-    background: #ffff99!important;
-    margin:0!important;
-    margin-bottom: 5px!important;
-    float: none!important;
-    width: auto!important;
-    height: auto!important;
+    background: #ffff99 !important;
+    margin: 0 !important;
+    margin-bottom: 5px !important;
+    float: none !important;
+    width: auto !important;
+    height: auto !important;
   }
 
   .editMenu li table {
-    border: 0!important;
+    border: 0 !important;
   }
 
   .editMenu li table tr {
-    font-size: 10px!important;
-    color: #888!important;
+    font-size: 10px !important;
+    color: #888 !important;
   }
 
   .editMenu li table tr th {

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>
+    <%= @premium_template.site_title %>
+    <% if @site_title %>
+      :: <%= @site_title %>
+    <% end %>
+  </title>
+
+  <%= @premium_template.meta_tags %>
+
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application',
+                             :cache => 'cache_all.js' %>
+
+  <%= javascript_include_tag 'jquery.ajaxify' %>
+
+  <%= stylesheet_link_tag 'jquery-ui-lightness/jquery.css' %>
+  <%= pt_stylesheet_link_tag 'coming_soon' %>
+  <%= stylesheet_link_tag 'fresh/premium_admin' %>
+</head>
+<body>
+
+<div class='contentArea'>
+  <div class='logo'>
+    <%= pt_image_tag 'cs_logo.png' %>
+  </div>
+
+  <div class='comingSoon'>
+    <%= pt_image_tag 'cs_tag.png' %>
+  </div>
+
+  <div class='subscribe'>
+    <% form_for @premium_service_subscriber do |f| %>
+      <%= f.hidden_field :restaurant_id, :value => @restaurant.id %>
+      <%= f.text_field :email,
+                       :class => 'emailAddress',
+                       :value => @premium_service_subscriber.email || 'Please enter your email address to subscribe',
+                       :onfocus => "$(this).val() == 'Please enter your email address to subscribe' ? $(this).val('') : ''"
+      %>
+
+      <button><%= pt_image_tag 'right_arrow.png' %></button>
+
+      <% message = flash[:notice] || flash[:success] %>
+      <% if message %>
+        <div id='flashMsg' title='Notification:'>
+          <h5><%= message %></h5>
+          <%= error_messages_for :premium_service_subscriber %>
+        </div>
+        <script type="text/javascript">
+          $('#flashMsg').dialog({
+            modal: true,
+            width: '400px',
+            buttons: {
+              Ok: function() {
+                $(this).dialog("close");
+              }
+            }})
+        </script>
+      <% end %>
+    <% end %>
+  </div>
+  <div class='clear'></div>
+
+  <div class='followUs'>
+    <div class='label'>FIND US ON</div>
+    <a href='http://www.facebook.com/pages/Dhaka/LAAL-SHOP/147621715266948'
+       onclick="$('#facebookWidget').dialog({modal: true, width: 'auto'}); return false;">
+      <%= pt_image_tag('facebook.png') %>
+    </a>
+    <a href='http://twitter.com/laalshop'
+       onclick="$('#twitterWidget').dialog({modal: true, width: 'auto'}); return false;">
+      <%= pt_image_tag('twitter.png') %>
+    </a>
+
+    <div class='clear'></div>
+    <div id='facebookWidget' style='display: none' title='Find us on facebook'>
+      <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FDhaka%2FLAAL-SHOP%2F147621715266948&amp;width=600&amp;connections=10&amp;stream=true&amp;header=true&amp;height=587" scrolling="no" frameborder="0" style="border:none; overflow:hidden; background:#fff; width:395px; height:587px;" allowTransparency="true"></iframe>
+    </div>
+
+    <div id='twitterWidget' style='display: none;'>
+      <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+      <script>
+        new TWTR.Widget({
+          version: 2,
+          type: 'profile',
+          rpp: 4,
+          interval: 6000,
+          width: 250,
+          height: 300,
+          theme: {
+            shell: {
+              background: '#b90000',
+              color: '#cccccc'
+            },
+            tweets: {
+              background: '#ffffff',
+              color: '#888888',
+              links: '#000000'
+            }
+          },
+          features: {
+            scrollbar: false,
+            loop: false,
+            live: true,
+            hashtags: true,
+            timestamp: true,
+            avatars: false,
+            behavior: 'all'
+          }
+        }).render().setUser('laalshop').start();
+      </script>
+    </div>
+  </div>
+</div>
+</body>
+</html>

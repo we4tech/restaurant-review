@@ -86,7 +86,21 @@ class RestaurantsController < ApplicationController
     if @restaurant.premium?
       @premium_template = @restaurant.selected_premium_template
       @context = :home
-      render :template => "templates/#{@premium_template.template}/layout", :layout => false
+      pt_render_template 'layout'
+    else
+      flash[:notice] = 'this is not a premium restaurant!'
+      redirect_to root_url
+    end
+  end
+
+  def coming_soon
+    @restaurant = Restaurant.find(params[:id].to_i)
+
+    if @restaurant.premium?
+      @premium_template = @restaurant.selected_premium_template
+      @premium_service_subscriber = PremiumServiceSubscriber.new
+      @context = :home
+      pt_render_template 'coming_soon'
     else
       flash[:notice] = 'this is not a premium restaurant!'
       redirect_to root_url

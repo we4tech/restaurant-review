@@ -1,7 +1,7 @@
 module ModuleMenuHelper
 
   KEY_DYNAMIC_MENU = 'dynamic_menu'
-  INTERNAL_LINKS = ['FOOD_MENU', 'NEWS', 'REVIEWS']
+  INTERNAL_LINKS = ['FOOD_MENU', 'NEWS', 'REVIEWS', 'LOGIN', 'REGISTER']
 
   #
   # Render dynamic menu editor
@@ -12,7 +12,9 @@ module ModuleMenuHelper
                     :object => object
     viewable = dynamic_menu(options)
 
-    "<div id='in_edit_#{object.id}'>#{editor}<div class='space_5 break'></div>#{viewable}</div>"
+    %{
+      <div id='in_edit_#{object.id}'>#{editor}<div class='space_5 break'></div>#{viewable}</div>
+    }
   end
 
   #
@@ -43,13 +45,18 @@ module ModuleMenuHelper
               url = restaurant_messages_url(@restaurant)
 
             when 'REVIEWS'
-              url = restaurant_reviews_url(@restaurant)
+              url = site_reviews_url
+
+            when 'REGISTER'
+              url = register_url
+
+            when 'LOGIN'
+              url = login_url
           end
         elsif !link || link.blank?
           link = url_escape(label)
           existing_page = page_exists?(link)
-          url = readable_page_url(
-              :restaurant_id => @restaurant.id, :page_name => link)
+          url = site_page_url(:page_name => link)
         elsif link && '/' == link
           url = premium_restaurant_url(@restaurant)
         else

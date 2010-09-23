@@ -21,6 +21,7 @@ class Restaurant < ActiveRecord::Base
   has_many :pages
   has_many :messages
   has_many :food_items
+  has_many :premium_service_subscribers
 
   validates_presence_of :name, :topic_id
   validates_uniqueness_of :name
