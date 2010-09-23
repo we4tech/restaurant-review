@@ -1,11 +1,12 @@
 module ApplicationHelper
 
   def detect_premium_site_or_topic_or_forward_to_default_one
+    #override_cookie_host_by(request.host)
+
     if @premium_template = PremiumTemplate.match_host(request.host)
       @restaurant = @premium_template.restaurant
       @topic = @restaurant.topic
       @context = :home
-      override_cookie_host_by(request.host)
 
       pt_render_view
     else
