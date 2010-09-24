@@ -125,12 +125,15 @@ class ApplicationController < ActionController::Base
 
     def log_new_feature_visiting_status
       @dont_show_new_features = []
+      host_parts = request.host.split(/\./)
+      host = host_parts[(host_parts.length - 2)..host_parts.length].join('.')
 
       if defined?(NEW_FEATURES)
         cookie = cookies[:new_feature]
 
         if cookie.nil?
           cookies[:new_feature] = {
+            :domain => host,
             :value => '',
             :expires => 1.year.from_now
           }
@@ -139,6 +142,7 @@ class ApplicationController < ActionController::Base
           NEW_FEATURES.each do |feature_name, feature|
             if !cookie.include?(feature_name.to_s) && feature[:unless_visited_on].include?(key)
               cookies[:new_feature] = {
+                :domain => host,
                 :value => "#{cookie}|#{feature_name.to_s}",
                 :expires => 1.year.from_now
               }

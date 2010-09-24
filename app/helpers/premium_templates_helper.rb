@@ -38,6 +38,14 @@ module PremiumTemplatesHelper
     instance
   end
 
+  def store_last_premium_site_host(override_host = nil)
+    session[:__site_host] = "http://#{override_host || request.host}"
+  end
+
+  def last_premium_site_host
+    session[:__site_host]
+  end
+
   def template_element(options, default_key)
     key = options.stringify_keys['key'] || default_key
     @premium_template.find_or_create_element(key)
@@ -49,7 +57,9 @@ module PremiumTemplatesHelper
 
   def pt_render_view
     if @premium_template.activate_coming_soon?
-      @premium_service_subscriber = PremiumServiceSubscriber.new
+      if params[:premium_service_subscriber].nil?
+        @premium_service_subscriber = PremiumServiceSubscriber.new
+      end
       pt_render_template('coming_soon')
     elsif @premium_template.activate_under_construction?
       pt_render_template('under_construction')
@@ -65,4 +75,9 @@ module PremiumTemplatesHelper
 
     stylesheet_link_tag files.collect{|f| "templates/#{@premium_template.template}/#{f}"}
   end
+
+  def pt_redirect_to_root(or_redirect_to = nil)
+    redirect_to or_redirect_to || last_premium_site_host
+  end
+
 end
