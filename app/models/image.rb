@@ -16,8 +16,10 @@ class Image < ActiveRecord::Base
                   :thumbnails => {
                       :very_small => 'x40',
                       :small => '60x60',
+                      :c_small => 'c100x100',
                       :large => 'x200',
                       :very_large => 'x400',
+                      :c_very_large => 'c822x515'
                   }
   validates_as_attachment
 

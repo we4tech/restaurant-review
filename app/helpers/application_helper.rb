@@ -63,6 +63,14 @@ module ApplicationHelper
   end
 
   def render_view(partial_template)
+    if @restaurant
+      render_restaurant_based_template(partial_template)
+    else
+      render :partial => partial_template, :layout => 'fresh'
+    end
+  end
+
+  def render_restaurant_based_template(partial_template)
     @premium_template = @restaurant.selected_premium_template
     @context = :inner_page
 
@@ -70,16 +78,15 @@ module ApplicationHelper
       @inner_page = partial_template
 
       if !File.exists?(File.join(RAILS_ROOT, 'app', 'views', "templates/#{@premium_template.template}/layout.#{params[:format]}.erb"))
-        params[:format] = :html  
+        params[:format] = :html
       end
 
       render :layout => false, :template => "templates/#{@premium_template.template}/layout"
     else
-      load_right_modules
       @content_template = partial_template
       render :template => 'layouts/fresh_inner_layout'
     end
-  end
+end
 
   def detect_name(object)
     if object.respond_to?(:name)

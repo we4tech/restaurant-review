@@ -7,8 +7,6 @@
     Edit feature images</h5>
 
   <div id='bigImageSettings' style='display: <%= params[:big_image_gallery_show] ? 'block' : 'none' %>'>
-    <% images = @restaurant.related_images.
-        by_group(PremiumTemplate::GROUP_FEATURE_IMAGE).collect(&:image) %>
     <ul class='images'>
       <% images.each do |image| %>
         <li>
@@ -16,8 +14,8 @@
           <br/>
           <%= link_to t('nav.delete'), image_url(image),
                       :method => :delete, :confirm => t('confirm.delete_image') %>
-          |
-          <%= link_to t('nav.edit'), edit_image_url(image) %>
+          | <%= link_to t('nav.edit'), edit_image_url(image) %>
+          | <%= link_to image.display? ? 'Hide' : 'Show', show_or_hide_image_url(image) %>
         </li>
       <% end %>
     </ul>

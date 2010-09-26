@@ -42,55 +42,72 @@
       <%= render_module :dynamic_menu, :key => :side %>
     </div>
 
-    <div class='centerContent'>
-      <div class='slider'>
-        <div class='image'>
-          <%= pt_image_tag 'sample.png', :class => 'displayImage' %>
-
-          <div class='imageStuffs'>
-            <div class='pagination'>
-              <%= link_to '&lt;', {}, :class => 'prev' %>&nbsp;&nbsp;&nbsp;1 / 100&nbsp;&nbsp;&nbsp;<%= link_to '&gt;', {}, :class => 'next' %>
-            </div>
-            <div class='overlay'>
-              <h4>
-                <%= link_to 'LEHANGA', '#' %>
-              </h4>
-              <div class='description'>
-                Cotton 80% + Polyester 20%
-              </div>
-              <div class='price'>
-                Price: $250
-              </div>
-            </div>
-
-            <div class='imagePagination'>
-              <ul>
-                <li>
-                  <a href='#'><%= pt_image_tag 'snav-prev.png', :class => 'navPrev' %></a>
-                </li>
-
-                <li><a href='#'><%= pt_image_tag 'thumb1.png', :class => 'thumb' %></a></li>
-                <li><a href='#'><%= pt_image_tag 'thumb1.png', :class => 'thumb'  %></a></li>
-                <li><a href='#'><%= pt_image_tag 'thumb1.png', :class => 'thumb'  %></a></li>
-                <li><a href='#'><%= pt_image_tag 'thumb1.png', :class => 'thumb'  %></a></li>
-
-                <li>
-                  <a href='#'><%= pt_image_tag 'snav-next.png', :class => 'navNext' %></a>
-                </li>
-              </ul>
-              <div class='clear'></div>
-            </div>
-          </div>
-        </div>
+    <% if @inner_page.nil? %>
+      <div class='centerContent'>
+        <%= pt_render_partial 'frontpage_slider' %>
       </div>
+    <% else %>
+      <div class='innerPage'>
+        <%= render :partial => @inner_page %>
+      </div>
+    <% end %>
 
-    </div>
     <div class='clear'></div>
   </div>
   <div class='clear'></div>
 
   <div class='footerSet'>
-    FOLLOW US FB, TW
+    <div class='followUs'>
+      <div class='label'>FIND US ON</div>
+      <a href='http://www.facebook.com/pages/Dhaka/LAAL-SHOP/147621715266948'
+         onclick="$('#facebookWidget').dialog({modal: true, width: 'auto'}); return false;">
+        <%= pt_image_tag('facebook.png') %>
+      </a>
+      <a href='http://twitter.com/laalshop'
+         onclick="$('#twitterWidget').dialog({modal: true, width: 'auto'}); return false;">
+        <%= pt_image_tag('twitter.png') %>
+      </a>
+
+      <div class='clear'></div>
+      <div id='facebookWidget' style='display: none' title='Find us on facebook'>
+        <iframe src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FDhaka%2FLAAL-SHOP%2F147621715266948&amp;width=600&amp;connections=10&amp;stream=true&amp;header=true&amp;height=587" scrolling="no" frameborder="0" style="border:none; overflow:hidden; background:#fff; width:395px; height:587px;" allowTransparency="true"></iframe>
+      </div>
+
+      <div id='twitterWidget' style='display: none;'>
+        <script src="http://widgets.twimg.com/j/2/widget.js"></script>
+        <script>
+          new TWTR.Widget({
+            version: 2,
+            type: 'profile',
+            rpp: 4,
+            interval: 6000,
+            width: 250,
+            height: 300,
+            theme: {
+              shell: {
+                background: '#b90000',
+                color: '#cccccc'
+              },
+              tweets: {
+                background: '#ffffff',
+                color: '#888888',
+                links: '#000000'
+              }
+            },
+            features: {
+              scrollbar: false,
+              loop: false,
+              live: true,
+              hashtags: true,
+              timestamp: true,
+              avatars: false,
+              behavior: 'all'
+            }
+          }).render().setUser('laalshop').start();
+        </script>
+      </div>
+    </div>
+    <div class='clear'></div>
   </div>
 </div>
 

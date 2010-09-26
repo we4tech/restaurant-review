@@ -93,13 +93,21 @@ a img {
   width: 822px;
 }
 
+.bodySet .innerPage {
+  float: left;
+  width: 822px;
+}
+
 .slider .image {
   z-index: 99;
 }
 
 .slider .image .displayImage {
   float: left;
+  max-width: 822px;
+  width:expression(document.body.clientWidth > 822? "822px": "auto" );
 }
+
 .slider .image .imageStuffs {
   float: right;
   margin-left: -310px;
@@ -109,7 +117,7 @@ a img {
 }
 
 .slider .image .imageStuffs .overlay {
-  margin-top: 330px;
+  margin-top: 300px;
   margin-left: 30px;
   text-align: left;
 }
@@ -125,6 +133,9 @@ a img {
 
 .slider .imageStuffs .overlay .description {
   margin-bottom: 10px;
+  height: 75px;
+  max-width: 265px;
+  width:expression(document.body.clientWidth > 265? "265px": "auto" );
 }
 
 .slider .image .pagination {
@@ -153,7 +164,13 @@ a img {
 }
 
 .slider .imagePagination .thumb {
-  height: 64px;
+  /*height: 64px;*/
+  width: 60px;
+  border: 4px solid transparent;
+}
+
+.slider .imagePagination .thumbSelected {
+  border: 4px solid #B90000;
 }
 
 .slider .imagePagination .navNext, .slider .imagePagination .navPrev {
@@ -175,4 +192,25 @@ a img {
 .slider .imagePagination ul li {
   float: left;
   margin-right: 10px;
+}
+
+.followUs .label {
+  float:left;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.followUs {
+  color: #fff;
+  float: right;
+}
+
+a img {
+  border: 0;
+}
+
+.followUs a img {
+  width: 20px;
+  float: left;
+  margin-right: 5px;
 }

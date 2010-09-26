@@ -1,0 +1,145 @@
+<div class='slider'>
+  <% render_module :big_image_gallery, :key => 'fp_featured' do |context, config, images| %>
+    <% if context == :view %>
+
+      <% if !images.empty? %>
+        <%
+           first_image = images.first
+           remaining_images = images - [first_image]
+           json_data = images.collect do |img|
+             {:id => img.id,
+              :thumb => img.public_filename(:c_small),
+              :full => img.public_filename(:c_very_large),
+              :caption => img.caption,
+              :description => img.description,
+              :link => img.link}
+           end
+        %>
+        <script type="text/javascript">
+          var imageData = <%= json_data.to_json %>;
+          var selectedItemPosition = 0;
+        </script>
+
+
+        <div class='image'>
+          <%= image_tag first_image.public_filename(:c_very_large),
+                        :class => 'displayImage', :id => 'fp_big_image' %>
+
+          <div class='imageStuffs'>
+            <% if !remaining_images.empty? %>
+              <!--div class='pagination'>
+                <%= link_to '&lt;', {}, :class => 'prev' %>&nbsp;&nbsp;&nbsp;1 /
+                100&nbsp;&nbsp;&nbsp;<%= link_to '&gt;', {}, :class => 'next' %>
+              </div-->
+            <% end %>
+            
+            <div class='overlay'>
+              <h4 id='fp_caption_link'>
+                <%= link_to first_image.caption, first_image.link %>
+              </h4>
+
+              <div class='description' id='fp_description'>
+                <%= simple_format first_image.description %>
+              </div>
+            </div>
+
+            <% if !remaining_images.empty? %>
+              <div class='imagePagination'>
+                <ul>
+                  <li>
+                    <a href='javascript:void(0)'><%= pt_image_tag 'snav-prev.png', :class => 'navPrev' %></a>
+                  </li>
+
+                  <% images.each_with_index do |image, index| %>
+                    <li>
+                      <a href='javascript:void(0)' rev="<%= index %>">
+                        <%= image_tag image.public_filename(:c_small),
+                                      :id => "slider_thumb_#{image.id}",
+                                      :class => 'thumb' %>
+                      </a>
+                    </li>
+                  <% end %>
+                  
+                  <li>
+                    <a href='javascript:void(0)'><%= pt_image_tag 'snav-next.png', :class => 'navNext' %></a>
+                  </li>
+                </ul>
+                <div class='clear'></div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% elsif context == :edit %>
+      <%= images.html %>
+    <% end %>
+  <% end %>
+
+</div>
+
+<script type="text/javascript">
+  var Slider = {
+    next: function() {
+      if (selectedItemPosition + 1 < imageData.length) {
+        selectedItemPosition += 1;
+      } else {
+        selectedItemPosition = 0;
+      }
+
+      Slider.selectImage(selectedItemPosition);
+    },
+
+    selectImage: function(position) {
+      var imageItem = imageData[position];
+      $('#fp_big_image').attr('src', imageItem.full).hide().appear();
+      $('#fp_caption_link').hide().html("<a href='" + imageItem.link + "'>" + imageItem.caption + "</a>").dropIn();
+      $('#fp_description').hide().html(imageItem.description).dropIn();
+      $('.imagePagination img').removeClass('thumbSelected');
+      $('#slider_thumb_' + imageItem.id).addClass('thumbSelected');
+    },
+
+    previous: function() {
+      if (selectedItemPosition - 1 < 0) {
+        selectedItemPosition = 0;
+      } else {
+        selectedItemPosition -= 1;
+      }
+
+      Slider.selectImage(selectedItemPosition);
+    },
+
+    running : true,
+    interval : null,
+
+    autoPlay: function() {
+      Slider.interval = setInterval(function() {
+        Slider.next();
+      }, 5000);  
+    },
+
+    stop: function() {
+      Slider.running = false;
+      clearInterval(Slider.interval);
+    }
+  };
+
+  $('.navNext').parent().click(function() {
+    Slider.stop();
+    Slider.next();
+  });
+
+  $('.navPrev').parent().click(function() {
+    Slider.stop();
+    Slider.previous();
+  });
+
+  $('.thumb').parent().click(function() {
+    Slider.stop();
+    Slider.selectImage(parseInt($(this).attr('rev')));
+  });
+
+  $(function() {
+    Slider.selectImage(0);
+    Slider.autoPlay();
+  });
+</script>

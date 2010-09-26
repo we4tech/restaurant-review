@@ -49,7 +49,7 @@ ActionController::Routing::Routes.draw do |map|
                               :pages, :messages,
                               :food_items, :reviews]
 
-  map.resources :images
+  map.resources :images, :member => {:show_or_hide => :get}
 
   map.resources :reviews
 
@@ -65,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
   map.fb_logout '/fb_logout', :controller => 'sessions', :action => 'fb_destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.login_as '/login_as/:user', :controller => 'sessions', :action => 'login_as'
-  map.register '/register', :controller => 'users', :action => 'create'
+  map.register '/register', :controller => 'users', :action => 'new'
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.activate "/activate/:activation_code", :controller => "users",
                :action => "activate", :activation_code => nil
@@ -117,6 +117,7 @@ ActionController::Routing::Routes.draw do |map|
   map.readable_page '/r/:restaurant_id/pages/:page_name',
                     :controller => 'pages', :action => 'show'
   map.site_reviews '/reviews', :controller => 'reviews', :action => 'index'
+  map.site_messages '/messages', :controller => 'messages', :action => 'index'
   map.site_page '/p/:page_name', :controller => 'pages', :action => 'show'
 
   # See how all your routes lay out with "rake routes"

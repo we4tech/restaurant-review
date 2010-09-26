@@ -8,4 +8,5 @@ page << %{
   $('##{"in_edit_#{@premium_template_element.id}"}').ajaxify();
   $('.ui-dialog, .ui-widget-overlay').hide();
   $('#edit_module_#{@premium_template_element.id}').dialog({width: 'auto', modal: true});
+  $('.new_menu_field').focus();
 }

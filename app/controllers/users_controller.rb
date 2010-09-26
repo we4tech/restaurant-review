@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   # render new.rhtml
   def new
     @user = User.new
+    render_view('users/new')
   end
  
   def create

@@ -2,6 +2,6 @@
 
 <% if slider_type == 'easy_slide'%>
   <%= render :partial => "images/modules/sliders/#{slider_type}", :locals => values %>
-<% else %>
+<% elsif slider_type == 'double_fade' %>
   <%= render :partial => 'images/modules/sliders/double_fade', :locals => values %>
 <% end %>

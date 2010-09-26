@@ -68,6 +68,10 @@ module PremiumTemplatesHelper
     end
   end
 
+  def pt_render_partial(file)
+    render :partial => "templates/#{@premium_template.template}/#{file}"
+  end
+
   def pt_stylesheet_link_tag(files)
     if !files.is_a?(Array)
       files = [files]
@@ -78,6 +82,10 @@ module PremiumTemplatesHelper
 
   def pt_redirect_to_root(or_redirect_to = nil)
     redirect_to or_redirect_to || last_premium_site_host
+  end
+
+  def pt_activate_no_reference_url?
+    @premium_template.activate_no_reference_url? || last_premium_site_host
   end
 
 end

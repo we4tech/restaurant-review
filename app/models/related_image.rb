@@ -9,5 +9,6 @@ class RelatedImage < ActiveRecord::Base
 
   named_scope :recent, :order => 'created_at DESC'
   named_scope :by_group, lambda { |group| {:conditions => {:group => group}} }
+  named_scope :old_first, :order => 'created_at ASC'
 
 end

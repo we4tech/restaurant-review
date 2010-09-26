@@ -62,6 +62,13 @@
 }
 
 .edit_module_link {
-  color: #0066cc;
+  color: #888;
   font-weight: bold;
+  background: url(/images/fresh/edit.png) no-repeat;
+  padding-left: 20px;
+  text-transform: capitalize;
+}
+
+.edit_module_link:hover {
+  color: red;
 }

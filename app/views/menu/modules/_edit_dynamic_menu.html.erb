@@ -16,7 +16,7 @@
 
       <ul class='editMenu'>
         <% object.data.each_with_index do |menu_ref, index| %>
-          <li id='<%= li_id = "li_#{index}" %>'>
+          <li id='<%= li_id = "li_#{index}_#{rand(1000)}" %>'>
             <table cellspacing="5">
               <tr>
                 <th>Index</th>
@@ -72,11 +72,14 @@
             </tr>
             <tr>
               <td>
-                <input type='text' name='premium_template_element[data][][index]'
+                <input type='text'
+                       class="new_menu_field"
+                       name='premium_template_element[data][][index]'
                        value='0' size='2' align="right"/>
               </td>
               <td>
-                <input type='text' name='premium_template_element[data][][label]' value=''/>
+                <input type='text'
+                       name='premium_template_element[data][][label]' value=''/>
               </td>
               <td>
                 <input type='text' name='premium_template_element[data][][ext_href]' value=''/>
@@ -116,15 +119,7 @@
 
   $('#<%= element_id %>').ajaxify();
 
-  //$('#<%= element_id%>').dialog({width: 'auto', modal: true});
-  /*
-   $(".editMenuEditor<%= suffix %>").click(function() {
-   $('#menu<%= suffix %>').dialog();
-   });
-
-   $('#<%= element_id %>').ajaxify();
-
-   */
+  $('.new_menu_field').focus();
 </script>
 
 <style type="text/css">

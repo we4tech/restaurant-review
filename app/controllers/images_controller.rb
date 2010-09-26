@@ -84,6 +84,15 @@ class ImagesController < ApplicationController
     end
   end
 
+  def show_or_hide
+    image = Image.find(params[:id].to_i)
+    if image.update_attribute(:display, !image.display?)
+      notify :success, :back
+    else
+      notify :failure, :back
+    end
+  end
+
   private
     def my_restaurant_and_user_contributed_image(restaurant, image)
       if restaurant.user_id == current_user.id

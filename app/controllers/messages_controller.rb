@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   before_filter :login_required, :except => [:show, :index]
 
   def index
-    @restaurant = Restaurant.find(params[:restaurant_id].to_i)
+    @restaurant = @restaurant || Restaurant.find(params[:restaurant_id].to_i)
     @messages = @restaurant.messages
     @site_title = 'News'
     render_view 'messages/index'
