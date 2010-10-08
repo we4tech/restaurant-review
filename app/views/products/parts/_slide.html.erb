@@ -1,0 +1,159 @@
+<div class='productsSlide'>
+  <ul class='topPagination'>
+    <li class='previous'><a href='javascript:void(0)'>&lt;</a></li>
+    <li class='metaInfo' id='metaInfo'>1 / 20</li>
+    <li class='next'><a href='javascript:void(0)'>&gt;</a></li>
+  </ul>
+
+  <ul class='products' id='products'>
+    <li class='previous'><a href='#'></a></li>
+    <% @products[0..2].each do |product| %>
+      <% if !product.images.empty? %>
+        <li class='product'>
+          <div class='image'>
+            <%= image_tag product.images.first.public_filename %>
+          </div>
+          <div class='tools'>
+            <h4><%= product.id %> - <%= site_product_link(product) %></h4>
+            <p><%= product.description %></p>
+            <div class='price'>Price: $<%= product.price %></div>
+            <div class='clear'></div>
+            <div class='space_10'></div>
+            <ul>
+              <li><%= link_to(pt_image_tag('comments_icon.png'), '#') %></li>
+              <li><%= link_to(pt_image_tag('favorite_icon.png'), '#') %></li>
+              <li><%= link_to(pt_image_tag('purchased_icon.png'), '#') %></li>
+              <li><%= link_to(pt_image_tag('add_to_cart.png'), '#') %></li>
+            </ul>
+          </div>
+        </li>
+      <% end %>
+    <% end %>
+    <li class='next'><a href='#'></a></li>
+  </ul>
+
+  <div class='bottomPagination'>
+
+  </div>
+</div>
+
+<div id='productItemTemplate' style='display: none'>
+  <div class='image'>
+    #IMAGE#
+  </div>
+  <div class='tools'>
+    <h4>#ID# - #LINK#</h4>
+    <p>#DESCRIPTION#</p>
+    <div class='price'>#PRICE#</div>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+    <ul>
+      <li><%= link_to(pt_image_tag('comments_icon.png'), '#') %></li>
+      <li><%= link_to(pt_image_tag('favorite_icon.png'), '#') %></li>
+      <li><%= link_to(pt_image_tag('purchased_icon.png'), '#') %></li>
+      <li><%= link_to(pt_image_tag('add_to_cart.png'), '#') %></li>
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var LAAL_CACHE_KEY = '<%= @restaurant.name %>';
+  var LAAL_PRODUCTS_COUNT = <%= @products_count %>;
+  var LAAL_PAGE_INDEX = 1;
+  var cacheSyncUrl = "<%= next_products_url %>&restaurant_id=<%= @restaurant.id %>&page=";
+  var LAAL_NO_MORE_CACHE = false;
+
+  SliderCacheUtil.addCache(LAAL_CACHE_KEY, [<%= @products.collect{|p|
+    {
+    :image => image_tag(p.images.first.public_filename),
+    :id => p.id,
+    :link => site_product_link(p),
+    :price => p.price,
+    :description => p.description
+    }.to_json}.compact.join(', ') %>]);
+
+  var LAALSlider = {
+    index: 2,
+    noMoreItemExists: false,
+    inProgress: false,
+
+    next: function() {
+      if (!LAALSlider.inProgress) {
+        var cachedItem = SliderCacheUtil.getCachedItemsAt(LAALSlider.index + 1, LAAL_CACHE_KEY);
+        if (cachedItem != null) {
+          LAALSlider.inProgress = true;
+          LAALSlider.index += 1;
+          LAALSlider.updateHtml(cachedItem, true);
+        }
+
+        if (!LAALSlider.noMoreItemExists) {
+          SliderCacheUtil.syncCache(LAAL_CACHE_KEY, LAALSlider.index, cacheSyncUrl + (LAAL_PAGE_INDEX + 1));
+        }
+      }
+    },
+
+    updateHtml: function(cachedItem, before) {
+      var uniqueId = Math.random().toString().replace(/\./, '');
+      var html = "<li class='product' id='" + uniqueId + "' style='display: none'>";
+      var templateHtml = $('#productItemTemplate').html();
+      templateHtml = templateHtml.replace(/#LINK#/, cachedItem.link);
+      templateHtml = templateHtml.replace(/#IMAGE#/, cachedItem.image);
+      templateHtml = templateHtml.replace(/#ID#/, cachedItem.id);
+      templateHtml = templateHtml.replace(/#DESCRIPTION#/, cachedItem.description);
+      templateHtml = templateHtml.replace(/#PRICE#/, cachedItem.price);
+      html += templateHtml;
+      html += "</li>";
+
+      // Append new html node
+      if (before) {
+        $('#products .next').before(html);
+        $('#products .product:first').fadeOut('fast', function() {
+          $(this).remove();
+          $('#' + uniqueId).appear('fast');
+        });
+      } else {
+        $('#products .previous').after(html);
+        $('#products .product:last').fadeOut('fast', function() {
+          $(this).remove();
+          $('#' + uniqueId).appear('fast');
+        });
+      }
+
+      // Update status
+      LAALSlider.updateStatus();
+      LAALSlider.inProgress = false;
+    },
+
+    updateStatus: function() {
+      $('#metaInfo').html((LAALSlider.index + 1) + " / " + LAAL_PRODUCTS_COUNT);
+    },
+
+    previous: function() {
+      if (!LAALSlider.inProgress) {
+        var previousIndex = LAALSlider.index - 3;
+        if (previousIndex >= 0) {
+          var cachedItem = SliderCacheUtil.getCachedItemsAt(previousIndex, LAAL_CACHE_KEY);
+          if (cachedItem != null) {
+            LAALSlider.inProgress = true;
+            LAALSlider.index -= 1;
+          }
+          LAALSlider.updateHtml(cachedItem, false);
+        }
+      }
+    }
+  };
+
+  $('.next').click(function() {
+    LAALSlider.next();
+  });
+
+ $('.previous').click(function() {
+    LAALSlider.previous();
+  });
+
+ $('.productsSlide').scroll(function() {
+   
+ });
+
+ LAALSlider.updateStatus();
+</script>

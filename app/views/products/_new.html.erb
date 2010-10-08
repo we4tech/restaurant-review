@@ -1,0 +1,22 @@
+<div class='breadcrumbs'>
+  <%= link_to @restaurant.name, restaurant_long_url(@restaurant) %> &raquo;
+  <%= link_to tt('nav.products'), restaurant_products_path(@restaurant) %> &raquo;
+</div>
+
+<h1>
+  <%= tt('nav.add_new_product') %>
+</h1>
+<div class='break'></div>
+<div class='space_10'></div>
+<% form_for @product do |f| %>
+  <%= f.hidden_field :restaurant_id %>
+
+  <table class='formTable' cellspacing="10">
+    <%= render :partial => 'products/parts/form', :locals => {:f => f} %>
+    <%= f.submit t('button.create') %>
+  </table>
+<% end %>
+
+<script type="text/javascript">
+  $('#product_name').focus();
+</script>

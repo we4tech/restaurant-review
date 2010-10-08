@@ -1,0 +1,14 @@
+<ul class='items'>
+  <% products.each do |product| %>
+    <li>
+      #<%= product.id %> - <%= product.name %> -
+      <small>
+        <%= link_to t('nav.edit'), edit_product_url(product) %> .
+        <%= link_to t('nav.add_image', :count => product.images.count), "#{edit_product_url(product)}#new_image" %> .
+        <%= link_to t('nav.delete'), product_url(product),
+                    :method => :delete, :confirm => t('confirm.delete_entry') %>
+      </small>
+    </li>
+  <% end %>
+</ul>
+<%= will_paginate products %>

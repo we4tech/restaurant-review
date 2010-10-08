@@ -52,4 +52,25 @@ module UrlOverrideHelper
   def discover_url(object)
     
   end
+
+  def site_products_url(restaurant)
+    if premium? && pt_activate_no_reference_url?
+      products_url
+    else
+      restaurant_products_url(restaurant)
+    end
+  end
+
+  def site_product_url(product)
+    if premium? && pt_activate_no_reference_url?
+      product_long_url(url_escape(product.name), product.id)
+    else
+      restaurant_product_url(product.restaurant, product)
+    end
+  end
+
+  def site_product_link(product)
+    link_to product.name, site_product_url(product)
+  end
+
 end

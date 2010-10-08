@@ -161,6 +161,7 @@ class ImagesController < ApplicationController
         object_id = Restaurant.find(params[:restaurant_id].to_i).id
         field_name = :restaurant_id
         return_url = edit_restaurant_url(object_id)
+
       elsif params[:user_id]
         object_id = current_user.id
         field_name = :user_id
@@ -170,8 +171,11 @@ class ImagesController < ApplicationController
             current_user.related_image.destroy
           end
         end
-
         return_url = edit_user_url(object_id)
+
+      elsif params[:product_id]
+        field_name = :product_id
+        object_id = params[:product_id].to_i
       end
 
       # Override mapping with :food_item_id

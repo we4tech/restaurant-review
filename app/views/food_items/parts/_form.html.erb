@@ -1,12 +1,12 @@
 <tr>
-  <th><%= f.label :food_item_id, 'Parent menu' %></th>
+  <th><%= f.label :food_item_id, tt('label.parent_menu') %></th>
   <th><%= f.label :name %></th>
   <th><%= f.label :price %></th>
 </tr>
 <tr>
   <td>
     <%= f.select :food_item_id, @restaurant.food_items.
-        collect{|fi| [fi.name, fi.id]}, :include_blank => 'Select parent menu' %>
+        collect{|fi| [fi.name, fi.id]}, :include_blank => tt('label.select_parent_menu') %>
     <%= f.error_message_on :food_item_id %>
   </td>
   <td>

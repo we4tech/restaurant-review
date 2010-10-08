@@ -1,0 +1,17 @@
+if !@products.empty?
+  page << %{
+    SliderCacheUtil.addItemsToCache(LAAL_CACHE_KEY, [#{@products.collect{|p|
+      {
+      :image => image_tag(p.images.first.public_filename),
+      :id => p.id,
+      :link => site_product_link(p),
+      :price => p.price,
+      :description => p.description
+      }.to_json}.compact.join(', ')}]);
+    LAAL_PAGE_INDEX = #{params[:page].to_i + 1};
+  }
+else
+  page << %{
+    LAALSlider.noMoreItemExists = true;
+  }
+end

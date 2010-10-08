@@ -72,3 +72,16 @@
 .edit_module_link:hover {
   color: red;
 }
+
+.adminPortion small {
+  font-size: 70%;
+}
+
+.adminPortion a {
+  color: #000;
+}
+
+.adminPortion a:hover {
+  color: #fff;
+  background: #000;
+}

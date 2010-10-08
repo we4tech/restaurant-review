@@ -19,6 +19,7 @@
   <%= javascript_include_tag 'jquery.ajaxify' %>
 
   <%= stylesheet_link_tag 'jquery-ui-lightness/jquery.css' %>
+  <%= stylesheet_link_tag 'fresh/common' %>
   <%= stylesheet_link_tag 'templates/laalshop/site' %>
   <%= stylesheet_link_tag 'fresh/premium_admin' %>
 </head>
@@ -34,6 +35,13 @@
       <%= render_module :dynamic_menu, :key => :top %>
     </div>
     <div class='clear'></div>
+
+    <% message = flash[:notice] || flash[:success] %>
+    <% if !message.blank? %>
+      <div class='message'>
+        <%= message %>
+      </div>
+    <% end %>
   </div>
   <div class='clear'></div>
 

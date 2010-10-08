@@ -2,9 +2,12 @@
   <% field_name = name_prefix.blank? ? key : "#{name_prefix}:#{key}" %>
 
   <div class='translations'>
-    <strong><%= key %></strong>
+    <h2 style='cursor:pointer; background: #ffff99; padding: 5px; border-bottom: 2px solid #ccc; margin-bottom: 5px;'
+        onclick="$('#<%= field_name.gsub(/:/,'') %>_block').toggle();">
+      Section - <%= key %>
+    </h2>
 
-    <div class='value'>
+    <div class='value' style='display:none' id='<%= field_name.gsub(/:/, '') %>_block'>
       <% if value && value.is_a?(Hash) %>
         <%= render :partial => 'translations',
                    :locals => {:map => value,
@@ -17,4 +20,43 @@
 
     <div class='clear'></div>
   </div>
+<% end %>
+
+<div class='space_10'></div>
+<% if !name_prefix.blank? %>
+  <% key = name_prefix.gsub(/:/, '_') + rand().to_s.gsub(/\./, '')[0..5] %>
+
+  <input type='button' id="<%= "#{key}_add" %>"
+         value="Add translation under <%= name_prefix.gsub(/:/, ' > ') %>"/>
+
+  <div class='space_10'></div>
+  <div id="<%= "#{key}_container" %>"></div>
+
+  <div id='<%= "#{key}_element" %>' style='display: none;'>
+    <div id='element_KEY_' style="margin-left: 10px; background: #d9e8b0; padding: 10px;margin-bottom: 10px;">
+      <strong>New field name</strong>
+      <div>
+        <input lang='bangla' id='id_<%= rand(100) * 100 %>'
+               name='translations<%= name_prefix.split(':').collect{|i| "[#{i}]"} %>[new][_KEY_][field_name]'/>
+        <input type='button' onclick="$('#element_KEY_').fade().remove()" value='Delete'/>
+        <input type='submit' value='Update'/>
+        <div class='space_10'></div>
+        <textarea lang='bangla' id='id_<%= rand(100) * 100 %>'
+                  name='translations<%= name_prefix.split(':').collect{|i| "[#{i}]"} %>[new][_KEY_][field_value]'></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $('#<%= "#{key}_add" %>').click(function() {
+      var newElementHtml = $('#<%= "#{key}_element" %>').html();
+      var key = Math.random().toString().replace(/\./, '');
+      newElementHtml = newElementHtml.replace(/_KEY_/, key);
+      newElementHtml = newElementHtml.replace(/_KEY_/, key);
+      newElementHtml = newElementHtml.replace(/_KEY_/, key);
+      newElementHtml = newElementHtml.replace(/_KEY_/, key);
+
+      $('#<%= "#{key}_container" %>').append(newElementHtml);
+    });
+  </script>
 <% end %>

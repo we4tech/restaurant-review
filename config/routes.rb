@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :products, :collection => {:next => :get}
+
   map.resources :premium_service_subscribers
 
 
@@ -47,7 +49,8 @@ ActionController::Routing::Routes.draw do |map|
                                           :test_email_template => :get},
                 :has_many => [:premium_templates,
                               :pages, :messages,
-                              :food_items, :reviews]
+                              :food_items, :reviews,
+                              :products]
 
   map.resources :images, :member => {:show_or_hide => :get}
 
@@ -113,6 +116,7 @@ ActionController::Routing::Routes.draw do |map|
   map.accept_treat_request '/games/accept_request/:id', :controller => 'games', :action => 'accept_request'
   map.static_page '/static/:page_name', :controller => 'home', :action => 'static_page',
                   :requirements => {:page_name => /[\d\w\.\-\s]/}
+  map.product_long_url '/p/:name/:id', :controller => 'products', :action => 'show'
 
   map.readable_page '/r/:restaurant_id/pages/:page_name',
                     :controller => 'pages', :action => 'show'

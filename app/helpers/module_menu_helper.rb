@@ -1,7 +1,7 @@
 module ModuleMenuHelper
 
   KEY_DYNAMIC_MENU = 'dynamic_menu'
-  INTERNAL_LINKS = ['FOOD_MENU', 'NEWS', 'REVIEWS', 'LOGIN', 'REGISTER']
+  INTERNAL_LINKS = ['FOOD_MENU', 'NEWS', 'REVIEWS', 'PRODUCTS', 'LOGIN', 'REGISTER']
 
   #
   # Render dynamic menu editor
@@ -81,6 +81,13 @@ module ModuleMenuHelper
       case int_link
         when 'FOOD_MENU'
           url = restaurant_food_items_url(@restaurant)
+
+        when 'PRODUCTS'
+          if pt_activate_no_reference_url?
+            url = products_url
+          else
+            url = restaurant_products_url(@restaurant)
+          end
 
         when 'NEWS'
           if pt_activate_no_reference_url?

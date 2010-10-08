@@ -1,0 +1,26 @@
+<div class='breadcrumbs'>
+  <%= link_to @restaurant.name, restaurant_long_url(@restaurant) %> &raquo;
+  <%= link_to tt('nav.products'), restaurant_products_path(@restaurant) %> &raquo;
+</div>
+
+<h1>
+  <%= tt('nav.add_new_product') %>
+</h1>
+<div class='break'></div>
+<div class='space_10'></div>
+
+<% form_for @product do |f| %>
+  <table class='formTable' cellspacing="10">
+    <%= render :partial => 'products/parts/form', :locals => {:f => f} %>
+    <%= f.submit t('button.update') %>
+  </table>
+<% end %>
+
+<div class='space_10'></div>
+<%= render_image_editor(:product,
+                        :return_to => "#{restaurant_products_url(@restaurant, :page => session[:last_page])}#adminPortion", 
+                        :images => @product.images) %>
+
+<script type="text/javascript">
+  $('#product_name').focus();
+</script>

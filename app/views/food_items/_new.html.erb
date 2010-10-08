@@ -2,11 +2,11 @@
   <%= link_to @restaurant.name, restaurant_long_url(
       :id => @restaurant.id,
       :name => url_escape(@restaurant.name)) %> &raquo;
-  <%= link_to 'Food Menu', restaurant_food_items_path(@restaurant) %> &raquo;
+  <%= link_to tt('nav.food_menu'), restaurant_food_items_path(@restaurant) %> &raquo;
 </div>
 
 <h1>
-  <%= t('nav.add_new_food_menu') %>
+  <%= tt('nav.add_new_food_menu') %>
 </h1>
 <div class='break'></div>
 <div class='space_10'></div>

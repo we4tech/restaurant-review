@@ -7,7 +7,7 @@
        loved_count = restaurant.reviews.loved.count
        loved_percentage = (100 / total_reviews_count) * loved_count
     %>
-    <div>
+    <div class='reviewStats'>
       <b><%= t('label.review_stat') %></b>
       <span class="stat_item icon_review">
         <%= t('label.reviews_count', :count => total_reviews_count) %>

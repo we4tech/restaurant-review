@@ -1,0 +1,89 @@
+.breadcrumbs {
+  float: left;
+  margin-top: 10px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.floatHeader {
+  float: left;
+}
+
+.pageTools {
+  float: left;
+  margin-top: 13px;
+  margin-left: 10px;
+  font-size: 80%;
+}
+
+.reviews {
+  background: firebrick;
+  padding: 10px;
+  margin-right: 20px;
+  border: 1px solid maroon;
+  margin-bottom: 20px;
+}
+
+.review_form, .edit_review {
+  margin-right: 20px;
+}
+
+h4 {
+  margin-bottom: 10px;
+}
+
+.review_form textarea, .edit_review textarea {
+  height: 100px;
+  border: 1px solid maroon;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.reviewStats {
+  color: #ff9999;
+  border-bottom: 1px solid #801c1c;
+}
+
+.userImage {
+  float: left;
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+.userImage img {
+  border: 2px solid #fff;
+}
+
+.review {
+  float: left;
+}
+
+.highlight {
+  font-size: 90%;
+  margin-right: 10px;
+}
+
+.relatedImages .relatedImage {
+  float: left;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.relatedImages .relatedImage a {
+  font-size: 70%;
+}
+
+.edit_image {
+  width: 500px;
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.items li {
+  margin-bottom: 5px;
+}

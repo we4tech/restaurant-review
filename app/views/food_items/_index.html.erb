@@ -4,10 +4,10 @@
       :name => url_escape(@restaurant.name)) %> &raquo;
 </div>
 
-<h1 class='floatHeader'><%= t('nav.food_menu') %></h1>
+<h1 class='floatHeader'><%= tt('nav.food_menu') %></h1>
 <% if @restaurant.author?(current_user) %>
   <div class='pageTools'>
-    (<%= link_to t('nav.add_new_food_menu'), new_restaurant_food_item_path %>)
+    (<%= link_to tt('nav.add_new_food_menu'), new_restaurant_food_item_path %>)
   </div>
 <% end %>
 <div class='clear'></div>

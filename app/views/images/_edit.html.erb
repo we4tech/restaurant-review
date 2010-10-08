@@ -17,21 +17,32 @@
     <div class='break'></div>
     <div class='space_10'></div>
 
-    <%= f.label :caption %><br/>
-    <%= f.text_field :caption, :style => 'width:100%' %><br/>
-
-    <%= f.label :link %><br/>
-    <%= f.text_field :link, :style => 'width:100%'  %><br/>
-
-    <%= f.label :description %><br/>
-    <%= f.text_area :description, :style => 'width:100%'  %><br/>
+    <table cellspacing="10px">
+      <tr>
+        <th align="left"><%= f.label :caption %></th>
+        <th align="left"><%= f.label :link %></th>
+      </tr>
+      <tr>
+        <td><%= f.text_field :caption, :style => 'width:100%' %></td>
+        <td><%= f.text_field :link, :style => 'width:100%'  %></td>
+      </tr>
+      <tr>
+        <th align="left" colspan="2"><%= f.label :description %></th>
+      </tr>
+      <tr>
+        <td colspan="2"><%= f.text_area :description, :style => 'width:100%'  %></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="right">
+          <%= f.submit t('button.update') %>
+        </td>
+      </tr>
+    </table>
 
     <% if request.headers['REFERER'] %>
       <input type='hidden' name='ref' value="<%= request.headers['REFERER'] %>"/>
     <% end %>
 
     <div class='space_10'></div>
-    <%= f.submit t('button.update') %>
-
   <% end %>
 </div>
