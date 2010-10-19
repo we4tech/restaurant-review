@@ -1,7 +1,7 @@
 <div class='tags'>
   <% @tags.each do |tag| %>
     <div class='tag'>
-      <%= tag.name %>
+      <%= tag.name %> (<%= link_to 'x', tag_url(tag), :confirm => t('confirm.delete_entry'), :method => :delete %>)
     </div>
   <% end %>
   <div class='clear'></div>
@@ -19,5 +19,17 @@
       <% end %>
     </select>
     <input type='submit' value='<%= t('label.sync_tags') %>'/>
+  <% end %>
+
+  <div class='space_10'></div>
+  <div class='break'></div>
+  <div class='space_10'></div>
+  <h4>Add new tag</h4>
+  <div class='space_10'></div>
+  <% form_for @tag || Tag.new do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <%= f.error_message_on :name %>
+    <%= f.submit t('button.create') %>
   <% end %>
 </div>

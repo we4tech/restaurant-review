@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
 
+  before_filter :login_required
   before_filter :log_new_feature_visiting_status
 
   def index
@@ -7,6 +8,28 @@ class TagsController < ApplicationController
       load_tag_group_tags
     else
       load_tags
+    end
+  end
+
+  def create
+    @tag = Tag.new(params[:tag])
+    @tag.topic_id = @topic.id
+    @tag.tag_mappings_count = 0
+
+    if @tag.save
+      notify :success, tags_url
+    else
+      load_tags
+      notify :failure, :index
+    end
+  end
+
+  def destroy
+    @tag = Tag.find(params[:id].to_i)
+    if @tag.destroy
+      notify :success, tags_url
+    else
+      notify :failure, tags_url
     end
   end
 
