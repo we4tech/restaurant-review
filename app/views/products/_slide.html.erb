@@ -1,0 +1,54 @@
+<div class='slide'>
+  <div class='bigImage'>
+    <div class='imagePreview'>
+      <%= image_tag(@first_image.public_filename, :id => 'bigImage') %>
+    </div>
+    <div class='linkScroll'>
+      <a href='#'>Scroll to View Full Dress</a>
+    </div>
+
+    <div class='linkClose'>
+      <a href='#'>Close</a>
+    </div>
+
+    <div class='thumbs'>
+      <ul>
+        <% @images.each do |image| %>
+          <li>
+            <%= link_to(image_tag(image.public_filename(:very_small)), "#!#{image.public_filename}") %>
+          </li>
+      <% end %>
+      </ul>
+    </div>
+
+    <div class='verticalScrollShade'>
+    </div>
+    <div class='horizontalScrollShade'>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    $('.thumbs li a').click(function() {
+      var href = $(this).attr('href');
+      href = href.split('#!')[1];
+      $('#bigImage').attr('src', href);
+    });
+
+    var url = window.location.href;
+    var url_parts = url.split('#!');
+    if (url_parts.length > 1) {
+      $('#bigImage').attr('src', url_parts[1]);
+    }
+
+    $('.imageSet').scroll(function() {
+      
+    });
+
+    $('.linkClose, .linkClose a').css('cursor', 'pointer').click(function() {
+      parent.LAALSlider.hidePreview();
+    });
+  });
+</script>

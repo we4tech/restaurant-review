@@ -1,0 +1,21 @@
+<% css_class = css_class || nil %>
+
+<ul class='imageGalleryInline'>
+  <% images.each do |image| %>
+    <%
+       if object.is_a?(Product)
+         item_url = "#{slide_product_url(object, :layout => 'image')}#!#{image.public_filename}"
+       else
+         item_url = image_url(image.id)
+       end
+    %>
+    <li>
+      <%= link_to(image_tag(image.public_filename(image_type),
+                          :class => 'large_image',
+                          :alt => 'N/A'),
+                item_url,
+                :class => css_class,
+                :title => image.caption) %>
+    </li>
+  <% end %>
+</ul>

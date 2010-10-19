@@ -17,10 +17,7 @@
 }
 
 .reviews {
-  background: firebrick;
-  padding: 10px;
   margin-right: 20px;
-  border: 1px solid maroon;
   margin-bottom: 20px;
 }
 
@@ -41,8 +38,8 @@ h4 {
 }
 
 .reviewStats {
-  color: #ff9999;
-  border-bottom: 1px solid #801c1c;
+  color: #888;
+  border-bottom: 1px solid #ccc;
 }
 
 .userImage {

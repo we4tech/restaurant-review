@@ -6,10 +6,12 @@ module ApplicationHelper
     if @premium_template = PremiumTemplate.match_host(request.host)
       @restaurant = @premium_template.restaurant
       @topic = @restaurant.topic
+      store_last_premium_site_host
+      set_premium_session
+      @premium = true
 
       if request.path == '/'
         @context = :home
-        store_last_premium_site_host
         pt_render_view
       end
     else
@@ -62,29 +64,33 @@ module ApplicationHelper
         :render_topic_box]
   end
 
-  def render_view(partial_template)
+  def render_view(partial_template, options = {})
     if @restaurant
-      render_restaurant_based_template(partial_template)
+      render_restaurant_based_template(partial_template, options)
     else
       render :partial => partial_template, :layout => 'fresh'
     end
   end
 
-  def render_restaurant_based_template(partial_template)
+  def render_restaurant_based_template(partial_template, options = {})
     @premium_template = @restaurant.selected_premium_template
     @context = :inner_page
 
     if !params[:d] && @premium_template
       @inner_page = partial_template
 
-      if !File.exists?(File.join(RAILS_ROOT, 'app', 'views', "templates/#{@premium_template.template}/layout.#{params[:format]}.erb"))
-        params[:format] = :html
-      end
+      if params[:layout].nil?
+        if !File.exists?(File.join(RAILS_ROOT, 'app', 'views', "templates/#{@premium_template.template}/layout.#{params[:format]}.erb"))
+          params[:format] = :html
+        end
 
-      render :layout => false, :template => "templates/#{@premium_template.template}/layout"
+        render :layout => false, :template => "templates/#{@premium_template.template}/layout"
+      else
+        render :layout => false, :template => "templates/#{@premium_template.template}/#{params[:layout]}"
+      end
     else
       @content_template = partial_template
-      render :template => 'layouts/fresh_inner_layout'
+      render :template => 'layouts/fresh_inner_layout', :locals => options[:locals]
     end
 end
 

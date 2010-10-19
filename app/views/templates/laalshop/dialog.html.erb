@@ -23,6 +23,7 @@
   <%= stylesheet_link_tag 'fresh/common' %>
   <%= stylesheet_link_tag 'templates/laalshop/site' %>
   <%= stylesheet_link_tag 'fresh/premium_admin' %>
+  <%= pt_stylesheet_link_tag 'dialog' %>
 </head>
 <body>
 
@@ -33,7 +34,9 @@
     </div>
 
     <div class='nav'>
-      <%= render_module :dynamic_menu, :key => :top %>
+      <ul class='menu'>
+        <li><a href='javascript:window.close()'>Close</a></li>  
+      </ul>
     </div>
     <div class='clear'></div>
 
@@ -47,17 +50,9 @@
   <div class='clear'></div>
 
   <div class='bodySet'>
-    <div class='leftNav'>
-      <%= render_module :dynamic_menu, :key => :side %>
-    </div>
-
-    <% if @inner_page.nil? %>
-      <div class='centerContent'>
-        <%= pt_render_partial 'frontpage_slider' %>
-      </div>
-    <% else %>
+    <div class='centerContent'>
       <%= render :partial => @inner_page %>
-    <% end %>
+    </div>
 
     <div class='clear'></div>
   </div>

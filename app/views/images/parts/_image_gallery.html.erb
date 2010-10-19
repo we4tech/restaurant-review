@@ -1,5 +1,6 @@
 <%
-   images = @restaurant.related_images.by_group(nil).collect(&:image)
+   object = object || nil
+   images = images || (object || @restaurant).related_images.by_group(nil).collect(&:image)
 %>
 <% if !images.empty? %>
   <%

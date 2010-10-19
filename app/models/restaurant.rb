@@ -104,9 +104,9 @@ class Restaurant < ActiveRecord::Base
     reviews.find(:first, :order => 'id DESC')
   end
 
-  def reviewed?(p_user)
+  def reviewed?(p_user, options = {})
     if p_user
-      reviews.count(:conditions => {:user_id => p_user.id}) > 0
+      p_user.reviews.of_restaurant(self, options).count > 0
     end
   end
 

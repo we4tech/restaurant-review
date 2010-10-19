@@ -1,12 +1,12 @@
 body, h1, h2, h3, h4, h5, h6, p, ul, li {
-  margin : 0;
+  margin: 0;
   padding: 0;
 }
 
 body {
   font-family: "Myriad pro", 'arial', sans-serif;
   font-size: 16px;
-  
+  overflow-x: hidden;
 }
 
 a img {
@@ -14,7 +14,7 @@ a img {
 }
 
 .mainSet {
-  background: #b90000 url(/images/templates/laalshop/flower_bg.png) 0 120px no-repeat ;
+  background: #b90000 url(/images/templates/laalshop/flower_bg.png) 0 120px no-repeat;
 }
 
 .navSet {
@@ -44,7 +44,7 @@ a img {
 
 .navSet .nav ul li {
   display: inline;
-  margin: 10px; 
+  margin: 10px;
 }
 
 .navSet .nav ul li a {
@@ -74,7 +74,7 @@ a img {
 }
 
 .bodySet .leftNav ul {
-  list-style-type: none;    
+  list-style-type: none;
 }
 
 .bodySet .leftNav ul a {
@@ -84,13 +84,15 @@ a img {
 }
 
 .bodySet .leftNav ul a:hover {
-  color: #DB7F7F;  
+  color: #DB7F7F;
 }
 
 .bodySet .centerContent {
   float: left;
   border: 10px solid #fff;
   width: 822px;
+  height: 515px;
+  background: #fff;
 }
 
 .bodySet .innerPage {
@@ -105,7 +107,7 @@ a img {
 .slider .image .displayImage {
   float: left;
   max-width: 822px;
-  width:expression(document.body.clientWidth > 822? "822px": "auto" );
+  width: expression(document.body.clientWidth > 822? "822px": "auto" );
 }
 
 .slider .image .imageStuffs {
@@ -135,7 +137,7 @@ a img {
   margin-bottom: 10px;
   height: 75px;
   max-width: 265px;
-  width:expression(document.body.clientWidth > 265? "265px": "auto" );
+  width: expression(document.body.clientWidth > 265? "265px": "auto" );
 }
 
 .slider .image .pagination {
@@ -156,7 +158,7 @@ a img {
 }
 
 .slider .image .pagination .next:hover, .slider .image .pagination .prev:hover {
-  text-decoration: underline;  
+  text-decoration: underline;
 }
 
 .slider .imagePagination {
@@ -165,7 +167,7 @@ a img {
 }
 
 .slider .imagePagination .thumb {
-  /*height: 64px;*/
+/*height: 64px;*/
   width: 60px;
   border: 4px solid transparent;
 }
@@ -175,7 +177,7 @@ a img {
 }
 
 .slider .imagePagination .navNext, .slider .imagePagination .navPrev {
-  margin-top: 26px;  
+  margin-top: 26px;
 }
 
 .slider .imagePagination .navNext:hover {
@@ -196,7 +198,7 @@ a img {
 }
 
 .followUs .label {
-  float:left;
+  float: left;
   margin-right: 10px;
   margin-top: 5px;
 }
@@ -233,7 +235,7 @@ a img {
 }
 
 .break {
-  border-bottom: 0!important;
+  border-bottom: 0 !important;
 }
 
 /* all collection page product slide */
@@ -275,24 +277,43 @@ a img {
 
 .productsSlide .products .previous, .productsSlide .products .next {
   float: left;
+  position: relative;
 }
 
 .productsSlide .products .previous {
-  background: url(/images/templates/laalshop/left_arrow.png) no-repeat;
-  height: 54px;
-  width: 54px;
   margin-top: 155px;
   margin-right: 20px;
   cursor: pointer;
 }
 
-.productsSlide .products .next {
-  background: url(/images/templates/laalshop/right_arrow.png) no-repeat;
+.productsSlide .products .previous a {
+  background: url(/images/templates/laalshop/left_arrow.png) no-repeat;
   height: 54px;
   width: 54px;
+  float: left;
+}
+
+.productsSlide .products .previous a:hover {
+  background: url(/images/templates/laalshop/left_arrow_hover.png) no-repeat;
+}
+
+.productsSlide .products .next {
   margin-top: 155px;
   margin-left: -60px;
   cursor: pointer;
+  height: 54px;
+  width: 54px;
+}
+
+.productsSlide .products .next a {
+  background: url(/images/templates/laalshop/right_arrow.png) no-repeat;
+  height: 54px;
+  width: 54px;
+  float: right;
+}
+
+.productsSlide .products .next a:hover {
+  background: url(/images/templates/laalshop/right_arrow_hover.png) no-repeat;
 }
 
 .productsSlide .products li.product {
@@ -316,4 +337,311 @@ a img {
   color: #888;
   font-weight: bold;
   border: 2px solid #ccc;
+}
+
+.product {
+  width: 60%;
+  float: left;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.product .description {
+  height: 200px;
+  overflow-y: hidden;
+  font-family: 'tahoma', serif;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.product .descriptionTools {
+  width: 100%;
+  margin-bottom: 10px;
+  text-align: right;
+
+}
+
+.product .reviews .userImage {
+}
+
+.product .reviews .userImage img {
+  width: 30px;
+}
+
+.product .reviews .review {
+  height: 35px;
+  background: url(/images/templates/laalshop/dialog-arrow.gif) no-repeat;
+  padding-left: 30px;
+  width: 390px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.product .reviewTools {
+  width: 465px;
+  margin-bottom: 10px;
+  text-align: right;
+  font-size: 70%;
+  margin-top: 5px;
+}
+
+.product .reviewTools a {
+  color: #dc7f7f;
+  text-decoration: none;
+}
+
+.product .reviewTools a:hover {
+  color: #ccc;
+}
+
+.product .reviews .review .content {
+  background: #FFFFCC;
+  height: 35px;
+  padding-top: 5px;
+  color: #888;
+  font-size: 70%;
+}
+
+.product .descriptionTools a {
+  color: #B80000;
+  text-decoration: none;
+}
+
+.product .descriptionTools a:hover {
+  color: #dc7f7f;
+}
+
+.product, .productRelatedItems {
+  color: #AEA99F;
+}
+
+.productMeta {
+  text-align: left;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.centerContent h1, .centerContent h4 {
+  color: #B80000;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+.centerContent h1 a, .centerContent h4 a {
+  color: #B80000;
+  text-decoration: none;
+}
+
+.centerContent h1 a:hover, .centerContent h4 a:hover {
+  color: #dc7f7f;
+}
+
+.product .relatedImages {
+}
+
+.productRelatedItems {
+  width: 36%;
+  float: left;
+  padding-left: 10px;
+  text-align: center;
+}
+
+.productRelatedItems .tools {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+}
+
+.productRelatedItems .tools li {
+  display: inline;
+  margin-right: 5px;
+}
+
+.productRelatedItems .tools li a img {
+  position: relative;
+}
+
+.productRelatedItems .tools li a div {
+  float: left;
+  padding-left: 10px;
+}
+
+.product .imageGalleryInline {
+  margin: 0;
+  padding: 0;
+}
+
+.product .imageGalleryInline li {
+  display: inline;
+  margin-right: 5px;
+}
+
+.comments .form label {
+  display: block;
+}
+
+.product .image .zoomLink {
+  float: right;
+  position: relative;
+  margin-top: -90px;
+  left: -40px;
+  width: 54px;
+  height: 54px;
+  background: url(/images/templates/laalshop/zoom.png) no-repeat;
+}
+
+.productRelatedItems .zoomLink {
+  position: relative;
+  right: 90px;
+  width: 54px;
+  height: 54px;
+  float: right;
+  top: 360px;
+  background: url(/images/templates/laalshop/zoom.png) no-repeat;
+}
+
+.zoomLink:hover {
+  background: url(/images/templates/laalshop/zoom_hover.png) no-repeat;
+}
+
+/* icons */
+.nav {
+  float: left;
+  margin-right: 5px;
+}
+
+.productReviewIcon {
+  background: url(/images/templates/laalshop/comments_icon.png) no-repeat;
+  font-size: 10px;
+  font-family: 'tohoma', serif;
+  text-align: center;
+  width: 27px;
+  height: 30px;
+  padding-top: 6px;
+
+}
+
+.productReviewIcon a {
+  color: #3E3E3E;
+  text-decoration: none;
+  position: relative;
+  margin-left: -3px;
+}
+
+/* Image Set */
+.imageSet {
+  background: #ccc;
+  border: 10px solid #fff;
+  padding: 5px 10px;
+  height: 515px;
+  width: 822px;
+  font-family: 'tohama', serif;
+  font-size: 16px;
+  overflow: scroll;
+}
+
+.imageSet .thumbs {
+  float: left;
+  z-index: 3;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+}
+
+.imageSet .thumbs ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.imageSet .thumbs ul li {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.imageSet .thumbs ul li img {
+  border: 3px solid #f0f0f0;
+  width: 53px;
+  background: #f0f0f0;
+}
+
+.imageSet .bigImage {
+  text-align: center;
+}
+
+.imageSet .bigImage .linkScroll, .imageSet .bigImage .linkClose {
+  background: #B80000;
+  padding: 3px;
+  width: 165px;
+  float: right;
+  font-size: 13px;
+  margin-top: 10px;
+  margin-right: 10px;
+  position: absolute;
+  z-index: 4;
+  top: 45px;
+  left: 660px;
+}
+
+.imageSet .bigImage .linkClose {
+  top: 15px;
+}
+
+.imagePreview {
+  position: relative;
+  margin-bottom: -600px;
+  z-index: 1;
+}
+
+#bigImage {
+
+}
+
+.linkScroll a, .linkClose a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.horizontalScrollShade {
+  background: none repeat scroll 0 0 #FFFFFF;
+  height: 15px;
+  left: 10px;
+  position: absolute;
+  top: 520px;
+  width: 842px;
+  z-index: 7;
+}
+
+.verticalScrollShade {
+  background: none repeat scroll 0 0 #FFFFFF;
+  height: 520px;
+  left: 838px;
+  position: absolute;
+  top: 10px;
+  width: 15px;
+  z-index: 7;
+}
+
+#dialogFrame {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 0 none;
+  height: 545px;
+  left: -70px;
+  margin-top: -450px;
+  padding: 15px 0 0 15px;
+  position: relative;
+  top: -170px;
+  width: 862px;
+}
+
+#dialogFrameFloat {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 0 none;
+  height: 545px;
+  left: 36.3%;
+  padding: 15px 0 0 15px;
+  position: absolute;
+  top: 20%;
+  width: 862px;
 }

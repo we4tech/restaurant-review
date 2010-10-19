@@ -1,20 +1,22 @@
-<% if @restaurant.author?(current_user) %>
-  <a href='#adminPortion' class='adminPortionActivationLink' title='Edit products'>Show Product Editor</a>
-  <a href='#' class='adminPortionActivationLink' title='Edit products' style="display:none">Hide Product Editor</a>
+<div class='innerPage'>
+  <% if @restaurant.author?(current_user) %>
+    <a href='#adminPortion' class='adminPortionActivationLink' title='Edit products'>Show Product Editor</a>
+    <a href='#' class='adminPortionActivationLink' title='Edit products' style="display:none">Hide Product Editor</a>
 
-  <div class='adminPortion' style='display: none'>
-    <%= link_to tt('nav.add_new_product'), new_restaurant_product_url %>
-    <div class='clear'></div>
+    <div class='adminPortion' style='display: none'>
+      <%= link_to tt('nav.add_new_product'), new_restaurant_product_url(@restaurant) %>
+      <div class='clear'></div>
 
-    <div class='space_10'></div>
-    <div class='break'></div>
-    <div class='space_10'></div>
-    <div class='products'>
-      <%= render :partial => 'products/parts/products',
-                 :locals => {:products => @products_for_admin} %>
+      <div class='space_10'></div>
+      <div class='break'></div>
+      <div class='space_10'></div>
+      <div class='products'>
+        <%= render :partial => 'products/parts/products',
+                   :locals => {:products => @products_for_admin} %>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
-<%= render :partial => 'products/parts/slide' %>
+  <%= render :partial => 'products/parts/slide' %>
+</div>
 

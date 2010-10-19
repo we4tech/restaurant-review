@@ -86,6 +86,10 @@ class User < ActiveRecord::Base
     self.email.match(/^fake@/)
   end
 
+  def reviewed?(restaurant, options = {})
+    self.reviews.of_restaurant(restaurant, options).first
+  end
+
   def self.top_contributors(p_topic, p_limit = 10)
     User.find(
         :all,

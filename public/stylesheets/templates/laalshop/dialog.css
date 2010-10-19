@@ -1,0 +1,29 @@
+.navSet {
+  height: 30px;
+}
+
+.navSet .logo {
+  margin-top: 0;
+}
+
+.navSet .nav {
+  margin-top: 5px;
+}
+
+.navSet .nav ul {
+  line-height: 25px;
+}
+
+.bodySet {
+  float: none;
+  margin-top: 0;
+}
+
+.bodySet .centerContent {
+  border: 0;
+  float: none;
+  margin: 0 auto;
+  height: auto;
+  padding: 10px;
+}
+

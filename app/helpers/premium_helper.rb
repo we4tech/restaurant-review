@@ -9,9 +9,7 @@ module PremiumHelper
   end
 
   def premium?
-    session = session || {}
     return true if @premium
-    return true if session[:premium]
     false
   end
 

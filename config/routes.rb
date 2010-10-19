@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :products, :collection => {:next => :get}
+  map.resources :products, :collection => {:next => :get}, :member => {:slide => :get, :reviews => :get}
 
   map.resources :premium_service_subscribers
 
@@ -116,13 +116,14 @@ ActionController::Routing::Routes.draw do |map|
   map.accept_treat_request '/games/accept_request/:id', :controller => 'games', :action => 'accept_request'
   map.static_page '/static/:page_name', :controller => 'home', :action => 'static_page',
                   :requirements => {:page_name => /[\d\w\.\-\s]/}
-  map.product_long_url '/p/:name/:id', :controller => 'products', :action => 'show'
+  map.product_long '/p/:name/:id', :controller => 'products', :action => 'show'
 
   map.readable_page '/r/:restaurant_id/pages/:page_name',
                     :controller => 'pages', :action => 'show'
   map.site_reviews '/reviews', :controller => 'reviews', :action => 'index'
+  map.site_reviews_on '/reviews/of/:attached_model/:attached_id', :controller => 'reviews', :action => 'reviews_on'
   map.site_messages '/messages', :controller => 'messages', :action => 'index'
-  map.site_page '/p/:page_name', :controller => 'pages', :action => 'show'
+  map.site_page '/page/:page_name', :controller => 'pages', :action => 'show'
 
   # See how all your routes lay out with "rake routes"
 

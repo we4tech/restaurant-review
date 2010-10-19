@@ -12,9 +12,12 @@
 
 <%= f.label :description %>
 <div class='space_10'></div>
-<%= f.text_area :description %>
+<%= f.text_area :description, :style => 'width: 90%' %>
 <%= f.error_message_on :description %>
 <div class='space_10'></div>
 
-
+<!--script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script type="text/javascript">
+  new nicEditor({buttonList : ['bold','italic','underline','left','center','right','ol','ul','fontFormat','indent','outdent','link','unlink','image','upload','xhtml']}).panelInstance('product_description');
+</script-->
 

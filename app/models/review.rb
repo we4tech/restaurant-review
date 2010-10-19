@@ -13,12 +13,23 @@ class Review < ActiveRecord::Base
 
   validates_presence_of :user_id
 
-  named_scope :restaurant, lambda{|restaurant_id| {:conditions => {:restaurant_id => restaurant_id}}}
+  named_scope :of_restaurant, lambda{|restaurant, and_other|
+    {
+        :conditions => {
+            :restaurant_id => restaurant.id
+        }.merge(and_other)
+    }
+  }
   named_scope :loved, :conditions => {:loved => LOVED}
   named_scope :hated, :conditions => {:loved => HATED}
   named_scope :wanna_go, :conditions => {:loved => WANNA_GO}
   named_scope :recent, :order => 'created_at DESC'
   named_scope :by_topic, lambda{|topic_id| {:conditions => {:topic_id => topic_id}}}
+  named_scope :attached_with, lambda{|options|
+    {
+      :conditions => options
+    }
+  }
 
   def loved?
     self.loved == LOVED
@@ -30,6 +41,18 @@ class Review < ActiveRecord::Base
 
   def wanna_go?
     self.loved == WANNA_GO
+  end
+
+  def attached?
+    attached_id.to_i > 0
+  end
+
+  def attachment
+    if attached?
+      attached_model.camelize.constantize.find(attached_id)
+    else
+      nil
+    end
   end
 
 end

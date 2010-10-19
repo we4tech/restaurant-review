@@ -1,0 +1,83 @@
+<div class='centerContent'>
+  <div class='productRelatedItems'>
+    <% if !@product.images.empty? %>
+      <% first_image = @product.images.first %>
+      <%= link_to image_tag(first_image.public_filename), image_url(first_image) %>
+      <%= link_to('', slide_product_url(@product, :layout => 'image'), :class => 'zoomLink') %><br/>
+      <% if !first_image.caption.blank? %>
+        <%= first_image.caption %>
+      <% end %>
+    <% end %>
+
+    <div class='productMeta'>
+      <h4><%= @product.name %></h4>
+      <div class='price'>Price: <%= @product.price %></div>
+      <div class='space_10'></div>
+      <%= render_product_tools %>
+      <div class='clear'></div>
+    </div>
+    <!--%= render_review_box(@restaurant, :attached_model => 'product', :attached_id => @product.id) %-->
+    <!--div class='space_10'></div-->
+
+    <!-- render_reviews(@restaurant, :attached_model => 'product', :attached_id => @product.id) -->
+  </div>
+
+  <div class='product'>
+    <h1>
+      <%= @product.name %>  
+    </h1>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+    
+    <div class='space_10'></div>
+    <%= render_paginated_description @product.description, 650 %>
+
+    <% if !@product.reviews.empty? %>
+      <h4><%= link_to "Reviews (#{@product.reviews(:count)})", reviews_product_url(@product.id) %></h4>
+      <div class='reviews'>
+        <% @product.reviews[0..2].each do |review| %>
+          <%= render :partial => 'reviews/parts/review',
+                     :locals => {
+                         :review => review,
+                         :hide_attachment => true,
+                         :hide_comment => true,
+                         :hide_footer => true,
+                         :length => 100} %>
+        <% end %>
+        <div class='reviewTools'>
+          <%= link_to pt_image_tag('add_your_review_small.png'), reviews_product_url(@product.id) %>
+        </div>
+      </div>
+    <% else %>
+      <%= link_to pt_image_tag('add_your_review_small.png'), reviews_product_url(@product.id) %>
+    <% end %>
+
+    <% if @product.images.length > 1 %>
+      <div class='space_10'></div>
+      <div class='space_10'></div>
+      <div class='space_10'></div>
+      <div class='relatedImages'>
+        <h4>Related images</h4>
+        <%= render_related_images(@product, :start => 1, :type => :inline,
+                                  :image_type => :small,
+                                  :css_class => 'zoomLink') %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<iframe id='dialogFrameFloat' class='floatWindow' style='display:none' src=""></iframe>
+<script type="text/javascript">
+  var LAALSlider = {
+    hidePreview: function() {
+      $('#dialogFrameFloat').fadeOut();
+    }
+  };
+
+  $('.zoomLink').bind('click', function() {
+     var $dialog = $('#dialogFrameFloat');
+     $dialog.attr('src', $(this).attr('href'));
+     $dialog.appear();
+     return false;
+   });
+</script>

@@ -1,14 +1,18 @@
-<div class='breadcrumbs'>
-  <%= link_to @restaurant.name, restaurant_long_url(@restaurant) %> &raquo;
+<% attached_options = attached_options || @attached_options || {} %>
+<div class='centerContent'>
+  <h1>
+    <%= link_to t('nav.reviews'), pt_site_reviews() %>
+    <% if @include_source_object %>
+      &raquo; <%= link_to @include_source_object.name, @include_source_object_link %>
+    <% end %>
+  </h1>
+  <div class='space_10'></div>
+
+  <div class='break'></div>
+  <div class='space_10'></div>
+  <%= render :partial => 'reviews/parts/restaurant_review',
+             :locals => {:restaurant => @restaurant, :attached_options => attached_options} %>
+  <div class="space_10"></div>
+  <%= render :partial => 'reviews/parts/review_editor', :locals => {:attached_options => attached_options} %>
+  <div class="space_10"></div>
 </div>
-<h1>
-  Reviews
-</h1>
-<div class='space_10'></div>
-<div class='break'></div>
-<div class='space_10'></div>
-<%= render :partial => 'reviews/parts/restaurant_review',
-           :locals => {:restaurant => @restaurant} %>
-<div class="space_10"></div>
-<%= render :partial => 'reviews/parts/review_editor' %>
-<div class="space_10"></div>

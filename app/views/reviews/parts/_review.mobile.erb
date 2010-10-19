@@ -2,6 +2,7 @@
    tag_name = tag_name || 'div'
    grid_class = grid_class || 'grid_6'
    hide_comment = hide_comment || false
+   length = length || false
 %>
 <<%= tag_name %> valign='top'>
   <%= link_to image_tag(review.user.display_picture,
@@ -13,7 +14,9 @@
 <<%= tag_name %> class="review <%= grid_class %> hreview" valign='top'>
   <a name="review-<%= review.id %>"></a>
   <% if !review.comment.blank? %>
-    <span class="content"><%= simple_format h(review.comment) %> - </span>
+    <span class="content">
+      <%= simple_format h(review.comment) %> -
+    </span>
   <% end %>
 
   <span class="reviewer">

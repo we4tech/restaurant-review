@@ -6,16 +6,17 @@
   </ul>
 
   <ul class='products' id='products'>
-    <li class='previous'><a href='#'></a></li>
+    <li class='previous'><a href='javascript:void(0)'></a></li>
     <% @products[0..2].each do |product| %>
       <% if !product.images.empty? %>
         <li class='product'>
           <div class='image'>
             <%= image_tag product.images.first.public_filename %>
+            <%= link_to('', slide_product_url(product, :layout => 'image'), :class => 'zoomLink') %>
           </div>
           <div class='tools'>
-            <h4><%= product.id %> - <%= site_product_link(product) %></h4>
-            <p><%= product.description %></p>
+            <h4><%= site_product_link(product) %></h4>
+            <p><%= truncate(product.description, :length => 30) %></p>
             <div class='price'>Price: $<%= product.price %></div>
             <div class='clear'></div>
             <div class='space_10'></div>
@@ -29,7 +30,7 @@
         </li>
       <% end %>
     <% end %>
-    <li class='next'><a href='#'></a></li>
+    <li class='next'><a href='javascript:void(0)'></a></li>
   </ul>
 
   <div class='bottomPagination'>
@@ -40,11 +41,12 @@
 <div id='productItemTemplate' style='display: none'>
   <div class='image'>
     #IMAGE#
+    <a href='#IMAGE_PREVIEW#' class='zoomLink'></a>
   </div>
   <div class='tools'>
-    <h4>#ID# - #LINK#</h4>
+    <h4>#LINK#</h4>
     <p>#DESCRIPTION#</p>
-    <div class='price'>#PRICE#</div>
+    <div class='price'>Price: #PRICE#</div>
     <div class='clear'></div>
     <div class='space_10'></div>
     <ul>
@@ -56,12 +58,15 @@
   </div>
 </div>
 
+<iframe id='dialogFrame' style='display:none' src=""></iframe>
+
 <script type="text/javascript">
   var LAAL_CACHE_KEY = '<%= @restaurant.name %>';
   var LAAL_PRODUCTS_COUNT = <%= @products_count %>;
   var LAAL_PAGE_INDEX = 1;
   var cacheSyncUrl = "<%= next_products_url %>&restaurant_id=<%= @restaurant.id %>&page=";
   var LAAL_NO_MORE_CACHE = false;
+  var LAAL_ZOOM_URL = '/zoom';
 
   SliderCacheUtil.addCache(LAAL_CACHE_KEY, [<%= @products.collect{|p|
     {
@@ -69,7 +74,8 @@
     :id => p.id,
     :link => site_product_link(p),
     :price => p.price,
-    :description => p.description
+    :description => truncate(p.description, :length => 30),
+    :image_preview => slide_product_url(p, :layout => 'image')
     }.to_json}.compact.join(', ') %>]);
 
   var LAALSlider = {
@@ -98,29 +104,58 @@
       var templateHtml = $('#productItemTemplate').html();
       templateHtml = templateHtml.replace(/#LINK#/, cachedItem.link);
       templateHtml = templateHtml.replace(/#IMAGE#/, cachedItem.image);
+      templateHtml = templateHtml.replace(/#IMAGE_PREVIEW#/, cachedItem.image_preview);
       templateHtml = templateHtml.replace(/#ID#/, cachedItem.id);
       templateHtml = templateHtml.replace(/#DESCRIPTION#/, cachedItem.description);
       templateHtml = templateHtml.replace(/#PRICE#/, cachedItem.price);
       html += templateHtml;
       html += "</li>";
 
+      var $productsNav = $('#products li:first, #products li:last');
+
       // Append new html node
       if (before) {
         $('#products .next').before(html);
-        $('#products .product:first').fadeOut('fast', function() {
-          $(this).remove();
-          $('#' + uniqueId).appear('fast');
+        var $oldItem = $('#products .product:first');
+        var $newItem = $('#' + uniqueId);
+        var $products = $('#products');
+
+        $products.css('position', 'relative').css('width', '1000px');
+        $newItem.appear();
+        $productsNav.hide();
+
+        $oldItem.fadeOut();
+        $products.animate({
+          left: '-170px',
+        }, function() {
+          $products.css('left', '0');
+          $oldItem.remove();
+          $productsNav.appear();
         });
+
       } else {
         $('#products .previous').after(html);
-        $('#products .product:last').fadeOut('fast', function() {
-          $(this).remove();
-          $('#' + uniqueId).appear('fast');
+        var $oldItem = $('#products .product:last');
+        var $newItem = $('#' + uniqueId);
+        var $products = $('#products');
+
+        $products.css('position', 'relative').css('left', '-170px').css('width', '1000px');
+        $newItem.appear();
+        $productsNav.hide();
+
+        $oldItem.fadeOut();
+        $products.animate({
+          left: '0px',
+        }, function() {
+          $products.css('left', '0');
+          $oldItem.remove();
+          $productsNav.appear();
         });
       }
 
       // Update status
       LAALSlider.updateStatus();
+      LAALSlider.activateZoomLink();
       LAALSlider.inProgress = false;
     },
 
@@ -140,6 +175,20 @@
           LAALSlider.updateHtml(cachedItem, false);
         }
       }
+    },
+
+    hidePreview: function() {
+      $('#dialogFrame').fadeOut();
+    },
+
+    activateZoomLink: function() {
+      $('.zoomLink').unbind('click');
+      $('.zoomLink').bind('click', function() {
+         var $dialog = $('#dialogFrame');
+         $dialog.attr('src', $(this).attr('href'));
+         $dialog.appear();
+         return false;
+       });
     }
   };
 
@@ -151,9 +200,15 @@
     LAALSlider.previous();
   });
 
+ $('.product .image').each(function() {
+   var $this = $(this);
+ });
+
  $('.productsSlide').scroll(function() {
    
  });
 
  LAALSlider.updateStatus();
+ LAALSlider.activateZoomLink();
+
 </script>

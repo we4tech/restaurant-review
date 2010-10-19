@@ -6,7 +6,8 @@ if !@products.empty?
       :id => p.id,
       :link => site_product_link(p),
       :price => p.price,
-      :description => p.description
+      :description => truncate(p.description, :length => 30),
+      :image_preview => slide_product_url(p, :layout => 'image')
       }.to_json}.compact.join(', ')}]);
     LAAL_PAGE_INDEX = #{params[:page].to_i + 1};
   }

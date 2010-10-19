@@ -1,0 +1,35 @@
+<% if params[:embed].nil? %>
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE html
+      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+      <%= @premium_template.site_title %>
+      <% if @site_title %>
+        :: <%= @site_title %>
+      <% end %>
+    </title>
+
+    <%= @premium_template.meta_tags %>
+
+    <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application',
+                               :cache => 'cache_all.js' %>
+
+    <%= javascript_include_tag 'jquery.scrollTo-1.4.2-min' %>
+    <%= javascript_include_tag 'jquery.ajaxify' %>
+
+    <%= stylesheet_link_tag 'templates/laalshop/site' %>
+  </head>
+  <body>
+<% end %>
+
+<div class='imageSet'>
+  <%= render :partial => @inner_page %>
+</div>
+
+<% if params[:embed].nil? %>
+  </body>
+  </html>
+<% end %>

@@ -153,6 +153,7 @@ en: !map:HashWithIndifferentAccess
     login: login
     more: Read more
     add_image: Add image ({{count}})
+    reviews: Reviews
   module: !map:HashWithIndifferentAccess 
     Most loved places!: Most loved places!
     Search restaurants: Search restaurants

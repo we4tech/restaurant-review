@@ -73,4 +73,25 @@ module UrlOverrideHelper
     link_to product.name, site_product_url(product)
   end
 
+  def pt_site_reviews
+    if premium? && pt_activate_no_reference_url?
+      site_reviews_url
+    else
+      restaurant_reviews_url(@restaurant)
+    end
+  end
+
+  def attached_url(model, object)
+    case model
+      when 'product'
+        site_product_url(object)
+      else
+        nil
+    end
+  end
+
+  def attached_link(model, object)
+    link_to object.name, attached_url(model, object)
+  end
+
 end
