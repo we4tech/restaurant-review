@@ -1,5 +1,18 @@
 h2. WellTreat.US release change logs.
 
+h4. Release - 0.16_LAALSHOP.
+
+* LS#2 Implement domain based virtual hosting support
+* LS#4 Add welcome page
+* LS#5 Implement Product gallery service
+* LS#7 Create facebook and twitter fan pages
+* LS#11 Integrate front page featured products gallery
+* LS#12 Coming soon subscriber
+* LS#13 Display list of subscribed users
+* LS#17 Add image zooming feature
+* 188. Add Tag option
+* 190. Integrate real restaurant owner email address..
+
 h4. Release - 0.14.
 
 * 161. Design template for restaurant page
