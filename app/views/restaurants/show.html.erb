@@ -10,11 +10,13 @@
           <%- if current_user.admin? -%>,
             <%= link_to 'Premium', restaurant_premium_templates_path(@restaurant) -%>
             <% if @restaurant.featured? %>
-              | <%= link_to t('label.remove_from_featured'), featured_restaurant_path(@restaurant.id) %>
+              , <%= link_to t('label.remove_from_featured'), featured_restaurant_path(@restaurant.id) %>
             <% else %>
-              | <%= link_to t('label.make_as_featured'), featured_restaurant_path(@restaurant.id) %>
+              , <%= link_to t('label.make_as_featured'), featured_restaurant_path(@restaurant.id) %>
             <% end %>
-          <%- end -%>)
+          <%- end -%>
+          , <%= link_to 'Add recipients', add_recipient_restaurant_path(@restaurant.id) %>
+          )
         <% end %>
       </span>
     </div>

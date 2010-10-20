@@ -5,6 +5,7 @@ class Restaurant < ActiveRecord::Base
   serialize :long_array
   serialize :short_map
   serialize :long_map
+  serialize :extra_notification_recipients
 
   belongs_to :user
   belongs_to :topic
@@ -135,6 +136,43 @@ class Restaurant < ActiveRecord::Base
     total_loves = self.reviews.loved.count.to_f
     total_reviews = self.reviews.count.to_f
     (total_loves / total_reviews) * p_scale
+  end
+
+  def apply_filters(filter_map, attributes = {})
+    if filter_map && !filter_map.empty?
+      filter_map.each do |filter, fields|
+        method_name = 'filter_' + filter.to_s
+        if respond_to?(method_name)
+          send(method_name, (fields || '').split(/,/).collect(&:strip).compact, attributes)
+        end
+      end
+    end
+  end
+
+  #
+  # Filters Implementations
+  # Filters are used for filtering special fields, such as trimming a
+  # serializable array field.
+  #
+  def filter_check_empty_array_element(fields, attributes = {})
+    attributes.stringify_keys!
+    fields.each do |field|
+      if attributes.empty?
+        values = send(field)
+      else
+        values = attributes[field.to_s]
+      end
+
+      if values.is_a?(Array)
+        modified_values = values.collect{|v| v.strip.blank? ? nil : v}.compact
+
+        if attributes.empty?
+          send("#{field}=", modified_values)
+        else
+          attributes[field] = modified_values
+        end
+      end
+    end
   end
 
   private

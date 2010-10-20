@@ -136,14 +136,19 @@ class RestaurantsController < ApplicationController
           :user_id => user_id, :topic_id => @topic.id)
       attributes[:long_array] ||= []
       attributes[:short_array] ||= []
+      attributes[:extra_notification_recipients] ||= []
+
+      restaurant.apply_filters(params[:filters], attributes)
 
       if restaurant.update_attributes(attributes)
-        if current_user.share_on_facebook?
+        if (params[:fb_share].nil? || params[:fb_share] == 'true') &&
+            current_user.share_on_facebook?
           flash[:notice] = 'Saved and shared your updates!'
-          redirect_to facebook_publish_url('updated_restaurant', restaurant.id, :next_to => edit_restaurant_url(restaurant))
+          return_to = params[:return_to] || edit_restaurant_url(restaurant)
+          redirect_to facebook_publish_url('updated_restaurant', restaurant.id, :next_to => return_to)
         else
           flash[:notice] = 'Saved your updates!'
-          redirect_to edit_restaurant_url(restaurant)
+          redirect_to params[:return_to] || edit_restaurant_url(restaurant)
         end
       else
         @form_fields = @topic.form_attribute.fields
@@ -227,6 +232,10 @@ class RestaurantsController < ApplicationController
     end
     mail = UserMailer.send("create_#{params[:m]}", args.length > 1 ? args : args.first)
     render :inline => "#{mail.body}"
+  end
+
+  def add_recipient
+    @restaurant = Restaurant.find(params[:id].to_i)
   end
 
   private

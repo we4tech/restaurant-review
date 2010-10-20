@@ -43,7 +43,7 @@ class UserMailer < ActionMailer::Base
   def comment_notification(review_comment)
     css :fresh
     
-    setup_email(review_comment.review.user, review_comment.topic)
+    setup_email(review_comment.review.user, review_comment.topic, review_comment.restaurant)
     @subject += "#{review_comment.user.login.humanize} has commented on your review at '#{review_comment.restaurant.name}'"
     @body[:review_comment] = review_comment
     @body[:url] = "#{restaurant_long_route_url(
@@ -57,7 +57,7 @@ class UserMailer < ActionMailer::Base
   def comment_participants_notification(participant, review_comment)
     css :fresh
 
-    setup_email(participant, review_comment.topic)
+    setup_email(participant, review_comment.topic, review_comment.restaurant)
     @subject += "#{review_comment.user.login.humanize} has commented after your comment at '#{review_comment.restaurant.name}'"
     @body[:review_comment] = review_comment
     @body[:participant] = participant
@@ -72,7 +72,7 @@ class UserMailer < ActionMailer::Base
   def review_notification(review)
     css :fresh
     
-    setup_email(review.restaurant.user, review.topic)
+    setup_email(review.restaurant.user, review.topic, review.restaurant)
     @subject += "#{review.user.login.humanize} has reviewed your #{review.topic.subdomain} '#{review.restaurant.name}'"
     @body[:review] = review
     @body[:url] = "#{restaurant_long_route_url(
@@ -84,8 +84,19 @@ class UserMailer < ActionMailer::Base
   end
 
   protected
-    def setup_email(user, topic)
+    def setup_email(user, topic, restaurant = nil)
+      cc_emails = []
+
+      if restaurant && !(restaurant.extra_notification_recipients || []).empty?
+        restaurant.extra_notification_recipients.each{|e| cc_emails << e}
+      end
+
       @recipients  = "#{user.email}"
+
+      if !cc_emails.empty?
+        @cc          = cc_emails
+      end
+
       @from        = "Notification <support@welltreat.us>"
       @subject     = "[#{topic ? topic.subdomain : 'www'}.welltreat.us] "
       @sent_on     = Time.now
