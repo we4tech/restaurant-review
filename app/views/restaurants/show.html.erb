@@ -30,8 +30,8 @@
       <div class='space_10'></div>
       <fb:like href="<%= request.url %>"></fb:like>
 
+      <%= render :partial => 'images/parts/image_gallery' %>
       <div class='contentDetails'>
-        <%= render :partial => 'images/parts/image_gallery' %>
         <%= @restaurant.description %>
       </div>
 
