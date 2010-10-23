@@ -18,7 +18,7 @@
 # .conf files. Do not symlink the .conf file to the .base file; it's wrong.
 #
 
-<% path = "/var/sphinx/" %>
+<% path = "/home/restaurantreview/shared/sphinx" %>
 
 # Indexing options
 indexer
