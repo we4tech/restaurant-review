@@ -80,11 +80,11 @@ module RestaurantsHelper
     
     
     # first search with strict location and cusinis 
-    restaurants = perform_search([:Restaurant], (%{@short_array #{short_array.join('|')} @long_array #{cuisin_tags.join('|')} @name -(#{@restaurant.name})}), {:per_page => per_page})
+    restaurants = perform_search([:Restaurant], (%{@short_array #{short_array.join('|')} @long_array #{cuisin_tags.join('|')} @name -(#{@restaurant.name})}), {:per_page => per_page, :page => 1})
     
     # second find without location filter
     if restaurants.empty? || restaurants.length < per_page
-      more_restaurants = perform_search([:Restaurant], (%{@long_array #{cuisin_tags.join('|')} @name -(#{@restaurant.name})}), {:per_page => per_page})
+      more_restaurants = perform_search([:Restaurant], (%{@long_array #{cuisin_tags.join('|')} @name -(#{@restaurant.name})}), {:per_page => per_page, :page => 1})
       more_restaurants.each do |r|
         restaurants << r
       end
@@ -92,7 +92,7 @@ module RestaurantsHelper
     
     if restaurants.empty? || restaurants.length < per_page
       restaurant_ids = restaurants.collect(&:id)
-      more_restaurants = perform_search([:Restaurant], (%{@long_array "#{cuisin_tags.join(' ')} #{long_array.join(' ')}"/1 @name -(#{@restaurant.name})}), {:per_page => 10})
+      more_restaurants = perform_search([:Restaurant], (%{@long_array "#{cuisin_tags.join(' ')} #{long_array.join(' ')}"/1 @name -(#{@restaurant.name})}), {:per_page => 10, :page => 1})
       more_restaurants.each do |r|
       	if !restaurant_ids.include?(r.id)
       	  restaurants << r

@@ -25,6 +25,8 @@ module SearchHelper
       options[:class_names] = models.collect(&:to_s)
     end
 
+    page_index = options[:page] || params[:page]
+
     begin
       search = Ultrasphinx::Search.new(
           {:query => query,
@@ -37,7 +39,7 @@ module SearchHelper
            },
            :per_page => Restaurant::per_page,
            :sort_by => '@weight DESC',
-           :page => params[:page].nil? ? 1 : params[:page].to_i}.merge(options))
+           :page => page_index.nil? ? 1 : page_index.to_i}.merge(options))
       search.run
       search
     rescue => $e

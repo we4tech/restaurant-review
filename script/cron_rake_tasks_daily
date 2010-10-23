@@ -1,0 +1,3 @@
+#!/bin/bash
+cd /home/restaurantreview/current
+/usr/bin/env rake ultrasphinx:index:main RAILS_ENV=production
