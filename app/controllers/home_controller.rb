@@ -149,6 +149,7 @@ class HomeController < ApplicationController
   end
 
   BANNED_PARAM_KEYS = ['_models', 'action', 'controller', 'l', 'page', 'format']
+  ALLOWED_PARAM_KEY_NEEDLE = ['short_array', 'long_array', 'description', 'name', 'address']
    	
   def search
     @title = I18n.t('header.search_results')
@@ -162,7 +163,7 @@ class HomeController < ApplicationController
    	query_map = {}
    	@tags = []
    	params.each do |k, v|
-   	  if !BANNED_PARAM_KEYS.include?(k.to_s)  
+   	  if v && allowed_key?(k)
    		query_map[k] = v 
    		
    		if v.is_a?(Array)
@@ -189,6 +190,13 @@ class HomeController < ApplicationController
     @breadcrumbs = []
     
     render :action => :recommend
+  end
+  
+  def allowed_key?(key)
+  	ALLOWED_PARAM_KEY_NEEDLE.each do |needle|
+  	  return true if key.include?(needle)
+  	end
+  	false
   end
 
   def photos
