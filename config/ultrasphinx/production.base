@@ -18,7 +18,7 @@
 # .conf files. Do not symlink the .conf file to the .base file; it's wrong.
 #
 
-<% path = "/opt/local/var/db/sphinx/" %>
+<% path = "/var/sphinx/" %>
 
 # Indexing options
 indexer
@@ -33,7 +33,7 @@ indexer
 searchd
 {  
   # What interface the search daemon should listen on and where to store its logs
-  address = 0.0.0.0
+  address = 127.0.0.1
   port = 3313
   seamless_rotate = 1
   log = <%= path %>log/searchd.log
