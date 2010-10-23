@@ -167,6 +167,8 @@ class HomeController < ApplicationController
    		
    		if v.is_a?(Array)
    		  v.each{|vi| @tags << vi.downcase}
+   		elsif v.is_a?(Hash)
+  		  v.values.each{|vi| @tags << vi.downcase}
    		else
    		  @tags << v.downcase
    		end
