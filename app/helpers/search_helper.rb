@@ -5,7 +5,15 @@ module SearchHelper
   def build_search_query(map, values = [])
     query = ""
     map.each do |fields, value|
-      parts = value.is_a?(Array) ? value : value.split(/\s/)
+      parts = []
+      if value.is_a?(Array) 
+      	parts = value
+      elsif value.is_a?(Hash)
+        parts = value.values
+      else 
+        value.split(/\s/)
+      end
+      
       query << "@(#{fields.split('|').join(',')}) \"#{parts.join(' ')}\"/#{parts.length - 1 > 0 ? parts.length - 1 : 1} "
     end
 
