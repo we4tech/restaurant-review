@@ -42,12 +42,14 @@ module SearchHelper
       search
     rescue => $e
       logger.error($e)
-      UserMailer::deliver_server_status_notification('DOWN Ultrasphinx', %{
+      if $e.is_a?(Errno::ECONNREFUSED)
+        UserMailer::deliver_server_status_notification('DOWN Ultrasphinx', %{
 Dear server admin,
 could you please turn on sphinx server? we can't reach it here!
 
 Error messages -
-#{$e.to_s}})
+#{$e.to_s}})        
+      end
       WillPaginate::Collection.new(1, 10, 0)
     end
   end
