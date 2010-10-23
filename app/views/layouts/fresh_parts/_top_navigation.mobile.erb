@@ -5,9 +5,9 @@
 
   <div id="site_top_navigation">
     <% if I18n.locale.to_s == 'en' %>
-      <%= link_to 'বাংলা', root_url(:l => 'bn') %> .
+      <a href='/?l=bn'>বাংলা</a> .
     <% else %>
-      <%= link_to 'English', root_url(:l => 'en') %> .
+      <a href='/?l=en'>English</a> .
     <% end %>
     <span> <%= link_to t('layout.links.home'), root_url %> . </span>
     <% if not logged_in? %>

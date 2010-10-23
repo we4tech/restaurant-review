@@ -48,13 +48,14 @@ en: !map:HashWithIndifferentAccess
     enter_email: Enter your email address
     not_logged_in: Not logged in
     remove_from_featured: Remove from featured
+    suggested_restaurants: You may also check!
     attached_with: Attached with
     i_wannago: i wanna go to
-    select_file: Select file
     to_visit: to visit
     author_added_on: author has added this picture on
     write_comment: Write your comment
     joined_our_community: has joined our community about
+    select_file: Select file
     fb_not_connected: You haven't yet connected your account with your facebook account.     please click on 'Auto share on Facebook' button on the top of the page
     delete_comment: Do you want to DELETE this comment ?
     no_review: Hola! you haven't reviewed any {{name}} yet!
@@ -147,13 +148,13 @@ en: !map:HashWithIndifferentAccess
     add_new_product: Add new product
     less: Read less
     show: Show
+    reviews: Reviews
     news: News
     read_more_reviews: check rest of the reviews...
     next: "Next \xC2\xBB"
     login: login
-    more: Read more
     add_image: Add image ({{count}})
-    reviews: Reviews
+    more: Read more
   module: !map:HashWithIndifferentAccess 
     Most loved places!: Most loved places!
     Search restaurants: Search restaurants

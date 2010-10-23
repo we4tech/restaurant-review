@@ -3,7 +3,7 @@
     <%= t('frontpage.recommend') %>
     <input type='hidden' name='_models' value='Restaurant'/>
 
-    <select name='short_array[]' onchange="document.getElementById('recommend_form').submit()">
+    <select name='short_array|long_array[]' onchange="document.getElementById('recommend_form').submit()">
       <% if @location_tag_group %>
         <% @location_tag_group.tags.each do |tag| %>
           <option value='<%= tag.name %>'><%= tag.name %></option>

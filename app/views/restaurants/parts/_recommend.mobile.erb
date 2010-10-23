@@ -1,9 +1,9 @@
 <div class='recommendRestaurants'>
   <form action="<%= search_url %>" id='recommend_form'>
     <%= t('frontpage.recommend') %>
-    <input type='_models' value='Restaurant'/>
-    
-    <select name='short_array|address' onchange="document.getElementById('recommend_form').submit()">
+    <input type='hidden' name='_models' value='Restaurant'/>
+
+    <select name='short_array|long_array[]' onchange="document.getElementById('recommend_form').submit()">
       <% if @location_tag_group %>
         <% @location_tag_group.tags.each do |tag| %>
           <option value='<%= tag.name %>'><%= tag.name %></option>

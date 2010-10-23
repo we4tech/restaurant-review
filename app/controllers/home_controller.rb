@@ -148,7 +148,7 @@ class HomeController < ApplicationController
     end
   end
 
-  BANNED_PARAM_KEYS = ['_models', 'action', 'controller', 'l', 'page']
+  BANNED_PARAM_KEYS = ['_models', 'action', 'controller', 'l', 'page', 'format']
    	
   def search
     @title = I18n.t('header.search_results')

@@ -135,3 +135,11 @@ textarea {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.associated_tags a {
+  text-decoration: none;
+}
+
+.associated_tags .selectedTag {
+  border-bottom: 1px solid red;
+}

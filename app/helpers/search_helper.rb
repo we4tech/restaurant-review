@@ -6,7 +6,7 @@ module SearchHelper
     query = ""
     map.each do |fields, value|
       parts = value.is_a?(Array) ? value : value.split(/\s/)
-      query << "@(#{fields.split('|').join(',')}) \"#{parts.join(' ')}\"/#{parts.length - 1 > 0 ? parts.length - 1 : 1}"
+      query << "@(#{fields.split('|').join(',')}) \"#{parts.join(' ')}\"/#{parts.length - 1 > 0 ? parts.length - 1 : 1} "
     end
 
     query
@@ -40,7 +40,7 @@ could you please turn on sphinx server? we can't reach it here!
 
 Error messages -
 #{$e.to_s}})
-      []
+      WillPaginate::Collection.new(1, 10, 0)
     end
   end
   

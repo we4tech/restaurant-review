@@ -4,13 +4,21 @@
       <%= link_to @topic.name.humanize.pluralize, root_url %> &raquo;
       <span class="review_tools">
         <% if @restaurant.author?(current_user) %>
-          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>,
+          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>
+          ,
           <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(@restaurant) -%>
           <%- if current_user.admin? -%>,
             <%= link_to 'Premium', restaurant_premium_templates_path(@restaurant) -%>
-          <%- end -%>)
+            <% if @restaurant.featured? %>
+              , <%= link_to t('label.remove_from_featured'), featured_restaurant_path(@restaurant.id) %>
+            <% else %>
+              , <%= link_to t('label.make_as_featured'), featured_restaurant_path(@restaurant.id) %>
+            <% end %>
+          <%- end -%>
+          , <%= link_to 'Add recipients', add_recipient_restaurant_path(@restaurant.id) %>
+          )
         <% end %>
-      </span> 
+      </span>
     </div>
     <div class="break space_5"></div>
     <%= render :partial => 'pages/parts/links' %>
@@ -18,13 +26,26 @@
 
     <div class="restaurant_details">
       <h1><%= @restaurant.name %></h1>
+
       <div class='space_10'></div>
       <fb:like href="<%= request.url %>"></fb:like>
 
-      <p>
-        <%= render :partial => 'images/parts/image_gallery' %>
-        <%= simple_format @restaurant.description %>
-      </p>
+      <%= render :partial => 'images/parts/image_gallery' %>
+      <div class='contentDetails'>
+        <%= @restaurant.description %>
+      </div>
+
+      <% if @restaurant.description.length > 400 %>
+        <div class='clear space_10'></div>
+        <div class='redBreak'></div>
+        <div class='contentDetailsTools'>
+          <a href='javascript:void(0)' class='readMoreLess'
+             onclick='$(".contentDetails").css("max-height", "inherit").css("overflow-y", "visible"); $(".contentDetailsTools .readMoreLess").toggle()'><%= t('nav.more') %></a>
+          <a href='javascript:void(0)' class='readMoreLess readLess'
+             style='display:none' onclick='$(".contentDetails").css("max-height", "200px").css("overflow-y", "hidden"); $(".contentDetailsTools .readMoreLess").toggle()'><%= t('nav.less') %></a>
+        </div>
+        <div class='clear space_10'></div>
+      <% end %>
 
       <div class='properties'>
         <% @form_fields.each do |field| %>
@@ -37,7 +58,7 @@
           %>
           <% if field_value && display %>
             <div class="grid_2">
-              <strong><%= tt(field_label, :group => :view) %></strong>
+              <strong><%= tt("fields.#{field_label}", :group => :view) %></strong>
             </div>
             <div class="grid_4">
               <% if field_type == 'checkbox' %>
@@ -59,32 +80,6 @@
       <div class="clear"></div>
       <div class="space_10"></div>
 
-      <% if !(@restaurant.address || '').blank? %>
-        <div class="site_simple_box restaurant_address">
-          <h4>
-            <%= t('fields.address') %>
-          </h4>
-          <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
-            <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
-                "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
-                "sensor=false&markers=color:green|label:R|" +
-                "#{@restaurant.lat},#{@restaurant.lng}&key=#{MAP_API_KEY}&size="
-               details_link = "http://maps.google.com/maps?f=q&" +
-                   "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
-                   "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"
-            %>
-
-            <div class="space_5"></div>
-            <%= link_to image_tag(map_url + "200x200"), "#{map_url}500x500",
-                        :class => 'openUpinLightBox',
-                        :title => link_to(t('fields.map'), details_link) %>
-          <% end %>
-          <address><%= @restaurant.address %></address>
-        </div>
-      <% end %>
-
-      <div class="space_10"></div>
-
       <div class="clear"></div>
       <div class="bookmark_tools">
         <%= distance_of_time_in_words(@restaurant.created_at, Time.now) %>
@@ -104,56 +99,68 @@
       </div>
       <div class="break"></div>
       <div class="space_5"></div>
+      <%= render_related_restaurants(5) %>
+
     </div>
     <div class="clear"></div>
 
     <% if current_user && @allow_contributed_image_upload %>
-      <%= render :partial => 'contributed_images/parts/add'%>
+      <%= render :partial => 'contributed_images/parts/add' %>
     <% end %>
 
     <%= render :partial => 'contributed_images/parts/image_gallery' %>
-
     <div class="clear space_10"></div>
-    <%= render :partial => 'reviews/parts/restaurant_review', :locals => {:restaurant => @restaurant} %>
 
-    <div class="space_10"></div>
-    <% if current_user %>
-      <% if !(user_review = current_user.reviews.restaurant(@restaurant.id).first) %>
-        <%= render :partial => 'reviews/parts/form', :locals => {:restaurant => @restaurant} %>
-      <% else %>
-        <div class='highlight'>
-          <%= t('label.existing_review_edit', :place => t('label.this_place'))%>
-          <a href='javascript: void(0)'
-             onclick="$('#edit_review_<%= user_review.id %>').show()">
-            <%= t('nav.edit_existing_review') %></a>
-        </div>
-        <%= render :partial => 'reviews/parts/edit_form',
-                   :locals => {:review => user_review} %>
-      <% end %>
-    <% else %>
-      <%= t('label.login_required_to_review', :link => link_to(t('nav.login'), login_url)) %>
-    <% end %>
+    <div class="break"></div>
+    <div class='space_10'></div>
+    <%= render :partial => 'reviews/parts/review_editor' %>
+    <div class='break'></div>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+    <%= render :partial => 'reviews/parts/restaurant_review',
+               :locals => {:restaurant => @restaurant} %>
+
     <div class="space_10"></div>
   </div>
 
-  <div class="grid_4" id="site_center_boxes">
+  <div class="" id="site_center_boxes">
 
     <% if @topic.name == 'restaurant' %>
       <div class="site_simple_box restaurant_address" align="center">
         <a href='mailto:biz@welltreat.us?subject=[BIZ knock knock]'
            title="<%= t('title.own_this') %>">
-          <%= image_tag('fresh/button_do_u_own_this.png')%>
+          <%= image_tag('fresh/button_do_u_own_this.png') %>
         </a>
       </div>
       <div class="clear"></div>
       <div class="space_10"></div>
-    <%end %>
+    <% end %>
 
-    
+    <% if !(@restaurant.address || '').blank? %>
+      <div class="site_simple_box restaurant_address">
+        <h4>
+          <%= t('fields.address') %>
+        </h4>
+        <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
+          <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
+              "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
+              "sensor=false&markers=color:green|label:R|" +
+              "#{@restaurant.lat},#{@restaurant.lng}&key=#{MAP_API_KEY}&size="
+             details_link = "http://maps.google.com/maps?f=q&" +
+                 "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
+                 "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"
+          %>
+
+          <div class="space_5"></div>
+          <%= link_to image_tag(map_url + "300x300"), "#{map_url}800x800",
+                      :class => 'openUpinLightBox',
+                      :title => link_to(t('fields.map'), details_link) %>
+        <% end %>
+        <address><%= @restaurant.address %></address>
+      </div>
+    <% end %>
     <div class="clear"></div>
     <%= render_who_wanna_go_there(@restaurant) %>
-    <div class="space_10"></div>
-
   </div>
 </div>
 
@@ -165,9 +172,9 @@
       <span class="average"><%= @restaurant.rating_out_of(Restaurant::RATING_LIMIT) %></span> out of
       <span class="best"><%= Restaurant::RATING_LIMIT %></span>
    </span>
-   based on
-   <span class="count"><%= @restaurant.reviews.loved.count %></span> ratings.
-   <span class="votes"><%= @restaurant.reviews.count %></span> user reviews.
+  based on
+  <span class="count"><%= @restaurant.reviews.loved.count %></span> ratings.
+  <span class="votes"><%= @restaurant.reviews.count %></span> user reviews.
 </div>
 
 <div class="vcard">
@@ -185,4 +192,5 @@
       </span>
    </span>
 </div>
+
 
