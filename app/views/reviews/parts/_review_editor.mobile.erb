@@ -4,24 +4,9 @@
 %>
 
 <% if logged_in? %>
-  <% if !(user_review = current_user.reviewed?(restaurant, attached_options)) %>
-    <%= render :partial => 'reviews/parts/form',
+  <%= render :partial => 'reviews/parts/form',
                :locals => {:restaurant => restaurant,
                            :attached_options => attached_options} %>
-  <% else %>
-    <div class='highlight'>
-      <%= t('label.existing_review_edit', :place => tt('label.this_place')) %>
-      <a href='javascript: void(0)'
-         onclick="$('#edit_review_<%= user_review.id %>').show()">
-        <%= t('nav.edit_existing_review') %>
-      </a>
-    </div>
-    <div class='space_10'></div>
-    <%= render :partial => 'reviews/parts/edit_form',
-               :locals => {:restaurant => restaurant,
-                           :review => user_review,
-                           :attached_options => attached_options} %>
-  <% end %>
 <% else %>
   <%= t('label.login_required_to_review',
         :link => link_to(t('nav.login'), login_url)) %>
