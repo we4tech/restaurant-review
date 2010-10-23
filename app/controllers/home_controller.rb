@@ -148,13 +148,33 @@ class HomeController < ApplicationController
     end
   end
 
+  BANNED_PARAM_KEYS = ['_models', 'action', 'controller', 'l', 'page']
+   	
   def search
     @title = I18n.t('header.search_results')
     @site_title = @title
-    @restaurants = WillPaginate::Collection.create(1, Restaurant::per_page) do |pager|
-      pager.replace([])
-      pager.total_entries = 0
-    end
+
+    models = []
+    if params[:_models] 
+      models = params[:_models].split(',').collect{|m| m.strip.blank? ? nil : m.strip}.compact
+   	end
+   	
+   	query_map = {}
+   	@tags = []
+   	params.each do |k, v|
+   	  if !BANNED_PARAM_KEYS.include?(k.to_s)  
+   		query_map[k] = v 
+   		
+   		if v.is_a?(Array)
+   		  v.each{|vi| @tags << vi.downcase}
+   		else
+   		  @tags << v.downcase
+   		end
+   	  end
+   	end
+   		
+	@tag_ids = []
+    @restaurants = perform_search(models, build_search_query(query_map, @tags))
 
     # pending module - :render_recently_added_pictures
     load_module_preferences
@@ -165,6 +185,8 @@ class HomeController < ApplicationController
         :render_most_lovable_places,
         :render_recently_added_places]
     @breadcrumbs = []
+    
+    render :action => :recommend
   end
 
   def photos

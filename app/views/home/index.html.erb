@@ -5,6 +5,9 @@
     <% end %><%= @title %>
   </h1>
   <div class="break space_5"></div>
+  <div class='info'><%= page_entries_info @restaurants %></div>
+  <div class="space_5"></div>
+  <div class="break space_5"></div>
   <% @restaurants.each_with_index do |restaurant, index| %>
     <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :index => index} %>
   <% end %>

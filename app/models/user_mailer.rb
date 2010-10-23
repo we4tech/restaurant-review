@@ -83,6 +83,15 @@ class UserMailer < ActionMailer::Base
     @body[:topic] = review.topic
   end
 
+  def server_status_notification(subject, message)
+    restaurant = Restaurant.first
+    user = User.find_by_email('hasan83bd@gmail.com')
+
+    setup_email(user, Topic.default)
+    @subject += subject
+    @body[:message] = message
+  end
+
   protected
     def setup_email(user, topic, restaurant = nil)
       cc_emails = []

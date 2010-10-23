@@ -5,6 +5,9 @@
     <% end %><%= @title %>
   </h1>
   <div class="break space_5"></div>
+  <div class='info'><%= page_entries_info @restaurants %></div>
+  <div class="space_5"></div>
+  <div class="break space_5"></div>
   <% if !@restaurants.empty? %>
     <% @restaurants.each_with_index do |restaurant, index| %>
       <%= render :partial => 'restaurants/parts/restaurant',
@@ -23,7 +26,9 @@
   <div class='site_simple_box filter_box'>
     <h4><%= t('label.filter_by') %></h4>
     <div class='space_10'></div>
-    <form action="<%= recommend_url %>">
+    <form action="<%= search_url %>" id='recommend_form'>
+      <input type='hidden' name='_models' value='Restaurant'/>
+
       <div class='tags'>
         <% @topic.tag_groups.each do |tag_group| %>
           <b><%= tag_group.name %></b>
@@ -31,9 +36,9 @@
           <% tag_group.tags.each do |tag| %>
             <div class='tag inlineTag'>
               <input id='<%= element_id = "tag_#{tag.id}" %>'
-                     type='checkbox' name='tag_ids[]'
-                     <%= @tag_ids.include?(tag.id) ? 'checked="checked"' : '' %>
-                     value='<%= tag.id %>'/>
+                     type='checkbox' name='short_array|long_array[]'
+                     <%= @tags.include?(tag.name.downcase) ? 'checked="checked"' : '' %>
+                     value='<%= tag.name %>' onclick="document.getElementById('recommend_form').submit()"/>
               <label for='<%= element_id %>'><%= tag.name %></label>
             </div>
           <% end %>

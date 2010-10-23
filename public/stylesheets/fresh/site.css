@@ -970,3 +970,21 @@ form .hints {
   color: #888;
   font-style: italic;
 }
+
+.info {
+  color: #888;
+}
+
+.similarRestaurant {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  float: left;
+  width: 80px;
+  padding: 5px;
+  text-align: center;
+}
+
+.similarRestaurant .name {
+  line-height: 15px;
+  font-size: 70%;
+}

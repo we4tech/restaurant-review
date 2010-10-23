@@ -60,7 +60,7 @@
         <%= restaurant.tags.collect {|tag|
           link_to(tag.name, tag_details_url(
               :label => 'cuisines-tags', :tag => url_escape(tag.name)),
-                  :class => "#{@tag_ids && @tag_ids.include?(tag.id) ? 'selectedTag' : ''}")
+                  :class => "#{@tags && @tags.include?(tag.name.downcase) ? 'selectedTag' : ''}")
         }.join(', ') %>
       </div>
     <% end %>

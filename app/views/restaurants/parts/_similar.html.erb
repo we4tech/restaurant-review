@@ -1,0 +1,25 @@
+<div class='similarRestaurants'>
+  <h4>You may also check!</h4>
+  <div class="space_5"></div>
+
+  <div class='restaurants'>
+    <% restaurants.each do |restaurant| %>
+      <% image = restaurant.rand_image %>
+
+      <div class='similarRestaurant'>
+        <% if image %>
+          <div class='picture'>
+            <%= image_tag image.public_filename(:small) %>
+          </div>
+        <% end %>
+        <div class='name'>
+          <%= restaurant_link(restaurant) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class='clear'></div>
+</div>
+
+<div class="space_5"></div>
+<div class="break"></div>

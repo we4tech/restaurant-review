@@ -63,12 +63,47 @@ module RestaurantsHelper
     }
   end
 
-  def render_related_restaurants(p_config)
-    "Hola"
-  end
 
   def render_feature_restaurants_box(options = {})
     @top_rated_restaurants = Restaurant.featured
     render :partial => 'restaurants/parts/featured_restaurants_for_mail'  
+  end
+  
+  def render_related_restaurants(per_page = 5)
+    long_array = (@restaurant.long_array || []).collect(&:downcase)
+    short_array = (@restaurant.short_array || []).collect(&:downcase)
+    cuisin_tags = TagGroup::separate_tags(:cuisins, long_array)
+    long_array = long_array - cuisin_tags
+    
+    long_array_length = long_array.length - 1 > 0 ? long_array.length - 1 : 1
+    short_array_length = 1
+    
+    
+    # first search with strict location and cusinis 
+    restaurants = perform_search([:Restaurant], (%{@short_array #{short_array.join('|')} @long_array #{cuisin_tags.join('|')} @name -(#{@restaurant.name})}), {:per_page => per_page})
+    
+    # second find without location filter
+    if restaurants.empty? || restaurants.length < per_page
+      more_restaurants = perform_search([:Restaurant], (%{@long_array #{cuisin_tags.join('|')} @name -(#{@restaurant.name})}), {:per_page => per_page})
+      more_restaurants.each do |r|
+        restaurants << r
+      end
+    end
+    
+    if restaurants.empty? || restaurants.length < per_page
+      restaurant_ids = restaurants.collect(&:id)
+      more_restaurants = perform_search([:Restaurant], (%{@long_array "#{cuisin_tags.join(' ')} #{long_array.join(' ')}"/1 @name -(#{@restaurant.name})}), {:per_page => 10})
+      more_restaurants.each do |r|
+      	if !restaurant_ids.include?(r.id)
+      	  restaurants << r
+      	end
+      end      
+    end  
+    
+    restaurants = restaurants[0..per_page]  
+  	
+  	if !restaurants.empty?
+	  render :partial => 'restaurants/parts/similar', :locals => {:restaurants => restaurants}
+	end
   end
 end

@@ -29,6 +29,12 @@ class Restaurant < ActiveRecord::Base
   validates_uniqueness_of :name
   validate :form_attributes_required_fields
 
+  # Full Text search integration
+  is_indexed :fields => ['created_at', 'name', 'description', 'address',
+                         'short_array', 'long_array'],
+             :delta => true
+
+
   named_scope :recent, :order => 'created_at DESC'
   named_scope :by_topic, lambda{|topic_id| {:conditions => {:topic_id => topic_id}}}
   named_scope :featured, :conditions => {:featured => true}
@@ -111,13 +117,8 @@ class Restaurant < ActiveRecord::Base
     end
   end
 
-  def rand_images
-    rand_imgs = self.images
-    if rand_imgs.empty?
-      rand_imgs = self.other_images
-    end
-
-    rand_imgs
+  def rand_image
+    (all_images || []).rand
   end
 
   def all_images

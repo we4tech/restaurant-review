@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
   include LocaleHelper
   include PremiumHelper
   include PremiumTemplatesHelper
+  include SearchHelper
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details

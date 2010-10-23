@@ -23,7 +23,8 @@ Rails::Initializer.run do |config|
   config.gem "will_paginate"
   config.gem 'super_exception_notifier', :lib => "exception_notification"
   config.gem "mail_style"
-  
+  config.gem "chronic"
+
   #config.gem 'jammit', :version => '0.5.1'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
