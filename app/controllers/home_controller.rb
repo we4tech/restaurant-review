@@ -240,30 +240,15 @@ class HomeController < ApplicationController
   end
 
   def recommend
-    @tag_ids = params[:tag_ids] || []
-    if @tag_ids.is_a?(Hash)
-      @tag_ids = @tag_ids.values
+    tag_ids = params[:tag_ids] || []
+    tag_ids = tag_ids.values if tag_ids.is_a?(Hash)
+    tags = tag_ids.collect{|tag_id| Tag.find(tag_id)}
+    url_params = {'_models' => 'Restaurant'}
+    tags.each do |tag|
+      url_params['short_array|long_array[]'] = tag.name
     end
-
-    if @tag_ids.empty?
-      @restaurants = []
-    else
-      @tag_ids = @tag_ids.collect(&:to_i)
-      @restaurants = load_paginated_restaurants
-    end
-
-    @breadcrumbs = [['Home', root_url]]
-    @title = I18n.t('header.recommend')
-    @site_title = @title
-
-    # pending module - :render_recently_added_pictures
-    load_module_preferences
-
-    @left_modules = [
-        :render_search,
-        :render_tagcloud,
-        :render_most_lovable_places,
-        :render_recently_added_places]
+    
+    redirect_to search_url(url_params)
   end
 
   private
