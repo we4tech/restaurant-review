@@ -189,7 +189,10 @@ class HomeController < ApplicationController
         :render_recently_added_places]
     @breadcrumbs = []
     
-    render :action => :recommend
+    respond_to do |format|
+      format.html { render :action => :recommend }
+      format.ajax { render :action => :recommend, :layout => false }
+    end
   end
   
   def allowed_key?(key)

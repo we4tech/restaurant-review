@@ -1018,3 +1018,7 @@ form .hints {
 .similarRestaurants .restaurants {
   padding-top: 40px;
 }
+
+.loading {
+  color: red;
+}

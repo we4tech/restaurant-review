@@ -22,36 +22,48 @@
   <% end %>
 </div>
 
-<div class="grid_4" id="site_center_boxes">
-  <div class='site_simple_box filter_box'>
-    <h4><%= t('label.filter_by') %></h4>
-    <div class='space_10'></div>
-    <form action="<%= search_url %>" id='recommend_form'>
-      <input type='hidden' name='_models' value='Restaurant'/>
+<% right_off = right_off || false %>
 
-      <div class='tags'>
-        <% @topic.tag_groups.each do |tag_group| %>
-          <b><%= tag_group.name %></b>
-          <div class='clear'></div>
-          <% tag_group.tags.each do |tag| %>
-            <div class='tag inlineTag'>
-              <input id='<%= element_id = "tag_#{tag.id}" %>'
-                     type='checkbox' name='short_array|long_array[]'
-                     <%= @tags.include?(tag.name.downcase) ? 'checked="checked"' : '' %>
-                     value='<%= tag.name %>' onclick="document.getElementById('recommend_form').submit()"/>
-              <label for='<%= element_id %>'><%= tag.name %></label>
-            </div>
+<% if !right_off %>
+  <div class="grid_4" id="site_center_boxes">
+    <div class='site_simple_box filter_box'>
+      <h4><%= t('label.filter_by') %></h4>
+      <div class='space_10'></div>
+      <form action="<%= search_url %>" id='recommend_form'>
+        <input type='hidden' name='_models' value='Restaurant'/>
+
+        <div class='tags'>
+          <% @topic.tag_groups.each do |tag_group| %>
+            <b><%= tag_group.name %></b>
+            <div class='clear'></div>
+            <% tag_group.tags.each do |tag| %>
+              <div class='tag inlineTag'>
+                <input id='<%= element_id = "tag_#{tag.id}" %>'
+                       type='checkbox' name='short_array|long_array[]'
+                       <%= @tags.include?(tag.name.downcase) ? 'checked="checked"' : '' %>
+                       value='<%= tag.name %>'
+                       class='buttonActionSubmitForm'
+                       onclick="document.getElementById('recommend_form').submit()"/>
+                <label for='<%= element_id %>'><%= tag.name %></label>
+              </div>
+            <% end %>
+            <div class='clear'></div>
+            <div class='space_10'></div>
           <% end %>
-          <div class='clear'></div>
-          <div class='space_10'></div>
-        <% end %>
-      </div>
-      <input type='submit' value='<%= t('button.search_again') %>'/>
-    </form>
+        </div>
+        <input type='submit' class='buttonSubmit' value='<%= t('button.search_again') %>'/>
+      </form>
+      <div class='space_10'></div>
+      <div class='clear'></div>
+    </div>
     <div class='space_10'></div>
-    <div class='clear'></div>
-  </div>
-  <div class='space_10'></div>
 
-  <%= render :partial => 'layouts/fresh_parts/modules' %>
-</div>
+    <%= render :partial => 'layouts/fresh_parts/modules' %>
+  </div>
+
+  <%= javascript_include_tag 'jquery.ajaxify' %>
+  <script type="text/javascript">
+    $('#site_center_boxes').ajaxify();
+  </script>
+<% end %>
+
