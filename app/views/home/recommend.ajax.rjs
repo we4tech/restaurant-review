@@ -1,0 +1,25 @@
+params[:format] = :html
+page << %{
+  $('#site_center_list').fadeOut(function() {
+    $(this).hide();
+    #{page.replace('#site_center_list', (render(:file => 'home/recommend.html.erb', :locals => {:right_off => true})))}
+    $(this).appear();
+    $('.buttonActionSubmitForm').each(function() {
+      var $next = $(this).next();
+      if ($next.html().indexOf('Loading..') != -1) {
+        $next.html($next.attr('title'));
+        $('.buttonActionSubmitForm').removeAttr('disabled');
+        $next.removeClass('loading');
+      }
+
+      $('.buttonSubmit').each(function() {
+          var $b = $(this);
+          if ($b.val().indexOf('Loading..') != -1) {
+            $b.removeAttr('disabled');
+            $b.val($b.attr('title'));
+            $b.removeClass('loading');
+          } 
+      });
+    });
+  });
+}
