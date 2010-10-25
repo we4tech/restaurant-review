@@ -13,6 +13,12 @@
 <%= f.error_message_on :hosts %>
 <span class='hints'>ie. www.abc.com, abc.com, subdomain.domain.com</span>
 <br/>
+
+<%= f.label :test_host %><br/>
+<%= f.text_field :test_host %>
+<%= f.error_message_on :test_host %>
+<span class='hints'>ie. shop.welltreat.us</span>
+<br/>
 <div class='space_10'></div>
 
 <%= f.check_box :activate_coming_soon %>

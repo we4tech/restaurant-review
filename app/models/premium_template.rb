@@ -31,20 +31,32 @@ class PremiumTemplate < ActiveRecord::Base
     end
   end
 
+  def match_test_host?(host)
+    host.downcase!
+    if test_host && !test_host.blank?
+      host == test_host
+    else
+      false
+    end
+  end
+
   def self.match_host(host)
+    host.downcase!
     if premium_template = @@premium_host_maps[host]
       return premium_template
     else
       PremiumTemplate.all(:conditions => 'hosts IS NOT NULL').each do |pt|
-        hosts = pt.hosts.split(/,/).collect(&:strip).compact
+        hosts = pt.hosts.split(',').collect(&:strip).compact
         hosts.each do |pt_host|
-          if pt_host == host
-            @@premium_host_maps[host] = pt
-            return pt
-          elsif pt_host.match(/#{host}$/)
+          if pt_host.downcase == host
             @@premium_host_maps[host] = pt
             return pt
           end
+          # disabled Wildcard (*) matching
+          #elsif pt_host.match(/#{host}$/)
+          #  @@premium_host_maps[host] = pt
+          #  return pt
+          #end
         end
       end
 

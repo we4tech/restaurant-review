@@ -56,12 +56,14 @@ module PremiumTemplatesHelper
   end
 
   def pt_render_view
-    if @premium_template.activate_coming_soon?
+    if @premium_template.activate_coming_soon? &&
+        !@premium_template.match_test_host?(request.host)  
       if params[:premium_service_subscriber].nil?
         @premium_service_subscriber = PremiumServiceSubscriber.new
       end
       pt_render_template('coming_soon')
-    elsif @premium_template.activate_under_construction?
+    elsif @premium_template.activate_under_construction? &&
+        !@premium_template.match_test_host?(request.host)
       pt_render_template('under_construction')
     else
       pt_render_template('layout')
