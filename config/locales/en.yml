@@ -201,7 +201,7 @@ en: !map:HashWithIndifferentAccess
     upload_avatar: Upload your avatar
     change_password: Change your account password
     reset_password: Reset your account password
-    my_review: My review
+    my_review: Write a review
     admin: !map:HashWithIndifferentAccess 
       form_attributes_edit: Edit topic
     top_contributors: Top contributors

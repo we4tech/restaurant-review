@@ -21,7 +21,7 @@ class ReviewsController < ApplicationController
         redirect_to :back
       end
     else
-      flash[:notice] = 'Failed to add your review!'
+      flash[:notice] = "Failed: #{@review.errors.full_messages.join('<br/>')}"
       redirect_to :back
     end
   end
@@ -32,7 +32,7 @@ class ReviewsController < ApplicationController
         :user_id => current_user.id,
         :topic_id => @topic.id)
 
-    if @review.update_attributes(attributes)
+    if @review.author?(current_user) && @review.update_attributes(attributes)
       flash[:notice] = 'Successfully updated your review!'
       if current_user.share_on_facebook?
         redirect_to facebook_publish_url(
@@ -54,6 +54,20 @@ class ReviewsController < ApplicationController
     @restaurant = @restaurant || Restaurant.find(params[:restaurant_id].to_i)
     @site_title = 'Reviews'
     render_view('reviews/index')
+  end
+
+  def destroy
+    review = Review.find(params[:id])
+    if review.author?(current_user)
+      if review.destroy
+        notify :success, :back
+      else
+        notify :failure, :back
+      end
+    else
+      flash[:notice] = 'You are not allowed'
+      redirect_to :back
+    end
   end
 
 end

@@ -200,7 +200,19 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $(".openUpinLightBox").prettyPhoto();
+    $(".openUpinLightBox").prettyPhoto();    
+  });
+
+  $('.edit_review textarea, .new_review textarea').each(function() {
+    $(this).bind('keypress', function() {
+	  var text = $(this).val();
+	  var lines_count = text.split('\n').length + 1;
+	  var $this = $(this);
+	
+	  if (lines_count > 4) {
+		$this.css('height', 'auto');	
+	  }
+    });
   });
 </script>
 

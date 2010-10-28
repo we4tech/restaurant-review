@@ -292,8 +292,23 @@ h1, h2, h3, h4, h5, h6 {
 
 .review_form {
   padding: 5px;
-  border: 1px solid #ccc;
-  background: #f0f0f0;
+
+}
+
+.reviewOptions {
+  float: left;
+  font-size: 80%;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+
+#review_submit {
+  margin-top: 5px;
+  float: right;
+  border: 0;
+  background: transparent;
+  margin-right: -10px;
 }
 
 .image_preview {
@@ -524,12 +539,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .review_comment_form textarea {
   width: 100%;
-  height: 100px;
+
 }
 
 .edit_review textarea, .new_review textarea {
+  border: 1px solid #999999;
+  height: 90px;
+  max-height: 200px;
+  min-height: 36px;
   width: 100%;
-  height: 200px;
+  padding: 3px;
 }
 
 .user_profile_brief {
@@ -680,7 +699,6 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   list-style-type: none;
 }
-
 
 .weeeFeatureBox li a .featureImage {
   float: left;
@@ -983,16 +1001,16 @@ form .hints {
   padding: 5px;
   text-align: center;
   height: 85px;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .similarRestaurant a {
-  color: #000!important;
+  color: #000 !important;
   font-weight: bold;
 }
 
 .similarRestaurant a:hover {
-  color: #fff!important;
+  color: #fff !important;
 }
 
 .similarRestaurant .picture img {

@@ -541,6 +541,7 @@ bn: !map:HashWithIndifferentAccess
       4Kaq4Kaw4Ka/4Kas4Kaw4KeN4Kak4KaoIOCmuOCmruCnguCmuSAoe3tjb3Vu
       dH19KQ==
 
+    more_tags: More tags
     signup: !binary |
       4Kao4Ka/4Kas4Kao4KeN4Kan4KaoIOCmleCmsOCngeCmqA==
 
@@ -586,8 +587,6 @@ bn: !map:HashWithIndifferentAccess
 
     more: !binary |
       4KaG4Kaw4KeLIOCmquCnnOCngeCmqA==
-
-    more_tags: "More tags"
 
   module: !map:HashWithIndifferentAccess 
     Most loved places!: !binary |
@@ -676,9 +675,7 @@ bn: !map:HashWithIndifferentAccess
       short: "%e de %b %H:%M"
       long: "%e de %B de %Y %H:%M"
     pm: pm
-  fields: !map:HashWithIndifferentAccess
-    phone: phone
-
+  fields: !map:HashWithIndifferentAccess 
     group_name: !binary |
       4Kam4Kay4KeH4KawIOCmqOCmvuCmrg==
 
@@ -699,6 +696,7 @@ bn: !map:HashWithIndifferentAccess
       4KaX4KeB4KaX4KeL4KayIOCmruCnjeCmr+CmvuCmqiDgpo8g4Kam4KeH4KaW
       4KeB4Kao
 
+    phone: phone
     features: !binary |
       4KaJ4Kay4KeN4Kay4KeH4KaW4Kav4KeL4KaX4KeN4KavIOCmrOCmv+Cmt+Cn
       n+Cml+CngeCmsuCniw==
@@ -779,7 +777,7 @@ bn: !map:HashWithIndifferentAccess
       pqrgprDgpr/gpqzgprDgp43gpqTgpqgg4KaV4Kaw4KeB4Kao
 
     my_review: !binary |
-      4KaG4Kau4Ka+4KawIOCmsOCmv+CmreCmv+CmiQ==
+      4Kaw4Ka/4Kat4Ka/4KaJIOCmleCmsOCngeCmqA==
 
     admin: !map:HashWithIndifferentAccess 
       form_attributes_edit: !binary |

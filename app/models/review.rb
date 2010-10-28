@@ -31,6 +31,8 @@ class Review < ActiveRecord::Base
     }
   }
 
+  validate :ensure_not_duplicate
+
   def loved?
     self.loved == LOVED
   end
@@ -54,5 +56,29 @@ class Review < ActiveRecord::Base
       nil
     end
   end
+
+  def author?(p_user)
+    return p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
+  end
+
+  protected
+    def ensure_not_duplicate
+      last_review = self.user.reviews.last
+      if last_review && attribute_matches?(last_review, [
+          :restaurant_id, :loved, :comment, :status,
+          :topic_id, :attached_model, :attached_id])
+        errors.add(:restaurant_id, 'Duplicate comment')
+      end
+    end
+
+    def attribute_matches?(match_with, fields)
+      fields.each do |field|
+        if send(field) != match_with.send(field)
+          return false
+        end
+      end
+      
+      true
+    end
 
 end
