@@ -69,7 +69,11 @@ module ApplicationHelper
       render_restaurant_based_template(partial_template, options)
     else
       @content_template = partial_template
-      render :template => 'layouts/fresh_inner_layout', :locals => (options[:locals] || {})
+      if options[:inner]
+        render :template => 'layouts/fresh_inner_layout', :locals => (options[:locals] || {})
+      else
+        render :partial => partial_template, :layout => 'fresh'
+      end
     end
   end
 

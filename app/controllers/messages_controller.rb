@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
     @restaurant = @restaurant || Restaurant.find(params[:restaurant_id].to_i)
     @messages = @restaurant.messages
     @site_title = 'News'
-    render_view 'messages/index'
+    render_view 'messages/index', :inner => true
   end
 
   def show
@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
     @premium_template = @restaurant.selected_premium_template
     @context = :inner_page
 
-    render_view 'messages/show'
+    render_view 'messages/show', :inner => true
   end
 
   def new
@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
     @message = Message.new
     @message_types = Message::TYPES
 
-    render_view 'messages/new'
+    render_view 'messages/new', :inner => true
   end
 
   def create
@@ -39,7 +39,7 @@ class MessagesController < ApplicationController
         notify :success, restaurant_messages_path(@restaurant)
       else
         @message_types = Message::TYPES
-        render_view 'messages/new'
+        render_view 'messages/new', :inner => true
       end
     end
   end
@@ -49,7 +49,7 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id].to_i)
     @message_types = Message::TYPES
 
-    render_view 'messages/edit'
+    render_view 'messages/edit', :inner => true
   end
 
   def update
@@ -66,7 +66,7 @@ class MessagesController < ApplicationController
         notify :success, restaurant_messages_path(@restaurant)
       else
         @message_types = Message::TYPES
-        render_view 'messages/edit'
+        render_view 'messages/edit', :inner => true
       end
     end
   end

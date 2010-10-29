@@ -76,7 +76,7 @@ class ImagesController < ApplicationController
     if @image
       @restaurant = @image.discover_relation_with_restaurant
       if @restaurant
-        render_view('images/show')
+        render_view('images/show', :inner => true)
       end
     else
       flash[:notice] = 'Image not found'

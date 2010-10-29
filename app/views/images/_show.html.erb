@@ -26,6 +26,16 @@
 
     <% if @restaurant %>
       <div class='space_10'></div>
+      <% if @restaurant && @restaurant.all_images.length > 1 %>
+        <h5>More pictures</h5>
+        <% @restaurant.all_images.each do |image| %>
+          <% if image.id != @image.id %>
+            <%= link_to image_tag(image.public_filename(:small)), image_url(image) %>
+          <% end %>
+        <% end %>
+        <div class='space_10'></div>
+      <% end %>
+
       <h5>This image is attached with</h5>
       <%= render :partial => 'images/parts/related_with', :object => @restaurant %>
     <% end %>

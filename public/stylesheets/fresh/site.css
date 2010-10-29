@@ -918,7 +918,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .bigImage img {
   border: 10px solid #ccc;
-  max-width: 600px;
+  max-width: 550px;
 }
 
 .bigImageContainer .comments .form {

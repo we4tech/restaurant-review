@@ -14,7 +14,7 @@ class PagesController < ApplicationController
     end
     
     @view_context = ViewContext::CONTEXT_RESTAURANT_DETAILS
-    render_view('pages/embed_show')
+    render_view('pages/embed_show', :inner => true)
   end
 
   def new
@@ -26,7 +26,7 @@ class PagesController < ApplicationController
       redirect_to edit_restaurant_page_path(@restaurant, @page)
     else
       @page = Page.new
-      render_view('pages/new')
+      render_view('pages/new', :inner => true)
     end
   end
 
@@ -46,7 +46,7 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id].to_i)
     @restaurant = @page.restaurant
 
-    render_view('pages/edit')
+    render_view('pages/edit', :inner => true)
   end
 
   def update

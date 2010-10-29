@@ -1,15 +1,12 @@
 <div class="site_simple_box">
   <h4><%= tt("module.#{title}") %></h4>
   <div class="space_5"></div>
-  <style type="text/css">
-  @import url(http://www.google.com/cse/api/branding.css);
-  </style>
   <div class="cse-branding-right" style="background-color:#FFFFFF;color:#000000">
     <div class="cse-branding-form">
       <form action="<%= search_url %>" id="cse-search-box">
         <div>
           <input type="hidden" name="_models" value="Restaurant" />
-          <input type="text" name="name|address|long_array|short_array|description" size="31" />
+          <input type="text" name="short_array|long_array|description[]" size="31" />
           <input type="submit" value="Search" />
         </div>
       </form>

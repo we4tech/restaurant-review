@@ -8,7 +8,7 @@ class FoodItemsController < ApplicationController
     @meta_description = "#{@restaurant.name} food menu".gsub(/"/, '')
     @meta_keywords = @restaurant.food_items.collect(&:name).join(', ').gsub(/"/, '')
     
-    render_view 'food_items/index'
+    render_view 'food_items/index', :inner => true
   end
 
   def new
@@ -19,7 +19,7 @@ class FoodItemsController < ApplicationController
       @food_item.food_item_id = params[:parent].to_i  
     end
 
-    render_view 'food_items/new'
+    render_view 'food_items/new', :inner => true
   end
 
   def create
@@ -30,7 +30,7 @@ class FoodItemsController < ApplicationController
         notify :success, new_restaurant_food_item_path(@restaurant, :parent => @food_item.food_item_id)
       else
         flash[:notice] = 'Error found'
-        render_view 'food_items/new'
+        render_view 'food_items/new', :inner => true
       end
     end
   end
@@ -48,7 +48,7 @@ class FoodItemsController < ApplicationController
   def edit
     if_permits?(@restaurant) do
       @food_item = FoodItem.find(params[:id].to_i)
-      render_view 'food_items/edit'
+      render_view 'food_items/edit', :inner => true
     end
   end
 
@@ -63,7 +63,7 @@ class FoodItemsController < ApplicationController
         notify :success, restaurant_food_items_path(@restaurant)
       else
         flash[:notice] = 'Failed to update'
-        render_view 'food_items/edit'
+        render_view 'food_items/edit', :inner => true
       end
     end
   end
@@ -71,7 +71,7 @@ class FoodItemsController < ApplicationController
   def add_image
     if_permits?(@restaurant) do
       @food_item = FoodItem.find(params[:id].to_i)
-      render_view 'food_items/add_image'
+      render_view 'food_items/add_image', :inner => true
     end
   end
 
