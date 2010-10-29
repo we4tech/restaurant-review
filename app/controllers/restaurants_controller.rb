@@ -87,6 +87,8 @@ class RestaurantsController < ApplicationController
 
   def premium
     @restaurant = Restaurant.find(params[:id].to_i)
+    set_premium_session
+    @premium = true
 
     if @restaurant.premium?
       @premium_template = @restaurant.selected_premium_template

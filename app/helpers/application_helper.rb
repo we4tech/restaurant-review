@@ -65,10 +65,11 @@ module ApplicationHelper
   end
 
   def render_view(partial_template, options = {})
-    if @restaurant
+    if @restaurant && premium?
       render_restaurant_based_template(partial_template, options)
     else
-      render :partial => partial_template, :layout => 'fresh'
+      @content_template = partial_template
+      render :template => 'layouts/fresh_inner_layout', :locals => (options[:locals] || {})
     end
   end
 
