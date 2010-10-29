@@ -14,6 +14,8 @@ module PremiumHelper
   end
 
   def pt_image_tag(file_name, options = {})
-    image_tag("templates/#{@premium_template.template}/#{file_name}", options)
+    if @premium_template
+      image_tag("templates/#{@premium_template.template}/#{file_name}", options)
+    end
   end
 end
