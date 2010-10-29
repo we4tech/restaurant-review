@@ -59,7 +59,7 @@
               rel='<%= review.id %>'
               id="add_comment_link_<%= review.id %>"><%= t('nav.reply') %></a>
           <%- if review.author?(current_user) -%>
-          , <%= link_to t('nav.delete'), review_url(review.id), :method => :delete, :confirm => t('confirm.delete_entry') %>
+          , <%= link_to t('nav.delete'), review_url(review.id), :method => :delete, :confirm => t('confirm.delete_entry') -%>
           <%- end -%>
           ]
         <% end %>
