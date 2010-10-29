@@ -14,9 +14,13 @@ a:visited {
   color: gray;
 }
 
-a img { border: 0; }
+a img {
+  border: 0;
+}
 
-.clear { clear: both; }
+.clear {
+  clear: both;
+}
 
 .mobileContainer {
   padding: 5px;
@@ -30,7 +34,7 @@ a img { border: 0; }
 }
 
 .logo {
-  
+
 }
 
 .logo a img {
@@ -123,7 +127,7 @@ h1 {
 
 textarea {
   width: 100%;
-  height: 200px;
+  height: 90px;
   margin-bottom: 5px;
 }
 
@@ -142,4 +146,68 @@ textarea {
 
 .associated_tags .selectedTag {
   border-bottom: 1px solid red;
+}
+
+.similarRestaurant {
+  width: 49%;
+  vertical-align: top;
+  padding-bottom: 10px;
+}
+
+.mobile_buttons {
+  background: url(/images/fresh/mobile_buttons_set.png) no-repeat;
+
+}
+
+.mobile_buttons ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  height: 46px;
+  margin: 0 auto;
+}
+
+.mobile_buttons ul li {
+  float: left;
+}
+
+.mobile_buttons ul li, .mobile_buttons ul li a {
+  font-size: 15px !important;
+  
+  padding-bottom: 14px;
+  padding-top: 14px;
+  text-decoration: none;
+  color: #ccc;
+  text-align: center;
+}
+
+.mobile_buttons ul li.leftEnabled {
+  width: 89px;
+  border-right: 1px solid #888;
+}
+
+.mobile_buttons ul li.leftDisabled {
+  background: url(/images/fresh/mobile_button_left.png) no-repeat;
+  width: 89px;
+}
+
+.mobile_buttons ul li.centerEnabled {
+  width: 110px;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+}
+
+.mobile_buttons ul li.centerDisabled {
+  background: url(/images/fresh/mobile_button_center.png) no-repeat;
+  width: 110px;
+}
+
+.mobile_buttons ul li.rightEnabled {
+  width: 89px;
+  border-left: 1px solid #888;
+}
+
+.mobile_buttons ul li.rightDisabled {
+  background: url(/images/fresh/mobile_button_right.png) no-repeat;
+  width: 89px;
 }

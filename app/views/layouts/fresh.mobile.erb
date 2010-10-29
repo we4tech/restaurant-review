@@ -11,8 +11,17 @@
   <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
 
   <meta NAME="Robots" content="index,follow"/>
-  <meta NAME="Description" content="Bangladeshi restaurant, cafe & eat out place review site"/>
-  <meta NAME="Keywords" content="Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
+  <% if @meta_description %>
+    <meta content="<%= @meta_description %>" name="description">
+  <% else %>
+    <meta name="description" content="Bangladeshi restaurant, cafe & eat out place review mobile site"/>
+  <% end %>
+
+  <% if @meta_keywords %>
+    <meta name="keywords" content="<%= @meta_keywords %>"/>
+  <% else %>
+    <meta name="keywords" content="Mobile Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
+  <% end %>
 
   <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
 

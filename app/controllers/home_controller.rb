@@ -188,9 +188,9 @@ class HomeController < ApplicationController
         :render_most_lovable_places,
         :render_recently_added_places]
     @breadcrumbs = []
-    
     respond_to do |format|
       format.html { render :action => :recommend }
+      format.mobile { render :action => :recommend }
       format.ajax { render :action => :recommend, :layout => false }
     end
   end

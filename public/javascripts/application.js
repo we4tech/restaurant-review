@@ -142,7 +142,9 @@ $(function() {
   var adminPortionVisible = false;
   var dialog = null;
 
-  if (currentLocation.indexOf('#') != -1) {
+  if (currentLocation.indexOf('#') != -1 &&
+      currentLocation.indexOf('#!') == -1) {
+
     var parts = currentLocation.split('#');
     if (parts.length > 1 && parts[1].length > 0) {
       //$('.' + parts[1]).show();

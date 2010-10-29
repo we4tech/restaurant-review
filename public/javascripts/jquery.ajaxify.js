@@ -44,8 +44,9 @@
           'data': params,
           dataType: opts.dataType,
           success: function(response) {
-            var parts = window.location.href.split('!#');
-            window.location.href = parts[0] + '!#' + params;
+            var parts = window.location.href.split('#!');
+            var partsOfPart = parts[0].split('/');
+            window.location.href = parts[0] + '#!/' + partsOfPart[partsOfPart.length - 1] + params;
           },
           error: function(response) {
             alert("Error - " + response);

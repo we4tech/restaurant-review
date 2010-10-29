@@ -1,10 +1,12 @@
 module MobileHelper
 
+  NON_MOBILE_FORMATS = ['html', 'ajax']
+
   def detect_mobile_view
     if params[:format].to_s.downcase == 'mobile'
       @mobile = true
       session[:mobile_format] = true
-    elsif params[:format].to_s.downcase == 'html'
+    elsif NON_MOBILE_FORMATS.include? params[:format].to_s.downcase
       session[:mobile_format] = nil
       @mobile = false
     elsif session[:mobile_format]

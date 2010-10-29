@@ -103,7 +103,11 @@ module RestaurantsHelper
     restaurants = restaurants[0..per_page]  
   	
   	if !restaurants.empty?
-	  render :partial => 'restaurants/parts/similar', :locals => {:restaurants => restaurants}
-	end
+      if !block_given?
+	      render :partial => 'restaurants/parts/similar', :locals => {:restaurants => restaurants}
+      else
+        yield(restaurants)
+      end
+	  end
   end
 end

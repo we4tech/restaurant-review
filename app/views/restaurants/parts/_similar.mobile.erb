@@ -1,23 +1,27 @@
 <div class='similarRestaurants'>
-  <h4><%= tt('label.suggested_restaurants') %></h4>
+  <h4>Quite similar restaurants</h4>
   <div class="space_5"></div>
 
-  <div class='restaurants'>
-    <% restaurants.each do |restaurant| %>
-      <% image = restaurant.rand_image %>
-
-      <div class='similarRestaurant'>
-        <% if image %>
-          <div class='picture'>
-            <%= link_to image_tag(image.public_filename(:small)), restaurant_long_url(restaurant) %>
-          </div>
+  <table class='restaurants'>
+    <tr>
+      <% restaurants.each_with_index do |restaurant, index| %>
+        <% image = restaurant.rand_image %>
+        <% if index % 2 == 0 %>
+          </tr><tr>
         <% end %>
-        <div class='name'>
-          <%= restaurant_link(restaurant) %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+        <td class='similarRestaurant'>
+          <% if image %>
+            <div class='picture'>
+              <%= link_to image_tag(image.public_filename(:small), :alt => ''), restaurant_long_url(restaurant) %>
+            </div>
+          <% end %>
+          <div class='name'>
+            <%= restaurant_link(restaurant) %>
+          </div>
+        </td>
+      <% end %>
+    </tr>
+  </table>
   <div class='clear'></div>
 </div>
 

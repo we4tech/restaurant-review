@@ -26,28 +26,9 @@
 
     <div class="restaurant_details">
       <h1><%= @restaurant.name %></h1>
-
-      <div class='space_10'></div>
-      <fb:like href="<%= request.url %>"></fb:like>
-
-      <%= render :partial => 'images/parts/image_gallery' %>
-      <div class='contentDetails'>
-        <%= @restaurant.description %>
-      </div>
-
-      <% if @restaurant.description.length > 400 %>
-        <div class='clear space_10'></div>
-        <div class='redBreak'></div>
-        <div class='contentDetailsTools'>
-          <a href='javascript:void(0)' class='readMoreLess'
-             onclick='$(".contentDetails").css("max-height", "inherit").css("overflow-y", "visible"); $(".contentDetailsTools .readMoreLess").toggle()'><%= t('nav.more') %></a>
-          <a href='javascript:void(0)' class='readMoreLess readLess'
-             style='display:none' onclick='$(".contentDetails").css("max-height", "200px").css("overflow-y", "hidden"); $(".contentDetailsTools .readMoreLess").toggle()'><%= t('nav.less') %></a>
-        </div>
-        <div class='clear space_10'></div>
-      <% end %>
-
-      <div class='properties'>
+	  <%= render_restaurant_review_stats(@restaurant) %>
+	  <div class='space_10'></div>
+	  <div class='properties'>
         <% @form_fields.each do |field| %>
           <%
              field_label = field['label']
@@ -77,10 +58,72 @@
           <% end %>
         <% end %>
       </div>
+	  <div class='clear space_10'></div>	
+	  <div class='mobile_buttons'>
+		<ul>
+			<% if @restaurant.string1 %>
+				<li class='leftEnabled'><a href='wtai://wp/mc;<%= @restaurant.string1 %>;'>Call</a></li>
+			<% else %>
+				<li class='leftDisabled'>Call</li>
+			<% end %>
+			<li class='centerEnabled'><a href='#new_review'>Reviews</a></li>
+			<% if !(@restaurant.address || '').blank? && @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
+				<li class='rightEnabled'><a href='services://C2A?C2Aid=2305&Version=1.0&2305=Landmark(lat=<%= @restaurant.lat %>&long=<%= @restaurant.lng %>&name=<%= u(@restaurant.name) %>)'>Map</a></li>
+			<% else %>
+				<li class='rightDisabled'>Map<li>
+			<% end %>
+		</ul>
+	  </div>
+	  <div class='clear'></div>
+      <div class='space_10'></div>
+      <fb:like href="<%= request.url %>"></fb:like>
+	  <div class='space_10'></div>
+
+      <%= render :partial => 'images/parts/image_gallery' %>
+		
+	  <% if !(@restaurant.address || '').blank? %>
+	  <div class='space_10'></div>
+      <div class="site_simple_box restaurant_address">
+        <h4>
+          <%= t('fields.address') %>
+        </h4>
+		<address><%= @restaurant.address %></address>
+		<div class='space_10'></div>
+        <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
+          <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
+              "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
+              "sensor=false&markers=color:green|label:R|" +
+              "#{@restaurant.lat},#{@restaurant.lng}&key=#{MAP_API_KEY}&size="
+             details_link = "http://maps.google.com/maps?f=q&" +
+                 "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
+                 "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"
+          %>
+
+          <div class="space_5"></div>
+          <%= link_to image_tag(map_url + "300x300"), "#{map_url}800x800",
+                      :class => 'openUpinLightBox',
+                      :title => link_to(t('fields.map'), details_link) %>
+        <% end %>
+        
+      </div>
+      <% end %>      
+
+	  <div class='clear space_10'></div>	
+      
+      <%= render_related_restaurants(5) %>	
       <div class="clear"></div>
       <div class="space_10"></div>
+		
+	  <div class='contentDetails'>
+		<% if params[:details] %>
+          <%= @restaurant.description %>
+ 		<% else %>
+		  <%= @restaurant.description[0..500] %>
+   		<% end %>
+      </div>	  
 
       <div class="clear"></div>
+	  <div class='space_10'></div>
       <div class="bookmark_tools">
         <%= distance_of_time_in_words(@restaurant.created_at, Time.now) %>
         <%= t('label.ago') %> <%= t('label.added_by') %>
@@ -97,10 +140,6 @@
                 src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech">
         </script>
       </div>
-      <div class="break"></div>
-      <div class="space_5"></div>
-      <%= render_related_restaurants(5) %>
-
     </div>
     <div class="clear"></div>
 
@@ -135,30 +174,7 @@
       <div class="clear"></div>
       <div class="space_10"></div>
     <% end %>
-
-    <% if !(@restaurant.address || '').blank? %>
-      <div class="site_simple_box restaurant_address">
-        <h4>
-          <%= t('fields.address') %>
-        </h4>
-        <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
-          <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
-              "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
-              "sensor=false&markers=color:green|label:R|" +
-              "#{@restaurant.lat},#{@restaurant.lng}&key=#{MAP_API_KEY}&size="
-             details_link = "http://maps.google.com/maps?f=q&" +
-                 "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
-                 "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"
-          %>
-
-          <div class="space_5"></div>
-          <%= link_to image_tag(map_url + "300x300"), "#{map_url}800x800",
-                      :class => 'openUpinLightBox',
-                      :title => link_to(t('fields.map'), details_link) %>
-        <% end %>
-        <address><%= @restaurant.address %></address>
-      </div>
-    <% end %>
+    
     <div class="clear"></div>
     <%= render_who_wanna_go_there(@restaurant) %>
   </div>
