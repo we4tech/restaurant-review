@@ -61,7 +61,7 @@
 	  <div class='clear space_10'></div>	
 	  <div class='mobile_buttons'>
 		<ul>
-			<% if @restaurant.string1 %>
+			<% if !(@restaurant.string1 || '').blank? %>
 				<li class='leftEnabled'><a href='wtai://wp/mc;<%= @restaurant.string1 %>;'>Call</a></li>
 			<% else %>
 				<li class='leftDisabled'>Call</li>

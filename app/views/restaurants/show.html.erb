@@ -15,7 +15,7 @@
               , <%= link_to t('label.make_as_featured'), featured_restaurant_path(@restaurant.id) %>
             <% end %>
           <%- end -%>
-          , <%= link_to 'Add recipients', add_recipient_restaurant_path(@restaurant.id) %>
+          , <%= link_to "Manage extra recipients (#{(@restaurant.extra_notification_recipients || []).join(', ')})", add_recipient_restaurant_path(@restaurant.id) %>
           )
         <% end %>
       </span>
