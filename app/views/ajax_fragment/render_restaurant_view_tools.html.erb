@@ -17,3 +17,15 @@
 <% jsonable_response.each do |item| %>
   $('#<%= item[:elementId] %>').html("<%= escape_javascript(item[:html])%>").appear();
 <% end %>
+
+// Enable add comment link
+$('.add_comment_link').each(function() {
+  var $self = $(this);
+  $self.bind('click', function() {
+    $('#review_comment_form_' + $self.attr('rel')).show();
+  });
+});
+
+$('.review_comment_form').each(function() {
+  $(this).hide();
+});
