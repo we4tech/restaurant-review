@@ -8,7 +8,9 @@
 <% (@left_modules || []).each do |module_name| %>
   <% mod_pref = @modules_pref[module_name] %>
   <% if mod_pref && mod_pref['enabled'] %>
-    <%= send(module_name.to_s, @modules_pref[module_name]) %>
+    <div id="module_<%= module_name.to_s %>">
+      <%= send(module_name.to_s, @modules_pref[module_name]) %>
+    </div>
     <div class="space_10"></div>
   <% end %>
 <% end %>

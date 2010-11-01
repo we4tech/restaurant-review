@@ -1,0 +1,30 @@
+<%
+   links = []
+
+   if current_user && !restaurant.reviewed?(current_user)
+     links << (link_to t('nav.review_now'),
+                       "#{restaurant_long_url(restaurant)}#new_review",
+                       :class => 'link_emp')
+   end
+
+   if logged_in? && restaurant.author?(current_user)
+     links << link_to(t('nav.edit'), edit_restaurant_url(:id => restaurant.id))
+     links << link_to(t('nav.edit_tags'), edit_tags_restaurant_url(restaurant))
+
+     if current_user.admin?
+       links << link_to('Premium', restaurant_premium_templates_path(restaurant))
+       if restaurant.featured?
+         links << link_to(t('label.remove_from_featured'), featured_restaurant_path(restaurant.id))
+       else
+         links << link_to(t('label.make_as_featured'), featured_restaurant_path(restaurant.id))
+       end
+
+       extra_rcpts = (restaurant.extra_notification_recipients || []).join(', ')
+       links << link_to("Manage extra recipients#{!extra_rcpts.blank? ? "(#{extra_rcpts})" : ''}",
+                        add_recipient_restaurant_path(restaurant.id))
+     end
+   end
+%>
+<% if !links.empty? %>
+  (<%= links.join(', ') %>)
+<% end %>

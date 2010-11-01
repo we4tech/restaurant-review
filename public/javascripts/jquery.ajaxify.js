@@ -46,7 +46,8 @@
           success: function(response) {
             var parts = window.location.href.split('#!');
             var partsOfPart = parts[0].split('/');
-            window.location.href = parts[0] + '#!/' + partsOfPart[partsOfPart.length - 1] + params;
+            var urlPartsWithParams = partsOfPart[partsOfPart.length - 1].split('?');
+            window.location.href = parts[0] + '#!/' + urlPartsWithParams[0] + '?' + params;
           },
           error: function(response) {
             alert("Error - " + response);

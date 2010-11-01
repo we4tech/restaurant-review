@@ -54,15 +54,9 @@
 
       <span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">
         <%= t('label.updated') %> <%= distance_of_time_in_words(review.updated_at, Time.now) %> <%= t('label.ago') %>.
-        <% if logged_in? %>
-          [<a class="date add_comment_link" href='javascript: void(0)'
-              rel='<%= review.id %>'
-              id="add_comment_link_<%= review.id %>"><%= t('nav.reply') %></a>
-          <%- if review.author?(current_user) -%>
-          , <%= link_to t('nav.delete'), review_url(review.id), :method => :delete, :confirm => t('confirm.delete_entry') -%>
-          <%- end -%>
-          ]
-        <% end %>
+        <span id='review_<%= review.id %>_tools' style="display: <%= @cached ? 'none' : 'inline' %>">
+          <%= render :partial => 'reviews/parts/tools', :locals => {:review => review} %>
+        </span>
         <% if hide_comment && review.review_comments.count > 0 %>
           <a href='javascript:void(0)'><%= t('nav.show_comments') %></a>
         <% end %>
@@ -114,15 +108,17 @@
   <div class='clear'></div>
 </div>
 
-<script type="text/javascript">
-  $('.add_comment_link').each(function() {
-    var $self = $(this);
-    $self.bind('click', function() {
-      $('#review_comment_form_' + $self.attr('rel')).show();
+<% if !@cached %>
+  <script type="text/javascript">
+    $('.add_comment_link').each(function() {
+      var $self = $(this);
+      $self.bind('click', function() {
+        $('#review_comment_form_' + $self.attr('rel')).show();
+      });
     });
-  });
 
-  $('.review_comment_form').each(function() {
-    $(this).hide();
-  });
-</script>
+    $('.review_comment_form').each(function() {
+      $(this).hide();
+    });
+  </script>
+<% end %>

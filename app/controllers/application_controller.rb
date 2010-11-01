@@ -5,11 +5,12 @@ class ApplicationController < ActionController::Base
 
   include ExceptionNotification::ExceptionNotifiable
 
-  if Rails.env != 'development' && Rails.env != 'test'
+  if Rails.env != 'test' && Rails.env != 'development'
     alias :rescue_action_locally :rescue_action_in_public
   end
 
   # Be sure to include AuthenticationSystem in Application Controller instead
+  include CacheHelper
   include AuthenticatedSystem
   include ApplicationHelper
   include UrlOverrideHelper

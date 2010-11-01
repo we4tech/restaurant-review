@@ -39,7 +39,7 @@ ActionMailer::Base.smtp_settings = {
     :user_name => "support@welltreat.us",
     :password => "h3110w0r1d",
     :authentication => :plain,
-    :enable_starttls_auto => true    
+    :enable_starttls_auto => true
 }
 
 config.action_mailer.default_url_options = {:host => 'restaurant.welltreat.us'}

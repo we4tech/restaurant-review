@@ -1,8 +1,8 @@
 module StuffEventsHelper
 
   def render_activities_link
-    count = ""
-    if current_user
+    count = 0
+    if current_user && @topic
       count = current_user.count_updates_since_i_last_visited(@topic)
     end
 

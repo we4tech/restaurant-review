@@ -1,0 +1,19 @@
+<%
+  jsonable_response = []
+  jsonable_response << {
+      :elementId => "restaurant_#{@restaurant.id}_tools",
+      :id => @restaurant.id,
+      :html => render(:partial => "restaurants/parts/tools",
+                      :locals => {:restaurant => @restaurant})}
+
+   @restaurant.reviews.each do |review|
+     jsonable_response << {
+         :elementId => "review_#{review.id}_tools",
+         :id => review.id,
+         :html => render(:partial => "reviews/parts/tools",
+                         :locals => {:review => review})}
+   end
+%>
+<% jsonable_response.each do |item| %>
+  $('#<%= item[:elementId] %>').html("<%= escape_javascript(item[:html])%>").appear();
+<% end %>

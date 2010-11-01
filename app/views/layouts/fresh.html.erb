@@ -2,7 +2,9 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <title>
-    <%= @topic.site_title %> <%= @site_title ? "&raquo; #{@site_title}" : '' %>
+    <% if @topic %>
+      <%= @topic.site_title %> <%= @site_title ? "&raquo; #{@site_title}" : '' %>
+    <% end %>
   </title>
 
   <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css',
@@ -35,13 +37,18 @@
   <% end %>
 
   <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif" />
+  <link rel="search"
+             type="application/opensearchdescription+xml"
+             href="/open-search.xml"
+             title="Bangladeshi Restaurant Search" />
+
 
   <!--[if IE]>
     <%= stylesheet_link_tag 'fresh/ie.css' %>
   <![endif]-->
 
   <style type="text/css">
-    <%= @topic.css %>
+    <%= @topic.css if @topic %>
   </style>
 </head>
 
@@ -50,7 +57,7 @@
 </script>
 
 <body<%= @edit_mode ? ' onbeforeunload="return (mFormContentChanged) ? \'- Your unsaved changes will be lost.\' : null"' : '' %>>
-<div class="navigation">
+<div class="navigation" id='topNavigationBar' style="display: <%= @cached ? 'none' : 'block' %>">
   <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
 </div>
 <div class="clear"></div>
@@ -60,21 +67,21 @@
  <div id="site_top">
     <div class="grid_11" id="site_logo">
       <div class="site_icon grid_1">
-        <% if @topic.banner_image_path %>
+        <% if @topic && @topic.banner_image_path %>
           <%= link_to image_tag(@topic.banner_image_path), root_url %>
         <% else %>
           No banner SET!
         <% end %>
       </div>
       <div class="site_icon_info grid_8 push_2">
-        <%= @topic.description %>
+        <%= @topic.description if @topic %>
       </div>
     </div>
 
     <%
-       flash_message = flash[:notice] || flash[:error] || flash[:success]
+       flash_message = !@cached ? (flash[:notice] || flash[:error] || flash[:success]) : nil
     %>
-    <div class="site_message" style="display: <%= flash_message ? 'block' : 'none' %>" onclick="this.style.display = 'none'">
+    <div class="site_message" id='siteNoticeBar' style="display: <%= !@cached && flash_message ? 'block' : 'none' %>" onclick="this.style.display = 'none'">
       <%= flash_message %>
     </div>
   </div>
@@ -148,5 +155,11 @@
   <% session[:_test] = true %>
   <%= javascript_include_tag 'test.js' %>
 <% end %>
+
+<% if @cached %>
+  <%= javascript_include_tag fragment_for_url('notice') %>
+  <%= javascript_include_tag fragment_for_url('top_menu') %>
+<% end %>
+
 </body>
 </html>

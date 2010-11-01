@@ -125,6 +125,8 @@ ActionController::Routing::Routes.draw do |map|
   map.site_reviews_on '/reviews/of/:attached_model/:attached_id', :controller => 'reviews', :action => 'reviews_on'
   map.site_messages '/messages', :controller => 'messages', :action => 'index'
   map.site_page '/page/:page_name', :controller => 'pages', :action => 'show'
+  map.fragment_for '/fragment_for/:name', :controller => 'ajax_fragment', :action => 'fragment_for'
+  map.open_search '/open-search.xml', :controller => 'static_page', :action => 'open_search', :format => :xml
 
   # See how all your routes lay out with "rake routes"
 

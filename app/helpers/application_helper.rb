@@ -34,7 +34,11 @@ module ApplicationHelper
       redirect_to "#{root_url(:subdomain => topic.subdomain)}#{path_prefix}"
       return
     else
-      @topic = Topic.find_by_name(topic_hint)
+      @topic = Topic.of(topic_hint)
+    end
+
+    if !@topic && params[:__topic_id]
+      @topic = Topic.find(params[:__topic_id])
     end
 
     if !@topic

@@ -2,22 +2,8 @@
   <div class="grid_8 restaurant_details">
     <div class="breadcrumbs">
       <%= link_to @topic.name.humanize.pluralize, root_url %> &raquo;
-      <span class="review_tools">
-        <% if @restaurant.author?(current_user) %>
-          (<%= link_to t('nav.edit'), edit_restaurant_url(:id => @restaurant.id) %>
-          ,
-          <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(@restaurant) -%>
-          <%- if current_user.admin? -%>,
-            <%= link_to 'Premium', restaurant_premium_templates_path(@restaurant) -%>
-            <% if @restaurant.featured? %>
-              , <%= link_to t('label.remove_from_featured'), featured_restaurant_path(@restaurant.id) %>
-            <% else %>
-              , <%= link_to t('label.make_as_featured'), featured_restaurant_path(@restaurant.id) %>
-            <% end %>
-          <%- end -%>
-          , <%= link_to "Manage extra recipients (#{(@restaurant.extra_notification_recipients || []).join(', ')})", add_recipient_restaurant_path(@restaurant.id) %>
-          )
-        <% end %>
+      <span class="review_tools" id="restaurant_<%= @restaurant.id %>_tools">
+        <%= render :partial => 'restaurants/parts/tools', :locals => {:restaurant => @restaurant} %>
       </span>
     </div>
     <div class="break space_5"></div>
@@ -216,3 +202,9 @@
   });
 </script>
 
+<% if @cached %>
+  <%= javascript_include_tag fragment_for_url('authenticity_token') %>
+  <%= javascript_include_tag fragment_for_url('module_render_recently_added_places', :restaurant_id => @restaurant.id) %>
+  <%= javascript_include_tag fragment_for_url('restaurant_view_tools', :restaurant_id => @restaurant.id) %>
+
+<% end %>

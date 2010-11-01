@@ -1,0 +1,25 @@
+<%
+   jsonable_response = []
+   @restaurants.each do |restaurant|
+     jsonable_response << {
+         :id => restaurant.id,
+         :html => render(:partial => "restaurants/parts/tools",
+                         :locals => {:restaurant => restaurant})}
+   end
+%>
+
+<% jsonable_response.each do |item| %>
+  $('#restaurant_' + <%= item[:id] %> + '_tools').html("<%= escape_javascript(item[:html]) %>").appear();
+<% end %>
+
+// Enable add comment link
+$('.add_comment_link').each(function() {
+  var $self = $(this);
+  $self.bind('click', function() {
+    $('#review_comment_form_' + $self.attr('rel')).show();
+  });
+});
+
+$('.review_comment_form').each(function() {
+  $(this).hide();
+});

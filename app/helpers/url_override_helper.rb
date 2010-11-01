@@ -94,4 +94,42 @@ module UrlOverrideHelper
     link_to object.name, attached_url(model, object)
   end
 
+  #
+  # Generate fragmented html ajax requesting URL
+  # this is based on +fragment_for_route+ route with little bit more and
+  # advance feature such as multi domain supports.
+  #
+  # by default this feature is intended to use the current request domain
+  # stripping left most domain and replacing that position
+  # with ajax0 to ajax2 domain name.
+  # so we could take advantages of having 2X3 = 6 concurrent browser
+  # connection threads available for serving our request.
+  #
+  # Parameters -
+  #   - fragment_key - this is used for handling the specific fragmented response
+  #   - options -      {:dynamic_ajax_host => true | [false]}
+  #
+  def _fragment_for_path(fragment_key, options = {})
+    host = request.host
+
+    if options[:dynamic_ajax_host].nil? || options[:dynamic_ajax_host]
+      host = determine_dynamic_ajax_host(host, 3)
+    end
+
+    if options[:__topic_id].nil?
+      options[:__topic_id] = @topic.id
+    end
+
+    fragment_for_route_url(fragment_key, options.merge(:host => host))
+  end
+
+  alias :_fragment_for_url :_fragment_for_path
+
+  private
+    def determine_dynamic_ajax_host(host, max_hosts)
+      ajax_host = "ajax#{rand(max_hosts)}"
+      host_parts = host.split('.')
+      "#{ajax_host}.#{host_parts[host_parts.length - 2, host_parts.length].join('.')}"
+    end
+
 end

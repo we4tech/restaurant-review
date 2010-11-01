@@ -162,6 +162,9 @@ $(function() {
       adminPortionVisible = true;
       $('.' + parts[1] + 'ActivationLink').toggle();
     }
+  } else if (currentLocation.indexOf('#!') != -1) {
+    var parts = currentLocation.split('#!');
+    window.location.href = "http://" + window.location.host + parts[1];
   }
 
   $('.adminPortionActivationLink').click(function() {

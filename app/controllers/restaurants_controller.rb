@@ -4,7 +4,11 @@ class RestaurantsController < ApplicationController
   before_filter :log_new_feature_visiting_status
   before_filter :set_premium_session, :only => [:premium]
   before_filter :unset_premium_session, :except => [:premium]
-
+   
+  caches_action :show, :cache_path => Proc.new {|c| 
+    c.cache_path(c, [:id])
+  }
+   	
   def new
     if topic_imposed_limit_allows?
       @restaurant = Restaurant.new
@@ -47,6 +51,7 @@ class RestaurantsController < ApplicationController
       return true
     end
 
+    @cached = true
     @site_title = "#{@restaurant.name} #{@restaurant.address.blank? ? '' : "@ #{@restaurant.address}"} "
     @form_fields = @topic.form_attribute.fields
     @allow_image_upload = @topic.form_attribute.allow_image_upload
@@ -74,6 +79,15 @@ class RestaurantsController < ApplicationController
         :render_most_lovable_places,
         :render_recently_added_places,
         :render_topic_box]
+        
+    respond_to do |format|
+      format.html { render }
+      format.xml {
+      	options = {}
+      	options[:only] = params[:fields] if params[:fields]
+      	render :xml => @restaurant.to_xml(options)
+      }
+    end
   end
 
   def redirected_to_long_url_if_its_not?

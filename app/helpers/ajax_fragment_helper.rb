@@ -1,0 +1,2 @@
+module AjaxFragmentHelper
+end

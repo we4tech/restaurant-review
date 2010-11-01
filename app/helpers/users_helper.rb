@@ -91,15 +91,19 @@ module UsersHelper
   end
 
   def render_top_contributors(p_limit = 10)
-    users = User.top_contributors(@topic, p_limit)
-    render :partial => 'users/parts/top_contributors',
-           :locals => {:users => users, :label => I18n.t('subheader.top_contributors')}
+    if @topic
+      users = User.top_contributors(@topic, p_limit)
+      render :partial => 'users/parts/top_contributors',
+             :locals => {:users => users, :label => I18n.t('subheader.top_contributors')}
+    end
   end
 
   def render_top_reviewers(p_limit = 10)
-    users = User.top_reviewers(@topic, p_limit)
-    render :partial => 'users/parts/top_contributors',
-           :locals => {:users => users, :label => I18n.t('subheader.top_reviewers')}
+    if @topic
+      users = User.top_reviewers(@topic, p_limit)
+      render :partial => 'users/parts/top_contributors',
+             :locals => {:users => users, :label => I18n.t('subheader.top_reviewers')}
+    end
   end
 
 end

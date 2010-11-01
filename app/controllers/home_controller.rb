@@ -4,10 +4,14 @@ class HomeController < ApplicationController
 
   before_filter :log_new_feature_visiting_status
   before_filter :unset_premium_session 
+  caches_action :frontpage, :index, :cache_path => Proc.new {|c| 
+    c.cache_path(c)
+  }
 
   def index
     @title = I18n.t('header.recent_restaurants')
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => params[:page])
+    @cached = true
     
     # pending module - :render_recently_added_pictures
     load_module_preferences
@@ -26,6 +30,7 @@ class HomeController < ApplicationController
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => page_index)
     @top_rated_restaurants = Restaurant.featured
     @location_tag_group = TagGroup.of('locations')
+    @cached = true
 
     # pending module - :render_recently_added_pictures
     load_module_preferences
@@ -36,6 +41,15 @@ class HomeController < ApplicationController
         :render_most_lovable_places,
         :render_recently_added_places]
     @breadcrumbs = []
+    
+    respond_to do |format|
+      format.html { render }
+      format.xml {
+      	options = {}
+      	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]
+      	render :xml => @restaurants.to_xml(options)
+      }
+    end
   end
 
   def most_loved_places
@@ -188,10 +202,16 @@ class HomeController < ApplicationController
         :render_most_lovable_places,
         :render_recently_added_places]
     @breadcrumbs = []
+    
     respond_to do |format|
       format.html { render :action => :recommend }
       format.mobile { render :action => :recommend }
       format.ajax { render :action => :recommend, :layout => false }
+      format.xml { 
+      	options = {}
+      	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]
+      	render :xml => @restaurants.to_xml(options) 
+      }
     end
   end
   

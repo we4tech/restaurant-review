@@ -1,6 +1,7 @@
 class Topic < ActiveRecord::Base
 
   CACHES = {}
+  @@topic_caches = {}
 
   serialize :site_labels
   serialize :modules
@@ -42,7 +43,24 @@ class Topic < ActiveRecord::Base
     self.name.gsub('_', '.')
   end
 
+  def self.of(topic_name)
+    topic_name.downcase!
+    if (topic = @@topic_caches[topic_name])
+      topic
+    else
+      populate_topic_caches
+      @@topic_caches[topic_name]
+    end
+  end
+
   private
+    def self.populate_topic_caches
+      Topic.all.each do |topic|
+        @@topic_caches[(topic.name || '').downcase] = topic
+      end
+      @@topic_caches
+    end
+
     def clear_cache
       Topic::CACHES["key_#{self.id}"] = nil
     end

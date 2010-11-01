@@ -24,7 +24,8 @@
   </h1>
   <div class="break space_5"></div>
   <% @restaurants.each_with_index do |restaurant, index| %>
-    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :index => index} %>
+    <%= render :partial => 'restaurants/parts/restaurant', 
+               :locals => {:restaurant => restaurant, :index => index} %>
   <% end %>
 
   <div class='pagination'>
@@ -35,3 +36,7 @@
 <div class="grid_4" id="site_center_boxes">
   <%= render :partial => 'layouts/fresh_parts/modules' %>
 </div>
+
+<% if @cached %>
+  <%= javascript_include_tag fragment_for_url('restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)) %>
+<% end %>

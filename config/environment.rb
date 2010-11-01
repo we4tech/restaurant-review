@@ -40,7 +40,8 @@ Rails::Initializer.run do |config|
   config.active_record.observers = [
       :user_observer, :review_comment_observer,
       :review_observer, :restaurant_observer,
-      :related_image_observer, :contributed_image_observer]
+      :related_image_observer, :contributed_image_observer,
+      :restaurant_sweeper, :review_sweeper, :image_sweeper]
 
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names.
@@ -50,9 +51,6 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 
-  if defined?(ActionController)
-    ActionController::Base.cache_store = :file_store, File.join(RAILS_ROOT, 'tmp', 'cache')
-  end
 end
 
 require File.join(RAILS_ROOT, 'lib', 'rails_ext')
