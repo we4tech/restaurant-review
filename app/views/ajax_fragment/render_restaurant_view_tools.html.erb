@@ -14,6 +14,9 @@
                          :locals => {:review => review})}
    end
 %>
+
+$('#restaurantReviewEditor').html("<%= escape_javascript(render(:partial => 'reviews/parts/review_editor')) %>").appear();
+
 <% jsonable_response.each do |item| %>
   $('#<%= item[:elementId] %>').html("<%= escape_javascript(item[:html])%>").appear();
 <% end %>

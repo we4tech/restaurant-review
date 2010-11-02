@@ -13,12 +13,9 @@ class ReviewsController < ApplicationController
       if current_user.share_on_facebook?
         redirect_to facebook_publish_url(
             'new_review', @review.id,
-            :next_to => restaurant_long_url(
-                :id => @review.restaurant.id,
-                :name => url_escape(@review.restaurant.name),
-                :page => :reviews))
+            :next_to => "#{restaurant_long_url(@review.restaurant)}#review-#{@review.id}")
       else
-        redirect_to :back
+        redirect_to "#{restaurant_long_url(@review.restaurant)}#review-#{@review.id}"
       end
     else
       flash[:notice] = "Failed: #{@review.errors.full_messages.join('<br/>')}"
