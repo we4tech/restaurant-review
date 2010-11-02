@@ -44,6 +44,7 @@ class HomeController < ApplicationController
     
     respond_to do |format|
       format.html { render }
+	  format.mobile { render }
       format.xml {
       	options = {}
       	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]

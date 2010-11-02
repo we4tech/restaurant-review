@@ -13,10 +13,12 @@
     <%= stuff_event.user.login %>
     <% if stuff_event.event_type == StuffEvent::TYPE_REVIEW %>
       reviewed on
-      <%= link_to stuff_event.restaurant.name,
-                  "#{restaurant_long_url(
-                      :name => stuff_event.restaurant.name.parameterize.to_s,
-                      :id => stuff_event.restaurant.id)}#review-#{stuff_event.review.id}" %>
+      <% if stuff_event.restaurant %>
+        <%= link_to stuff_event.restaurant.name,
+                    "#{restaurant_long_url(
+                        :name => stuff_event.restaurant.name.parameterize.to_s,
+                        :id => stuff_event.restaurant.id)}#review-#{stuff_event.review.id}" %>
+      <% end %>
 
     <% elsif stuff_event.event_type == StuffEvent::TYPE_REVIEW_UPDATE %>
         updated review on
