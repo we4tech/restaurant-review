@@ -7,7 +7,7 @@ class RestaurantsController < ApplicationController
    
   caches_action :show, :cache_path => Proc.new {|c| 
     c.cache_path(c, [:id])
-  }
+  }, :if => Proc.new {|c| !c.send(:mobile?)}
    	
   def new
     if topic_imposed_limit_allows?

@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   before_filter :unset_premium_session 
   caches_action :frontpage, :index, :cache_path => Proc.new {|c| 
     c.cache_path(c)
-  }
+  }, :if => Proc.new {|c| !c.send(:mobile?)}
 
   def index
     @title = I18n.t('header.recent_restaurants')
