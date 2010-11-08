@@ -1,5 +1,29 @@
 h2. WellTreat.US release change logs.
 
+h4. Release - 0.17_LAALSHOP.
+
+* 186. Fix problem with Unbiased rating
+* 193. Fix issue with max height on details page
+* 191. Make system searchable
+* 192. Integrate full text search
+* 129. Similar restaurant
+* 193. Integrate nifty design for similar restaurants
+
+* 195. Remove single review constraint
+* 196. Added support for old recommend url
+* 197. Ajaxify search filtering box
+* 201. Have test url for premium service
+* 203. Keep option for removing own review
+* 204. Keep option for removing any reviews as an admin
+* [NOT an issue] 206. Fix problem with facebook user without email
+* 198. Design review box as FB comment box
+* 207. Fix mobile version
+* 205. Add phone call and map option for nokia mobile version
+* 200. Display owner recipients emails (if admin) on restaurant page
+* 206. Display related pictures from the same restaurant(s) on display image page
+* 210. Open search integration
+* 211. Don't cache mobile view
+
 h4. Release - 0.16_LAALSHOP.
 
 * LS#2 Implement domain based virtual hosting support
