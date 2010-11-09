@@ -1,0 +1,7 @@
+h1. Installation
+
+Add the following codes with in your +application_controller+
+
+@include MultidomainCookieHelper@
+@before_filter :set_cookie_domain@
+

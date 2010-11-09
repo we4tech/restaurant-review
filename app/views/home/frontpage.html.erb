@@ -38,5 +38,5 @@
 </div>
 
 <% if @cached %>
-  <%= javascript_include_tag fragment_for_url('restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)) %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)) %>
 <% end %>

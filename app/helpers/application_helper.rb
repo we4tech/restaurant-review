@@ -1,8 +1,6 @@
 module ApplicationHelper
 
   def detect_premium_site_or_topic_or_forward_to_default_one
-    override_cookie_host_by(request.host)
-
     if @premium_template = PremiumTemplate.match_host(request.host)
       @restaurant = @premium_template.restaurant
       @topic = @restaurant.topic
@@ -17,12 +15,6 @@ module ApplicationHelper
     else
       detect_topic_or_forward_to_default_one
     end
-  end
-
-  def override_cookie_host_by(host)
-    host_parts = host.split(/\./)
-    host = host_parts[(host_parts.length - 2)..(host_parts.length)].join('.')
-    ActionController::Session::CookieStore.override_domain = ".#{host}"
   end
 
   def detect_topic_or_forward_to_default_one

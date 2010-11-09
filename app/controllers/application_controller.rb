@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   include PremiumHelper
   include PremiumTemplatesHelper
   include SearchHelper
+  include MultidomainCookieHelper
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -31,6 +32,7 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   filter_parameter_logging :fb_sig_friends, :password
 
+  before_filter :set_cookie_domain
   before_filter :detect_premium_site_or_topic_or_forward_to_default_one
   before_filter :check_facebook_connect_session
   before_filter :detect_mobile_view

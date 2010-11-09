@@ -125,9 +125,34 @@ module UrlOverrideHelper
 
   alias :_fragment_for_url :_fragment_for_path
 
+  DEFAULT_OPTIONS = {
+      :subdomain_name => 'ajax',
+      :max_subdomains => 3
+  }
+
+  #
+  # Wrap the specified url route with the ajax prefixed domain,
+  #
+  # Parameters -
+  #   - subdomain_name  - (default ajax) override default sub domain name
+  #   - max_subdomains - (default 3) override number of sub domain factor
+  #     through the options map
+  #
+  def ajaxified_url_wrap(route, route_options = {})
+    options = DEFAULT_OPTIONS.merge(route_options)
+    host = determine_dynamic_ajax_host(
+        request.host, options.delete(:max_subdomains),
+        options.delete(:subdomain_name))
+    required_options = {:host => host, :__topic_id => @topic.id}
+
+    # Force user defined host if specified through route_options
+    required_options[:host] = route_options[:host] if route_options[:host]
+    send(route, route_options.merge(required_options))
+  end
+
   private
-    def determine_dynamic_ajax_host(host, max_hosts)
-      ajax_host = "ajax#{rand(max_hosts)}"
+    def determine_dynamic_ajax_host(host, max_hosts, subdomain_name = 'ajax')
+      ajax_host = "#{subdomain_name}#{rand(max_hosts)}"
       host_parts = host.split('.')
       "#{ajax_host}.#{host_parts[host_parts.length - 2, host_parts.length].join('.')}"
     end

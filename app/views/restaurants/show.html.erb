@@ -206,8 +206,7 @@
 </script>
 
 <% if @cached %>
-  <%= javascript_include_tag fragment_for_url('authenticity_token') %>
-  <%= javascript_include_tag fragment_for_url('module_render_recently_added_places', :restaurant_id => @restaurant.id) %>
-  <%= javascript_include_tag fragment_for_url('restaurant_view_tools', :restaurant_id => @restaurant.id) %>
-
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'module_render_recently_added_places', :restaurant_id => @restaurant.id) %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_view_tools', :restaurant_id => @restaurant.id) %>
 <% end %>
