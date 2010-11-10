@@ -58,7 +58,7 @@
 
 <body<%= @edit_mode ? ' onbeforeunload="return (mFormContentChanged) ? \'- Your unsaved changes will be lost.\' : null"' : '' %>>
 <div class="navigation" id='topNavigationBar' style="display: <%= @cached ? 'none' : 'block' %>">
-  <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
+  <%= render :partial => 'layouts/fresh_parts/top_navigation_v2' %>
 </div>
 <div class="clear"></div>
 
@@ -119,6 +119,42 @@
   </div>
 </div>
 
+<% if params[:_test] || session[:_test] %>
+  <% session[:_test] = true %>
+  <%= javascript_include_tag 'test.js' %>
+<% end %>
+
+<% if @cached %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'notice') %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'top_menu') %>
+<% end %>
+
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+  $(function() {
+    FB.init({appId: '<%= Facebooker.api_key %>', status: true, cookie: true, xfbml: true});
+    App.Tasks.executeTasks();
+    
+    <% if !logged_in? %>
+      FB.Event.subscribe('auth.sessionChange', function(response) {
+        if (response.session) {
+          var path = location.href;
+          window.location = path + (path.match(/\?/) ? '&' : '?') + "fskey=" +
+                            response.session.session_key + "&fuid=" +
+                            response.session.uid + '&fexpires=' +
+                            response.session.expires + '&fsecret=' +
+                            response.session.secret + '&fat=' +
+                            response.session.access_token
+        }
+      });
+    <% end %>
+  });
+</script>
+<% if logged_in? %>
+  <%= render :partial => 'users/parts/facebook_app_script' %>
+<% end %>
+
 <% if params[:no_script].nil? %>
   <script type="text/javascript">
   var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
@@ -149,16 +185,6 @@
     feedback_widget_options.style = "idea";
     var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
   </script>
-<% end %>
-
-<% if params[:_test] || session[:_test] %>
-  <% session[:_test] = true %>
-  <%= javascript_include_tag 'test.js' %>
-<% end %>
-
-<% if @cached %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'notice') %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'top_menu') %>
 <% end %>
 
 </body>

@@ -32,7 +32,7 @@ class AjaxFragmentController < ApplicationController
     end
 
     def render_top_menu
-      @content_file = 'layouts/fresh_parts/top_navigation'
+      @content_file = 'layouts/fresh_parts/top_navigation_v2'
       @effect = 'slideDown()'
       @element = '#topNavigationBar'
       render :action => 'render_fragment', :layout => false
@@ -42,6 +42,11 @@ class AjaxFragmentController < ApplicationController
       @content_text = flash[:notice] || flash[:error] || flash[:success]
       @effect = 'appear()'
       @element = '#siteNoticeBar'
+      @after_effects = %{
+        setTimeout(function() {
+          $('#{@element}').fadeOut();
+        }, 5000);
+      }
       render :action => 'render_fragment', :layout => false
     end
 

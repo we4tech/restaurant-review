@@ -238,4 +238,34 @@ $(function() {
   $('.pagination a').each(function() {
     $(this).attr('href', $(this).attr('href') + '#adminPortion');
   });
+
+  $('.submenu').click(function() {
+    var $menuPanel = $($(this).attr('rev'));
+    var $self = $(this);
+    var x = $self.offset().left;
+    var y = $self.offset().top;
+    if ($menuPanel.css('display') == 'block' || $menuPanel.css('display') == 'inline') {
+      $menuPanel.slideUp(function() {
+        $(this).hide();
+        $self.removeClass('menuSel');
+      })
+    } else {
+      $self.removeClass('menuSel').addClass('menuSel');
+      $menuPanel.css('left', x - 7).css('top', y + $self.css('height') + 10).slideDown();
+    }
+  });
 });
+
+App.Tasks = {
+  tasks : [],
+
+  addTask: function(closure) {
+    App.Tasks.tasks.push(closure)
+  },
+
+  executeTasks : function() {
+    for (var i = 0; i < App.Tasks.tasks.length; i++) {
+      App.Tasks.tasks[i].call();
+    }
+  }
+}

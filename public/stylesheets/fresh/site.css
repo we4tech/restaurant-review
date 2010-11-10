@@ -7,7 +7,7 @@ body {
 }
 
 a {
-  color: #0066cc !important;
+  color: #0066cc;
   text-decoration: none !important;
 }
 
@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 5px;
   position: fixed;
   left: 40%;
-  z-index: 100;
+  z-index: 2000;
   border: 2px solid #ccc;
 }
 
@@ -78,21 +78,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #site_top_navigation {
-  text-align: right;
+  text-align: center;
   font-size: 10px;
-  color: gray;
-  padding: 10px;
+  color: #ccc;
+  padding: 10px 10px 5px 10px;
+  background: url(/images/fresh/site_top_nav_bg.png);
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
 }
 
 #site_top_navigation a {
   font-size: 15px !important;
   padding-left: 5px;
   padding-right: 5px;
-  color: crimson !important;
+  color: #fff;
 }
 
 #site_top_navigation a:hover {
-  color: #fff !important;
+  color: #fff;
 }
 
 #site_top_navigation a.fb_button {
@@ -1037,4 +1041,54 @@ form .hints {
 
 .loading {
   color: red;
+}
+
+#site_top_navigation span a {
+  padding: 5px;
+}
+
+#site_top_navigation .topMenuSub {
+  background: #fff;
+  text-align: left;
+  color: #172B2C;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+#site_top_navigation .topMenuSub ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  padding: 5px;
+}
+
+#site_top_navigation .topMenuSub ul li {
+  padding: 5px;
+  margin: 0;
+}
+
+#site_top_navigation .topMenuSub ul li a {
+  color: #172B2C;
+}
+
+#site_top_navigation .topMenuSub ul li a:hover {
+  color: #ccc!important;
+}
+
+#site_top_navigation a.menuSel {
+  background: #fff url("/images/fresh/downarrow.png") no-repeat scroll right center;
+  color: #ccc;
+  padding-bottom: 10px;
+  padding: 10px;
+  padding-right:17px !important;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.submenu {
+  background:url("/images/fresh/downarrow.png") no-repeat scroll right center transparent;
+  padding: 10px;
+  padding-right:17px !important;
+  padding-bottom: 10px;
 }

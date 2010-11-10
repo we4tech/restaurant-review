@@ -1,8 +1,14 @@
 <script type="text/javascript">
   $(function() {
-    FB.logout(function() {
-      $.get('<%= facebook_connect_update_url %>', {'sid': ''}, function() {
-        window.location = '<%= logout_url %>';
+    setTimeout(function() {
+      window.location = '<%= logout_url %>';
+    }, 10000);
+
+    App.Tasks.addTask( function() {
+      FB.logout(function() {
+        $.get('<%= facebook_connect_update_url %>', {'sid': ''}, function() {
+          window.location = '<%= logout_url %>';
+        });
       });
     });
   });

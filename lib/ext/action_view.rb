@@ -4,7 +4,7 @@ ActionView::Helpers::UrlHelper.module_eval do
   def url_for(options = {})
     if options.is_a?(Hash)
       if !options.stringify_keys.include?('l')
-        options.merge!({'l' => I18n.locale.to_s})
+        options.merge!({'l' => I18n.locale.to_s, :subdomain => @topic ? @topic.subdomain : nil})
       end
       
       __url_for(options)
@@ -18,6 +18,10 @@ ActionView::Helpers::UrlHelper.module_eval do
         elsif options.match(/\?/)
           options << "&l=#{I18n.locale.to_s}"
         end
+      end
+
+      if @topic
+        options.gsub!(/(ajax\d+)\./, "#{@topic.subdomain}.")
       end
 
       __url_for(options)

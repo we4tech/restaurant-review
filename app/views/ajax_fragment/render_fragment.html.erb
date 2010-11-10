@@ -3,4 +3,8 @@
 %>
 <% if content && !content.blank? && content.length > 2 %>
   $('<%= @element %>').html("<%= content %>").<%= @effect ? @effect : 'slideDown()' %>;
+
+  <% if @after_effects %>
+    <%= @after_effects %>
+  <% end %>
 <% end %>

@@ -99,10 +99,10 @@ en: !map:HashWithIndifferentAccess
       add: add restaurant
       logout: logout
       auto_share_on_facebook: Auto share on Facebook
-      edit_user: edit account
+      edit_user: settings
       register: register
       photos: photos
-      my_page: my page
+      my_page: profile
       admin: admin
       fb_login: login with facebook
       home: home
@@ -134,7 +134,7 @@ en: !map:HashWithIndifferentAccess
     delete: Delete
     more_places: "more places \xC2\xBB"
     more_tags: More tags
-    updates: updates ({{count}})
+    updates: notification ({{count}})
     reply: reply!
     edit_existing_review: edit your existing review!
     manage_news: Manage News
