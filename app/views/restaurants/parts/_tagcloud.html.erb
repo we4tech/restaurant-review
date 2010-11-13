@@ -1,14 +1,14 @@
 <%
    label = config['label']
 %>
-<div class="site_simple_box">
+<div class="site_simple_box categories_view">
 
   <h4><%= tt("module.#{label}") %></h4>
   <div class="space_5"></div>
 
   <% if !tags.empty? %>
     <%
-       max_font_size = 3;
+       max_font_size = 10;
 
        max_hit_count = tags.max{|a, b|
          a.tag_mappings_count.to_i <=> b.tag_mappings_count.to_i
@@ -25,7 +25,7 @@
            hit_count = tag.tag_mappings_count
            font_size = 1
            if hit_count > min_hit_count
-             font_size = (max_font_size * (hit_count - min_hit_count)) / (max_hit_count - min_hit_count)
+             font_size = tag.cloud_size(max_font_size, max_hit_count, min_hit_count)
            end
         %>
         <div class='tag'>

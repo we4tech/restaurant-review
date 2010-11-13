@@ -150,6 +150,11 @@ module UrlOverrideHelper
     send(route, route_options.merge(required_options))
   end
 
+  def tag_search_url(tag)
+    search_url('name|short_array|long_array|description' => tag.name,
+               '_models' => 'Restaurant')
+  end
+
   private
     def determine_dynamic_ajax_host(host, max_hosts, subdomain_name = 'ajax')
       ajax_host = "#{subdomain_name}#{rand(max_hosts)}"

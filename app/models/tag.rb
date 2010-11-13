@@ -14,5 +14,28 @@ class Tag < ActiveRecord::Base
   after_destroy { TagGroup::update_caches! }
 
   default_scope :order => 'name ASC'
-  
+  named_scope :featurable, :conditions => {:feature_enlist => true}
+
+  def cloud_size(factor, max_hit_count, min_hit_count)
+    if tag_mappings_count > min_hit_count
+      (factor * (tag_mappings_count - min_hit_count)) / (max_hit_count - min_hit_count)
+    else
+      1
+    end
+  end
+
+  def most_loved_restaurants(limit = 2)
+    TagMapping.all(
+        :joins => ['LEFT JOIN reviews ON reviews.restaurant_id = tag_mappings.restaurant_id',
+                   'LEFT JOIN restaurants ON restaurants.id = tag_mappings.restaurant_id'],
+        :select => 'tag_mappings.*, restaurants.*, count(reviews.restaurant_id) as most_loved',
+        :group => 'reviews.restaurant_id',
+        :order => 'most_loved DESC',
+        :limit => limit,
+        :conditions => {
+          'tag_mappings.tag_id' => self.id,
+          'tag_mappings.topic_id' => self.topic_id,
+          'reviews.loved' => Review::LOVED}).collect(&:restaurant)
+  end
+
 end

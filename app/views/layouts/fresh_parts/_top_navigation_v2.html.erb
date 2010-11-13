@@ -25,7 +25,7 @@
       <form action="<%= search_url %>" id="cse-search-box" style='display:inline;'>
         <input type="hidden" name="_models" value="Restaurant"/>
         <input type="text" name="name|short_array|long_array|description[]"
-               value="<%= @tags ? @tags.join(' ') : '' %>"
+               value="<%= @searched_tags ? @searched_tags.join(' ') : '' %>"
                size="31"/>
         <input type="submit" value="Search"/>
       </form> | 

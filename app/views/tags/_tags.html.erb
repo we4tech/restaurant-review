@@ -1,7 +1,10 @@
 <div class='tags'>
   <% @tags.each do |tag| %>
     <div class='tag'>
-      <%= tag.name %> (<%= link_to 'x', tag_url(tag), :confirm => t('confirm.delete_entry'), :method => :delete %>)
+      <%= tag.name %> <small style='color: green'><%= tag.feature_enlist ? '(featured)' : '' %></small>
+      (<%= [link_to('x', tag_url(tag), :confirm => t('confirm.delete_entry'),
+                    :method => :delete),
+           link_to('e', "#{edit_tag_path(tag.id)}#edit_tag")].join(', ') %>)
     </div>
   <% end %>
   <div class='clear'></div>
@@ -26,10 +29,17 @@
   <div class='space_10'></div>
   <h4>Add new tag</h4>
   <div class='space_10'></div>
-  <% form_for @tag || Tag.new do |f| %>
+  <% form_for form_model = (@tag || Tag.new) do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name %>
     <%= f.error_message_on :name %>
-    <%= f.submit t('button.create') %>
+    <%= f.check_box :feature_enlist %>
+    <%= f.label :feature_enlist %>
+
+    <% if form_model.new_record? %>
+      <%= f.submit t('button.create') %>
+    <% else %>
+      <%= f.submit t('button.update') %>
+    <% end %>
   <% end %>
 </div>

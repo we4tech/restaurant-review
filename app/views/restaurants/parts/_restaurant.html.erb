@@ -21,9 +21,11 @@
 
     <div class="site_list_item_rating">
       <%= render_restaurant_review_stats(restaurant) %>
-      <span id='restaurant_<%= restaurant.id %>_tools' style="display: <%= @cached ? 'none' : 'inline' %>">
-        <%= render :partial => 'restaurants/parts/tools', :locals => {:restaurant => restaurant} %>
-      </span>
+      <% if @display_tools.nil? || @display_tools %>
+        <span id='restaurant_<%= restaurant.id %>_tools' style="display: <%= @cached ? 'none' : 'inline' %>">
+          <%= render :partial => 'restaurants/parts/tools', :locals => {:restaurant => restaurant} %>
+        </span>
+      <% end %>
     </div>
 
     <div class="summary">

@@ -8,6 +8,19 @@ module CacheHelper
     "#{controller.send(:action_name)}_#{I18n.locale.to_s}#{value_string.blank? ? '' : "_#{value_string}"}"
   end
 
+  def cache_fragment(fragment_key, &block)
+    key = fragment_cache_key(fragment_key)
+    if fragment_exist?(key)
+      render :text => read_fragment(key)
+    else
+      write_fragment(key, block.call)
+    end
+  end
+
+  def flush_fragment(fragment_key)
+    expire_fragment(fragment_cache_key(fragment_key))
+  end
+
   class Util
     def self.expire_caches(path, match)
       files = Dir.glob(File.join(RAILS_ROOT, 'tmp', 'cache', 'views', '*', path, '*'))

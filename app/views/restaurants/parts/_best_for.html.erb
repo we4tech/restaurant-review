@@ -1,0 +1,61 @@
+<div class='bestForBox'>
+  <h4>Find out which restaurants are best for what!</h4>
+  <div class='break'></div>
+  <div class='space_10'></div>
+  <div class='bestForNav' id='bestForNav'>
+    <ul>
+      <% @best_for_tags.each_with_index do |tag, index| %>
+        <li value="<%= index %>" id='bestForNav<%= index %>'>
+          <%= tag.name %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class='bestForContainer' id='bestForContainer'>
+    Loading...
+  </div>
+
+  <div id='bestForCollection'>
+    <% @display_tools = false %>
+    <% @best_for_tags.each_with_index do |tag, index| %>
+      <div id='best_for_<%= index %>' style='display:none'>
+        <% tag.most_loved_restaurants(2).each do |restaurant| %>
+          <% rand_image = restaurant.rand_image %>
+          <%= render :partial => 'restaurants/parts/restaurant',
+                     :locals => {:restaurant => restaurant} %>
+          <div class='space_5'></div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class='clear'></div>
+</div>
+<div class='clear'></div>
+<div class='space_10'></div>
+
+<script type="text/javascript">
+  var BestForBox = {
+    mContainer : null,
+
+    set: function(index) {
+      var $container = BestForBox.mContainer;
+      if ($container == null) {
+        $container = $('#bestForContainer');
+      }
+
+      $container.html($('#best_for_' + index).html());
+      $('#bestForNav .selected').removeClass('selected');
+      $('#bestForNav' + index).removeClass('selected').addClass('selected');
+    }
+  };
+
+
+  $('#bestForNav ul li').click(function() {
+    var $self = $(this);
+    BestForBox.set($(this).attr('value'));
+  });
+
+  BestForBox.set(0);
+</script>

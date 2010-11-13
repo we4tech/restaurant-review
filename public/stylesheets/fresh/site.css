@@ -537,7 +537,6 @@ h1, h2, h3, h4, h5, h6 {
   width: 20px;
 }
 
-
 .review_comment_form textarea {
   width: 100%;
   height: 90px;
@@ -1073,7 +1072,7 @@ form .hints {
 }
 
 #site_top_navigation .topMenuSub ul li a:hover {
-  color: #ccc!important;
+  color: #ccc !important;
 }
 
 #site_top_navigation a.menuSel {
@@ -1081,14 +1080,84 @@ form .hints {
   color: #ccc;
   padding-bottom: 10px;
   padding: 10px;
-  padding-right:17px !important;
+  padding-right: 17px !important;
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
 }
 
 .submenu {
-  background:url("/images/fresh/downarrow.png") no-repeat scroll right center transparent;
+  background: url("/images/fresh/downarrow.png") no-repeat scroll right center transparent;
   padding: 10px;
-  padding-right:17px !important;
+  padding-right: 17px !important;
   padding-bottom: 10px;
+}
+
+/* Best for box */
+.bestForBox {
+  padding: 10px 10px 10px 35px;
+}
+
+.bestForBox .bestForNav {
+  width: 18.5%;
+  text-align: left;
+  float: left;
+  z-index: 300;
+  position: relative;
+}
+
+.bestForBox .bestForNav ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.bestForBox .bestForNav ul li {
+  background: url(/images/fresh/best_for_tab_nav_bg_hover.png) no-repeat;
+  margin: 0;
+  padding: 5px;
+  margin: 5px 0;
+  cursor: pointer;
+  color: #fff;
+  padding: 5px 50px 5px 20px;
+  width: 110px;
+}
+
+.bestForBox .bestForNav ul li.selected {
+  background: url(/images/fresh/best_for_tab_nav_bg.png) no-repeat;
+  font-weight: bold;
+  color: #000;
+}
+
+.bestForBox .bestForNav ul li:hover {
+  background: url(/images/fresh/best_for_tab_nav_bg.png) no-repeat;
+  color: #000;
+}
+
+.bestForBox .bestForContainer {
+  background: url(/images/fresh/bestForContainer.png) no-repeat;
+  width: 82%;
+  float: left;
+  padding: 10px;
+  margin-left: -3%;
+  z-index: 200;
+  position: relative;
+  overflow-y: auto;
+  height: 376px;
+}
+
+.bestForBox .bestForContainer .site_list_item {
+  padding-left: 10px;
+  border: 0;
+}
+
+.bestForBox .bestForContainer .site_list_item  a {
+  color: #666666;
+}
+
+.bestForBox .bestForContainer .site_list_item  .associated_tags {
+  color: #333333;   
+}
+
+.bestForBox .bestForContainer .site_list_item img {
+  border:4px solid #fff;
 }

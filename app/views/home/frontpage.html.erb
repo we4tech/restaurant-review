@@ -10,6 +10,13 @@
       <div class='grid_12' id='featureBox'>
         <%= render :partial => 'restaurants/parts/top_rated_slider' %>
       </div>
+      <div class='clear'></div>
+      <div class='grid_12' id='categoryHitRestaurantBox'>
+        <% if !@cached %>
+          <%= render :partial => 'restaurants/parts/best_for' %>
+        <% end %>
+      </div>
+
     <% end %>
     <div class='clear'></div>
   </div>
@@ -39,4 +46,5 @@
 
 <% if @cached %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)) %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'best_for_box') %>
 <% end %>

@@ -1,6 +1,7 @@
 class TagsController < ApplicationController
 
   before_filter :login_required
+  before_filter :authorize
   before_filter :log_new_feature_visiting_status
 
   def index
@@ -20,6 +21,22 @@ class TagsController < ApplicationController
       notify :success, tags_url
     else
       load_tags
+      notify :failure, :index
+    end
+  end
+
+  def edit
+    @tag = Tag.find(params[:id])
+    index
+    render :action => :index
+  end
+
+  def update
+    @tag = Tag.find(params[:id])
+    if @tag.update_attributes(params[:tag])
+      notify :success, tags_url
+    else
+      index
       notify :failure, :index
     end
   end

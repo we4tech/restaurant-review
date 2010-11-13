@@ -21,6 +21,7 @@ class ImageSweeper < ActiveRecord::Observer
       if image.restaurant_id
         CacheHelper::Util.expire_caches("home", "frontpage")
         CacheHelper::Util.expire_caches("restaurants", "show.+_#{image.restaurant_id}")
+        CacheHelper::Util.expire_caches(".", "best_for_box")
       end
     end
 end

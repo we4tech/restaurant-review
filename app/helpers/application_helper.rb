@@ -22,7 +22,7 @@ module ApplicationHelper
     if topic_hint.empty? || topic_hint == 'www'
       topic = Topic.default
       path_prefix = (request.path || '')
-      path_prefix = path_prefix[1..path_prefix.length]                                                            
+      path_prefix = path_prefix[1..path_prefix.length]
       redirect_to "#{root_url(:subdomain => topic.subdomain)}#{path_prefix}"
       return
     else

@@ -3,7 +3,7 @@ class AjaxFragmentController < ApplicationController
   ALLOWED_FRAGMENTS = [:top_menu, :notice, :restaurant_tools,
                        :restaurant_view_tools,
                        :module_render_recently_added_places,
-                       :authenticity_token, :test]
+                       :authenticity_token, :test, :best_for_box, :featured_box]
   include RestaurantsHelper
   after_filter :no_cache
 
@@ -81,6 +81,26 @@ class AjaxFragmentController < ApplicationController
         }
       });
       }
+    end
+
+    def render_best_for_box
+      cache_fragment('best_for_box') do
+        @content_file = 'restaurants/parts/best_for'
+        @effect = 'appear()'
+        @element = '#categoryHitRestaurantBox'
+        @best_for_tags = Tag.featurable
+        render :partial => 'ajax_fragment/render_fragment', :layout => false
+      end
+    end
+
+    def render_featured_box
+      cache_fragment('featured_box') do 
+        @content_file = 'restaurants/parts/top_rated_slider'
+        @effect = 'appear()'
+        @element = '#featureBox'
+        @top_rated_restaurants = Restaurant.featured
+        render :partial => 'ajax_fragment/render_fragment', :layout => false
+      end
     end
 
     def render_test

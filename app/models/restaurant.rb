@@ -32,6 +32,7 @@ class Restaurant < ActiveRecord::Base
   # Full Text search integration
   is_indexed :fields => ['created_at', 'name', 'description', 'address',
                          'short_array', 'long_array'],
+             :include => [{:association_name => 'topic', :field => 'id', :as => 'topic_id'}],
              :delta => true
 
 

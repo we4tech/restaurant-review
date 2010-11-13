@@ -17,7 +17,6 @@ class HomeController < ApplicationController
     load_module_preferences
 
     @left_modules = [
-        :render_search,
         :render_tagcloud,
         :render_most_lovable_places,
         :render_recently_added_places]
@@ -30,13 +29,13 @@ class HomeController < ApplicationController
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => page_index)
     @top_rated_restaurants = Restaurant.featured
     @location_tag_group = TagGroup.of('locations')
+    @best_for_tags = Tag.featurable
     @cached = true
 
     # pending module - :render_recently_added_pictures
     load_module_preferences
 
     @left_modules = [
-        :render_search,
         :render_tagcloud,
         :render_most_lovable_places,
         :render_recently_added_places]
@@ -72,7 +71,7 @@ class HomeController < ApplicationController
     @title = I18n.t('header.loved_places')
     @site_title = @title
 
-    @left_modules = [:render_search, :render_tagcloud, :render_recently_added_places]
+    @left_modules = [:render_tagcloud, :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -97,7 +96,7 @@ class HomeController < ApplicationController
     @site_title = @title
 
     @display_last_review = true
-    @left_modules = [:render_search, :render_tagcloud, :render_most_lovable_places]
+    @left_modules = [:render_tagcloud, :render_most_lovable_places]
     @breadcrumbs = [['All', root_url]]
     render :action => :index
   end
@@ -123,7 +122,7 @@ class HomeController < ApplicationController
     @title = I18n.t("header.wannago")
     @site_title = @title
 
-    @left_modules = [:render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_long_url(:id => restaurant.id, :name => url_escape(restaurant.name))]]
     @restaurant = restaurant
   end
@@ -153,8 +152,7 @@ class HomeController < ApplicationController
 
       @title = I18n.t('header.tag_details', :tag => tag.name)
       @site_title = @title
-      @left_modules = [:render_search,
-                       :render_tagcloud, :render_recently_added_places]
+      @left_modules = [:render_tagcloud, :render_recently_added_places]
       @breadcrumbs = [['All', root_url]]
       render :action => :index
     else
@@ -198,12 +196,11 @@ class HomeController < ApplicationController
     load_module_preferences
 
     @left_modules = [
-        :render_search,
         :render_tagcloud,
         :render_most_lovable_places,
         :render_recently_added_places]
     @breadcrumbs = []
-    
+    @searched_tags = @tags
     respond_to do |format|
       format.html { render :action => :recommend }
       format.mobile { render :action => :recommend }
@@ -238,8 +235,7 @@ class HomeController < ApplicationController
 
     @title = I18n.t('header.photos')
     @site_title = @title
-    @left_modules = [:render_search,
-                     :render_tagcloud, :render_most_lovable_places,
+    @left_modules = [:render_tagcloud, :render_most_lovable_places,
                      :render_recently_added_places]
     @breadcrumbs = [['All', root_url]]
   end
@@ -254,7 +250,7 @@ class HomeController < ApplicationController
     @title = nil if @title.nil? || @title.blank?
 
     @site_title = @title
-    @left_modules = [:render_search, :render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
     @breadcrumbs = [['All', root_url],
                     ['Photos', photos_url(:page => params[:page])]]
   end

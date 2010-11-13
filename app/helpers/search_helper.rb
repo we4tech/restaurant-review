@@ -21,12 +21,19 @@ module SearchHelper
   end
 
   def perform_search(models, query, options = {})
+
+    # Apply specific model
     if models && !models.empty?
       options[:class_names] = models.collect(&:to_s)
     end
 
+    # Apply topic based filter
+    options[:filters] = (options[:filters] || {}).merge(:topic_id => @topic.id)
+
+    # Define page index
     page_index = options[:page] || params[:page]
 
+    # Start performing search
     begin
       search = Ultrasphinx::Search.new(
           {:query => query,

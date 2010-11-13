@@ -59,6 +59,7 @@ module RestaurantsHelper
     render :partial => 'restaurants/parts/tagcloud', :locals => {
         :config => p_config,
         :tags => tags,
+        :tag_groups => TagGroup.all,
         :column => bind_column.to_sym
     }
   end

@@ -19,6 +19,7 @@ class RestaurantSweeper < ActiveRecord::Observer
   private
     def expire_cache_for(restaurant)
       CacheHelper::Util.expire_caches("home", "frontpage")   
-      CacheHelper::Util.expire_caches("restaurants", "show.+_#{restaurant.id}")   
+      CacheHelper::Util.expire_caches("restaurants", "show.+_#{restaurant.id}")
+      CacheHelper::Util.expire_caches(".", "best_for_box")
     end
 end
