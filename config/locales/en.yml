@@ -92,6 +92,7 @@ en: !map:HashWithIndifferentAccess
     login: Log in
     update: Update
     add_comment: Add comment
+    search: Search
   layout: !map:HashWithIndifferentAccess 
     passionate_food_lovers_community: passionate food lovers community!
     links: !map:HashWithIndifferentAccess 
@@ -167,6 +168,7 @@ en: !map:HashWithIndifferentAccess
     search_results: Search results!
     wannago: Who else wanna visit this place!
     reviewed_places: Recently reviewed places!
+    best_for: Find out which restaurants are best for what!
     photos: Restaurants pictures!
     edit_tags: "Edit tags \xC2\xBB {{name}}"
     loved_places: Most loved places!

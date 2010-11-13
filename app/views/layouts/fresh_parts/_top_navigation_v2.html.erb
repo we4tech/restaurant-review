@@ -5,7 +5,10 @@
 
   <div id="site_top_navigation">
     <%
-       current_url = request.url.clone
+       current_url = request.headers['referer'] || request.host
+       # Replace ajax subdomain
+       current_url.gsub!(/(ajax\d+)/, @topic.subdomain)
+       
        if current_url.match(/l=(\w+)/)
          current_url = current_url.gsub(/l=(\w+)/, 'l=:V:')
        else
@@ -27,7 +30,7 @@
         <input type="text" name="name|short_array|long_array|description[]"
                value="<%= @searched_tags ? @searched_tags.join(' ') : '' %>"
                size="31"/>
-        <input type="submit" value="Search"/>
+        <input type="submit" value="<%= t('button.search')%>"/>
       </form> | 
     </span>
     <span> <%= link_to t('layout.links.home'), root_url %> | </span>

@@ -8,7 +8,7 @@
   <div class="space_10"></div>
 
   <div class='admin_topic_new'>
-    <% form_for @topic do |f| %>
+    <% form_for @topic_object do |f| %>
       <%= render :partial => 'topics/parts/form', :locals => {:f => f} %>
       <div class="clear"></div>
       <div class="space_5"></div>

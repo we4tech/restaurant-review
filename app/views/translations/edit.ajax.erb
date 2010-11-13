@@ -40,6 +40,6 @@
 <script type="text/javascript">
   $('#edit_translation').parent().ajaxify({
     urlRef: false, autoButtonEnable: true, success: function(response) {
-      $('#translationEditPanel').replaceWith(response);
+      $('#translationEditPanel').replace(response);
     }});
 </script>

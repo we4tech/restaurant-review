@@ -21,7 +21,17 @@ class TranslationsController < ApplicationController
     end
 
     flash[:success] = 'Stored translation file!'
-    redirect_to edit_translation_path(params[:id])
+
+    respond_to do |format|
+      format.html {
+        redirect_to edit_translation_path(params[:id])
+      }
+
+      format.ajax {
+        @translation_map = YAML.load_file(yml_file)
+        render :action => :edit, :layout => false
+      }
+    end
   end
 
   private

@@ -1,7 +1,7 @@
 <div id="site_center">
   <div class="grid_8 restaurant_details">
     <div class="breadcrumbs">
-      <%= link_to @topic.name.humanize.pluralize, root_url %> &raquo;
+      <%= link_to t("topic.#{@topic.name.humanize.pluralize}"), root_url %> &raquo;
       <span class="review_tools" id="restaurant_<%= @restaurant.id %>_tools">
         <%= render :partial => 'restaurants/parts/tools', :locals => {:restaurant => @restaurant} %>
       </span>

@@ -53,21 +53,21 @@ class TopicsController < ApplicationController
   end
 
   def new
-    @topic = Topic.new
+    @topic_object = Topic.new
     @themes = detect_themes
   end
 
   def edit
-    @topic = Topic.find(params[:id].to_i)
+    @topic_object = Topic.find(params[:id].to_i)
     @themes = detect_themes
   end
 
   def update
-    @topic = Topic.find(params[:id].to_i)
+    @topic_object = Topic.find(params[:id].to_i)
     @site_labels = params[:site_labels]
-    if @topic.update_attributes(params[:topic].merge(:site_labels => @site_labels))
-      flash[:notice] = "Updated topic - '#{@topic.name}'"
-      redirect_to edit_topic_url(:id => @topic.id)
+    if @topic_object.update_attributes(params[:topic].merge(:site_labels => @site_labels))
+      flash[:notice] = "Updated topic - '#{@topic_object.name}'"
+      redirect_to edit_topic_url(:id => @topic_object.id)
     else
       @themes = detect_themes
       render :action => :edit
@@ -75,18 +75,18 @@ class TopicsController < ApplicationController
   end
 
   def create
-    @topic = Topic.new(params[:topic])
+    @topic_object = Topic.new(params[:topic])
     @site_labels = params[:site_labels]
-    @topic.site_labels = @site_labels
-    @topic.form_attribute = FormAttribute.new
-    @topic.form_attribute.fields = [
+    @topic_object.site_labels = @site_labels
+    @topic_object.form_attribute = FormAttribute.new
+    @topic_object.form_attribute.fields = [
             {'field' => 'name', 'type' => 'text_field', 'required' => true, 'index' => 0},
             {'field' => 'description', 'type' => 'text_area', 'required' => true, 'index' => 1},
             {'field' => 'address', 'type' => 'text_field', 'required' => true, 'index' => 2}]
-    @topic.modules = DEFAULT_MODULES
+    @topic_object.modules = DEFAULT_MODULES
 
-    if @topic.save
-      flash[:notice] = "Created new topic - '#{@topic.name}'"
+    if @topic_object.save
+      flash[:notice] = "Created new topic - '#{@topic_object.name}'"
       redirect_to topics_url
     else
       flash[:notice] = "Please fill up the red marked fields."
@@ -96,18 +96,18 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    @topic = Topic.find(params[:id].to_i)
-    if @topic.destroy
-      flash[:notice] = "Removed topic - '#{@topic.name}'"
+    @topic_object = Topic.find(params[:id].to_i)
+    if @topic_object.destroy
+      flash[:notice] = "Removed topic - '#{@topic_object.name}'"
       redirect_to topics_url
     else
-      flash[:notice] = "Failed to remove topic - '#{@topic.name}'"
+      flash[:notice] = "Failed to remove topic - '#{@topic_object.name}'"
       redirect_to :back
     end
   end
 
   def edit_modules
-    @topic = Topic.find(params[:id].to_i)
+    @topic_object = Topic.find(params[:id].to_i)
     @module_names = DEFAULT_MODULES.collect{|m| m['name']}
     @all_modules = DEFAULT_MODULES.clone
     @bind_columns = Restaurant.column_names - [
@@ -117,11 +117,11 @@ class TopicsController < ApplicationController
   end
 
   def update_modules
-    @topic = Topic.find(params[:id].to_i)
+    @topic_object = Topic.find(params[:id].to_i)
     (params[:modules] || []).sort!{|a, b| a['order'] <=> b['order']}
-    if @topic.update_attribute(:modules, params[:modules])
-      flash[:notice] = "Updated topic - '#{@topic.name}'"
-      redirect_to edit_topic_modules_url(@topic.id)
+    if @topic_object.update_attribute(:modules, params[:modules])
+      flash[:notice] = "Updated topic - '#{@topic_object.name}'"
+      redirect_to edit_topic_modules_url(@topic_object.id)
     else
       flash[:notice] = 'Failed to update'
       redirect_to :back

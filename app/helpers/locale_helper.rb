@@ -10,6 +10,11 @@ module LocaleHelper
   end
 
   def if_valid(locale)
+    if locale && !locale.blank?
+      # Remove .js format
+      locale = locale.split('.').first
+    end
+
     if SUPPORTED_LOCALES.include?(locale.to_s)
       locale
     else

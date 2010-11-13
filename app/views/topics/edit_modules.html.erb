@@ -1,7 +1,7 @@
 <div class="grid_12">
   <h4>
     <%= link_to 'Administration panel', admin_url %> &raquo;
-    <%= link_to @topic.name.humanize, topic_url(@topic.id) %> &raquo;
+    <%= link_to @topic_object.name.humanize, topic_url(@topic_object.id) %> &raquo;
     Update modules
   </h4>
   <div class="break"></div>
@@ -12,8 +12,8 @@
   <div class="space_10"></div>
 
   <div class='admin_topic_new'>
-    <% form_for @topic, :url => update_topic_modules_url do |f| %>
-      <% @topic.modules.each do |m| %>
+    <% form_for @topic_object, :url => update_topic_modules_url do |f| %>
+      <% @topic_object.modules.each do |m| %>
         <%
            order = m['order']
            name = m['name']

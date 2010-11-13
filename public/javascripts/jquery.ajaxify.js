@@ -44,10 +44,24 @@
           'data': params,
           dataType: opts.dataType,
           success: function(response) {
-            var parts = window.location.href.split('#!');
-            var partsOfPart = parts[0].split('/');
-            var urlPartsWithParams = partsOfPart[partsOfPart.length - 1].split('?');
-            window.location.href = parts[0] + '#!/' + urlPartsWithParams[0] + '?' + params;
+            if (opts.urlRef) {
+              var parts = window.location.href.split('#!');
+              var partsOfPart = parts[0].split('/');
+              var urlPartsWithParams = partsOfPart[partsOfPart.length - 1].split('?');
+              window.location.href = parts[0] + '#!/' + urlPartsWithParams[0] + '?' + params;
+            }
+
+            if (opts.success != null) {
+              opts.success(response);  
+            }
+
+            if (opts.autoButtonEnable) {
+              $form.find('.buttonSubmit').each(function() {
+                var $button = $(this);
+                $button.removeClass('loading');
+                $button.val($button.attr('title')).removeAttr('disabled');
+              });
+            }
           },
           error: function(response) {
             alert("Error - " + response);
@@ -72,6 +86,8 @@
 
   $.fn.ajaxify.defaultOptions = {
     format: 'ajax',
-    dataType: 'script'
+    dataType: 'script',
+    urlRef: true,
+    autoButtonEnable: false
   }
 })(jQuery);
