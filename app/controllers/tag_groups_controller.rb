@@ -5,7 +5,7 @@ class TagGroupsController < ApplicationController
   before_filter :log_new_feature_visiting_status
 
   def index
-    @tag_groups = TagGroup.all
+    @tag_groups = TagGroup.by_topic(@topic.id)
   end
 
   def new

@@ -1,16 +1,16 @@
 --- !map:HashWithIndifferentAccess 
-en: !map:HashWithIndifferentAccess
+isp_en: !map:HashWithIndifferentAccess
   topic:
-    Restaurants: Restaurants
+    Isps: Internet Service Providers
   label: !map:HashWithIndifferentAccess 
-    this_place: this place
+    this_place: this ISP
     login: login
     updated: updated
     located_at: Located at
     contributors: Contributors
     loves_count: "{{count}} loves"
     already_added: Already added
-    wannago: wanna go to
+    wannago: wanna use
     disliked: disliked
     back: back
     message_meta_info: "{{type}} was added by {{link}} about {{days}} ago"
@@ -52,7 +52,7 @@ en: !map:HashWithIndifferentAccess
     remove_from_featured: Remove from featured
     suggested_restaurants: You may also check!
     attached_with: Attached with
-    i_wannago: i wanna go to
+    i_wannago: i wanna use
     to_visit: to visit
     author_added_on: author has added this picture on
     write_comment: Write your comment
@@ -61,7 +61,7 @@ en: !map:HashWithIndifferentAccess
     fb_not_connected: You haven't yet connected your account with your facebook account.     please click on 'Auto share on Facebook' button on the top of the page
     delete_comment: Do you want to DELETE this comment ?
     no_review: Hola! you haven't reviewed any {{name}} yet!
-    login_required_to_review: Please {{link}} to review this place!
+    login_required_to_review: Please {{link}} to review this ISP!
     filter_by: Filter results by -
     user_contributed_on: has contributed to
     image_caption: Write image caption....
@@ -74,7 +74,7 @@ en: !map:HashWithIndifferentAccess
     caption: Caption
     reviews_count: "{{count}} reviews"
     i_dislike: i dislike
-    wanna_go: "{{count}} wanna go"
+    wanna_go: "{{count}} wanna use"
     review_stat: Review status -
     review_of: commented a review of {{link}}
     added: added
@@ -96,25 +96,25 @@ en: !map:HashWithIndifferentAccess
     add_comment: Add comment
     search: Search
   layout: !map:HashWithIndifferentAccess 
-    passionate_food_lovers_community: passionate food lovers community!
+    passionate_food_lovers_community: passionate IPS users community!
     links: !map:HashWithIndifferentAccess 
-      update_record: update your record
-      add: add restaurant
-      logout: logout
+      update_record: Update your record
+      add: Add ISP information
+      logout: Logout
       auto_share_on_facebook: Auto share on Facebook
-      edit_user: settings
-      register: register
-      photos: photos
-      my_page: profile
-      admin: admin
-      fb_login: login with facebook
-      home: home
-      login: login
-      share_on_facebook: share on facebook
+      edit_user: Settings
+      register: Register
+      photos: Photos
+      my_page: Profile
+      admin: Admin
+      fb_login: Login with facebook
+      home: Home
+      login: Login
+      share_on_facebook: Share on facebook
   featurebox: !map:HashWithIndifferentAccess 
     readmore: read more...
     rating: "{{loves_count}} people <span class='icon_loved'>loved</span> it!"
-    address: "address:"
+    address: "Address:"
   confirm: !map:HashWithIndifferentAccess 
     delete_comment: Do you want to remove this comment?
     delete_image: do you want to delete this image?
@@ -122,25 +122,25 @@ en: !map:HashWithIndifferentAccess
   title: !map:HashWithIndifferentAccess 
     logout: Log out
     image_delete_message: FYI, You can remove this comment with in 10 minutes of its submission time.
-    own_this: Do you own this restaurant?
+    own_this: Do you own this ISP?
     login: Log in
     create_an_account: Create an account
   nav: !map:HashWithIndifferentAccess 
-    add_new_food_menu: Add new food menu
-    add_news: Add news
+    add_new_food_menu: Add new ISP Service
+    add_news: Add ISP news
     logout: Logout
     are_you_new_user: Are you new user?
     edit: Edit
     previous: "\xC2\xAB Previous"
-    food_menu: Food menu
+    food_menu: ISP services
     show_comments: show comments
     delete: Delete
-    more_places: "more places \xC2\xBB"
+    more_places: "more internet providers \xC2\xBB"
     more_tags: More tags
-    updates: notification ({{count}})
+    updates: Notification ({{count}})
     reply: reply!
     edit_existing_review: edit your existing review!
-    manage_news: Manage News
+    manage_news: Manage ISP News
     signup: Signup
     review_now: "[review now!]"
     did_you_forgot: Did you forget your password?
@@ -152,53 +152,59 @@ en: !map:HashWithIndifferentAccess
     less: Read less
     show: Show
     reviews: Reviews
-    news: News
+    news: ISP News
     read_more_reviews: check rest of the reviews...
     next: "Next \xC2\xBB"
     login: login
     add_image: Add image ({{count}})
     more: Read more
   module: !map:HashWithIndifferentAccess 
-    Most loved places!: Most loved places!
-    Search restaurants: Search restaurants
-    Recently reviewed places!: Recently reviewed places!
-    Cuisines & tags: Cuisines & tags
-    Who wanna visit here!: Who wanna visit here!
+    Most loved places!: Top internet service providers
+    Search restaurants: Search internet providers
+    Recently reviewed places!: Reviewed internet providers
+    Cuisines & tags: Internet providers services in tags
+    Who wanna visit here!: Who wanna try this!
+    "Tag cloud!": Internet provider's top services
   frontpage: !map:HashWithIndifferentAccess 
-    recommend: Where do you wanna eat TODAY ?
+    recommend: Where do you wanna connect internet to?
   header: !map:HashWithIndifferentAccess 
     search_results: Search results!
-    wannago: Who else wanna visit this place!
-    reviewed_places: Recently reviewed places!
-    best_for: Find out which restaurants are best for what!
-    photos: Restaurants pictures!
+    wannago: Who else wanna try this ISP!
+    reviewed_places: Reviewed internet service providers
+    best_for: Find out which ISPs are the best for what!
+    photos: ISP pictures!
     edit_tags: "Edit tags \xC2\xBB {{name}}"
-    loved_places: Most loved places!
+    loved_places: Top internet service providers
     tag_details: "Selected tag \xC2\xBB {{tag}}"
-    recent_restaurants: Recently added restaurants!
-    restaurant_create: Create new restaurant
+    recent_restaurants: Recently added ISPs!
+    restaurant_create: Create ISP profile
     restaurant_show_page: "{{link}}  \xC2\xBB Edit"
-    recommend: Recommend restaurants!
+    recommend: Recommend Internet Service Provider!
     login: Log in
   errors: !map:HashWithIndifferentAccess 
     invalid_tag: Invalid tag label - {{tag}}
     authorization: You are not authorized
     no_matched_type: Not matched type!
-  fields: !map:HashWithIndifferentAccess 
+  fields: !map:HashWithIndifferentAccess
+    coverage_areas: Network Coverage Areas
+    head_office_address: Head Office Address
+    contact_details: Contact details
     group_name: Group Name
-    address: address
+    address: Address
     name: name
     confirm_password: Confirm password
     remember: Remember me
     map: Browse on google map
     phone: phone
-    features: Features
+    features: Features & Locations
     Branches Located at: Branches Located at
-    cuisine & tags: cuisine & tags
+    cuisine & tags: ISP services tags
     description: description
     comments_count: Comments ({{count}})
     password: password
     login: login
+    web_site_url: Web site link
+    services: Available services
   subheader: !map:HashWithIndifferentAccess 
     contributed_images: User contributed images
     review_on_more_topics: Review on more topics!
@@ -210,7 +216,7 @@ en: !map:HashWithIndifferentAccess
       form_attributes_edit: Edit topic
     top_contributors: Top contributors
     active_share: Active share with friends!
-    activities: Activities on my participated restaurants
+    activities: Activities on my participated ISP
     upload_pictures: Upload pictures
     top_reviewers: Top reviewers
     signup_new_user: Sign up as a new user
@@ -218,8 +224,7 @@ en: !map:HashWithIndifferentAccess
     user_contributed_pictures: Upload your pictures
     recently_commented_on_reviews: Recently commented on reviews
     ongoing_activities: On going activities
-  hello: Hello world
-  footer: !map:HashWithIndifferentAccess 
+  footer: !map:HashWithIndifferentAccess
     copyrights: "\xC2\xA9 Well Treat Us, All rights reserved!"
     links: !map:HashWithIndifferentAccess 
       opensource: Fork on github!
@@ -227,3 +232,181 @@ en: !map:HashWithIndifferentAccess
       biz_contact: Business Contact
       dev_blogs: Developer's blog
   select_parent_product: Select parent product
+
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " and "
+      last_word_connector: ", and "
+
+    select:
+      prompt: "Please select"
+
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+
+    currency:
+      format:
+        format: "%u%n"
+        unit: "$"
+        separator: "."
+        delimiter: ","
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+
+    percentage:
+      format:
+        delimiter: ""
+
+    precision:
+      format:
+        delimiter: ""
+
+    human:
+      format:
+        delimiter: ""
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          unit: ""
+          thousand: Thousand
+          million: Million
+          billion: Billion
+          trillion: Trillion
+          quadrillion: Quadrillion
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "half a minute"
+      less_than_x_seconds:
+        one:   "less than 1 second"
+        other: "less than {{count}} seconds"
+      x_seconds:
+        one:   "1 second"
+        other: "{{count}} seconds"
+      less_than_x_minutes:
+        one:   "less than a minute"
+        other: "less than {{count}} minutes"
+      x_minutes:
+        one:   "1 minute"
+        other: "{{count}} minutes"
+      about_x_hours:
+        one:   "about 1 hour"
+        other: "about {{count}} hours"
+      x_days:
+        one:   "1 day"
+        other: "{{count}} days"
+      about_x_months:
+        one:   "about 1 month"
+        other: "about {{count}} months"
+      x_months:
+        one:   "1 month"
+        other: "{{count}} months"
+      about_x_years:
+        one:   "about 1 year"
+        other: "about {{count}} years"
+      over_x_years:
+        one:   "over 1 year"
+        other: "over {{count}} years"
+      almost_x_years:
+        one:   "almost 1 year"
+        other: "almost {{count}} years"
+    prompts:
+      year:   "Year"
+      month:  "Month"
+      day:    "Day"
+      hour:   "Hour"
+      minute: "Minute"
+      second: "Seconds"
+
+  helpers:
+    select:
+      prompt: "Please select"
+
+    submit:
+      create: 'Create {{model}}'
+      update: 'Update {{model}}'
+      submit: 'Save {{model}}'
+
+  errors:
+    format: "{{attribute}} {{message}}"
+
+    messages: &errors_messages
+      inclusion: "is not included in the list"
+      exclusion: "is reserved"
+      invalid: "is invalid"
+      confirmation: "doesn't match confirmation"
+      accepted: "must be accepted"
+      empty: "can't be empty"
+      blank: "can't be blank"
+      too_long: "is too long (maximum is {{count}} characters)"
+      too_short: "is too short (minimum is {{count}} characters)"
+      wrong_length: "is the wrong length (should be {{count}} characters)"
+      not_a_number: "is not a number"
+      not_an_integer: "must be an integer"
+      greater_than: "must be greater than {{count}}"
+      greater_than_or_equal_to: "must be greater than or equal to {{count}}"
+      equal_to: "must be equal to {{count}}"
+      less_than: "must be less than {{count}}"
+      less_than_or_equal_to: "must be less than or equal to {{count}}"
+      odd: "must be odd"
+      even: "must be even"
+
+  activerecord:
+    errors:
+      template:
+        header:
+          one:    "1 error prohibited this {{model}} from being saved"
+          other:  "{{count}} errors prohibited this {{model}} from being saved"
+        body: "There were problems with the following fields:"
+
+      messages:
+        taken: "has already been taken"
+        record_invalid: "Validation failed: {{errors}}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "{{attribute}}{{message}}"

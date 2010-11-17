@@ -156,8 +156,12 @@ module UrlOverrideHelper
   end
 
   private
+    @@current_ajaxified_url_index = 0
+
     def determine_dynamic_ajax_host(host, max_hosts, subdomain_name = 'ajax')
-      ajax_host = "#{subdomain_name}#{rand(max_hosts)}"
+      ajax_host = "#{subdomain_name}#{@@current_ajaxified_url_index}"
+      @@current_ajaxified_url_index += 1
+      @@current_ajaxified_url_index = 0 if @@current_ajaxified_url_index > max_hosts
       host_parts = host.split('.')
       "#{ajax_host}.#{host_parts[host_parts.length - 2, host_parts.length].join('.')}"
     end

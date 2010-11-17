@@ -6,9 +6,10 @@ class TagGroup < ActiveRecord::Base
 
   has_many :tag_group_mappings, :dependent => :destroy
   has_many :tags, :through => :tag_group_mappings
+  named_scope :by_topic, lambda{|topic_id| {:conditions => {:topic_id => topic_id}}}
 
   validates_presence_of :name
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => :topic_id
   after_save { TagGroup::update_caches! }
   after_destroy { TagGroup::update_caches! }
 
@@ -16,8 +17,8 @@ class TagGroup < ActiveRecord::Base
   cattr_accessor :per_page
 
   class << self
-    def of(name)
-      TagGroup.find_by_name(name)
+    def of(topic, name)
+      TagGroup.find_by_topic_id_and_name(topic.id, name)
     end
 
     def update_caches!

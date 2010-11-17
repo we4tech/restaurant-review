@@ -41,6 +41,20 @@ class ApplicationController < ActionController::Base
 
   protected
 
+    def default_url_options(options = {})
+      # Force for url locale
+      options[:l] = I18n.locale if !options.keys.include?(:l)
+
+      # If ajax is request host, forcefully set different
+      # topic subdomain as url host
+      host_parts = request.host.split('.')
+      if (host_parts.first || '').match(/^ajax\d+$/)
+        options[:subdomain] = @topic ? @topic.subdomain : nil
+      end
+
+      options
+    end
+
     def if_permits? (object)
       if object && object.author?(current_user)
         yield

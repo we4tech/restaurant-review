@@ -24,6 +24,7 @@ Rails::Initializer.run do |config|
   config.gem 'super_exception_notifier', :lib => "exception_notification"
   config.gem "mail_style"
   config.gem "chronic"
+  config.gem "i18n"
 
   #config.gem 'jammit', :version => '0.5.1'
 
@@ -48,8 +49,8 @@ Rails::Initializer.run do |config|
   config.time_zone = 'Dhaka'
 
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-  # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
-  # config.i18n.default_locale = :de
+  config.i18n.load_path += Dir[Rails.root.join('admin_generated', '*', 'locales', '*.yml')]
+  config.i18n.default_locale = :en
 
 end
 

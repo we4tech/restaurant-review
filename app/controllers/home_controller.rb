@@ -28,7 +28,7 @@ class HomeController < ApplicationController
     page_index = params[:page].to_i > 0 ? params[:page].to_i : 1
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => page_index)
     @top_rated_restaurants = Restaurant.featured
-    @location_tag_group = TagGroup.of('locations')
+    @location_tag_group = TagGroup.of(@topic, 'locations')
     @best_for_tags = Tag.featurable
     @cached = true
 

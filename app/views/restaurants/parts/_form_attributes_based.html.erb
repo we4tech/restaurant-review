@@ -68,7 +68,7 @@
     <div class='options_box'>
       <% existing_value = @restaurant.send(field_name) || []  %>
 
-      <% (default_value || '').split(/\|/).sort.each do |option| %>
+      <% parse_default_value(default_value).sort.each do |option| %>
         <% option.strip! %>
         <div class='option'>
           <input id='<%= option_field_id = "option_#{option}" %>'
