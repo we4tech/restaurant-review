@@ -84,7 +84,7 @@ class AjaxFragmentController < ApplicationController
     end
 
     def render_best_for_box
-      cache_fragment('best_for_box') do
+      cache_fragment("best_for_box_#{@topic.name}") do
         @content_file = 'restaurants/parts/best_for'
         @effect = 'appear()'
         @element = '#categoryHitRestaurantBox'
@@ -98,7 +98,7 @@ class AjaxFragmentController < ApplicationController
     end
 
     def render_featured_box
-      cache_fragment('featured_box') do 
+      cache_fragment("featured_box_#{@topic.name}") do 
         @content_file = 'restaurants/parts/top_rated_slider'
         @effect = 'appear()'
         @element = '#featureBox'
