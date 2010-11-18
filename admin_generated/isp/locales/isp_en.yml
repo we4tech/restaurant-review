@@ -161,12 +161,12 @@ isp_en: !map:HashWithIndifferentAccess
   module: !map:HashWithIndifferentAccess 
     Most loved places!: Top internet service providers
     Search restaurants: Search internet providers
-    Recently reviewed places!: Reviewed internet providers
+    Recently reviewed places!: Recent reviewes
     Cuisines & tags: Internet providers services in tags
     Who wanna visit here!: Who wanna try this!
-    "Tag cloud!": Internet provider's top services
+    "Tag cloud!": Find ISP by services
   frontpage: !map:HashWithIndifferentAccess 
-    recommend: Where do you wanna connect internet to?
+    recommend: Find Internet Service At ?
   header: !map:HashWithIndifferentAccess 
     search_results: Search results!
     wannago: Who else wanna try this ISP!
@@ -176,7 +176,7 @@ isp_en: !map:HashWithIndifferentAccess
     edit_tags: "Edit tags \xC2\xBB {{name}}"
     loved_places: Top internet service providers
     tag_details: "Selected tag \xC2\xBB {{tag}}"
-    recent_restaurants: Recently added ISPs!
+    recent_restaurants: Recently added Internet Service Providers
     restaurant_create: Create ISP profile
     restaurant_show_page: "{{link}}  \xC2\xBB Edit"
     recommend: Recommend Internet Service Provider!

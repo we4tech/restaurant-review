@@ -50,7 +50,7 @@ module RestaurantsHelper
   def render_tagcloud(p_config)
     bind_column = p_config['bind_column'].to_s
     field = @topic.form_attribute.fields.reject{|h| h if h['field'] != bind_column}
-    tag_names = (field.first['default_value'] || '').split('|')
+    tag_names = field.first ? (field.first['default_value'] || '').split('|') : []
 
     tags = Tag.all(:conditions => {
         :name => tag_names,
@@ -66,7 +66,7 @@ module RestaurantsHelper
 
 
   def render_feature_restaurants_box(options = {})
-    @top_rated_restaurants = Restaurant.featured
+    @top_rated_restaurants = Restaurant.featured(@topic.id)
     render :partial => 'restaurants/parts/featured_restaurants_for_mail'  
   end
   

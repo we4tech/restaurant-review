@@ -33,6 +33,12 @@
 <div class="clear"></div>
 <div class="space_5"></div>
 
+<label class="grid_2">Meta tags</label>
+<%= f.text_area :meta_tags_html, :rows => 5, :class => 'grid_7', :style => 'margin-left: 0;'  %>
+<%= f.error_message_on :meta_tags_html %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
 <label class="grid_2">Email footer</label>
 <%= f.text_area :email_footer, :rows => 5, :class => 'grid_7', :style => 'margin-left: 0;'  %>
 <%= f.error_message_on :email_footer %>

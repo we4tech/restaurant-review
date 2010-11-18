@@ -59,7 +59,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :contributed_images
 
-  map.resources :topics
+  map.resources :topics, :member => {:export => :get, :import => :get, :import_uploaded_file => :post}
 
   map.resources :review_comments
 

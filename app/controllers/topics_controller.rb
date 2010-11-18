@@ -1,3 +1,5 @@
+require 'json'
+
 class TopicsController < ApplicationController
 
   before_filter :authorize, :except => []
@@ -128,7 +130,64 @@ class TopicsController < ApplicationController
     end
   end
 
+  def export
+    @topic_object = Topic.find(params[:id])
+    respond_to do |format|
+      format.xml {render(:xml => @topic_object)}
+      format.json {
+        send_data(@topic_object.to_json,
+                  :filename => "#{@topic_object.name}.json",
+                  :disposition => "attachment; filename=\"#{@topic_object.name}.json\"")
+      }
+    end
+  end
+
+  def import
+    @topic_object = Topic.find(params[:id])
+  end
+
+  def import_uploaded_file
+    @topic_object = Topic.find(params[:id])
+    file = params[:file]
+
+    if file
+      if process_uploaded_file(@topic_object, file)
+        flash[:notice] = 'Import succeeded!'
+        redirect_to edit_topic_url(@topic_object.id)
+      else
+        if flash[:notice].nil?
+          flash[:notice] = 'Import failed'
+        end
+        
+        redirect_to :back
+      end
+    end
+  end
+
   private
+    def process_uploaded_file(topic, file)
+      extension = file.original_filename.split('.').last.downcase
+      case extension
+        when 'json'
+          return process_json_import(topic, file)
+        when 'xml'
+          flash[:notice] = 'Not supported right now!'
+          return false
+      end
+    end
+
+    def process_json_import(topic, file)
+      fields = JSON.parse(file.read)
+      importable_topic_attributes = fields['topic']
+
+      # Remove id
+      importable_topic_attributes.delete('id')
+      importable_topic_attributes.delete('name')
+
+      # Update attributes
+      topic.update_attributes(importable_topic_attributes)
+    end
+
     def detect_themes
       if @@themes.empty?
         Dir.glob(File.join(RAILS_ROOT, 'config', 'themes', '*.yml')).each do |file|

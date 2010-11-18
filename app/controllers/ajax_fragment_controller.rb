@@ -88,8 +88,12 @@ class AjaxFragmentController < ApplicationController
         @content_file = 'restaurants/parts/best_for'
         @effect = 'appear()'
         @element = '#categoryHitRestaurantBox'
-        @best_for_tags = Tag.featurable
-        render :partial => 'ajax_fragment/render_fragment', :layout => false
+        @best_for_tags = Tag.featurable(@topic.id)
+        if @best_for_tags.present?
+          render :partial => 'ajax_fragment/render_fragment', :layout => false
+        else
+          render :text => ''
+        end
       end
     end
 
@@ -98,7 +102,7 @@ class AjaxFragmentController < ApplicationController
         @content_file = 'restaurants/parts/top_rated_slider'
         @effect = 'appear()'
         @element = '#featureBox'
-        @top_rated_restaurants = Restaurant.featured
+        @top_rated_restaurants = Restaurant.featured(@topic.id)
         render :partial => 'ajax_fragment/render_fragment', :layout => false
       end
     end

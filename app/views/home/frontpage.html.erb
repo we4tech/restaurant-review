@@ -1,26 +1,27 @@
-<% if @topic.name == 'restaurant' %>
-  <div style='background: #fff'>
-    <div class='grid_12' id='recommendBox'>
-      <%= render :partial => 'restaurants/parts/recommend' %>
-      <div class='clear'></div>
-    </div>
-    <div class='clear'></div>
-
-    <% if params[:page].to_i < 2 %>
-      <div class='grid_12' id='featureBox'>
-        <%= render :partial => 'restaurants/parts/top_rated_slider' %>
-      </div>
-      <div class='clear'></div>
-      <div class='grid_12' id='categoryHitRestaurantBox'>
-        <% if !@cached %>
-          <%= render :partial => 'restaurants/parts/best_for' %>
-        <% end %>
-      </div>
-
-    <% end %>
+<div style='background: #fff'>
+  <div class='grid_12' id='recommendBox'>
+    <%= render :partial => 'restaurants/parts/recommend' %>
     <div class='clear'></div>
   </div>
-<% end %>
+  <div class='clear'></div>
+
+  <% if params[:page].to_i < 2 %>
+    <div class='grid_12' id='featureBox'>
+      <%= render :partial => 'restaurants/parts/top_rated_slider' %>
+    </div>
+    <div class='clear'></div>
+    <div class='grid_12' id='categoryHitRestaurantBox'>
+      <% if !@cached %>
+        <% if !@best_for_tags.empty? %>
+          <%= render :partial => 'restaurants/parts/best_for' %>
+        <% end %>
+      <% end %>
+    </div>
+
+  <% end %>
+  <div class='clear'></div>
+</div>
+
 
 <div class="clear"></div>
 <div class="grid_8" id="site_center_list">

@@ -20,28 +20,32 @@
                              'jquery.easing.js', 'jquery.timers.js',
                              :cache => 'cache_supporting.js' %>
 
-  <meta name="abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
 
   <meta name="robots" content="index,follow"/>
 
-  <% if @meta_description %>
-    <meta content="<%= @meta_description %>" name="description">
+
+  <% if @topic.meta_tags_html.present? %>
+    <%= @topic.meta_tags_html %>
   <% else %>
-    <meta name="description" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+    <meta name="abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+    <% if @meta_description -%>
+      <meta content="<%= @meta_description %>" name="description">
+    <%- else -%>
+      <meta name="description" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+    <%- end -%>
+
+    <%- if @meta_keywords -%>
+      <meta name="keywords" content="<%= @meta_keywords %>"/>
+    <%- else -%>
+      <meta name="keywords" content="Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
+    <%- end -%>
+
+    <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
+    <link rel="search"
+          type="application/opensearchdescription+xml"
+          href="/open-search.xml"
+          title="Bangladeshi Restaurant Search"/>
   <% end %>
-
-  <% if @meta_keywords %>
-    <meta name="keywords" content="<%= @meta_keywords %>"/>
-  <% else %>
-    <meta name="keywords" content="Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
-  <% end %>
-
-  <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif" />
-  <link rel="search"
-             type="application/opensearchdescription+xml"
-             href="/open-search.xml"
-             title="Bangladeshi Restaurant Search" />
-
 
   <!--[if IE]>
     <%= stylesheet_link_tag 'fresh/ie.css' %>
@@ -64,7 +68,7 @@
 
 <div class="container_12 site_body">
 
- <div id="site_top">
+  <div id="site_top">
     <div class="grid_11" id="site_logo">
       <div class="site_icon grid_1">
         <% if @topic && @topic.banner_image_path %>
@@ -109,9 +113,15 @@
     <div class="grid_4 align_right">
       <ul id="site_bottom_navigation">
         <li><%= link_to t('footer.links.biz_contact'), 'mailto:biz@welltreat.us?subject=[Biz talk]' %></li>
-        <li><a href="http://hasan.we4tech.com"><%= t('footer.links.dev_blogs') %></a></li>
-        <li><a href="http://github.com/we4tech/restaurant-review/"><%= t('footer.links.opensource') %></a></li>
-        <li><a href="<%= root_url(:format => 'mobile') %>"><%= t('footer.links.mobile') %></a></li>
+        <li>
+          <a href="http://hasan.we4tech.com"><%= t('footer.links.dev_blogs') %></a>
+        </li>
+        <li>
+          <a href="http://github.com/we4tech/restaurant-review/"><%= t('footer.links.opensource') %></a>
+        </li>
+        <li>
+          <a href="<%= root_url(:format => 'mobile') %>"><%= t('footer.links.mobile') %></a>
+        </li>
       </ul>
     </div>
 
@@ -129,43 +139,23 @@
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'top_menu', :d => Time.now.to_i) %>
 <% end %>
 
-<div id="fb-root"></div>
-<script src="http://connect.facebook.net/en_US/all.js"></script>
-<script>
-  $(function() {
-    FB.init({appId: '<%= Facebooker.api_key %>', status: true, cookie: true, xfbml: true});
-    App.Tasks.executeTasks();
-    
-    <% if !logged_in? %>
-      FB.Event.subscribe('auth.sessionChange', function(response) {
-        if (response.session) {
-          var path = location.href;
-          window.location = path + (path.match(/\?/) ? '&' : '?') + "fskey=" +
-                            response.session.session_key + "&fuid=" +
-                            response.session.uid + '&fexpires=' +
-                            response.session.expires + '&fsecret=' +
-                            response.session.secret + '&fat=' +
-                            response.session.access_token
-        }
-      });
-    <% end %>
-  });
+<script type="text/javascript">
+  FB.init({appId: '<%= Facebooker.api_key %>', status: true, cookie: true, xfbml: true});
+  App.Tasks.executeTasks();
 </script>
-<% if logged_in? %>
-  <%= render :partial => 'users/parts/facebook_app_script' %>
-<% end %>
 
 <% if params[:no_script].nil? %>
   <script type="text/javascript">
-  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
   </script>
   <script type="text/javascript">
-  try {
-  var pageTracker = _gat._getTracker("UA-12009085-1");
-  pageTracker._setDomainName(".welltreat.us");
-  pageTracker._trackPageview();
-  } catch(err) {}</script>
+    try {
+      var pageTracker = _gat._getTracker("UA-12009085-1");
+      pageTracker._setDomainName(".welltreat.us");
+      pageTracker._trackPageview();
+    } catch(err) {
+    }</script>
 
   <script type="text/javascript" charset="utf-8">
     var is_ssl = ("https:" == document.location.protocol);

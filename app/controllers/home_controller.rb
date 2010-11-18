@@ -27,9 +27,9 @@ class HomeController < ApplicationController
     @title = I18n.t('header.recent_restaurants')
     page_index = params[:page].to_i > 0 ? params[:page].to_i : 1
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => page_index)
-    @top_rated_restaurants = Restaurant.featured
+    @top_rated_restaurants = Restaurant.featured(@topic.id)
     @location_tag_group = TagGroup.of(@topic, 'locations')
-    @best_for_tags = Tag.featurable
+    @best_for_tags = Tag.featurable(@topic.id)
     @cached = true
 
     # pending module - :render_recently_added_pictures

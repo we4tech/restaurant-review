@@ -38,7 +38,7 @@ class Restaurant < ActiveRecord::Base
 
   named_scope :recent, :order => 'created_at DESC'
   named_scope :by_topic, lambda{|topic_id| {:conditions => {:topic_id => topic_id}}}
-  named_scope :featured, :conditions => {:featured => true}
+  named_scope :featured, lambda{|topic_id| {:conditions => {:featured => true, :topic_id => topic_id}}}
 
   @@per_page = 20
   cattr_reader :per_page

@@ -16,6 +16,8 @@
           <%= link_to 'edit', edit_topic_url(:id => topic.id) %> |
           <%= link_to 'form attributes', form_attribute_by_topic_url(:topic_id => topic.id) %> |
           <%= link_to 'modules', edit_topic_modules_url(:id => topic.id) %> |
+          <%= link_to 'export', export_topic_path(:id => topic.id, :format => :json) %> |
+          <%= link_to 'import', import_topic_path(:id => topic.id) %> |
           <%= link_to 'delete', topic_url(:id => topic.id), :method => :delete, :confirm => 'Do you really want to remove this topic?' %>
           ]
         </div>
