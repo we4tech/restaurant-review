@@ -1098,10 +1098,9 @@ form .hints {
 }
 
 .bestForBox .bestForNav {
-  width: 18.5%;
+  width: 15.5%;
   text-align: left;
   float: left;
-  z-index: 300;
   position: relative;
 }
 
@@ -1111,38 +1110,43 @@ form .hints {
   list-style-type: none;
 }
 
-.bestForBox .bestForNav ul li {
-  background: url(/images/fresh/best_for_tab_nav_bg_hover.png) no-repeat;
-  margin: 0;
-  padding: 5px;
-  margin: 5px 0;
-  cursor: pointer;
-  color: #fff;
-  padding: 5px 50px 5px 20px;
-  width: 110px;
+.bestForBox .bestForNav ul li.selected {
+  background: Cornsilk;
+  color: #000;
+  font-weight: bold;
+  position: relative;
+  z-index: 400;
 }
 
-.bestForBox .bestForNav ul li.selected {
-  background: url(/images/fresh/best_for_tab_nav_bg.png) no-repeat;
-  font-weight: bold;
-  color: #000;
+.bestForBox .bestForNav ul li {
+  background: none repeat scroll 0 0 #CCCCCC;
+  color: #FFFFFF;
+  cursor: pointer;
+  margin: 5px 0;
+  padding: 5px 50px 5px 20px;
+  width: 68px;
+  border: 2px solid #ccc;
+  border-right: 0;
+  font-size: 12px;
 }
 
 .bestForBox .bestForNav ul li:hover {
-  background: url(/images/fresh/best_for_tab_nav_bg.png) no-repeat;
+  background: Cornsilk;
   color: #000;
+  position: relative;
+  z-index: 400;
 }
 
 .bestForBox .bestForContainer {
-  background: url(/images/fresh/bestForContainer.png) no-repeat;
-  width: 82%;
+  background: none repeat scroll 0 0 Cornsilk;
+  border: 2px solid #CCCCCC;
   float: left;
-  padding: 10px;
-  margin-left: -3%;
-  z-index: 200;
-  position: relative;
-  overflow-y: auto;
   height: 376px;
+  overflow-y: auto;
+  padding: 30px 10px 10px 30px;
+  position: relative;
+  width: 700px;
+  z-index: 200;
 }
 
 .bestForBox .bestForContainer .site_list_item {
@@ -1159,7 +1163,7 @@ form .hints {
 }
 
 .bestForBox .bestForContainer .site_list_item img {
-  border:4px solid #fff;
+  border: 4px solid #fff;
 }
 
 .floatingButtons {
@@ -1175,4 +1179,35 @@ form .hints {
 .floatingButtons input {
   font-size: 20px;
   padding: 5px;
+}
+
+.bestForItem {
+  background: #FFFFFF url(/images/fresh/bet_for_item_bg.png) no-repeat;
+  float: left;
+  height: 100px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  width: 320px;
+}
+
+.bestForItem small {
+  font-size: 12px;
+  color: #000;
+}
+
+.bestForItem img {
+  margin-top: 5px;
+}
+
+.bestForItem .info {
+  float: left;
+  width: 240px;
+}
+
+.bestForBox .info .stat {
+  font-size: 10px;
+  font-weight: bolder;
+  color: red;
+  margin-bottom: 15px;
 }

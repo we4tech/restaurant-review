@@ -133,7 +133,6 @@
   <% session[:_test] = true %>
   <%= javascript_include_tag 'test.js' %>
 <% end %>
-
 <% if @cached %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'notice', :d => Time.now.to_i) %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'top_menu', :d => Time.now.to_i) %>

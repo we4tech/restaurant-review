@@ -51,7 +51,7 @@ class RestaurantsController < ApplicationController
       return true
     end
 
-    @cached = true
+    @cached = true if params[:jsonp].nil? || params[:jsonp] != 'false'
     @site_title = "#{@restaurant.name} #{@restaurant.address.blank? ? '' : "@ #{@restaurant.address}"} "
     @form_fields = @topic.form_attribute.fields
     @allow_image_upload = @topic.form_attribute.allow_image_upload

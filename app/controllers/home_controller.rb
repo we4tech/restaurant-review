@@ -30,7 +30,7 @@ class HomeController < ApplicationController
     @top_rated_restaurants = Restaurant.featured(@topic.id)
     @location_tag_group = TagGroup.of(@topic, 'locations')
     @best_for_tags = Tag.featurable(@topic.id)
-    @cached = true
+    @cached = true if params[:jsonp].nil? || params[:jsonp] != 'false'
 
     # pending module - :render_recently_added_pictures
     load_module_preferences

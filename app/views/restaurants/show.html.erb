@@ -202,7 +202,6 @@
   });
   $('.review_comment_form').hide();
 </script>
-
 <% if @cached %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'module_render_recently_added_places', :restaurant_id => @restaurant.id) %>

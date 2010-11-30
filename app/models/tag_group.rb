@@ -54,7 +54,7 @@ class TagGroup < ActiveRecord::Base
     end
   end
 
-  def most_loved_restaurants(limit = 2)
+  def most_loved_restaurants(limit = 10)
     TagMapping.all(
         :joins => ['LEFT JOIN reviews ON reviews.restaurant_id = tag_mappings.restaurant_id',
                    'LEFT JOIN restaurants ON restaurants.id = tag_mappings.restaurant_id'],
