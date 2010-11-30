@@ -32,3 +32,7 @@ $('.add_comment_link').each(function() {
 $('.review_comment_form').each(function() {
   $(this).hide();
 });
+
+<% if current_user && @allow_contributed_image_upload %>
+  $('#imageUploader').html("<%= escape_javascript(render(:partial => 'contributed_images/parts/add')) %>").hide().appear();
+<% end %>

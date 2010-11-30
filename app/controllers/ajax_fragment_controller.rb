@@ -59,6 +59,9 @@ class AjaxFragmentController < ApplicationController
 
     def render_restaurant_view_tools
       @restaurant = Restaurant.find(params[:restaurant_id])
+      @allow_image_upload = @topic.form_attribute.allow_image_upload
+      @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+      
       params[:format] = :html
       render :action => 'render_restaurant_view_tools', :layout => false
     end

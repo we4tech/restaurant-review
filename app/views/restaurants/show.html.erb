@@ -90,9 +90,7 @@
     </div>
     <div class="clear"></div>
 
-    <% if current_user && @allow_contributed_image_upload %>
-      <%= render :partial => 'contributed_images/parts/add' %>
-    <% end %>
+    <div id='imageUploader'></div>
 
     <%= render :partial => 'contributed_images/parts/image_gallery' %>
     <div class="clear space_10"></div>
