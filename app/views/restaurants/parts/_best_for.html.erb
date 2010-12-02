@@ -23,9 +23,11 @@
         <% tag.most_loved_restaurants.each do |restaurant| %>
           <% rand_image = restaurant.rand_image %>
           <div class='bestForItem'>
-            <div class='grid_1'>
-              <%= image_tag(rand_image.public_filename(:small), :alt => '')%>
-            </div>
+            <% if rand_image %>
+              <div class='grid_1'>
+                <%= image_tag(rand_image.public_filename(:small), :alt => '')%>
+              </div>
+            <% end %>
             <div class='info'>
               <strong><%= link_to truncate(restaurant.name, 25),
                                   restaurant_long_url(restaurant),
