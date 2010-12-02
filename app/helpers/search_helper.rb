@@ -2,6 +2,8 @@ require 'timeout'
 
 module SearchHelper
 
+  METERS_PER_KILOMETER = 1000
+
   def build_search_query(map, values = [])
     query = ""
     map.each do |fields, value|
@@ -22,6 +24,8 @@ module SearchHelper
 
   def perform_search(models, query, options = {})
 
+    sort_by = '@weight DESC'
+
     # Apply specific model
     if models && !models.empty?
       options[:class_names] = models.collect(&:to_s)
@@ -32,6 +36,23 @@ module SearchHelper
 
     # Define page index
     page_index = options[:page] || params[:page]
+
+    # If location is given prepare meter based options
+    if options.include?(:location)
+      geo_params = process_location(options[:location])
+
+      if geo_params.include?(:location)
+        options[:location] = geo_params[:location]
+      end
+
+      if geo_params.include?(:sort_by)
+        sort_by = geo_params[:sort_by]
+      end
+
+      if geo_params.include?(:filters)
+        options[:filters] = options[:filters].merge(geo_params[:filters])
+      end
+    end
 
     # Start performing search
     begin
@@ -45,7 +66,7 @@ module SearchHelper
                'address' => 3.0
            },
            :per_page => Restaurant::per_page,
-           :sort_by => '@weight DESC',
+           :sort_by => sort_by,
            :page => page_index.nil? ? 1 : page_index.to_i}.merge(options))
       search.run
       search
@@ -62,5 +83,16 @@ Error messages -
       WillPaginate::Collection.new(1, 10, 0)
     end
   end
+
+  private
+    def process_location(location)
+      lat = (location[:lat].to_f / 180.0) * Math::PI
+      long = (location[:long].to_f / 180.0) * Math::PI 
+      meter = location[:meter].to_f
+
+      {:location => {:lat => lat, :long => long},
+       :filters => {'distance' => 0.0..meter},
+       :sort_by => 'distance'}
+    end
   
 end

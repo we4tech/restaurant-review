@@ -43,7 +43,7 @@ class HomeController < ApplicationController
     
     respond_to do |format|
       format.html { render }
-	  format.mobile { render }
+	    format.mobile { render }
       format.xml {
       	options = {}
       	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]
@@ -177,20 +177,33 @@ class HomeController < ApplicationController
    	@tags = []
    	params.each do |k, v|
    	  if v && allowed_key?(k)
-   		query_map[k] = v 
+   		  query_map[k] = v 
    		
-   		if v.is_a?(Array)
-   		  v.each{|vi| @tags << vi.downcase}
-   		elsif v.is_a?(Hash)
-  		  v.values.each{|vi| @tags << vi.downcase}
-   		else
-   		  @tags << v.downcase
-   		end
+   		  if v.is_a?(Array)
+   		    v.each{|vi| @tags << vi.downcase}
+   		  elsif v.is_a?(Hash)
+  		    v.values.each{|vi| @tags << vi.downcase}
+   		  else
+   		    @tags << v.downcase
+   		  end
    	  end
    	end
+   	
+   	# Determine location parameters
+   	options = {}
+   	
+   	if params[:lat].to_f > 0 && params[:lng].to_f > 0 && params[:meter].to_i > 0
+   	  options[:location] = {
+   	    :lat => params[:lat],
+   	    :long => params[:lng],
+   	    :meter => params[:meter]
+   	  }
+   	  
+   	  @location = options[:location]
+ 	  end
    		
-	@tag_ids = []
-    @restaurants = perform_search(models, build_search_query(query_map, @tags))
+	  @tag_ids = []
+    @restaurants = perform_search(models, build_search_query(query_map, @tags), options)
 
     # pending module - :render_recently_added_pictures
     load_module_preferences

@@ -27,11 +27,56 @@
 <% if !right_off %>
   <div class="grid_4" id="site_center_boxes">
     <div class='site_simple_box filter_box'>
-      <h4><%= t('label.filter_by') %></h4>
-      <div class='space_10'></div>
       <form action="<%= search_url %>" id='recommend_form'>
         <input type='hidden' name='_models' value='Restaurant'/>
 
+        <div class="tags">
+          <h4>Filter by location - </h4>
+          <div class="space_10"></div>
+          <div class="highlight">
+            <label for='smallMapLat' class="grid_1">Latitude</label>
+            <input type='text' name='lat' id='smallMapLat' class="grid_1"
+                   value="<%= @location ? @location[:lat].to_f : 0 %>"/>
+            <div class="clear"></div>
+            <label for='smallMapLng' class="grid_1">Longitude</label>
+            <input type='text' name='lng' id='smallMapLng' class="grid_1"
+                   value="<%= @location ? @location[:long].to_f : 0 %>"/>
+
+            <% selected_meter = @location ? @location[:meter].to_i : 100 %>
+            <select name='meter'>
+              <% (1..5).each do |meter| %>
+                  <option value="<%= meter * 1000 %>" <%= selected_meter == (meter * 1000) ? 'selected="selected"' : '' %>>
+                    <%= meter %> km
+                  </option>
+              <% end %>
+            </select>
+            <div class="clear"></div>
+          </div>
+          <div class="space_10"></div>
+          <input type='submit' class='buttonSubmit' value='<%= t('button.search_again') %>'/>
+          <div class="space_10"></div>
+          <div id="smallMap"
+               title="<%= @location && @location[:lat].to_f > 0 && @location[:long].to_f > 0 ? "#{@location[:lat]},#{@location[:long]}" : '23.79,90.42' %>"
+               markerMessage="<h4>Where are you NOW?</h4><br/>show us your current location<br/>so that we can <b>suggest</b><br/>you the <b>NEARBY</b> restaurants."
+               infoWindowMessagePrefix="You are NOW @"
+               mapWidth="300px"></div>
+          <div class='clear'></div>
+        </div>
+        <div class="clear"></div>
+        <div class="space_10"></div>
+
+        <script type="text/javascript">
+            App.Tasks.addTask(function() {
+                App.MapWidget.createMap($('#smallMap'), function(pPlacemark) {
+                    $('#geoLat, #smallMapLat').val(pPlacemark.Point.coordinates[1]);
+                    $('#geoLng, #smallMapLng').val(pPlacemark.Point.coordinates[0]);
+                });
+                //App.MapWidget.mMap.checkResize();
+            });
+        </script>
+
+        <h4><%= t('label.filter_by') %></h4>
+        <div class='space_10'></div>
         <div class='tags'>
           <% @topic.tag_groups.each do |tag_group| %>
             <b><%= tag_group.name %></b>

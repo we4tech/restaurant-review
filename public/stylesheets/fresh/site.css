@@ -1211,3 +1211,16 @@ form .hints {
   color: red;
   margin-bottom: 15px;
 }
+
+.geoSearchFields {
+  position: absolute;
+  top: 40px;
+  left: 67px;
+  background: #fff;
+  padding: 5px;
+  border: 2px solid #ccc;
+}
+
+#geoSearchMap {
+  color: #000;  
+}

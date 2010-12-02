@@ -1,5 +1,44 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
+
+// JQuery utility extension
+(function($) {
+
+  /**
+   * Check whether the specific attribute is empty
+   * @param attributeKey attribute key
+   */
+  $.fn.isEmptyAttr = function(attributeKey) {
+    return (!this.attr(attributeKey) || this.attr(attributeKey).length == 0)
+  },
+
+  /**
+   * Extract options from the specified dom element's attribute if not exists default will be returned
+   * ++ Warning the passed options will be modified
+   * @param attributeKeys List of optionalize keys
+   */
+  $.fn.extractOptions = function(attributeKeys, options) {
+
+    for (var i = 0; i < attributeKeys.length; i++) {
+      var attributeKey = attributeKeys[i];
+      if (!this.isEmptyAttr(attributeKey)) {
+        options[attributeKey] = this.attr(attributeKey);
+      }
+    }
+
+    return options;
+  },
+
+  /**
+   * Find existing map instance
+   */
+  $.fn.mapInstance = function() {
+    return App.MapWidget.mInitiatedMaps[this.attr('id')];
+  }
+
+
+})(jQuery);
+
 App = {
 }
 
@@ -9,62 +48,75 @@ App.MapWidget = {
   mMap : null,
   mGeoCoder: null,
   mTextField : null,
+  mInitiatedMaps : {},
 
-  initMap: function($pMapWidgetElement, pCallback) {
-    if (App.MapWidget.mMap == null) {
-      $pMapWidgetElement.css('width', '500px').css('height', '300px');
+  createMap: function($pMapWidgetElement, pCallback) {
+    if (!$pMapWidgetElement.mapInstance()) {
 
-      App.MapWidget.mMap = new GMap2(document.getElementById("google_map_canvas"));
+      var mapOptions = {
+        'markerMessage': 'Where is this restaurant located at?',
+        'infoWindowMessagePrefix': "Restaurant is located @",
+        'mapWidth': '520px',
+        'mapHeight': '300px',
+        'title': '23.7230556,90.4086111'
+      };
 
-      var map = App.MapWidget.mMap;
-      map.setUIToDefault();
-      map.enableGoogleBar();
+      /**
+       * Configure map with the attached attributes
+       */
+      function preConfigureMap() {
+        mapOptions = $pMapWidgetElement.extractOptions(
+            ['markerMessage', 'infoWindowMessagePrefix',
+             'mapWidth', 'mapHeight', 'title'], mapOptions);
+
+        $pMapWidgetElement.css({
+          'width': mapOptions['mapWidth'],
+          'height': mapOptions['mapHeight']});
+
+      }
 
       var center = null;
 
-      var alreadySelectedLocation = $pMapWidgetElement.attr('title');
-      if (alreadySelectedLocation == ',') {
-        center = new GLatLng(23.7230556, 90.4086111);
-      } else {
-        var locationParts = alreadySelectedLocation.split(",");
+      /**
+       * Set default location from the "title" attribute or use the default one
+       */
+      function setCenter() {
+        var defaultLocation = mapOptions['title'];
+        var locationParts = defaultLocation.split(",");
         center = new GLatLng(locationParts[0], locationParts[1]);
+        map.setCenter(center, 13);
       }
 
-      map.setCenter(center, 13);
+      /**
+       * After creating map object now configure rest of the required configurations
+       */
+      function postConfigureMap() {
+        try {
+          map.setUIToDefault();
+          map.enableGoogleBar();
 
-      var marker = new GMarker(center, {draggable: true});
-      marker.openInfoWindowHtml('Where is this restaurant located at?');
-
-      GEvent.addListener(marker, "dragstart", function() {
-        map.closeInfoWindow();
-      });
-
-      GEvent.addListener(marker, "dragend", function() {
-        var place = marker.getLatLng();
-        var address = null;
-        marker.openInfoWindowHtml("Retrieving address...");
-        if (App.MapWidget.mGeoCoder == null) {
-          App.MapWidget.mGeoCoder = new GClientGeocoder();
+          setCenter();
+        } catch ($e) {
+          alert("Error found while post configuring map - " + $e);
         }
+      }
 
-        App.MapWidget.mGeoCoder.getLocations(place, function(response) {
-          if (response || response.Status.code == 200) {
-            var placemark = response.Placemark[0];
-            marker.openInfoWindowHtml('Restaurant is located @' + placemark.address);
-            pCallback(placemark);
-          }
+      var marker = null;
+
+      /**
+       * Setup a draggable marker to point to the specific location
+       */
+      function setupDraggableMarker() {
+        marker = new GMarker(center, {draggable: true});
+        map.addOverlay(marker);
+        marker.openInfoWindowHtml(mapOptions['markerMessage']);
+
+        GEvent.addListener(marker, "dragstart", function() {
+          map.closeInfoWindow();
         });
-      });
 
-      map.addOverlay(marker);
-
-      GEvent.addListener(map, 'addoverlay', function(pOverlay) {
-        if (pOverlay instanceof GMarker) {
-          var place = pOverlay.getLatLng();
-          marker.setLatLng(place);
-
-          pOverlay.closeInfoWindow();
-
+        GEvent.addListener(marker, "dragend", function() {
+          var place = marker.getLatLng();
           var address = null;
           marker.openInfoWindowHtml("Retrieving address...");
           if (App.MapWidget.mGeoCoder == null) {
@@ -74,15 +126,89 @@ App.MapWidget = {
           App.MapWidget.mGeoCoder.getLocations(place, function(response) {
             if (response || response.Status.code == 200) {
               var placemark = response.Placemark[0];
-              marker.openInfoWindowHtml('Restaurant is located @' + placemark.address);
+              marker.openInfoWindowHtml(mapOptions['infoWindowMessagePrefix'] + placemark.address);
               pCallback(placemark);
             }
           });
-        }
-      });
+        });
 
-      App.MapWidget.MAP_INIT = true;
-      $pMapWidgetElement.appear();
+
+      }
+
+      /**
+       * If any marker is placed on the map notify the callback closure
+       */
+      function addEventForAnyMarkerPlacement() {
+        GEvent.addListener(map, 'addoverlay', function(pOverlay) {
+          if (pOverlay instanceof GMarker) {
+            var place = pOverlay.getLatLng();
+            marker.setLatLng(place);
+
+            pOverlay.closeInfoWindow();
+
+            var address = null;
+            marker.openInfoWindowHtml("Retrieving address...");
+            if (App.MapWidget.mGeoCoder == null) {
+              App.MapWidget.mGeoCoder = new GClientGeocoder();
+            }
+
+            App.MapWidget.mGeoCoder.getLocations(place, function(response) {
+              if (response || response.Status.code == 200) {
+                var placemark = response.Placemark[0];
+                marker.openInfoWindowHtml(mapOptions['infoWindowMessagePrefix'] + placemark.address);
+                pCallback(placemark);
+              }
+            });
+          }
+        });
+      }
+
+      /**
+       * Setup all global events
+       */
+      function setupGlobalEvents() {
+        addEventForAnyMarkerPlacement();
+      }
+
+      /**
+       * Appear map object
+       */
+      function appearMap() {
+        $pMapWidgetElement.appear();
+        map.checkResize();
+      }
+
+      var map = null;
+
+      /**
+       * Create new map instance
+       */
+      function createInstance() {
+        try {
+          map = new GMap2(document.getElementById($pMapWidgetElement.attr('id')));
+          App.MapWidget.mInitiatedMaps[$pMapWidgetElement.attr('id')] = map;
+        } catch ($e) {
+          alert("Failed to create map - " + $e);
+        }
+      }
+
+      /**
+       * Initiate new map object and register in global scope
+       */
+      function init() {
+        preConfigureMap();
+        createInstance();
+        postConfigureMap();
+        setupDraggableMarker();
+        setupGlobalEvents();
+        appearMap();
+      }
+
+      /**
+       * Load new map instance
+       */
+      init();
+
     }
   }
 }
@@ -103,7 +229,7 @@ App.UI = {
       if ($(this).val() != defaultText) {
         $(this).val(defaultText);
       }
-      
+
       $(this).bind('focus', function() {
         var $self = $(this);
         if ($self.val() == defaultText) {
@@ -169,7 +295,7 @@ $(function() {
 
   $('.adminPortionActivationLink').click(function() {
     $('.' + $(this).attr('class')).toggle();
-    
+
     if (dialog == null) {
       dialog = $('.adminPortion').dialog({
         'title': $(this).attr('title'),
@@ -232,7 +358,7 @@ var SliderCacheUtil = {
 
 $(function() {
   $('.message').css('cursor', 'pointer').click(function() {
-    $(this).fadeOut().remove();  
+    $(this).fadeOut().remove();
   });
 
   $('.pagination a').each(function() {
