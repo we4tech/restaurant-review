@@ -65,12 +65,12 @@
     </span>
     <span> <%= link_to t('layout.links.home'), root_url %> | </span>
     <% if not logged_in? %>
-      <%= link_to tt('layout.links.login'), login_url %> OR
+      <%= link_to tt('layout.links.login'), login_url, :class => 'login_button' %> OR
       <fb:login-button perms="email,publish_stream">
         <%= t('layout.links.fb_login') %>
       </fb:login-button>
       |
-      <%= link_to tt('layout.links.register'), signup_url %> |
+      <%= link_to tt('layout.links.register'), signup_url, :class => 'register_button' %> |
       <%= link_to tt('layout.links.photos'), photos_url %>
     <% else %>
       <% if !@record_already_added %>
@@ -175,6 +175,20 @@
   <%= render :partial => 'users/parts/facebook_app_script' %>
 <% end %>
 
+<% if !logged_in? %>
+  <%
+     @user = @user || User.new
+  %>
+
+  <div id="login_form" style="display: none">
+    <%= render :partial => 'sessions/new' %>
+  </div>
+
+  <div id="registration_form" style="display: none">
+    <%= render :partial => 'users/new' %>
+  </div>
+<% end %>
+
 <script type="text/javascript">
   App.Tasks.executeTasks();
 
@@ -199,5 +213,30 @@
     
     return true;
   });
+
+  <% if !logged_in? %>
+    $('.login_button').click(function() {
+      $('#login_form').dialog({
+        modal: true, title: "<%= t('title.login')%>", width: 400, height: 410});
+      return false;
+    });
+
+    $('.register_button').click(function() {
+      $('#registration_form').dialog({
+        modal: true, title: "<%= t('layout.links.register') %>",
+        width: 400
+      });
+      return false;
+    });
+  <% end %>
+
+  $('#login_form, #registration_form').ajaxify({urlRef: false});
+
+  $('form input').each(function() {
+    var $field = $(this);
+    if ($field.attr('name') == 'authenticity_token') {
+      $field.val("<%= form_authenticity_token %>");
+    }
+  })
 </script>
 

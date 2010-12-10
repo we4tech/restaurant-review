@@ -11,13 +11,15 @@
                           'fresh/text.css', 'fresh/site.css',
                           :cache => 'cache_all.css' %>
   <%= stylesheet_link_tag 'ext/prettyPhoto.css', 'ext/jquery.bt.css',
+                          'jquery-ui-fresh/jquery.css',
                           :cache => 'cache_supporting.js' %>
 
   <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'application',
                              :cache => 'cache_all.js' %>
 
   <%= javascript_include_tag 'jquery.prettyPhoto.js', 'jquery.bt.min.js',
-                             'jquery.easing.js', 'jquery.timers.js',
+                             'jquery.easing.js', 'jquery.timers.js', 'jquery.scrollTo-1.4.2-min',
+                             'jquery.ajaxify.js',
                              :cache => 'cache_supporting.js' %>
 
 
@@ -61,6 +63,7 @@
 
 
 <body<%= @edit_mode ? ' onbeforeunload="return (mFormContentChanged) ? \'- Your unsaved changes will be lost.\' : null"' : '' %>>
+<a href="#" style="display:none" id="siteTopLink">Top</a>
 <div class="navigation" id='topNavigationBar' style="display: <%= @cached ? 'none' : 'block' %>">
   <% if !@cached %>
     <%= render :partial => 'layouts/fresh_parts/top_navigation_v2' %>

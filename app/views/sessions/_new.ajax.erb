@@ -1,0 +1,7 @@
+<% if @redirect_url.nil? %>
+  $('#login_form').html("<%= escape_javascript(render(:partial => 'sessions/new.html.erb')) %>");
+  $('#login_form').ajaxify({urlRef: false});
+<% else %>
+  $('#login_form').html("<%= escape_javascript(flash[:notice]) %>");
+  window.location.reload();
+<% end %>

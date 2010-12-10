@@ -78,7 +78,7 @@ class AjaxFragmentController < ApplicationController
       response.headers["Cache-Control"] = "no-cache"
       
       render :text => %{
-      $('form div input').each(function() {
+      $('form input').each(function() {
         if ($(this).attr('name') == 'authenticity_token') {
           $(this).val("#{form_authenticity_token}");
         }

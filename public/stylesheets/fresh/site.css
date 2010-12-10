@@ -1094,14 +1094,13 @@ form .hints {
 
 /* Best for box */
 .bestForBox {
-  padding: 10px 10px 10px 35px;
+  margin: 0 30px;
 }
 
 .bestForBox .bestForNav {
-  width: 15.5%;
   text-align: left;
-  float: left;
-  position: relative;
+  margin: 0 auto;
+  margin-bottom: 5px;
 }
 
 .bestForBox .bestForNav ul {
@@ -1111,10 +1110,9 @@ form .hints {
 }
 
 .bestForBox .bestForNav ul li.selected {
-  background: Cornsilk;
-  color: #000;
+  background: #888;
+  color: #fff;
   font-weight: bold;
-  position: relative;
   z-index: 400;
 }
 
@@ -1122,31 +1120,26 @@ form .hints {
   background: none repeat scroll 0 0 #CCCCCC;
   color: #FFFFFF;
   cursor: pointer;
-  margin: 5px 0;
-  padding: 5px 50px 5px 20px;
-  width: 68px;
-  border: 2px solid #ccc;
+  padding: 5px 10px;
+  border: 4px solid #ccc;
   border-right: 0;
   font-size: 12px;
+  display: inline;
+  margin: 0!important;
 }
 
 .bestForBox .bestForNav ul li:hover {
-  background: Cornsilk;
-  color: #000;
-  position: relative;
+  background: #888;
+  color: #fff;
   z-index: 400;
 }
 
 .bestForBox .bestForContainer {
-  background: none repeat scroll 0 0 Cornsilk;
-  border: 2px solid #CCCCCC;
-  float: left;
+  clear: both;
   height: 376px;
   overflow-y: auto;
-  padding: 30px 10px 10px 30px;
-  position: relative;
-  width: 700px;
   z-index: 200;
+  margin-top: 20px;
 }
 
 .bestForBox .bestForContainer .site_list_item {

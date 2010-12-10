@@ -10,7 +10,7 @@
     <p><%= label_tag 'email', t('label.email') %><br/>
     <%= f.text_field :email %></p>
 
-    <%= render :partial => 'users/parts/fields', :locals => {:f => f} %>
+    <%= render :partial => 'users/parts/fields.html.erb', :locals => {:f => f} %>
 
   <p><%= submit_tag t('button.signup') %></p>
   <% end -%>

@@ -1,0 +1,2 @@
+$('#registration_form').html("<%= escape_javascript(render(:partial => 'users/new.html.erb')) %>")
+$('#registration_form').ajaxify({urlRef: false});

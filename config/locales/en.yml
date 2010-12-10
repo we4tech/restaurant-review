@@ -1,7 +1,9 @@
---- !map:HashWithIndifferentAccess 
+--- !map:HashWithIndifferentAccess
 en: !map:HashWithIndifferentAccess
   topic:
     Restaurants: Restaurants
+  notice:
+    thanks_for_signing_in: "Thanks for signing up!  We're sending you an email with your activation code."
   label: !map:HashWithIndifferentAccess 
     this_place: this place
     login: login
@@ -184,6 +186,7 @@ en: !map:HashWithIndifferentAccess
     invalid_tag: Invalid tag label - {{tag}}
     authorization: You are not authorized
     no_matched_type: Not matched type!
+    user_creation_failed: Please revise your registration form, we have found some errors
   fields: !map:HashWithIndifferentAccess 
     group_name: Group Name
     address: address

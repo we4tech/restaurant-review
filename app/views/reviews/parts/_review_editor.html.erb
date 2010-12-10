@@ -9,5 +9,5 @@
                            :attached_options => attached_options} %>
 <% else %>
   <%= t('label.login_required_to_review',
-        :link => link_to(t('nav.login'), login_url)) %>
+        :link => link_to(t('nav.login'), login_url, :class => 'login_button')) %>
 <% end %>

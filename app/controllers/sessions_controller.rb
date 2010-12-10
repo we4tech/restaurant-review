@@ -22,10 +22,22 @@ class SessionsController < ApplicationController
 
       if user.image
         flash[:notice] = "Logged in successfully"
-        redirect_back_or_default(updates_url)
+        respond_to do |format|
+          format.html { redirect_back_or_default(updates_url) }
+          format.ajax {
+            @redirect_url = session[:return_to] || updates_url
+            render :partial => 'sessions/new.ajax.erb', :layout => false
+          }
+        end
       else
         flash[:notice] = "Logged in successfully, please upload your display picture (avatar)!"
-        redirect_to edit_user_url(user)
+        respond_to do |format|
+          format.html { redirect_to edit_user_url(user) }
+          format.ajax {
+            @redirect_url = edit_user_url(user)
+            render :partial => 'sessions/new.ajax.erb', :layout => false
+          }
+        end
       end
 
       if !current_user.user_logs.by_topic(@topic.id).first
@@ -35,7 +47,11 @@ class SessionsController < ApplicationController
       note_failed_signin
       @login       = params[:login]
       @remember_me = params[:remember_me]
-      render_view('sessions/new')
+
+      respond_to do |format|
+        format.html { render_view('sessions/new') }
+        format.ajax { render :partial => 'sessions/new.ajax.erb', :layout => false}
+      end
     end
   end
 

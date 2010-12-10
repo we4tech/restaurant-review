@@ -1,5 +1,8 @@
---- !map:HashWithIndifferentAccess 
-bn: !map:HashWithIndifferentAccess 
+--- !map:HashWithIndifferentAccess
+bn: !map:HashWithIndifferentAccess
+  notice:
+    thanks_for_signing_in: "Thanks for signing up!  We're sending you an email with your activation code."
+
   label: !map:HashWithIndifferentAccess 
     this_place: !binary |
       4KaP4KaHIOCmuOCnjeCmpeCmvuCmqOCmn+Cmv+CmpOCnhw==
@@ -675,6 +678,7 @@ bn: !map:HashWithIndifferentAccess
     no_matched_type: !binary |
       4KaG4Kaq4Kao4Ka+4KawIOCmruCmpOCmqCDgppbgp4Hgppzgp4cg4Kaq4Ka+
       4KaT4Kav4Ka84Ka+IOCmr+CmvuCmhyDgpqjgpr8h
+    user_creation_failed: Please revise your registration form, we have found some errors
 
   time: !map:HashWithIndifferentAccess 
     am: am

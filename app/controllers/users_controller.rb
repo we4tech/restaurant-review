@@ -25,11 +25,22 @@ class UsersController < ApplicationController
     success = @user && @user.valid?
     if success && @user.errors.empty?
       @user.activate!
-      redirect_back_or_default('/')
-      flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
+
+      respond_to do |format|
+        format.html {
+          flash[:notice] = t('notice.thanks_for_signing_in')
+          redirect_back_or_default('/')
+        }
+        format.ajax { render :layout => false}
+      end
     else
-      flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      render_view('users/new')
+      flash[:error]  = t('error.user_creation_failed')
+      respond_to do |format|
+        format.html {render_view('users/new')}
+        format.ajax {
+          render :partial => 'users/new'
+        }
+      end
     end
   end
 

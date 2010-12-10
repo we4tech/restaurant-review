@@ -1,25 +1,33 @@
 <div class="centerContent grid_12">
-  <h1><%= t('header.login')%></h1>
+  <h1><%= t('header.login') %></h1>
+
+  <% if flash[:notice] || flash[:error] %>
+    <div class="highlight">
+      <%= flash[:notice] || flash[:error] %>
+    </div>
+  <% end %>  
 
   <% form_tag session_path do -%>
-  <p><%= label_tag 'login', t('fields.login') %><br />
-  <%= text_field_tag 'login', @login %></p>
 
-  <p><%= label_tag 'password', t('fields.password') %><br/>
-  <%= password_field_tag 'password', nil %></p>
+    <p><%= label_tag 'login', t('fields.login') %><br/>
+      <%= text_field_tag 'login', @login %></p>
 
-  <!-- Uncomment this if you want this functionality
+    <p><%= label_tag 'password', t('fields.password') %><br/>
+      <%= password_field_tag 'password', nil %></p>
+
+    <!-- Uncomment this if you want this functionality
   <p><%= label_tag 'remember_me', t('fields.remember') %>
   <%= check_box_tag 'remember_me', '1', @remember_me %></p>
   -->
 
-  <p>
-    <%= submit_tag t('button.login') %>
-  </p>
-  <p>
-    <%= link_to t('nav.did_you_forgot'), reset_password_url %>
-    Or <%= link_to t('nav.are_you_new_user'), signup_url %>
-  </p>
+    <p>
+      <%= submit_tag t('button.login') %>
+    </p>
+
+    <p>
+      <%= link_to t('nav.did_you_forgot'), reset_password_url, :class => 'forgot_user_button' %>
+      Or <%= link_to t('nav.are_you_new_user'), signup_url, :class => 'register_button' %>
+    </p>
   <% end -%>
-  
+
 </div>

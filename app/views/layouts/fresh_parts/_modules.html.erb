@@ -4,7 +4,7 @@
     <div class="space_10"></div>
     <fb:like href="<%= request.url %>" width='310'></fb:like>
     <div class="space_10"></div>
-    <fb:activity site="restaurant.welltreat.us" width="300" height="300" header="false" recommendations="true"></fb:activity>
+    <fb:activity site="<%= @topic.subdomain %>.welltreat.us" width="300" height="300" header="false" recommendations="true"></fb:activity>
   </div>
 <% end %>
 <div class='space_10'></div>
