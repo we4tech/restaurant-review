@@ -51,7 +51,7 @@
                 }.join(', ')
                 %>
               <% else %>
-                <%= h field_value %>
+                <%= auto_link(h(field_value)) %>
               <% end %>
             </div>
             <div class="clear"></div>
