@@ -18,9 +18,9 @@
     <% if !review.comment.blank? %>
       <div class="content" id='<%= review_content_id = "review_#{review.id}_content" %>'>
         <% if !length %>
-          <%= simple_format(h(review.comment)) %>
+          <%= simple_format(auto_link(h(review.comment))) %>
         <% else %>
-          <%= truncate(h(review.comment), length) %>
+          <%= auto_link(truncate(h(review.comment), length)) %>
         <% end %>
       </div>
 
@@ -80,7 +80,7 @@
                             user_long_url(:login => comment.user.login,
                                           :id => comment.user.id) %> -
               </span>
-              <em><%= h(comment.content) %></em>
+              <em><%= auto_link(h(comment.content)) %></em>
               <span class="date" title="<%= comment.updated_at.strftime('%d %b %Y') %>">
                 -
                 <%= distance_of_time_in_words(comment.updated_at, Time.now) %> <%= t('label.ago') %>.

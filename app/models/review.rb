@@ -58,7 +58,7 @@ class Review < ActiveRecord::Base
   end
 
   def author?(p_user)
-    return p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
+    p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
   end
 
   protected
