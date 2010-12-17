@@ -20,7 +20,11 @@ module RestaurantsHelper
           :loved_percentage => loved_percentage
       }
 
-      render :partial => 'restaurants/parts/review_stats', :locals => variables
+      if params[:format].to_s == 'atom'
+        render :partial => 'restaurants/parts/review_stats.html.erb', :locals => variables
+      else
+        render :partial => 'restaurants/parts/review_stats', :locals => variables
+      end
     end
   end
 

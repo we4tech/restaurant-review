@@ -3,6 +3,11 @@
 <div class="clear"></div>
 <div class="space_5"></div>
 
+<label class="grid_2">Enabled?</label>
+<%= f.check_box :enabled %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
 <label class="grid_2">Topic name</label>
 <%= f.text_field :name %>
 <%= f.error_message_on :name %>

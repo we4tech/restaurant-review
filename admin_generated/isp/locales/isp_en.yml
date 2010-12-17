@@ -2,6 +2,9 @@
 isp_en: !map:HashWithIndifferentAccess
   topic:
     Isps: Internet Service Providers
+  notice:
+    thanks_for_signing_in: "Thanks for signing up!  We're sending you an email with your activation code."
+    user_creation_failed: "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
   label: !map:HashWithIndifferentAccess 
     this_place: this ISP
     login: login

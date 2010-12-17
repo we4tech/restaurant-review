@@ -1101,6 +1101,8 @@ form .hints {
   text-align: left;
   margin: 0 auto;
   margin-bottom: 5px;
+  padding: 10px 5px;
+  background: #ccc;
 }
 
 .bestForBox .bestForNav ul {
@@ -1216,4 +1218,8 @@ form .hints {
 
 #geoSearchMap {
   color: #000;  
+}
+
+#site_top_navigation .topicSelectionBox {
+  width: 120px;
 }

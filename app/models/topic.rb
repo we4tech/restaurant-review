@@ -21,6 +21,8 @@ class Topic < ActiveRecord::Base
   after_save :clear_cache
 
   named_scope :recent, :order => 'created_at DESC'
+  named_scope :enabled, :conditions => {:enabled => true}
+  
   @@per_page = 20
 
   def self.default

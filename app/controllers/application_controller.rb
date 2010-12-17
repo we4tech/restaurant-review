@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
 
       # If ajax is request host, forcefully set different
       # topic subdomain as url host
-      if request
+      if request && !options.include?(:subdomain)
         host_parts = request.host.split('.')
         if (host_parts.first || '').match(/^ajax\d+$/)
           options[:subdomain] = @topic ? @topic.subdomain : nil

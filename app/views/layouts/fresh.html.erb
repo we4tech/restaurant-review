@@ -29,17 +29,17 @@
   <% if @topic.meta_tags_html.present? %>
     <%= @topic.meta_tags_html %>
   <% else %>
-    <meta name="abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+    <meta name="abstract" content="Bangladeshi and Dhaka restaurant, cafe & eat out place review site"/>
     <% if @meta_description -%>
       <meta content="<%= @meta_description %>" name="description">
     <%- else -%>
-      <meta name="description" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+      <meta name="description" content="Bangladeshi and Dhaka Restaurant, cafe & eat out place review site"/>
     <%- end -%>
 
     <%- if @meta_keywords -%>
       <meta name="keywords" content="<%= @meta_keywords %>"/>
     <%- else -%>
-      <meta name="keywords" content="Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
+      <meta name="keywords" content="Dhaka Restaurant Reviews Restaurant in Bangladesh Restaurant in Dhaka Restaurant Bangladeshi Food bd food food company Cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
     <%- end -%>
 
     <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
@@ -139,7 +139,7 @@
   <%= javascript_include_tag 'test.js' %>
 <% end %>
 
-<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= MAP_API_KEY %>&hl=en"></script>
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= MAP_API_KEY %>&hl=en" defer="defer"></script>
 
 <% if @cached %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'notice', :d => Time.now.to_i) %>

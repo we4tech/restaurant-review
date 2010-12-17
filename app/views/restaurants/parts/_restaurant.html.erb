@@ -5,6 +5,7 @@
    end
    index = index || 0
    grid_class = grid_class || 'grid_6'
+   only_html = only_html || false
 %>
 
 <div class="site_list_item" id="list_item_restaurant_<%= restaurant.id %>">
@@ -23,7 +24,11 @@
       <%= render_restaurant_review_stats(restaurant) %>
       <% if @display_tools.nil? || @display_tools %>
         <span id='restaurant_<%= restaurant.id %>_tools' style="display: <%= @cached ? 'none' : 'inline' %>">
-          <%= render :partial => 'restaurants/parts/tools', :locals => {:restaurant => restaurant} %>
+          <% if !only_html %>
+            <%= render :partial => 'restaurants/parts/tools', :locals => {:restaurant => restaurant} %>
+          <% else %>
+            <%= render :partial => 'restaurants/parts/tools.html.erb', :locals => {:restaurant => restaurant} %>
+          <% end %>
         </span>
       <% end %>
     </div>
@@ -56,8 +61,13 @@
       <% last_review = restaurant.last_review %>
       <% if last_review %>
         <div class='review_quote'>
-          <%= render :partial => 'reviews/parts/review',
-                     :locals => {:review => last_review, :tag_name => 'span', :grid_class => ''} %>
+          <% if !only_html %>
+            <%= render :partial => 'reviews/parts/review',
+                       :locals => {:review => last_review, :tag_name => 'span', :grid_class => ''} %>
+          <% else %>
+            <%= render :partial => 'reviews/parts/review.html.erb',
+                       :locals => {:review => last_review, :tag_name => 'span', :grid_class => ''} %>
+          <% end %>
           <div class="clear"></div>
           <div class="space_5"></div>
           <div class="break"></div>

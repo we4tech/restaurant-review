@@ -128,6 +128,9 @@ ActionController::Routing::Routes.draw do |map|
   map.fragment_for '/fragment_for/:name', :controller => 'ajax_fragment', :action => 'fragment_for'
   map.open_search '/open-search.xml', :controller => 'static_page', :action => 'open_search', :format => :xml
 
+  # Feeds related routing
+  map.feed_reviews '/feeds/recent_reviews.:format', :controller => 'feeds', :action => 'reviews'
+
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.

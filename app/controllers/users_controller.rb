@@ -34,7 +34,7 @@ class UsersController < ApplicationController
         format.ajax { render :layout => false}
       end
     else
-      flash[:error]  = t('error.user_creation_failed')
+      flash[:error]  = t('notice.user_creation_failed')
       respond_to do |format|
         format.html {render_view('users/new')}
         format.ajax {
