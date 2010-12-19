@@ -13,3 +13,10 @@
     <%= f.submit t('button.create'), :class => 'submit' %>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  $('.submit').mousedown(function() {
+    mFormContentChanged = false;
+    return true;
+  });
+</script>

@@ -37,7 +37,7 @@
             <div class="space_10"></div>
             <div id="geoSearchMap"
                  title="<%= @location && @location[:lat].to_f > 0 && @location[:long].to_f > 0 ? "#{@location[:lat]},#{@location[:long]}" : '23.79,90.42' %>"
-                 markerMessage="<h4>Where are you NOW?</h4><br/>show us your current location<br/>so that we can <b>suggest</b><br/>you the <b>NEARBY</b> restaurants."
+                 markerMessage="<h4>Where are you NOW?</h4><br/>show us your current location<br/>so that we can <b>suggest</b><br/>you the <b>NEARBY</b> <%= @topic.name.pluralize %>."
                  infoWindowMessagePrefix="You are NOW @"
                  style="height: 300px"></div>
             <div class='clear'></div>

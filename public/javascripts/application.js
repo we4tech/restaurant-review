@@ -34,13 +34,183 @@
    */
   $.fn.mapInstance = function() {
     return App.MapWidget.mInitiatedMaps[this.attr('id')];
+  },
+
+//  #
+//  # == What is Levenshtein Distance?
+//  # Taken from - http://www.merriampark.com/ld.htm
+//  #
+//  # Levenshtein distance (LD) is a measure of the similarity between two strings,
+//  # which we will refer to as the source string (s) and the target string (t).
+//  # The distance is the number of deletions, insertions, or substitutions required
+//  # to transform s into t. For example,
+//  #
+//  #    * If s is "test" and t is "test", then LD(s,t) = 0,
+//  #      because no transformations are needed. The strings are already identical.
+//  #    * If s is "test" and t is "tent", then LD(s,t) = 1,
+//  #      because one substitution (change "s" to "n") is sufficient to transform s into t.
+//  #
+//  # The greater the Levenshtein distance, the more different the strings are.
+//  # Levenshtein distance is named after the Russian scientist Vladimir Levenshtein,
+//  # who devised the algorithm in 1965. If you can't spell or pronounce Levenshtein,
+//  # the metric is also sometimes called edit distance.
+//  # The Levenshtein distance algorithm has been used in:
+//  #
+//  #    * Spell checking
+//  #    * Speech recognition
+//  #    * DNA analysis
+//  #    * Plagiarism detection
+//  #
+  $.calculateDistance = function(firstText, secondText, returnMatrix) {
+    firstText = firstText.toLowerCase();
+    secondText = secondText.toLowerCase();
+
+    var firsTextLength = firstText.length;
+    var secondTextLength = secondText.length;
+    var matrix = [];
+
+    if (firsTextLength == 0) {
+      return secondTextLength;
+    }
+
+    if (secondTextLength == 0) {
+      return firsTextLength;
+    }
+
+    function determineDistance(firstTextLength, secondTextLength) {
+      $.debug(matrix);
+      return matrix[secondTextLength][firstTextLength];
+    }
+
+    function decideMinimumValue(values) {
+      var minValue = values[0];
+      for (var i = 0; i < values.length; i++) {
+        if (values[i] < minValue) {
+          minValue = values[i];
+        }
+      }
+
+      return minValue;
+    }
+
+    function compareText(firstTextLength, secondTextLength,
+                          firstText, secondText) {
+      for (var j = 1; j <= firstTextLength; j++) {
+        for (var i = 1; i <= secondTextLength; i++) {
+          var n_j = j - 1;
+          var m_i = i - 1;
+
+          // If s[i] equals t[j], the cost is 0.
+          // If s[i] doesn't equal t[j], the cost is 1.
+          var charA = firstText.charAt(n_j);
+          var charB = secondText.charAt(m_i);
+          var value = charA == charB ? 0 : 1;
+
+          // Set cell d[i,j] of the matrix equal to the minimum of:
+          // a. The cell immediately above plus 1: d[i-1,j] + 1.
+          var value_1 = matrix[i - 1][j] + 1;
+          // b. The cell immediately to the left plus 1: d[i,j-1] + 1.
+          var value_2 = matrix[i][j - 1] + 1;
+          // c. The cell diagonally above and to the left plus the
+          // cost: d[i-1,j-1] + cost.
+          var value_3 = matrix[i-1][j-1] + value;
+          value = decideMinimumValue([value_1, value_2, value_3]);
+
+          // Set min value
+          matrix[i][j] = value
+        }
+      }
+    }
+
+    function prepareMatrix(firstTextLength, secondTextLength) {
+      matrix = [];
+      for (var i = 0; i <= secondTextLength + 1; i++) {
+        matrix[i] = [];
+        for (var j = 0; j <= firstTextLength + 1; j++) {
+          if (i == 0) {
+            matrix[i][j] = j
+          } else if (j == 0) {
+            matrix[i][j] = i
+          }
+        }
+      }
+    }
+
+    prepareMatrix(firsTextLength, secondTextLength);
+    compareText(firsTextLength, secondTextLength, firstText, secondText);
+
+    if (returnMatrix) {
+      return matrix;
+    } else {
+      return determineDistance(firsTextLength, secondTextLength);
+    }
+  },
+
+  $.debug = function(message) {
+    // console.debug(message);
+  },
+
+  $.visualizeMatrix = function(firstText, secondText) {
+    var matrix = $.calculateDistance(firstText, secondText, true);
+    var text = "";
+    for (var i = 0; i < matrix.length; i++) {
+      for (var j = 0; j < matrix[i].length; j++) {
+        text += matrix[i][j] + " "
+      }
+      text += "\n";
+    }
+
+    return text;
+  },
+
+  /**
+   * Iterate through the elements and match more relevant text.
+   */
+  $.searchRelevantItem = function(text, itemsArray) {
+    var mostRelevant = null;
+
+    for (var i = 0; i < itemsArray.length; i++) {
+      var values = itemsArray[i];
+      var firstText = text;
+      var secondText = values[0];
+      // Split text based on the minimum textual length
+      if (firstText.length > secondText.length) {
+        firstText = firstText.substring(0, secondText.length);
+      } else {
+        secondText = secondText.substring(0, firstText.length);
+      }
+
+      var score = $.calculateDistance(firstText, secondText);
+      if (mostRelevant == null || score < mostRelevant[0]) {
+        mostRelevant = [score, values[0], values[1]];
+      }
+    }
+
+    $.debug(mostRelevant);
+    return mostRelevant;
+  },
+
+  $.fuzzySearch = function(text, itemsArray) {
+    var mostRelevant = null;
+
+    for (var i = 0; i < itemsArray.length; i++) {
+      var values = itemsArray[i];
+      var firstText = text;
+      var secondText = values[0];
+      var score = firstText.score(secondText);
+      if (mostRelevant == null || score > mostRelevant[0]) {
+        mostRelevant = [score, values[0], values[1]];
+      }
+    }
+
+    return mostRelevant;
   }
 
 
 })(jQuery);
 
 App = {
-}
+};
 
 App.MapWidget = {
 
@@ -211,7 +381,101 @@ App.MapWidget = {
 
     }
   }
-}
+};
+
+App.TagSearcher = function(pTextField) {
+
+  var mLastSearchedKey = null;
+  var mCachedOptions = [];
+  var mTagsPanel = null;
+  var mSearchingWorker = null;
+  var mDefaultValue = null;
+
+  function indexOptions() {
+    mTagsPanel = $('#' + pTextField.attr('title'));
+    $('#' + pTextField.attr('title') + ' label').each(function() {
+      var $label = $(this);
+      var labelId = $label.attr('id');
+      if (labelId == null || labelId.length == 0) {
+        labelId = ("option_" + Math.random()).replace('.', '');
+        $label.attr('id', labelId);
+      }
+
+      mCachedOptions.push([$label.html().toLowerCase(), labelId])
+    });
+
+    $.debug(mCachedOptions)
+  }
+
+  function clearVisualHighlights() {
+    $('#' + pTextField.attr('title') + ' label').css('border-bottom', '0');
+  }
+
+  function performSearch() {
+    if ((mSearchingWorker) != null) {
+      clearVisualHighlights();
+      clearTimeout(mSearchingWorker);
+    }
+
+    mSearchingWorker = setTimeout(function() {
+      var text = pTextField.val().trim().toLowerCase();
+      if (text.length > 0 && text != mLastSearchedKey) {
+        var parts = text.split(",");
+        for (var ti = 0; ti < parts.length; ti++) {
+          var textPart = parts[ti].trim();
+          var mostRelevant = $.fuzzySearch(textPart, mCachedOptions);
+          $.debug(mostRelevant);
+
+          if (mostRelevant) {
+            var $selectedLabel = $('#' + mostRelevant[2]);
+            $selectedLabel.animate({borderBottom: '2px solid red'}, 1000);
+            mTagsPanel.scrollTo($selectedLabel, 500);
+
+            if (mostRelevant[1] == textPart) {
+              $('#' + $selectedLabel.attr('for')).attr('checked', 'checked');
+              pTextField.val('').focus();
+            }
+          }
+        }
+      }
+    }, 1000);
+  }
+
+  function observeKeyPress() {
+    pTextField.keyup(function() {
+      performSearch()
+    });
+
+    pTextField.keypress(function(e) {
+      var code = (e.keyCode ? e.keyCode : e.which);
+      if(code == 13) {
+        return false;
+      }
+    });
+  }
+
+  function clearDefaultMessage() {
+    mDefaultValue = pTextField.attr('value');
+    pTextField.focus(function() {
+      var $this = $(this);
+      if (!$this.isEmptyAttr('value') && $this.attr('value') == mDefaultValue) {
+        $this.attr('value', '');
+      }
+    });
+
+    pTextField.blur(function() {
+      var $this = $(this);
+      if ($this.isEmptyAttr('value')) {
+        $this.attr('value', mDefaultValue);
+      }
+    });
+  }
+
+  clearDefaultMessage();
+  indexOptions();
+  observeKeyPress();
+
+};
 
 
 App.UI = {
@@ -311,6 +575,7 @@ $(function() {
       $('.adminPortion').dialog('open');
     }
   });
+
 });
 
 /**

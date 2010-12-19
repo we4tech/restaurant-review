@@ -36,6 +36,8 @@
       <div>
         <div id="google_map_canvas"
              title="<%= "#{@restaurant.lat},#{@restaurant.lng}" %>"
+             markerMessage="<h4>Where is your <%= @topic.name.humanize %>?</h4>"
+             infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
              style="width: 300px; height: 300px"></div>
       </div>
       <div>
@@ -50,6 +52,7 @@
     </div>
     <div class="clear"></div>
     <% location_included = true %>
+    <br/>
 
   <% elsif combobox %>
     <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
@@ -66,19 +69,24 @@
   <% elsif options %>
     <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
     <div class='options_box'>
+      <input name='tag_search_keywords' class="tagSearchField"
+             type="text" title="field_<%= field_name %>"
+             value="Search tags..." />
       <% existing_value = @restaurant.send(field_name) || []  %>
 
-      <% parse_default_value(default_value).sort.each do |option| %>
-        <% option.strip! %>
-        <div class='option'>
-          <input id='<%= option_field_id = "option_#{option}" %>'
-                 type='checkbox' name='restaurant[<%= field_name %>][]'
-                 value="<%= option %>" class="<%= field_type %>"
-                 <%= existing_value.include?(option) ? 'checked="checked"' : '' %>
-                 />
-          <label for="<%= option_field_id %>"><%= option %></label>
-        </div>
-      <% end %>
+      <div class="tags" id="field_<%= field_name %>">
+        <% parse_default_value(default_value).sort.each do |option| %>
+          <% option.strip! %>
+          <div class='option'>
+            <input id='<%= option_field_id = "option_#{url_escape(option)}" %>'
+                   type='checkbox' name='restaurant[<%= field_name %>][]'
+                   value="<%= option %>" class="<%= field_type %>"
+                   <%= existing_value.include?(option) ? 'checked="checked"' : '' %>
+                   />
+            <label for="<%= option_field_id %>"><%= option %></label>
+          </div>
+        <% end %>
+      </div>
     </div>
     <%= f.error_message_on field_name %>
     <br clear="all"/>
@@ -108,7 +116,12 @@
 <% end %>
 
 <script type="text/javascript">
-  $('input, textarea').bind('keypress', function(pEvent) {
+  $('input, textarea, .nicEdit-main').bind('keypress', function(pEvent) {
     mFormContentChanged = true;  
   });
+
+  $('.tagSearchField').each(function() {
+    new App.TagSearcher($(this));
+  });
+
 </script>
