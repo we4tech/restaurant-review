@@ -33,6 +33,16 @@ Capistrano::Configuration.instance.load do
       run "rm #{release_path}/tmp -rf"
       run "ln -nfs #{shared_path}/tmp #{release_path}/tmp"
     end
+
+    desc 'Disable web site'
+    task :web_disable do
+      run "ln -nfs #{shared_path}/system/maintenance.html #{current_path}/public/index.html"
+    end
+
+    desc 'Enable web site'
+    task :web_enable do
+      run "rm #{current_path}/public/index.html"
+    end
   end
 
   namespace :configuration do
@@ -51,5 +61,7 @@ Capistrano::Configuration.instance.load do
 
   after "deploy:setup",           "shared_directories:setup"
   after "deploy:update", "shared_directories:symlink", "configuration:mongrel", "service:mongrel_restart"
+  #after "deploy:web:disable", "shared_directories:web_disable"
+  #after "deploy:web:enable", "shared_directories:web_enable"
 
 end

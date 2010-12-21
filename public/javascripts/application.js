@@ -517,7 +517,7 @@ App.UI = {
       });
     });
   }
-}
+};
 
 /**
  * Lookup for all "adminPortionActivationLink" links if current browser url
@@ -619,7 +619,7 @@ var SliderCacheUtil = {
       }
     }
   }
-}
+};
 
 $(function() {
   $('.message').css('cursor', 'pointer').click(function() {
@@ -659,4 +659,4 @@ App.Tasks = {
       App.Tasks.tasks[i].call();
     }
   }
-}
+};
