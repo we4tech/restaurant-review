@@ -115,7 +115,7 @@ class Topic < ActiveRecord::Base
     if topic = @@topics_host_maps[host]
       return topic
     else
-      Topic.all(:conditions => 'hosts IS NOT NULL').each do |t|
+      Topic.enabled(:conditions => 'hosts IS NOT NULL').each do |t|
         t.host_list.each do |pt_host|
           pt_host.downcase!
           if pt_host == host

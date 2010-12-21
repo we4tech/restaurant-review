@@ -1,7 +1,7 @@
 module TopicsHelper
 
   def render_topic_box(p_options)
-    topics = Topic.all
+    topics = Topic.enabled
     render :partial => 'topics/parts/all_topics', :locals => {:topics => topics}
   end
 
