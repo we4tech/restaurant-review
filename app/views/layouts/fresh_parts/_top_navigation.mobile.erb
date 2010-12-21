@@ -71,7 +71,7 @@
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script>
   $(function() {
-    FB.init({appId: '<%= Facebooker.api_key %>', status: true, cookie: true, xfbml: true});
+    FB.init({appId: '<%= @topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key  %>', status: true, cookie: true, xfbml: true});
     <% if !logged_in? %>
       FB.Event.subscribe('auth.sessionChange', function(response) {
         if (response.session) {

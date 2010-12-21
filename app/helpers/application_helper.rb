@@ -18,22 +18,33 @@ module ApplicationHelper
   end
 
   def detect_topic_or_forward_to_default_one
-    topic_hint = (request.subdomains || []).join("_")
-    if topic_hint.empty? || topic_hint == 'www'
-      topic = Topic.default
-      path_prefix = (request.path || '')
-      path_prefix = path_prefix[1..path_prefix.length]
-      redirect_to "#{root_url(:subdomain => topic.subdomain)}#{path_prefix}"
-      return
-    else
-      @topic = Topic.of(topic_hint)
+    # Match topic by topic hosts
+    @topic = Topic.match_host(request.host)
+    if @topic
+      @subdomain_routing_stop = true
     end
 
-    if !@topic && params[:__topic_id]
+    # Match topic by subdomain
+    if @topic.nil?
+      topic_hint = (request.subdomains || []).join("_")
+      if topic_hint.empty? || topic_hint == 'www'
+        topic = Topic.default
+        path_prefix = (request.path || '')
+        path_prefix = path_prefix[1..path_prefix.length]
+        redirect_to "#{root_url(:subdomain => topic.subdomain)}#{path_prefix}"
+        return
+      else
+        @topic = Topic.of(topic_hint)
+      end
+    end
+
+    # Match topic by specified special parameter __topic_id
+    if @topic.nil? && params[:__topic_id]
       @topic = Topic.find(params[:__topic_id])
     end
 
-    if !@topic
+    # Throw error message if none of them matches.
+    if @topic.nil?
       flash[:notice] = "Invalid domain name - '#{topic_hint}'"
       redirect_to root_url(:subdomain => false)
     else

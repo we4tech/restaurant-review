@@ -14,7 +14,8 @@
                           'jquery-ui-fresh/jquery.css',
                           :cache => 'cache_supporting.js' %>
 
-  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'fuzzy-string', 'application',
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'fuzzy-string',
+                             'application', 'jquery.lazyload.mini',
                              :cache => 'cache_all.js' %>
 
   <%= javascript_include_tag 'jquery.prettyPhoto.js', 'jquery.bt.min.js',
@@ -139,7 +140,7 @@
   <%= javascript_include_tag 'test.js' %>
 <% end %>
 
-<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= MAP_API_KEY %>&hl=en" defer="defer"></script>
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= @topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key %>&hl=en" defer="defer"></script>
 
 <% if @cached %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'notice', :d => Time.now.to_i) %>
@@ -148,7 +149,7 @@
 
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript">
-  FB.init({appId: '<%= Facebooker.api_key %>', status: true, cookie: true, xfbml: true});
+  FB.init({appId: '<%= @topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key %>', status: true, cookie: true, xfbml: true});
   App.Tasks.executeTasks();
 </script>
 
@@ -184,6 +185,14 @@
     var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
   </script>
 <% end %>
+
+<script type="text/javascript">
+  $("img").lazyload({
+      placeholder : "/images/grey.gif",
+      effect : "fadeIn",
+      failurelimit : 10
+  });
+</script>
 
 </body>
 </html>

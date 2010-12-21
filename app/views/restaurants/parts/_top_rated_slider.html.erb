@@ -25,16 +25,7 @@
           <%= truncate strip_tags(restaurant.description), :length => 100 %>
           <%= link_to t('featurebox.readmore'), link %>
           <fb:like href='<%= link %>'></fb:like>
-          <% if !restaurant.tags.empty? %>
-            <div class="associated_tags">
-              <strong><%= tt('fields.features') %>:</strong>
-              <%= restaurant.tags.collect {|tag|
-                link_to(tag.name,
-                        tag_details_url(
-                            :label => 'cuisines-tags',
-                            :tag => tag.name))}.join(', ') %>
-            </div>
-          <% end %>
+          
         </p>
 
         <div class='featureOtherPics'>
@@ -48,7 +39,7 @@
             <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
                          "#{restaurant.lat},#{restaurant.lng}&zoom=14&" +
                          "sensor=false&markers=color:green|label:R|" +
-                         "#{restaurant.lat},#{restaurant.lng}&key=#{MAP_API_KEY}&size="
+                         "#{restaurant.lat},#{restaurant.lng}&key=#{@topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key}&size="
                details_link = "http://maps.google.com/maps?f=q&" +
                               "q=#{CGI.escape(restaurant.address)}&hl=en&" +
                               "geocode=&sll=#{restaurant.lat},#{restaurant.lng}"

@@ -51,7 +51,7 @@
         <b><%= tt('fields.features') %>:</b>
         <%= restaurant.tags.collect {|tag|
           link_to(tag.name, tag_details_url(
-              :label => 'cuisines-tags', :tag => url_escape(tag.name)),
+              :label => url_escape(@topic.module_conf('long_array')['label']), :tag => url_escape(tag.name)),
                   :class => "#{@tags && @tags.include?(tag.name.downcase) ? 'selectedTag' : ''}")
         }.join(', ') %>
       </div>

@@ -127,6 +127,13 @@ ActionController::Routing::Routes.draw do |map|
   map.site_page '/page/:page_name', :controller => 'pages', :action => 'show'
   map.fragment_for '/fragment_for/:name', :controller => 'ajax_fragment', :action => 'fragment_for'
   map.open_search '/open-search.xml', :controller => 'static_page', :action => 'open_search', :format => :xml
+  map.topic_messages '/:topic_name/:restaurant_id/news',
+                     :controller => 'messages', :action => 'index',
+                     :requirements => {:topic_name => /[\w\d\.\-]+/}
+  map.topic_items '/:topic_name/:restaurant_id/items',
+                     :controller => 'food_items', :action => 'index',
+                     :requirements => {:topic_name => /[\w\d\.\-]+/}
+  
 
   # Feeds related routing
   map.feed_reviews '/feeds/recent_reviews.:format', :controller => 'feeds', :action => 'reviews'

@@ -67,12 +67,18 @@
 
         <script type="text/javascript">
             App.Tasks.addTask(function() {
-                App.MapWidget.createMap($('#smallMap'), function(pPlacemark) {
-                    $('#geoLat, #smallMapLat').val(pPlacemark.Point.coordinates[1]);
-                    $('#geoLng, #smallMapLng').val(pPlacemark.Point.coordinates[0]);
-                });
+                
                 //App.MapWidget.mMap.checkResize();
             });
+			var gmailCheckInterval = setTimeout(function() {
+				if (GMap2 != null) {					
+					App.MapWidget.createMap($('#smallMap'), function(pPlacemark) {
+		                $('#geoLat, #smallMapLat').val(pPlacemark.Point.coordinates[1]);
+		                $('#geoLng, #smallMapLng').val(pPlacemark.Point.coordinates[0]);
+		            });
+					//clearInterval(gmailCheckInterval);
+				}
+			}, 5000);
         </script>
 
         <h4><%= t('label.filter_by') %></h4>

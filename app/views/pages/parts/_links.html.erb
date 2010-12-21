@@ -4,8 +4,8 @@
     <b><%= t('label.pages') %> <%= @restaurant.author?(current_user) ?
         "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id))})" :
         '' %></b>
-    <%= link_to t('nav.news'), restaurant_messages_path(@restaurant) %> .
-    <%= link_to t('nav.food_menu'), restaurant_food_items_path(@restaurant) %> .
+    <%= link_to t('nav.news'), topic_messages_path(:topic_name => @topic.name.pluralize, :restaurant_id => @restaurant.id) %> .
+    <%= link_to t('nav.food_menu'), topic_items_path(:topic_name => @topic.name.pluralize, :restaurant_id => @restaurant) %> .
     
     <% if @page %>
       <%= link_to @restaurant.name, restaurant_long_url(@restaurant) %> .
@@ -28,8 +28,8 @@
   <div class='menu'>
     <b><%= t('label.pages') %> <%= @restaurant.author?(current_user) ?
         "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id))})" : '' %></b>
-    <%= link_to t('nav.news'), restaurant_messages_path(@restaurant) %> .
-    <%= link_to t('nav.food_menu'), restaurant_food_items_path(@restaurant) %>
+    <%= link_to t('nav.news'), topic_messages_path(:topic_name => @topic.name.pluralize, :restaurant_id => @restaurant.id) %> .
+    <%= link_to t('nav.food_menu'), topic_items_path(:topic_name => @topic.name.pluralize, :restaurant_id => @restaurant) %>
   </div>
   <div class='space_10'></div>
   <div class='break'></div>

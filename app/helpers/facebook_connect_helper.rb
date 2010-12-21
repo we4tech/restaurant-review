@@ -39,7 +39,7 @@ module FacebookConnectHelper
     end
 
     def build_fb_session
-      fb_cookie = cookies["#{FACEBOOK_CONNECT_COOKIE_PREFIX}#{Facebooker.api_key}"]
+      fb_cookie = cookies["#{FACEBOOK_CONNECT_COOKIE_PREFIX}#{@topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key}"]
       parsed = {}
 
       if fb_cookie && !fb_cookie.blank?

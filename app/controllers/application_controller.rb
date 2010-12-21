@@ -50,7 +50,11 @@ class ApplicationController < ActionController::Base
       if request && !options.include?(:subdomain)
         host_parts = request.host.split('.')
         if (host_parts.first || '').match(/^ajax\d+$/)
-          options[:subdomain] = @topic ? @topic.subdomain : nil
+          if @subdomain_routing_stop
+            options[:subdomain] = 'www'
+          else
+            options[:subdomain] = @topic ? @topic.subdomain : nil
+          end
         end
       end
 

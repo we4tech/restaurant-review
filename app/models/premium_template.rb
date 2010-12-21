@@ -46,7 +46,7 @@ class PremiumTemplate < ActiveRecord::Base
       return premium_template
     else
       PremiumTemplate.all(:conditions => 'hosts IS NOT NULL').each do |pt|
-        hosts = pt.hosts.split(',').collect(&:strip).compact
+        hosts = pt.hosts.split(/[,\s]+/).collect(&:strip).compact
         hosts.each do |pt_host|
           if pt_host.downcase == host
             @@premium_host_maps[host] = pt

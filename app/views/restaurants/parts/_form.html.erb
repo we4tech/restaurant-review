@@ -31,7 +31,7 @@
   new nicEditor({buttonList : ['bold','italic','underline','left','center','right','ol','ul','fontFormat','indent','outdent','link','unlink','image','upload','xhtml']}).panelInstance('restaurant_description');
 </script>
 
-<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= MAP_API_KEY %>&hl=en"></script>
+<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= @topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key %>&hl=en"></script>
 <script type="text/javascript">
   App.MapWidget.createMap($('#google_map_canvas'), function(pPlacemark) {
     $('#restaurant_address').val(pPlacemark.address);

@@ -150,8 +150,8 @@
       %>
 
       <select onchange="window.location='<%= current_url %>'.replace(/:V:/, this.value)">
-        <option value='en' <%= I18n.locale.to_s == 'en' ? 'selected="selected"' : '' %>>English</option>
-        <option value='bn' <%= I18n.locale.to_s == 'bn' ? 'selected="selected"' : '' %>>বাংলা</option>
+        <option value='<%= @topic.default? ? 'en' : "#{@topic.name}_en" %>' <%= I18n.locale.to_s.match(/en$/i) ? 'selected="selected"' : '' %>>English</option>
+        <option value='<%= @topic.default? ? 'bn' : "#{@topic.name}_bn" %>' <%= I18n.locale.to_s.match(/bn$/i) ? 'selected="selected"' : '' %>>বাংলা</option>
       </select>
     </span>
   </div>
@@ -160,7 +160,7 @@
 <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript">
-  FB.init({appId: '<%= Facebooker.api_key %>', status: true, cookie: true, xfbml: true});
+  FB.init({appId: '<%= @topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key %>', status: true, cookie: true, xfbml: true});
 
   <% if !logged_in? %>
     FB.Event.subscribe('auth.sessionChange', function(response) {

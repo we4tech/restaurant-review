@@ -34,7 +34,7 @@
           <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
               "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
               "sensor=false&markers=color:green|label:R|" +
-              "#{@restaurant.lat},#{@restaurant.lng}&key=#{MAP_API_KEY}&size="
+              "#{@restaurant.lat},#{@restaurant.lng}&key=#{@topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key}&size="
              details_link = "http://maps.google.com/maps?f=q&" +
                  "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
                  "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"

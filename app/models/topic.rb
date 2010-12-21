@@ -2,6 +2,7 @@ class Topic < ActiveRecord::Base
 
   CACHES = {}
   @@topic_caches = {}
+  @@topics_host_maps = {}
 
   serialize :site_labels
   serialize :modules
@@ -25,6 +26,8 @@ class Topic < ActiveRecord::Base
   
   @@per_page = 20
 
+  #
+  # Retrieve the default topic
   def self.default
     Topic.find_by_default(true)
   end
@@ -41,10 +44,60 @@ class Topic < ActiveRecord::Base
     caches["#{p_text}#{p_options[:group]}"]
   end
 
+  #
+  # Represent topic name into more subdomain computable name
+  # ie. convert "some_sub_domain" => "some.sub.domain"
   def subdomain
     self.name.gsub('_', '.')
   end
 
+  #
+  # Retrieve configuration for the specific +bind_column+
+  #
+  # Parameters -
+  #   +bind_column+ - this column must be database specific column
+  #                   which are mapped over topic module editor
+  def module_conf(bind_column)
+    (self.modules && self.modules.reject{|m| m['bind_column'] != bind_column} || []).first
+  end
+
+  #
+  # Determine the default host,
+  # right now the implementation is based on the +self.host_list+ array pop
+  def default_host
+    host_list.first
+  end
+
+  #
+  # To convert +self.hosts+ string into an array of hosts
+  # Space and Comma will be used for splitting host string
+  def host_list
+    return @host_list if defined?(@host_list)
+
+    if !self.hosts.blank?
+      @host_list = self.hosts.split(/[,\s]+/).compact
+    else
+      @host_list = []
+    end
+
+    @host_list
+  end
+
+  #
+  # Determine locale based on whether this topic is set as "default" or not.
+  # Because except all default topics we will be using +"topic.name"_en|bn+ format
+  def locale(locale)
+    if default?
+      locale.to_s
+    else
+      "#{self.name}_#{locale.to_s}"
+    end
+  end
+
+  #
+  # Retrieve topic of specified name
+  # +THIS METHOD handles with CACHED data+ due to overwhelmed use potential,
+  # we have used class variable to cache the list.
   def self.of(topic_name)
     topic_name.downcase!
     if (topic = @@topic_caches[topic_name])
@@ -52,6 +105,30 @@ class Topic < ActiveRecord::Base
     else
       populate_topic_caches
       @@topic_caches[topic_name]
+    end
+  end
+
+  #
+  # Retrieve the topic which matches with the specified +host+
+  def self.match_host(host)
+    host.downcase!
+    if topic = @@topics_host_maps[host]
+      return topic
+    else
+      Topic.all(:conditions => 'hosts IS NOT NULL').each do |t|
+        t.host_list.each do |pt_host|
+          pt_host.downcase!
+          if pt_host == host
+            @@topics_host_maps[host] = t
+            return t
+          elsif host.match(/#{pt_host}$/)
+            @@topics_host_maps[host] = t
+            return t
+          end
+        end
+      end
+
+      return nil
     end
   end
 

@@ -214,7 +214,8 @@ class FacebookConnectController < ApplicationController
   end
 
   def build_facebook_session
-    session = Facebooker::Session.create(Facebooker.api_key, Facebooker.secret_key)
+    session = Facebooker::Session.create(@topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key,
+                                         @topic.fb_connect_secret.blank? ? Facebooker.secret_key : @topic.fb_connect_secret)
     sid = current_user.facebook_sid
     uid = current_user.facebook_uid
     if sid.to_i > 0 && uid.to_i > 0
