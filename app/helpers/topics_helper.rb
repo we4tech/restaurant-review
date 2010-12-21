@@ -10,7 +10,7 @@ module TopicsHelper
     Topic.enabled.each do |topic|
       topic_host = root_url(:host => 'welltreat.us', :subdomain => topic.subdomain, :l => topic.locale(:en))
       if topic.default_host
-        topic_host = root_url(:host => topic.default_host, :l => topic.locale(:en))
+        topic_host = root_url(:host => topic.default_host, :subdomain => 'www', :l => topic.locale(:en))
       end
       html << "<option value='#{topic_host}' #{topic.id == @topic.id ? 'selected="selected"' : ''}>#{topic.label}</option>"
     end
