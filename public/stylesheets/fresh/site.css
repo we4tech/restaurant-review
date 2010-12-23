@@ -838,9 +838,7 @@ h1, h2, h3, h4, h5, h6 {
 .recommendRestaurants {
   margin: 10px 10px 20px 30px;
   padding-bottom: 10px;
-  font-size: 160%;
   border-bottom: 1px solid #ccc;
-  text-align: center;
 }
 
 .recommendRestaurants select, .recommendRestaurants input {
@@ -1187,13 +1185,13 @@ form .hints {
 }
 
 .bestForItem {
-  background: #FFFFFF url(/images/fresh/bet_for_item_bg.png) no-repeat;
+  border-bottom: 2px solid #CCCCCC;
   float: left;
   height: 100px;
   margin-bottom: 10px;
-  margin-right: 10px;
-  padding: 5px;
-  width: 320px;
+  margin-right: 5px;
+  padding: 0;
+  overflow-y:hidden;
 }
 
 .bestForItem small {
@@ -1207,14 +1205,14 @@ form .hints {
 
 .bestForItem .info {
   float: left;
-  width: 240px;
+  width: 200px;
 }
 
 .bestForBox .info .stat {
   font-size: 10px;
   font-weight: bolder;
   color: red;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .geoSearchFields {

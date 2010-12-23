@@ -108,7 +108,10 @@ class RestaurantsController < ApplicationController
     if @restaurant.premium?
       @premium_template = @restaurant.selected_premium_template
       @context = :home
-      pt_render_template 'layout'
+      respond_to do |format|
+        format.html { pt_render_template 'layout' }
+        format.mobile { render :text => 'Sorry, We don\'t have support for mobile view.'}
+      end
     else
       flash[:notice] = 'this is not a premium restaurant!'
       redirect_to root_url

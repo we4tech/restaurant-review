@@ -5,9 +5,16 @@
     <div class="highlight">
       <%= flash[:notice] || flash[:error] %>
     </div>
-  <% end %>  
+  <% end %>
 
   <% form_tag session_path do -%>
+    <% if defined?(@js_callback) %>
+      <input type="hidden" name="js_callback" value="<%= @js_callback %>"/>
+    <% end %>
+
+    <% if defined?(@page_reload_off) %>
+      <input type="hidden" name="page_reload_off" value="<%= @page_reload_off %>"/>
+    <% end %>
 
     <p><%= label_tag 'login', t('fields.login') %><br/>
       <%= text_field_tag 'login', @login %></p>

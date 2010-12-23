@@ -5,12 +5,16 @@ class SessionsController < ApplicationController
   
   # render new.rhtml
   def new
+    store_location
     render_view('sessions/new')
   end
 
   def create
     logout_keeping_session!
     user = User.authenticate(params[:login], params[:password])
+    @page_reload_off = "true" == params[:page_reload_off]
+    @js_callback = params[:js_callback]
+
     if user
       # Protects against session fixation attacks, causes request forgery
       # protection if user resubmits an earlier form using back

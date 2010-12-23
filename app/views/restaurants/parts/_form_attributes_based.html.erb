@@ -35,7 +35,7 @@
     <div class="grid_6">
       <div>
         <div id="google_map_canvas"
-             title="<%= "#{@restaurant.lat},#{@restaurant.lng}" %>"
+             title="<%= @restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982" %>"
              markerMessage="<h4>Where is your <%= @topic.name.humanize %>?</h4>"
              infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
              style="width: 300px; height: 300px"></div>

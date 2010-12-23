@@ -3,5 +3,11 @@
   $('#login_form').ajaxify({urlRef: false});
 <% else %>
   $('#login_form').html("<%= escape_javascript(flash[:notice]) %>");
-  window.location.reload();
+  <% if !@page_reload_off %>
+    window.location.reload();
+  <% end %>
+
+  if (pageCallback != undefined) {
+    pageCallback.call();
+  }
 <% end %>

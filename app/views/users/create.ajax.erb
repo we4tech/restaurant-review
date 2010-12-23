@@ -1,2 +1,6 @@
-$('#registration_form').html("<%= escape_javascript(t('notice.thanks_for_signing_in')) %>").scrollTo({top: 0}, 800);
+$('#registration_form').html("<%= escape_javascript(t('notice.thanks_for_signing_in')) %>");
 $('#siteTopLink').click();
+
+if (pageCallback != undefined) {
+  pageCallback.call();
+}

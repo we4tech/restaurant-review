@@ -14,17 +14,20 @@ class UsersController < ApplicationController
 
   # render new.rhtml
   def new
+    store_location
     @user = User.new
     render_view('users/new')
   end
  
   def create
     logout_keeping_session!
+    @js_callback = params[:js_callback]
     @user = User.new(params[:user])
     @user.register! if @user && @user.valid?
     success = @user && @user.valid?
     if success && @user.errors.empty?
       @user.activate!
+      self.current_user = @user
 
       respond_to do |format|
         format.html {

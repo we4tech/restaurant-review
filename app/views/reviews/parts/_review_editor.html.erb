@@ -5,9 +5,29 @@
 
 <% if logged_in? %>
   <%= render :partial => 'reviews/parts/form',
-               :locals => {:restaurant => restaurant,
-                           :attached_options => attached_options} %>
+             :locals => {:restaurant => restaurant,
+                         :attached_options => attached_options} %>
 <% else %>
   <%= t('label.login_required_to_review',
         :link => link_to(t('nav.login'), login_url, :class => 'login_button')) %>
+  <%= render :partial => 'reviews/parts/form',
+             :locals => {:restaurant => restaurant,
+                         :attached_options => attached_options} %>
+
+  <script type="text/javascript">
+    var mLoggedIn = false;
+
+    function pageCallback() {
+      mLoggedIn = true;
+      $('#new_review').submit();
+    }
+
+    $('#new_review').submit(function() {
+      if (!mLoggedIn) {
+        $('.login_button').click();
+        $('#login_form, #registration_form, .ui-dialog form').append('<input type="hidden" name="page_reload_off" value="true"/><input type="hidden" name="js_callback" value="processLoggedInSuccessful"/>');
+      }
+      return mLoggedIn;
+    });
+  </script>
 <% end %>
