@@ -836,7 +836,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .recommendRestaurants {
-  margin: 10px 10px 20px 30px;
+  margin: 10px 10px 5px 30px;
   padding-bottom: 10px;
   border-bottom: 1px solid #ccc;
 }
@@ -1230,4 +1230,9 @@ form .hints {
 
 #site_top_navigation .topicSelectionBox {
   width: 120px;
+}
+
+.add_block {
+  background: url("/images/fresh/ad_marker.png?d") no-repeat scroll 30px 0 transparent;
+  padding-top: 15px;
 }
