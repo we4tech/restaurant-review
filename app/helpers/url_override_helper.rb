@@ -5,8 +5,13 @@ module UrlOverrideHelper
   def user_long_url(p_options)
     if p_options.is_a?(User)
       user = p_options
-      user_long_route_url(:login => url_escape(user.login && !user.login.blank? ? user.login : 'fb_user'),
-                          :id => user.id)
+      # IMPORTANT: Empty login will lead to user_long_route instead topic preference
+      if @topic.user_subdomain? && !user.login.blank? && !user.login.match(/ajax|asset/i)
+        root_url :subdomain => user.domain_name
+      else
+        user_long_route_url(:login => url_escape(user.login && !user.login.blank? ? user.login : 'fb_user'),
+                            :id => user.id)
+      end
     else
       p_options[:login] = p_options[:login] && !p_options[:login].blank? ? p_options[:login] : 'fb_user'
       user_long_route_url(p_options)

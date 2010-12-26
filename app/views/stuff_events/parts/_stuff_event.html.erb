@@ -5,8 +5,7 @@
   <div class="small">
     <%= link_to image_tag(stuff_event.user.display_picture,
                           :width => '40px', :alt => 'N/A'),
-                user_long_url(:id => stuff_event.user.id,
-                              :login => stuff_event.user.login),
+                user_long_url(stuff_event.user),
                 :class => 'image_small' %>
   </div>
   <div class="grid_6">

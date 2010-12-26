@@ -69,7 +69,7 @@
   <% elsif options %>
     <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
     <div class='options_box'>
-      <input name='tag_search_keywords' class="tagSearchField"
+      <input name='tag_search_keywords' class="tagSearchField searchIcon"
              type="text" title="field_<%= field_name %>"
              value="Search tags..." />
       <% existing_value = @restaurant.send(field_name) || []  %>

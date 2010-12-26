@@ -8,14 +8,12 @@
         <% if review.user.image %>
           <%= link_to image_tag(review.user.image.public_filename(:very_small),
                                 :alt => 'n/a'),
-                      user_long_url(:id => review.user.id,
-                                    :login => review.user.login),
+                      user_long_url(review.user),
                       :class => 'image_small',
                       :title => "#{review.user.login}" %>
         <% else %>
           <%= link_to(image_tag('fresh/user.png'),
-                      user_long_url(:id => review.user.id,
-                                    :login => review.user.login),
+                      user_long_url(review.user),
                       :class => 'image_small') %>
         <% end %>
       </div>

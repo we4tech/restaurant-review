@@ -2,6 +2,7 @@
 class SessionsController < ApplicationController
 
   before_filter :log_new_feature_visiting_status
+  protect_from_forgery :except => :create
   
   # render new.rhtml
   def new

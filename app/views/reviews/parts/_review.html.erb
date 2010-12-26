@@ -10,8 +10,7 @@
   <<%= tag_name %> class='userImage'>
     <%= link_to image_tag(review.user.display_picture,
                           :width => '40px', :alt => 'DP'),
-                user_long_url(:id => review.user.id,
-                              :login => review.user.login),
+                user_long_url(review.user),
                 :class => 'image_small' %>
   </<%= tag_name %>>
   <<%= tag_name %> class="review <%= grid_class %> hreview">
@@ -34,8 +33,7 @@
 
     <% if !hide_footer %>
       <span class="reviewer">
-        <%= link_to review.user.login, user_long_url(
-            :id => review.user.id, :login => review.user.login) %>
+        <%= link_to review.user.login, user_long_url(review.user) %>
 
         <% if !hide_attachment && review.attached? %>
           <span class='attachedWith'>
@@ -77,8 +75,7 @@
               <span class='review_comment_author'>
                 <%= link_to "#{image_tag(comment.user.display_picture,
                                          :width => '40px', :alt => t('label.not_available'))} #{comment.user.login}",
-                            user_long_url(:login => comment.user.login,
-                                          :id => comment.user.id) %> -
+                            user_long_url(comment.user) %> -
               </span>
               <em><%= auto_link(h(comment.content)) %></em>
               <span class="date" title="<%= comment.updated_at.strftime('%d %b %Y') %>">

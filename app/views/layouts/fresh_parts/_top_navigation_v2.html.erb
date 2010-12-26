@@ -11,9 +11,10 @@
       <form action="<%= search_url %>" id="cse-search-box" style='display:inline;'>
         <input type="hidden" name="_models" value="Restaurant"/>
         <input type="text" id="searchField"
+               class='searchIcon'
                name="name|short_array|long_array|description[]"
                value="<%= @searched_tags ? @searched_tags.join(' ') : '' %>"
-               size="31"/>
+               size="20"/>
         <div class='geoSearchFields' id='geoSearchFields' style="display: none;">
           <div class='geoSearchPanel'>
             <div>
@@ -228,6 +229,7 @@
     });
 
     $('.register_button').click(function() {
+      $.getScript("<%= ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>");
       $('#registration_form').dialog({
         modal: true, title: "<%= t('layout.links.register') %>",
         width: 400

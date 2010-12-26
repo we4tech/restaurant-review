@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   # Be sure to include AuthenticationSystem in Application Controller instead
   include CacheHelper
   include AuthenticatedSystem
+  include UsersHelper
   include ApplicationHelper
   include UrlOverrideHelper
   include FacebookConnectHelper
@@ -55,6 +56,8 @@ class ApplicationController < ActionController::Base
           else
             options[:subdomain] = @topic ? @topic.subdomain : nil
           end
+        elsif @topic.user_subdomain?
+          options[:subdomain] = 'www'
         end
       end
 

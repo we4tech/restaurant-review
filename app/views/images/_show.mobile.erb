@@ -60,13 +60,11 @@
             <div class='avatar'>
               <%= link_to(image_tag(comment.user.display_picture,
                                     :height => '40px', :alt => 'n/a'),
-                          user_long_url(:id => comment.user.id, :login => comment.user.login),
+                          user_long_url(comment.user),
                           :title => "#{comment.user.login}") %>
             </div>
             <div class='content'>
-              <%= simple_format("#{link_to comment.user.login, user_long_url(
-                  :id => comment.user.id,
-                  :login => comment.user.login.parameterize)} #{auto_link(h(comment.content))}
+              <%= simple_format("#{link_to comment.user.login, user_long_url(comment.user)} #{auto_link(h(comment.content))}
                     <span class='date'>#{distance_of_time_in_words(Time.now, comment.created_at)} #{t('label.ago')}</span>") %>
 
               <% if @image.author?(current_user) %>

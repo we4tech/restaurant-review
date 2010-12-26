@@ -7,8 +7,7 @@
 <<%= tag_name %> valign='top'>
   <%= link_to image_tag(review.user.display_picture,
                         :width => '40px', :alt => 'DP'),
-              user_long_url(:id => review.user.id,
-                            :login => review.user.login),
+              user_long_url(review.user),
               :class => 'image_small' %>
 </<%= tag_name %>>
 <<%= tag_name %> class="review <%= grid_class %> hreview" valign='top'>
@@ -20,8 +19,7 @@
   <% end %>
 
   <span class="reviewer">
-    <%= link_to review.user.login, user_long_url(
-        :id => review.user.id, :login => review.user.login) %>
+    <%= link_to review.user.login, user_long_url(review.user) %>
     <% if review.loved? %>
       <%= tt('label.loved') %>
     <% elsif review.hated? %>
@@ -59,8 +57,7 @@
             <td>
               <%= link_to "#{image_tag(comment.user.display_picture,
                                        :width => '40px', :alt => t('label.not_available'))} <br/> #{comment.user.login}",
-                          user_long_url(:login => comment.user.login,
-                                        :id => comment.user.id) %>
+                          user_long_url(comment.user) %>
             </td>
             <td class='review_comment'>
               <em><%= auto_link(h(comment.content)) %></em>

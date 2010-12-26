@@ -24,7 +24,7 @@
         <%= link_to tt('layout.links.update_record'), update_your_record_url %> .
       <% end %>
       <%= render_activities_link %> .
-      <%= link_to tt('layout.links.my_page'), user_long_url(:login => current_user.login, :id => current_user.id) %> .
+      <%= link_to tt('layout.links.my_page'), user_long_url(current_user) %> .
       <%= link_to tt('layout.links.photos'), photos_url %> .
       <% if current_user.facebook_session_exists? %>
         <span class='facebook_connect_control'>

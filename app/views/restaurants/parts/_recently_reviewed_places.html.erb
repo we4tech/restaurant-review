@@ -7,8 +7,7 @@
       <div>
         <%= link_to image_tag(review.user.display_picture,
                               :width => '40px', :alt => 'n/a'),
-                    user_long_url(:login => review.user.login,
-                                  :id => review.user.id),
+                    user_long_url(review.user),
                     :class => 'image_small' %>
       </div>
 
@@ -19,8 +18,7 @@
 
         <span class="reviewer icon_<%= review.loved? ? 'loved' : '' %>">
           <%= link_to review.user.login,
-                      user_long_url(:login => review.user.login,
-                                    :id => review.user.id) %>
+                      user_long_url(review.user) %>
           <% if review.loved? %>
             <%= tt('label.loved') %>
           <% elsif review.hated? %>

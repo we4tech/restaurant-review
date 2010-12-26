@@ -127,8 +127,7 @@
       <div class="bookmark_tools">
         <%= distance_of_time_in_words(@restaurant.created_at, Time.now) %>
         <%= t('label.ago') %> <%= t('label.added_by') %>
-        <%= link_to @restaurant.user.login, user_long_url(
-            :id => @restaurant.user.id, :login => @restaurant.user.login) %>.
+        <%= link_to @restaurant.user.login, user_long_url(@restaurant.user) %>.
 
         <a class="addthis_button"
            href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech">

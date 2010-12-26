@@ -8,6 +8,11 @@
 <div class="clear"></div>
 <div class="space_5"></div>
 
+<%= f.label :user_subdomain, 'Enable user profile on subdomain ?', :class => 'grid_2' %>
+<%= f.check_box :user_subdomain %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
 <label class="grid_2">Topic name</label>
 <%= f.text_field :name %>
 <%= f.error_message_on :name %>

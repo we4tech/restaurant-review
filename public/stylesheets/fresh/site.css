@@ -1135,7 +1135,7 @@ form .hints {
   border-right: 0;
   font-size: 12px;
   display: inline;
-  margin: 0!important;
+  margin: 0 !important;
 }
 
 .bestForBox .bestForNav ul li:hover {
@@ -1191,7 +1191,7 @@ form .hints {
   margin-bottom: 10px;
   margin-right: 5px;
   padding: 0;
-  overflow-y:hidden;
+  overflow-y: hidden;
 }
 
 .bestForItem small {
@@ -1225,7 +1225,7 @@ form .hints {
 }
 
 #geoSearchMap {
-  color: #000;  
+  color: #000;
 }
 
 #site_top_navigation .topicSelectionBox {
@@ -1235,4 +1235,9 @@ form .hints {
 .add_block {
   background: url("/images/fresh/ad_marker.png?d") no-repeat scroll 30px 0 transparent;
   padding-top: 15px;
+}
+
+.searchIcon {
+  background: url("/images/fresh/search_icon.png") no-repeat scroll 2px 2px #FFFFFF;
+  padding: 2px 2px 2px 20px;
 }

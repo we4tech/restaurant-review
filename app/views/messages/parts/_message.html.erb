@@ -27,7 +27,7 @@
     <small class='small'>
       <%= t('label.message_meta_info', 
             :type => Message::type_label(object.type_id),
-            :link => link_to(object.user.login, user_long_url(:id => object.user.id, :login => object.user.login)),
+            :link => link_to(object.user.login, user_long_url(object.user)),
             :days => distance_of_time_in_words(object.created_at, Time.now))%>
       <% if object.author?(current_user) %>
         <div class='adminTools'>

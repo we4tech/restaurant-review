@@ -26,6 +26,14 @@ class Topic < ActiveRecord::Base
   
   @@per_page = 20
 
+  SUBDOMAIN_CONTENT_TYPE = {
+      'User profile page' => 1,
+      'Tag page' => 2,
+      'Restaurant page' => 3
+  }
+
+  # TODO: Setup domain matcher based on SUBDOMAIN content type configuration
+
   #
   # Retrieve the default topic
   def self.default
@@ -121,7 +129,7 @@ class Topic < ActiveRecord::Base
           if pt_host == host
             @@topics_host_maps[host] = t
             return t
-          elsif host.match(/#{pt_host}$/)
+          elsif host.match(/#{pt_host}$/) || pt_host.match(/#{host}/)
             @@topics_host_maps[host] = t
             return t
           end

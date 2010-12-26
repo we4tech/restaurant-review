@@ -63,8 +63,17 @@
               });
             }
           },
+          
           error: function(response) {
             alert("Error - " + response);
+
+            if (opts.autoButtonEnable) {
+              $form.find('.buttonSubmit').each(function() {
+                var $button = $(this);
+                $button.removeClass('loading');
+                $button.val($button.attr('title')).removeAttr('disabled');
+              });
+            }
           }});
       } catch (e) {
         alert(e);

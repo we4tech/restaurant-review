@@ -17,25 +17,21 @@
             <%= link_to image_tag(review.user.image.public_filename(:small),
                                   :height => '40px',
                                   :alt => 'n/a'),
-                        user_long_url(:id => review.user.id,
-                                      :login => review.user.login),
+                        user_long_url(review.user),
                         :title => "#{review.user.login}" %>
             <br/>
             <%= link_to review.user.login,
-                        user_long_url(:id => review.user.id,
-                                      :login => review.user.login) %>
+                        user_long_url(review.user) %>
           </td>
         <% else %>
           <td>
             <%= link_to image_tag('fresh/user.png',
                                   :alt => 'n/a'),
-                        user_long_url(:id => review.user.id,
-                                      :login => review.user.login),
+                        user_long_url(review.user),
                         :title => "#{review.user.login}" %>
             <br/>
             <%= link_to review.user.login,
-                        user_long_url(:id => review.user.id,
-                                      :login => review.user.login) %>
+                        user_long_url(review.user) %>
           </td>
         <% end %>
       </tr>

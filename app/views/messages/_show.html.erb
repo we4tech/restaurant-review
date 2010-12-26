@@ -19,7 +19,7 @@
 <small class='small'>
   <%= t('label.message_meta_info',
         :type => Message::type_label(@message.type_id),
-        :link => link_to(@message.user.login, user_long_url(:id => @message.user.id, :login => @message.user.login)),
+        :link => link_to(@message.user.login, user_long_url(@message.user)),
         :days => distance_of_time_in_words(@message.created_at, Time.now)) %>
   
   <% if @message.author?(current_user) %>

@@ -11,7 +11,7 @@
 
   <div class='mailContent'>
     <h1 style="margin: 0;">
-      Hi <%= link_to @review_comment.review.user.login.humanize, user_long_url(:login => url_escape(@review_comment.review.user.login), :id => @review_comment.review.user_id) %>
+      Hi <%= link_to @review_comment.review.user.login.humanize, user_long_url(@review_comment.review.user) %>
       ,
     </h1>
     <h4 style="margin: 0">

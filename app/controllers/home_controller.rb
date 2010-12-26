@@ -176,19 +176,20 @@ class HomeController < ApplicationController
    	query_map = {}
    	@tags = []
    	params.each do |k, v|
+   	  k = k.gsub(/[%25C7]+/, '|')
    	  if v && allowed_key?(k)
    		  query_map[k] = v 
    		
    		  if v.is_a?(Array)
    		    v.each{|vi| @tags << vi.downcase}
    		  elsif v.is_a?(Hash)
-  		    v.values.each{|vi| @tags << vi.downcase}
+   		    v.values.each{|vi| @tags << vi.downcase if vi}
    		  else
    		    @tags << v.downcase
    		  end
    	  end
    	end
-   	
+   	   	
    	# Determine location parameters
    	options = {}
    	

@@ -43,6 +43,8 @@ class User < ActiveRecord::Base
   FACEBOOK_CONNECT_ENABLED = 1
   FACEBOOK_CONNECT_DISABLED = 0
 
+  before_save :update_domain_name
+
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -72,6 +74,10 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
 
+  #
+  # Determine user display picture either from his uploaded one or from his facebook profile
+  # (if he has registered through facebook account)
+  # Otherwise return our default display picture
   def display_picture
     if self.image
       self.image.public_filename(:very_small)
@@ -82,14 +88,46 @@ class User < ActiveRecord::Base
     end
   end
 
+  #
+  # Strip all symbols, ie - _, -, @, . etc..
+  # Only characters are allowed.
+  def convert_to_subdomain
+    self.login.gsub(/\-/, '')
+  end
+
+  #
+  # Detect whether this account was auto created and thus set fake email id.
+  # we set fake email with "fake" prefix so it is quite easy to figure out
+  # the fake emails. thus system can force user to set the real email address.
   def fake_email?
     self.email.match(/^fake@/)
   end
 
+  #
+  # Return the state of whether this user has reviewed the specific restaurant or not
+  # Parameters
+  #   - restaurant  - restaurant object
+  #   - options     - optional parameters are in hash map
+  # Returns
+  #   - boolean true or false
   def reviewed?(restaurant, options = {})
     self.reviews.of_restaurant(restaurant, options).first
   end
 
+  #
+  # Find user by the given sub domain name, ie hasan.khadok.com
+  def self.by_domain_name(domain_name)
+    domain_name = domain_name.parameterize.to_s.gsub(/\-/, '')
+    self::find_by_domain_name(domain_name)
+  end
+
+  #
+  # Retrieve the top contributors from the participation on specific topic
+  # parameters -
+  #   - p_topic   - Topic object
+  #   - p_limit   - Number of rows to be returned
+  # returns -
+  #   - array of users
   def self.top_contributors(p_topic, p_limit = 10)
     User.find(
         :all,
@@ -102,6 +140,13 @@ class User < ActiveRecord::Base
     )
   end
 
+  #
+  # Retrieve the top reviewers based on their participation on specific topic
+  # parameters -
+  #   - p_topic     - Topic object
+  #   - p_limit     - Number of rows to be returned
+  # returns -
+  #   - array of users
   def self.top_reviewers(p_topic, p_limit = 10)
     User.find(
         :all,
@@ -114,6 +159,9 @@ class User < ActiveRecord::Base
     )
   end
 
+  #
+  # Register user by his facebook account,
+  # Retrieve facebook user profile information through graph api call
   def self.register_by_facebook_account(fb_session, fb_uid)
     api = FacebookGraphApi.new(fb_session.auth_token, fb_uid)
     user_attributes = api.find_user(fb_uid)
@@ -155,6 +203,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  #
+  # Update user with active facebook session
   def self.update_facebook_session(fb_uid, fb_session)
     existing_user = User.find_by_facebook_uid(fb_uid)
     existing_user.facebook_sid = fb_session.auth_token
@@ -162,6 +212,10 @@ class User < ActiveRecord::Base
   end
 
   private
+    def update_domain_name
+      self.domain_name = convert_to_subdomain
+    end
+
     def self.find_or_build_unique_user_name (name)
       name = CGI.escape(name.parameterize.to_s)
       if self.unique?(:login, name)

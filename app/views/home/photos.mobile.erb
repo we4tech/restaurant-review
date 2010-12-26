@@ -43,8 +43,7 @@
         <td class='info'>
           <% if stuff_event.event_type == StuffEvent::TYPE_CONTRIBUTED_IMAGE %>
             <%= link_to stuff_event.user.login,
-                        user_long_url(:id => stuff_event.user.id,
-                                      :login => stuff_event.user.login.parameterize) %>
+                        user_long_url(stuff_event.user) %>
             <%= t('label.contributed_to') %>
           <% else %>
             <%= t('label.attached_with') %>

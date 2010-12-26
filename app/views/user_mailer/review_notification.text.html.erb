@@ -10,8 +10,8 @@
   </div>
 
   <div class='mailContent'>
-    <h1 style="margin: 0;">Hi <%= link_to @review.restaurant.user.login.humanize, user_long_url(:login => url_escape(@review.restaurant.user.login), :id => @review.restaurant.user_id) %>,</h1>
-    <h4 style="margin: 0">"<%= link_to @review.user.login.humanize, user_long_url(:login => url_escape(@review.user.login), :id => @review.user_id) %>" just reviewed
+    <h1 style="margin: 0;">Hi <%= link_to @review.restaurant.user.login.humanize, user_long_url(@review.restaurant.user) %>,</h1>
+    <h4 style="margin: 0">"<%= link_to @review.user.login.humanize, user_long_url(@review.user) %>" just reviewed
       "<%= link_to @review.restaurant.name, restaurant_long_url(@review.restaurant) %>".</h4>
 
     <blockquote><%= h @review.comment %></blockquote>
