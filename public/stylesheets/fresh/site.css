@@ -194,9 +194,8 @@ h1, h2, h3, h4, h5, h6 {
 #site_bottom {
   background: #000 url(/images/fresh/gradient_white_black.png) repeat-x;
   color: #fff;
-  width: 98.6%;
+  width: 100%;
   margin-top: 30px;
-  padding: 10px;
   padding-bottom: 20px;
 }
 
@@ -1145,11 +1144,12 @@ form .hints {
 }
 
 .bestForBox .bestForContainer {
+  border: 1px solid #CCCCCC;
   clear: both;
   height: 376px;
   overflow-y: auto;
+  padding: 10px;
   z-index: 200;
-  margin-top: 20px;
 }
 
 .bestForBox .bestForContainer .site_list_item {
@@ -1192,6 +1192,7 @@ form .hints {
   margin-right: 5px;
   padding: 0;
   overflow-y: hidden;
+  
 }
 
 .bestForItem small {
@@ -1206,6 +1207,7 @@ form .hints {
 .bestForItem .info {
   float: left;
   width: 200px;
+  font-size: 12px;
 }
 
 .bestForBox .info .stat {
