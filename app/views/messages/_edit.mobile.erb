@@ -16,21 +16,21 @@
     <div class='space_10'></div>
   <% end %>
 
-  <% form_for Image.new, :html => {:multipart => true} do |f| %>
+  <% form_for MultiImage.new, :url => images_path, :html => {:method => :post, :multipart => true} do |f| %>
     <input type='hidden' name='fb_share_off' value='true'/>
     <input type='hidden' name='message_id' value="<%= @message.id %>"/>
 
     <table class='formTable highlight'>
       <tr>
-        <th><%= f.label :caption %></th>
+        <th><%= f.label :captions %></th>
         <th>Select file</th>
       </tr>
       <tr>
         <td>
-          <%= f.text_field :caption %>
+          <%= f.text_field :captions, :index => '' %>
         </td>
         <td>
-          <%= f.file_field :uploaded_data %>
+          <%= f.file_field :uploaded_datum, :index => '' %>
         </td>
       </tr>
       <tr>

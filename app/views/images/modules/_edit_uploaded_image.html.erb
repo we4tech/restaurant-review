@@ -1,17 +1,17 @@
 <div class='edit_module'>
   <h5>Edit banner image</h5>
-  <% form_for Image.new, :html => {:multipart => true} do |f| %>
+  <% form_for MultiImage.new, :url => images_path, :html => {:multipart => true, :method => :post} do |f| %>
     <input type="hidden" name="restaurant_id"
            value="<%= @restaurant.id %>"/>
 
-    <%= f.hidden_field :group,
+    <%= f.hidden_field :groups, :index => '',
                        :value => PremiumTemplate::GROUP_BANNER_IMAGE %>
     <input type='hidden' name='fb_share_off' value='true'/>
     <input type='hidden' name='return_to' value="<%= design_premium_template_url(@premium_template.id) %>"/>
     <input type='hidden' name='relate_through' value='related_image'/>
     <input type='hidden' name='override' value='true'/>
-    <%= f.file_field :uploaded_data %>
-    <%= f.text_field :caption %>
+    <%= f.file_field :uploaded_datum, :index => '' %>
+    <%= f.text_field :captions, :index => '' %>
     <%= f.submit t('button.upload') %>
   <% end %>
 

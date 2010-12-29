@@ -89,7 +89,11 @@
     </div>
     <div class="clear"></div>
 
-    <div id='imageUploader'></div>
+    <div id='imageUploader'>
+      <% if !@cached %>
+      	<%= render(:partial => 'contributed_images/parts/add') %>
+      <% end %>
+    </div>
 
     <%= render :partial => 'contributed_images/parts/image_gallery' %>
     <div class="clear space_10"></div>

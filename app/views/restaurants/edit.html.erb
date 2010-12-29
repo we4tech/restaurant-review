@@ -23,13 +23,21 @@
       <h3><%= t('subheader.upload_pictures')%></h3>
       <div class="break"></div>
       <div class="space_5 break"></div>
-      <% form_for Image.new, :html => {:multipart => true} do |f| %>
+      <% form_for MultiImage.new, :url => images_url, :html => {:method => :post, :multipart => true} do |f| %>
         <input type="hidden" name="restaurant_id" value="<%= @restaurant.id %>"/>
 
-        <%= f.file_field :uploaded_data %>
-        <%= f.text_field :caption %>
+        <div id="duplicable">
+          <div style='margin-bottom: 10px'>
+            <%= f.file_field :uploaded_datum, :index => '' %>
+            <%= f.text_field :captions, :index => '' %>
+          </div>
+        </div>
+
+        <div id='duplicatedItems'></div>
+        <input type="button" value="Add more" id="addMoreImage"/>
         <%= f.submit t('button.upload') %>
       <% end %>
+
       <div class="clear"></div>
       <div class="space_10"></div>
       <div class="break"></div>
@@ -86,4 +94,6 @@
     mFormContentChanged = false;
     return true;
   });
+
+  $('#addMoreImage').whenClicked({duplicate: $('#duplicable'), to: $('#duplicatedItems')});
 </script>

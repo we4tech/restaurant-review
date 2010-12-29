@@ -3,16 +3,17 @@ class ImagesController < ApplicationController
   before_filter :login_required, :except => [:show]
 
   def create
-    @image_file, @group = prepare_image_object
+    @multi_images = prepare_image_object
+    @group = @multi_images.group
 
-    if @image_file.save
+    if @multi_images.saved_all?
       class_name = determine_mapping_class_name
       cleanup_image_relation(class_name, @group)
       object_id, field_name, return_url = create_image_relation(class_name)
 
       flash[:notice] = 'Successfully added your image!'
       if params[:fb_share_off].nil? && current_user.share_on_facebook? && field_name == :restaurant_id
-        redirect_to facebook_publish_url('new_image', @image_file.id, :restaurant_id => object_id, :next_to => return_url)
+        redirect_to facebook_publish_url('new_image', @multi_images.images.first.id, :restaurant_id => object_id, :next_to => return_url)
       elsif return_url
         redirect_to return_url
       else
@@ -108,13 +109,15 @@ class ImagesController < ApplicationController
     def create_image_relation(class_name)
       object_id, field_name, return_url = determine_object_id_field_and_return_url
 
-      class_name.create({
-        :image_id => @image_file.id,
-        :model => Restaurant.name,
-        :topic_id => @topic.id,
-        :group => @group,
-        :user_id => current_user.id,
-      }.merge({field_name => object_id}))
+      @multi_images.each do |image|
+        class_name.create({
+          :image_id => image.id,
+          :model => Restaurant.name,
+          :topic_id => @topic.id,
+          :group => @group,
+          :user_id => current_user.id,
+        }.merge({field_name => object_id}))
+      end
 
       return object_id, field_name, return_url
     end
@@ -140,15 +143,11 @@ class ImagesController < ApplicationController
     end
 
     def prepare_image_object
-      group = nil
-      image_file = Image.new(params[:image])
-      image_file.user = current_user
-      image_file.topic_id = @topic.id
-      if params[:image]
-        group = params[:image][:group]
-      end
+      multi_images = MultiImage.new(params[:multi_image])
+      multi_images.user = current_user
+      multi_images.topic_id = @topic.id
 
-      return image_file, group
+      multi_images
     end
 
     def determine_object_id_field_and_return_url

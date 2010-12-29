@@ -24,7 +24,7 @@
   <div class='break'></div>
 <% end %>
 
-<% form_for Image.new, :html => {:multipart => true} do |f| %>
+<% form_for MultiImage.new, :url => images_path, :html => {:method => :post, :multipart => true} do |f| %>
   <input type='hidden' name='fb_share_off' value='true'/>
   <input type='hidden' name='return_to' value="<%= restaurant_food_items_path(@restaurant) %>" />
 
@@ -48,7 +48,7 @@
     </tr>
     <tr>
       <td>
-        <%= f.text_field :caption %>
+        <%= f.text_field :captions, :index => '' %>
       </td>
     </tr>
     <tr>
@@ -56,7 +56,7 @@
     </tr>
     <tr>
       <td>
-        <%= f.file_field :uploaded_data %>
+        <%= f.file_field :uploaded_datum, :index => '' %>
       </td>
     </tr>
     <tr>

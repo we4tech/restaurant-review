@@ -31,10 +31,10 @@
       <% end %>
     </div>
     <%= error_messages_for :image %>
-    <% form_for Image.new, :html => {:multipart => true} do |f| %>
+    <% form_for MultiImage.new, :url => images_url, :html => {:method => :post, :multipart => true} do |f| %>
       <input type="hidden" name="user_id" value="<%= current_user.id %>"/>
 
-      <%= f.file_field :uploaded_data %>
+      <%= f.file_field :uploaded_datum, :index => '' %>
       <%= f.submit t('button.upload') %>
     <% end %>
     <div class="clear"></div>

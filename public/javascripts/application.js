@@ -204,6 +204,31 @@
     }
 
     return mostRelevant;
+  },
+
+  /**
+   * Duplicate and append a specific element's internal HTML to the given element.
+   * Ie. if you have an image upload box and you want to add option for "add more" fields.
+   * this extension is right for you.
+   *
+   * @param options an JSON formatted object
+   *
+   * Allowed options -
+   *    duplicate:    - Set duplicable element - jquery object expected
+   *    to:           - Set duplicated elements container - jquery object expected
+   *
+   */
+  $.fn.whenClicked = function(options) {
+    var $duplicable = options['duplicate'];
+    var $container = options['to'];
+
+    if ($duplicable && $container) {
+      $(this).click(function() {
+        $container.append($duplicable.html());
+      })
+    } else {
+      alert('Invalid (whenClicked) usages, please use "duplicate" and "to" attributes');
+    }
   }
 
 
@@ -267,7 +292,7 @@ App.MapWidget = {
 
           setCenter();
         } catch ($e) {
-          alert("Error found while post configuring map - " + $e);
+          // alert("Error found while post configuring map - " + $e);
         }
       }
 
@@ -358,7 +383,7 @@ App.MapWidget = {
           map = new GMap2(document.getElementById($pMapWidgetElement.attr('id')));
           App.MapWidget.mInitiatedMaps[$pMapWidgetElement.attr('id')] = map;
         } catch ($e) {
-          alert("Failed to create map - " + $e);
+          // alert("Failed to create map - " + $e);
         }
       }
 

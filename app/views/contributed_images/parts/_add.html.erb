@@ -2,16 +2,28 @@
 <div class="space_10"></div>
 <div class="contributed_image_form">
   <h6><%= t('subheader.user_contributed_pictures') %></h6>
-  <% form_for Image.new, :html => {:multipart => true} do |f| %>
+  <% form_for MultiImage.new, :url => images_path, :html => {:multipart => true, :method => :post} do |f| %>
     <input type="hidden" name="restaurant_id" value="<%= @restaurant.id %>"/>
     <input type="hidden" name="return_to" value="<%= restaurant_url(@restaurant) %>">
 
-    <%= f.file_field :uploaded_data %>
+    <div id='duplicable'>
+      <div style="margin-bottom: 10px;">
+        <%= f.file_field :uploaded_datum, :index => '' %>
+        <% caption_default_text = t('label.image_caption') %>
+        <%= f.text_field :captions,
+                         :index => '',
+                         :onclick => "$(this).val() == '#{caption_default_text}' ? $(this).val('') : ''",
+                         :onblur => "$(this).val().length == 0 ? $(this).val('#{caption_default_text}') : ''" %>
+      </div>
+    </div>
 
-    <% caption_default_text = t('label.image_caption') %>
-    <%= f.text_field :caption,
-                     :onclick => "$(this).val() == '#{caption_default_text}' ? $(this).val('') : ''", 
-                     :onblur => "$(this).val().length == 0 ? $(this).val('#{caption_default_text}') : ''" %>
-    <%= f.submit t('button.upload') %>
+    <div id='duplicatedItemsContainer'></div>
+    <div class="buttons">
+      <input type='button' id="duplicableButton" value="Add more files"/><%= f.submit t('button.upload') %>
+    </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  $('#duplicableButton').whenClicked({duplicate: $('#duplicable'), to: $('#duplicatedItemsContainer')});
+</script>

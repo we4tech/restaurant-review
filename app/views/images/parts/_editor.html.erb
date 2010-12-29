@@ -30,35 +30,39 @@
   <div class='break'></div>
   <div class='space_10'></div>
 
-  <% form_for Image.new, :html => {:multipart => true, :title => 'Upload image'} do |f| %>
+  <% form_for MultiImage.new, :url => images_url, :html => {:multipart => true, :title => 'Upload image', :method => :post} do |f| %>
     <input type='hidden' name='fb_share_off' value='<%= fb_share ? true : false %>'/>
     <input type='hidden' name='return_to' value="<%= return_to %>"/>
     <input type='hidden' name='relate_through' value="<%= relate_through %>"/>
     <input type='hidden' name='<%= related_field.to_s %>' value="<%= @product.id %>"/>
 
-    <table class='formTable'>
-      <tr>
-        <th><%= t('label.caption') %></th>
-      </tr>
-      <tr>
-        <td>
-          <%= f.text_field :caption %>
-        </td>
-      </tr>
-      <tr>
-        <th><%= t('label.select_file') %></th>
-      </tr>
-      <tr>
-        <td>
-          <%= f.file_field :uploaded_data %>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <%= f.submit t('button.upload') %>
-        </td>
-      </tr>
-    </table>
+    <div id="duplicable">
+      <table class='formTable'>
+        <tr>
+          <th><%= t('label.caption') %></th>
+        </tr>
+        <tr>
+          <td>
+            <%= f.text_field :captions, :index => '' %>
+          </td>
+        </tr>
+        <tr>
+          <th><%= t('label.select_file') %></th>
+        </tr>
+        <tr>
+          <td>
+            <%= f.file_field :uploaded_datum, :index => '' %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= f.submit t('button.upload') %>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="container"></div>
   <% end %>
 </div>
 <div class='space_10'></div>
