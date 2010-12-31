@@ -141,11 +141,16 @@
           %>
 
           <div class="space_5"></div>
-          <%= link_to image_tag(map_url + "300x300"), "#{map_url}800x800",
-                      :class => 'openUpinLightBox',
+          <%= link_to image_tag(map_url + "300x300"), full_map_url(:rid => @restaurant.id),
+                      :class => 'xopenUpinLightBox',
                       :title => link_to(t('fields.map'), details_link) %>
         <% end %>
-        <address><%= @restaurant.address %></address>
+        <address>
+        	<%= @restaurant.address %>
+        	<% if @restaurant.located_in_map? %>
+        		<%= link_to '[Large map]', full_map_url(:rid => @restaurant.id) %>
+        	<% end %>
+        </address>
       </div>
     <% end %>
     <div class="clear"></div>

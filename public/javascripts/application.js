@@ -36,6 +36,89 @@
     return App.MapWidget.mInitiatedMaps[this.attr('id')];
   },
 
+  $.fn.markerManager = null,
+  $.fn.markersInfo = {},
+
+  $.fn.storeMarkerInfo = function(markerInfo) {
+    this.markersInfo[markerInfo.name] = markerInfo;
+  },
+      
+  $.fn.getMarkerInfo = function(marker) {
+    return this.markersInfo[marker.getTitle()];
+  },
+
+  $.fn.mapBuildMarker = function(markerInfo, options) {
+    this.storeMarkerInfo(markerInfo);
+
+    var position = new GLatLng(markerInfo.lat, markerInfo.lng);
+    var markerIcon = new GIcon();
+
+    markerIcon.image = markerInfo.marker_icon;
+    markerIcon.shadow = markerIcon.marker_icon_shadow;
+    markerIcon.iconSize = new GSize(32, 32);
+    markerIcon.shadowSize = new GSize(59, 32);
+    markerIcon.iconAnchor = new GPoint(5, 32);
+
+    var clickCallback = options['onclick'];
+
+    var marker = new GMarker(position, {
+      title: markerInfo.name + " (" + markerInfo.reviews_count + ' reviews, ' + markerInfo.reviews_loved + ' loves' + ')',
+      icon: markerIcon
+    });
+
+    if (clickCallback) {
+      GEvent.addListener(marker, 'click', function() {
+        clickCallback(marker, markerInfo);
+      });
+    }
+    return marker;
+  },
+
+  /**
+   * Add marker for the specific map instance
+   */
+  $.fn.mapAddMarkers = function(markers) {
+    var $this = $(this);
+    var map = $this.mapInstance();
+
+    for (var i = 0; i < markers.length; i++) {
+      map.addOverlay(markers[i]);
+    }
+
+  },
+
+  $.executeLater = function(callback, duration) {
+    duration = duration ? duration : 5000;
+    setTimeout(callback, duration);
+  },
+
+  $.fn.loadNearbyRestaurants = function(pSearchUrl, pHiddenDialogContent, clear) {
+    var $this = this;
+    $.getJSON(pSearchUrl, function(data){
+      if (data) {
+        $.executeLater(function() {
+          if (clear) {
+            $this.mapInstance().clearOverlays();
+          }
+          var markers = [];
+
+          for (var i = 0; i < data.length; i++) {
+            markers.push($this.mapBuildMarker(data[i], {
+              onclick: function(marker, markerInfo) {
+                pHiddenDialogContent.html(markerInfo.marker_html).dialog({
+                  'title': markerInfo.name + " (" + markerInfo.reviews_count + ' reviews, ' + markerInfo.reviews_loved + ' loves' + ')',
+                  'width': '600px',
+                  'modal': true,
+                  'closeOnEscape': true})
+              }}));
+          }
+
+          $this.mapAddMarkers(markers);
+        }, 1000);
+      }
+    });
+  },
+
 //  #
 //  # == What is Levenshtein Distance?
 //  # Taken from - http://www.merriampark.com/ld.htm
@@ -253,7 +336,8 @@ App.MapWidget = {
         'infoWindowMessagePrefix': "Restaurant is located @",
         'mapWidth': '520px',
         'mapHeight': '300px',
-        'title': '23.7230556,90.4086111'
+        'title': '23.7230556,90.4086111',
+        'mapReadOnly': 'false'
       };
 
       /**
@@ -262,7 +346,7 @@ App.MapWidget = {
       function preConfigureMap() {
         mapOptions = $pMapWidgetElement.extractOptions(
             ['markerMessage', 'infoWindowMessagePrefix',
-             'mapWidth', 'mapHeight', 'title'], mapOptions);
+             'mapWidth', 'mapHeight', 'title', 'mapReadOnly'], mapOptions);
 
         $pMapWidgetElement.css({
           'width': mapOptions['mapWidth'],
@@ -302,45 +386,22 @@ App.MapWidget = {
        * Setup a draggable marker to point to the specific location
        */
       function setupDraggableMarker() {
-        marker = new GMarker(center, {draggable: true});
-        map.addOverlay(marker);
+        var markerOptions = {};
+        if (mapOptions['mapReadOnly'] == 'false') {
+          markerOptions['draggable'] = true;
+        }
+
+        marker = new GMarker(center, markerOptions);
         marker.openInfoWindowHtml(mapOptions['markerMessage']);
+        map.addOverlay(marker);
 
-        GEvent.addListener(marker, "dragstart", function() {
-          map.closeInfoWindow();
-        });
-
-        GEvent.addListener(marker, "dragend", function() {
-          var place = marker.getLatLng();
-          var address = null;
-          marker.openInfoWindowHtml("Retrieving address...");
-          if (App.MapWidget.mGeoCoder == null) {
-            App.MapWidget.mGeoCoder = new GClientGeocoder();
-          }
-
-          App.MapWidget.mGeoCoder.getLocations(place, function(response) {
-            if (response || response.Status.code == 200) {
-              var placemark = response.Placemark[0];
-              marker.openInfoWindowHtml(mapOptions['infoWindowMessagePrefix'] + placemark.address);
-              pCallback(placemark);
-            }
+        if (mapOptions['mapReadOnly'] == 'false') {
+          GEvent.addListener(marker, "dragstart", function() {
+            map.closeInfoWindow();
           });
-        });
 
-
-      }
-
-      /**
-       * If any marker is placed on the map notify the callback closure
-       */
-      function addEventForAnyMarkerPlacement() {
-        GEvent.addListener(map, 'addoverlay', function(pOverlay) {
-          if (pOverlay instanceof GMarker) {
-            var place = pOverlay.getLatLng();
-            marker.setLatLng(place);
-
-            pOverlay.closeInfoWindow();
-
+          GEvent.addListener(marker, "dragend", function() {
+            var place = marker.getLatLng();
             var address = null;
             marker.openInfoWindowHtml("Retrieving address...");
             if (App.MapWidget.mGeoCoder == null) {
@@ -351,11 +412,45 @@ App.MapWidget = {
               if (response || response.Status.code == 200) {
                 var placemark = response.Placemark[0];
                 marker.openInfoWindowHtml(mapOptions['infoWindowMessagePrefix'] + placemark.address);
-                pCallback(placemark);
+                if (pCallback) {
+                  pCallback(placemark);
+                }
               }
             });
-          }
-        });
+          });
+        }
+      }
+
+      /**
+       * If any marker is placed on the map notify the callback closure
+       */
+      function addEventForAnyMarkerPlacement() {
+        if (mapOptions['mapReadOnly'] == 'false') {
+          GEvent.addListener(map, 'addoverlay', function(pOverlay) {
+            if (pOverlay instanceof GMarker) {
+              var place = pOverlay.getLatLng();
+              marker.setLatLng(place);
+
+              pOverlay.closeInfoWindow();
+
+              var address = null;
+              marker.openInfoWindowHtml("Retrieving address...");
+              if (App.MapWidget.mGeoCoder == null) {
+                App.MapWidget.mGeoCoder = new GClientGeocoder();
+              }
+
+              App.MapWidget.mGeoCoder.getLocations(place, function(response) {
+                if (response || response.Status.code == 200) {
+                  var placemark = response.Placemark[0];
+                  marker.openInfoWindowHtml(mapOptions['infoWindowMessagePrefix'] + placemark.address);
+                  if (pCallback) {
+                    pCallback(placemark);
+                  }
+                }
+              });
+            }
+          });
+        }
       }
 
       /**

@@ -77,8 +77,8 @@ index
   html_index_attrs =
   
   # Enable these if you need wildcard searching. They will slow down indexing significantly.
-  #   min_infix_len = 1    
-  #   enable_star = 1 
+  min_infix_len = 1
+  enable_star = 1
 
   # # URL search options
   # # add " @, /, :," before " a-z," in the charset_table and uncomment prefix_fields

@@ -5,7 +5,7 @@
   <ul>
     <% topics.each do |topic| %>
       <li>
-        <%= link_to topic.name.humanize.pluralize, root_url(:subdomain => topic.name.gsub('_', '.')) %>
+        <%= link_to topic.name.humanize.pluralize, topic_public_host(topic) %>
       </li>
     <% end %>
   </ul>

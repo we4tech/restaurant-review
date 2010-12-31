@@ -5,6 +5,7 @@
    hide_attachment = hide_attachment || false
    hide_footer = hide_footer || false
    length = length || false
+   only_html = only_html || false
 %>
 <div class='reviewContainer' id='review-<%= review.id %>'>
   <<%= tag_name %> class='userImage'>
@@ -53,7 +54,8 @@
       <span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">
         <%= t('label.updated') %> <%= distance_of_time_in_words(review.updated_at, Time.now) %> <%= t('label.ago') %>.
         <span id='review_<%= review.id %>_tools' style="display: <%= @cached ? 'none' : 'inline' %>">
-          <%= render :partial => 'reviews/parts/tools', :locals => {:review => review} %>
+          <%= render :partial => "reviews/parts/tools#{only_html ? '.html.erb' : ''}",
+                     :locals => {:review => review, :only_html => only_html} %>
         </span>
         <% if hide_comment && review.review_comments.count > 0 %>
           <a href='javascript:void(0)'><%= t('nav.show_comments') %></a>
@@ -65,7 +67,8 @@
       <div class="clear"></div>
       <div class="space_10"></div>
 
-      <%= render :partial => 'review_comments/parts/review_comment_form', :locals => {:review => review} %>
+      <%= render :partial => "review_comments/parts/review_comment_form#{only_html ? '.html.erb' : ''}",
+                 :locals => {:review => review, :only_html => only_html} %>
 
       <% comments = review.review_comments %>
       <% if !comments.empty? %>

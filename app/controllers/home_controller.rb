@@ -176,12 +176,13 @@ class HomeController < ApplicationController
    	query_map = {}
    	@tags = []
    	params.each do |k, v|
+   	  v = v.collect{|mv| mv if !mv.blank?}.compact if v.is_a?(Array)
    	  k = k.gsub(/[%25C7]+/, '|')
-   	  if v && allowed_key?(k)
+   	  if !v.blank? && allowed_key?(k)
    		  query_map[k] = v 
    		
    		  if v.is_a?(Array)
-   		    v.each{|vi| @tags << vi.downcase}
+   		    v.each{|vi| @tags << vi.downcase if !vi.blank?}
    		  elsif v.is_a?(Hash)
    		    v.values.each{|vi| @tags << vi.downcase if vi}
    		  else
@@ -219,6 +220,20 @@ class HomeController < ApplicationController
       format.html { render :action => :recommend }
       format.mobile { render :action => :recommend }
       format.ajax { render :action => :recommend, :layout => false }
+      format.json { 
+      	options = {}
+      	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]
+      	@display_last_review = true
+      	render :json => @restaurants.collect{|r| {
+      		:id => r.id, :address => r.address, 
+      		:lat => r.lat, :lng => r.lng, 
+      		:name => r.name, :reviews_count => r.reviews.count,
+      		:reviews_loved => r.reviews.loved.count, :reviews_hated => r.reviews.hated.count,
+      		:marker_icon => 'http://maps.google.com/mapfiles/kml/pal2/icon40.png',
+      		:marker_icon_shadow => 'http://maps.google.com/mapfiles/kml/pal2/icon40s.png',
+      		:marker_html => render_to_string(:partial => 'restaurants/parts/restaurant.html.erb', :locals => {:restaurant => r, :only_html => true}),
+      		:url => restaurant_long_url(r)}}.to_json
+      }
       format.xml { 
       	options = {}
       	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]

@@ -43,6 +43,9 @@
         <br/>
         <b><%= tt('fields.address') %>:</b>
         <%= restaurant.address %>
+        <% if restaurant.lat.to_i > 0 && restaurant.lng.to_i > 0 %>
+          <%= link_to '[Map]', full_map_url(:rid => restaurant.id) %>
+        <% end %>
       <% end %>
     </div>
 
@@ -66,7 +69,7 @@
                        :locals => {:review => last_review, :tag_name => 'span', :grid_class => ''} %>
           <% else %>
             <%= render :partial => 'reviews/parts/review.html.erb',
-                       :locals => {:review => last_review, :tag_name => 'span', :grid_class => ''} %>
+                       :locals => {:review => last_review, :tag_name => 'span', :grid_class => '', :only_html => true} %>
           <% end %>
           <div class="clear"></div>
           <div class="space_5"></div>

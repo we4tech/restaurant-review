@@ -7,13 +7,15 @@ class MultiImage
   def initialize(images = [])
     @images = []
     (images || []).each do |image_attributes|
-      @images << Image.new(
-          :caption => image_attributes[:captions],
-          :uploaded_data => image_attributes[:uploaded_datum],
-          :group => image_attributes[:groups],
-          :description => image_attributes[:descriptions],
-          :link => image_attributes[:links]
-      )
+      if image_attributes[:uploaded_datum]
+        @images << Image.new(
+            :caption => image_attributes[:captions],
+            :uploaded_data => image_attributes[:uploaded_datum],
+            :group => image_attributes[:groups],
+            :description => image_attributes[:descriptions],
+            :link => image_attributes[:links]
+        )
+      end
     end
 
   end

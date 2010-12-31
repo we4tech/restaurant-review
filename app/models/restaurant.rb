@@ -58,6 +58,10 @@ class Restaurant < ActiveRecord::Base
     self.premium_templates.published.first || self.premium_templates.first
   end
 
+  def located_in_map?
+    lat.to_i > 0 && lng.to_i > 0
+  end
+
   #
   # Retrieve most loved restaurants based on the highest number of 'loved' rate
   # Use +p_limit+ option to limit the row set.

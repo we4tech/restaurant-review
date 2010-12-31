@@ -138,6 +138,9 @@ ActionController::Routing::Routes.draw do |map|
   # Feeds related routing
   map.feed_reviews '/feeds/recent_reviews.:format', :controller => 'feeds', :action => 'reviews'
 
+  # Full map
+  map.full_map '/full_map', :controller => 'map', :action => 'full_view'
+
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
