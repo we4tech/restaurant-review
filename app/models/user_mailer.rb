@@ -107,7 +107,7 @@ class UserMailer < ActionMailer::Base
       end
 
       @from        = "Notification <support@welltreat.us>"
-      @subject     = "[#{topic ? topic.subdomain : 'www'}.welltreat.us] "
+      @subject     = "[#{topic.public_host}] "
       @sent_on     = Time.now
       @body[:user] = user
     end

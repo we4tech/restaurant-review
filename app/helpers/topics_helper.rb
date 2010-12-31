@@ -8,12 +8,7 @@ module TopicsHelper
   #
   # Determine public host based on default host name and other attributes
   def topic_public_host(topic)
-    topic_host = root_url(:host => 'welltreat.us', :subdomain => topic.subdomain, :l => topic.locale(:en))
-    if topic.default_host
-      topic_host = root_url(:host => topic.default_host, :subdomain => 'www', :l => topic.locale(:en))
-    end
-
-    topic_host
+    root_url(topic.public_host_config)
   end
 
   def render_topics_selection_box(options = {})

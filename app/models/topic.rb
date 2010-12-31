@@ -103,6 +103,27 @@ class Topic < ActiveRecord::Base
   end
 
   #
+  # Determine public host based on if host is defined otherwise standard host with topic.subdomain
+  def public_host_config
+    config = {:host => 'welltreat.us', :subdomain => subdomain, :l => locale(:en)}
+    if default_host
+      config = {:host => default_host, :subdomain => 'www', :l => locale(:en)}
+    end
+
+    config
+  end
+
+  def public_host
+    config = public_host_config
+    "#{config[:subdomain]}.#{config[:host]}"
+  end
+
+  def public_url(secure = false)
+    config = public_host_config
+    "http#{secure ? 's' : ''}://#{config[:subdomain]}.#{config[:host]}?l=#{config[:l]}"
+  end
+
+  #
   # Retrieve topic of specified name
   # +THIS METHOD handles with CACHED data+ due to overwhelmed use potential,
   # we have used class variable to cache the list.

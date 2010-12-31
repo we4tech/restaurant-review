@@ -29,7 +29,7 @@
               </div>
             <% end %>
             <div class='info'>
-              <strong><%= link_to truncate(restaurant.name, 25),
+              <strong><%= link_to truncate(restaurant.name, :length => 25),
                                   restaurant_long_url(restaurant),
                                   :title => restaurant.name %></strong><br/>
               <div class='stat'>
