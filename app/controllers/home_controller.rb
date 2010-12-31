@@ -190,7 +190,7 @@ class HomeController < ApplicationController
    		  end
    	  end
    	end
-   	   	
+   	
    	# Determine location parameters
    	options = {}
    	

@@ -77,27 +77,61 @@ module RestaurantsHelper
   def render_related_restaurants(per_page = 5)
     long_array = (@restaurant.long_array || []).collect(&:downcase)
     short_array = (@restaurant.short_array || []).collect(&:downcase)
-    cuisin_tags = TagGroup::separate_tags(:cuisins, long_array)
-    long_array = long_array - cuisin_tags
+    cuisine_tags = TagGroup::separate_tags(:cuisins, long_array)
+    long_array = long_array - cuisine_tags
     
     long_array_length = long_array.length - 1 > 0 ? long_array.length - 1 : 1
     short_array_length = 1
     
     
-    # first search with strict location and cusinis 
-    restaurants = perform_search([:Restaurant], (%{@short_array #{short_array.join('|')} @long_array #{cuisin_tags.join('|')} @name -(#{@restaurant.name})}), {:per_page => per_page, :page => 1})
+    # first search with strict location and cuisines
+    queries = []
+    # %{#{short_array.empty? ? '' : '@short_array '}#{short_array.join('|')} #{cuisine_tags.empty? ? '' : '@long_array '}#{cuisine_tags.join('|')} }.strip
+    if !short_array.empty?
+      queries << "@short_array #{short_array.join('|')}"
+    end
+
+    if !cuisine_tags.empty?
+      queries << "@long_array #{cuisine_tags.join('|')}"
+    end
+
+    queries << "@name -(#{@restaurant.name})"
+
+    restaurants = perform_search([:Restaurant], (queries.join(' ')), {:per_page => per_page, :page => 1})
     
     # second find without location filter
     if restaurants.empty? || restaurants.length < per_page
-      more_restaurants = perform_search([:Restaurant], (%{@long_array #{cuisin_tags.join('|')} @name -(#{@restaurant.name})}), {:per_page => per_page, :page => 1})
+      queries = []
+      # %{@long_array #{cuisine_tags.join('|')} @name -(#{@restaurant.name})}
+      if !cuisine_tags.empty?
+        queries << "@long_array #{cuisine_tags.join('|')}"
+      end
+
+      queries << "@name -(#{@restaurant.name})"
+
+      more_restaurants = perform_search([:Restaurant], (queries.join(' ')), {:per_page => per_page, :page => 1})
       more_restaurants.each do |r|
         restaurants << r
       end
     end
     
     if restaurants.empty? || restaurants.length < per_page
+      queries = []
+      # %{@long_array "#{cuisine_tags.join(' ')} #{long_array.join(' ')}"/1 @name -(#{@restaurant.name})}
+      if !cuisine_tags.empty?
+        queries << "@long_array \"#{cuisine_tags.join('|')}"
+      else
+        queries << "@long_array \""
+      end
+
+      if !long_array.empty?
+        queries << "#{long_array.join(' ')}\"/1"
+      end
+      
+      queries << "@name -(#{@restaurant.name})"
+
       restaurant_ids = restaurants.collect(&:id)
-      more_restaurants = perform_search([:Restaurant], (%{@long_array "#{cuisin_tags.join(' ')} #{long_array.join(' ')}"/1 @name -(#{@restaurant.name})}), {:per_page => 10, :page => 1})
+      more_restaurants = perform_search([:Restaurant], (queries.join(' ')), {:per_page => 10, :page => 1})
       more_restaurants.each do |r|
       	if !restaurant_ids.include?(r.id)
       	  restaurants << r
