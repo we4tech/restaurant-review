@@ -14,7 +14,9 @@ class Tag < ActiveRecord::Base
   after_destroy { TagGroup::update_caches! }
 
   default_scope :order => 'name ASC'
-  named_scope :featurable, lambda { |topic_id| {:conditions => {:feature_enlist => true, :topic_id => topic_id}} }
+  named_scope :featurable, lambda { |topic_id| {
+      :conditions => {:feature_enlist => true,
+                      :topic_id => topic_id}} }
 
   def cloud_size(factor, max_hit_count, min_hit_count)
     if tag_mappings_count > min_hit_count

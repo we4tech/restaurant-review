@@ -56,9 +56,7 @@ module RestaurantsHelper
     field = @topic.form_attribute.fields.reject{|h| h if h['field'] != bind_column}
     tag_names = field.first ? (field.first['default_value'] || '').split('|') : []
 
-    tags = Tag.all(:conditions => {
-        :name => tag_names,
-        :topic_id => @topic.id })
+    tags = Tag.all(:conditions => {:name => tag_names, :topic_id => @topic.id })
     
     render :partial => 'restaurants/parts/tagcloud', :locals => {
         :config => p_config,
@@ -75,9 +73,9 @@ module RestaurantsHelper
   end
   
   def render_related_restaurants(per_page = 5)
-    long_array = (@restaurant.long_array || []).collect(&:downcase)
-    short_array = (@restaurant.short_array || []).collect(&:downcase)
-    cuisine_tags = TagGroup::separate_tags(:cuisins, long_array)
+    long_array = (@restaurant.long_array || []).collect{|l| l.downcase.sphinxify}
+    short_array = (@restaurant.short_array || []).collect{|s| s.downcase.sphinxify}
+    cuisine_tags = TagGroup::separate_tags(:cuisins, long_array).collect(&:sphinxify)
     long_array = long_array - cuisine_tags
     
     long_array_length = long_array.length - 1 > 0 ? long_array.length - 1 : 1
@@ -95,9 +93,10 @@ module RestaurantsHelper
       queries << "@long_array #{cuisine_tags.join('|')}"
     end
 
-    queries << "@name -(#{@restaurant.name})"
+    queries << "@name -(#{@restaurant.name.sphinxify})"
 
     restaurants = perform_search([:Restaurant], (queries.join(' ')), {:per_page => per_page, :page => 1})
+    restaurants.uniq!
     
     # second find without location filter
     if restaurants.empty? || restaurants.length < per_page
@@ -107,9 +106,10 @@ module RestaurantsHelper
         queries << "@long_array #{cuisine_tags.join('|')}"
       end
 
-      queries << "@name -(#{@restaurant.name})"
+      queries << "@name -(#{@restaurant.name.sphinxify})"
 
       more_restaurants = perform_search([:Restaurant], (queries.join(' ')), {:per_page => per_page, :page => 1})
+      more_restaurants.uniq!
       more_restaurants.each do |r|
         restaurants << r
       end
@@ -128,17 +128,19 @@ module RestaurantsHelper
         queries << "#{long_array.join(' ')}\"/1"
       end
       
-      queries << "@name -(#{@restaurant.name})"
+      queries << "@name -(#{@restaurant.name.sphinxify})"
 
       restaurant_ids = restaurants.collect(&:id)
       more_restaurants = perform_search([:Restaurant], (queries.join(' ')), {:per_page => 10, :page => 1})
+      more_restaurants.uniq!
       more_restaurants.each do |r|
       	if !restaurant_ids.include?(r.id)
       	  restaurants << r
       	end
       end      
     end  
-    
+
+    restaurants.uniq!
     restaurants = restaurants[0..per_page]  
   	
   	if !restaurants.empty?

@@ -63,7 +63,12 @@
         <%= link_to tt('layout.links.update_record'), update_your_record_url %>
         |
       <% end %>
-      <%= render_activities_link %> |
+      <%= render_activities_link %>
+      <div id="activities_submenu" class="topMenuSub" style="display: none; position: absolute;width: 300px; height:500px; overflow-y: scroll;">
+        <ul>
+          <li>Loading...</li>
+        </ul>
+      </div> |
       <%= link_to tt('layout.links.photos'), photos_url %> |
       <a href='javascript:void(0)' class='submenu' rev='#submenu'><%= tt('layout.links.my_page') %></a>
       
@@ -245,6 +250,13 @@
     if ($field.attr('name') == 'authenticity_token') {
       $field.val("<%= form_authenticity_token %>");
     }
-  })
+  });
+
+  $('#activities_link').click(function() {
+    $.get("<%= updates_url(:format => :ajax) %>", function(data) {
+      $('#activities_submenu').html(data);
+    });
+    return false;
+  });
 </script>
 

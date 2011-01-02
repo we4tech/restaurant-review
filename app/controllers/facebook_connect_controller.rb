@@ -30,6 +30,9 @@ class FacebookConnectController < ApplicationController
           when 'new_review'
             review = Review.find(params[:id].to_i)
             status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
+          when 'shared_review'
+            review = Review.find(params[:id].to_i)
+            status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review, true)
           when 'updated_review'
             review = Review.find(params[:id].to_i)
             status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
@@ -66,7 +69,7 @@ class FacebookConnectController < ApplicationController
   end
 
   private
-  def publish_story_of_review(p_bundle_id, p_facebook_session, p_review)
+  def publish_story_of_review(p_bundle_id, p_facebook_session, p_review, shared = false)
     restaurant = p_review.reload.restaurant
     link = restaurant_long_route_url(
         :topic_name => p_review.topic.subdomain,
@@ -93,14 +96,22 @@ class FacebookConnectController < ApplicationController
     FacebookerPublisher::deliver_publish_stream(
         user, user, {
             :attachment => {
-                :name => "#{restaurant_review(p_review)} '#{restaurant.name}'",
+                :name => "#{restaurant_review_title(p_review, shared)} '#{restaurant.name}'",
                 :href => link,
                 :caption => restaurant_review_stat(p_review),
-                :description => remove_html_entities(p_review.comment),
+                :description => remove_html_entities(restaurant_review_content(p_review, shared)),
                 :media => attached_images},
             :action_links => {
                 'text' => 'add your review!',
                 'href' => link}});
+  end
+
+  def restaurant_review_content(review, shared = false)
+    if !shared
+      "#{review.comment}"
+    else
+      "Reviewed by #{review.user.login}: #{review.comment}"
+    end
   end
 
   def publish_story_of_photo_comment(facebook_session, photo_comment)

@@ -31,6 +31,12 @@
         var method = $form.attr('method') || 'GET';
 
         if (opts.format) {
+          // Replace extension
+          if (url.indexOf('.html') != -1) {
+            url = url.replace(/\.html/, '.' + opts.format);  
+          }
+
+          // Add parameter
           if (url.indexOf('?') == -1) {
             url += '?format=' + opts.format;
           } else {

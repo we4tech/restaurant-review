@@ -27,12 +27,19 @@ class StuffEventsController < ApplicationController
         :order => 'created_at DESC',
         :page => params[:page])
 
-    load_module_preferences
-    @left_modules = [
-        :render_topic_box,
-        :render_tagcloud,
-        :render_most_lovable_places,
-        :render_recently_added_places]
-    @breadcrumbs = [['All', root_url]]
+    respond_to do |format|
+      format.html {
+        load_module_preferences
+        @left_modules = [
+            :render_topic_box,
+            :render_tagcloud,
+            :render_most_lovable_places,
+            :render_recently_added_places]
+        @breadcrumbs = [['All', root_url]]
+      }
+
+      format.ajax { render :layout => false}
+    end
+
   end
 end

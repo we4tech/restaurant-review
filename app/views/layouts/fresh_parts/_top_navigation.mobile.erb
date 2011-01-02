@@ -16,7 +16,8 @@
         <%= t('layout.links.fb_login') %>
       </fb:login-button> .
       <%= link_to tt('layout.links.register'), signup_url %> .
-      <%= link_to tt('layout.links.photos'), photos_url %>
+      <%= link_to tt('layout.links.photos'), photos_url %> .
+      <%= link_to 'PC version', root_url(:format => :html) %>
     <% else %>
       <% if !@record_already_added %>
         <%= link_to tt('layout.links.add'), new_restaurant_url %> .

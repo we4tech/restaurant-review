@@ -109,6 +109,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Center style starts */
 #site_center {
   margin-top: 30px;
+  min-height: 500px;
 }
 
 .site_list_item {
@@ -1185,14 +1186,15 @@ form .hints {
 }
 
 .bestForItem {
-  border-bottom: 2px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;
+  border-left: 1px solid #CCCCCC;
   float: left;
   height: 100px;
   margin-bottom: 10px;
   margin-right: 5px;
   padding: 0;
   overflow-y: hidden;
-  
+  padding-left: 5px;
 }
 
 .bestForItem small {

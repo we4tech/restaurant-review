@@ -497,7 +497,8 @@ bn:
       4KaP4KaV4Kaf4Ka/IOCmj+CmleCmvuCmieCmqOCnjeCmnyDgpqTgp4jgprDg
       pr8g4KaV4Kaw4KeB4Kao
 
-  nav: !map:HashWithIndifferentAccess 
+  nav: !map:HashWithIndifferentAccess
+    share_on_fb: "Share on facebook"
     add_new_food_menu: !binary |
       4Kao4Kak4KeB4KaoIOCmluCmvuCmrOCmvuCmsOCnh+CmsCDgpq7gp4fgpqjg
       p43gpq/gp4Eg4Ka44KaC4Kav4KeL4Kac4Kao

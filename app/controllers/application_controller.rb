@@ -46,6 +46,19 @@ class ApplicationController < ActionController::Base
       # Force for url locale
       options[:l] = I18n.locale if !options.keys.include?(:l)
 
+      determine_subdomain! options
+
+      # Force Content Format
+      if defined?(params) && options[:format].nil? && params[:format]
+        if !params[:format].to_s.match(/^ajax|asset/)
+          options[:format] = params[:format]
+        end
+      end
+
+      options
+    end
+
+    def determine_subdomain!(options)
       # If ajax is request host, forcefully set different
       # topic subdomain as url host
       if request && !options.include?(:subdomain)
@@ -60,8 +73,6 @@ class ApplicationController < ActionController::Base
           options[:subdomain] = 'www'
         end
       end
-
-      options
     end
 
     def if_permits? (object)
@@ -111,13 +122,17 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def restaurant_review(p_review)
-      if p_review.loved?
-        '&hearts; loved and reviewed this place!'
-      elsif p_review.hated?
-        'hated and reviewed this place! '
-      elsif p_review.wanna_go?
-        'wanna go to '
+    def restaurant_review_title(p_review, shared = false)
+      if !shared
+        if p_review.loved?
+          '&hearts; Loved and reviewed this place!'
+        elsif p_review.hated?
+          'Hated and reviewed this place! '
+        elsif p_review.wanna_go?
+          'Wanna go to '
+        end
+      else
+        'Shared review from'
       end
     end
 

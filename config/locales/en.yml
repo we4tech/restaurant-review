@@ -128,7 +128,8 @@ en:
     own_this: Do you own this restaurant?
     login: Log in
     create_an_account: Create an account
-  nav: !map:HashWithIndifferentAccess 
+  nav: !map:HashWithIndifferentAccess
+    share_on_fb: "Share on facebook"
     add_new_food_menu: Add new food menu
     add_news: Add news
     logout: Logout

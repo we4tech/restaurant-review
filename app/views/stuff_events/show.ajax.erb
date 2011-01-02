@@ -1,0 +1,19 @@
+<% if !@stuff_events.empty? %>
+  <ul>
+    <% @stuff_events.each do |stuff_event| %>
+      <li>
+        <%= render :partial => 'stuff_events/parts/stuff_event.html.erb',
+                   :locals  => {:stuff_event => stuff_event,
+                                :first_grid_class => '', :grid_class => '',
+                                :first_grid_style => 'float: left;'} %>
+      </li>
+    <% end %>
+    <li>
+      <%= link_to 'View all', updates_path %>
+    </li>
+  </ul>
+
+
+<% else %>
+  <%= t('label.no_review', :name => @topic.name.humanize) %>
+<% end %>

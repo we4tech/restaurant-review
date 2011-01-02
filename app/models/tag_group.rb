@@ -61,6 +61,7 @@ class TagGroup < ActiveRecord::Base
         :select => 'tag_mappings.*, restaurants.*, count(reviews.restaurant_id) as most_loved',
         :group => 'reviews.restaurant_id',
         :order => 'most_loved DESC',
+        #:include => [:related_images, :contributed_images],
         :limit => limit,
         :conditions => {
           'tag_mappings.tag_id' => self.tags.collect(&:id),

@@ -17,9 +17,11 @@
        min_hit_count = tags.min{|a, b|
          a.tag_mappings_count.to_i <=> b.tag_mappings_count.to_i
        }.tag_mappings_count.to_i
+
+       tags.sort!{|a, b| a.name <=> b.name}
     %>
     <div class='tagcloud' id='siteTagCloud'>
-      <% tags.shuffle.each do |tag| %>
+      <% tags.each do |tag| %>
         <%
            # Take from WIKI
            hit_count = tag.tag_mappings_count

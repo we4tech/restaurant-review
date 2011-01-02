@@ -8,7 +8,8 @@ module StuffEventsHelper
 
     link_to t('nav.updates', :count => count),
             updates_url,
-            :class => "#{count > 0 ? 'link_has_update' : ''}",
+            :rev => '#activities_submenu',
+            :class => "#{count > 0 ? 'link_has_update submenu' : 'submenu'}",
             :id => 'activities_link'
   end
 end
