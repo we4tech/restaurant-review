@@ -129,6 +129,7 @@ isp_en: !map:HashWithIndifferentAccess
     login: Log in
     create_an_account: Create an account
   nav: !map:HashWithIndifferentAccess 
+    share_on_fb: "Shared on facebook"
     add_new_food_menu: Add new ISP Service
     add_news: Add ISP news
     logout: Logout
