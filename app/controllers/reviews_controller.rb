@@ -7,15 +7,16 @@ class ReviewsController < ApplicationController
     @review = Review.new(params[:review])
     @review.user_id = current_user.id
     @review.topic_id = @topic.id
+    redirect_url = event_or_restaurant_url(@review.any)
 
     if @review.save
       flash[:notice] = 'Successfully added your review!'
       if current_user.share_on_facebook?
         redirect_to facebook_publish_url(
             'new_review', @review.id,
-            :next_to => "#{restaurant_long_url(@review.restaurant)}#review-#{@review.id}")
+            :next_to => "#{redirect_url}#review-#{@review.id}")
       else
-        redirect_to "#{restaurant_long_url(@review.restaurant)}#review-#{@review.id}"
+        redirect_to "#{redirect_url}#review-#{@review.id}"
       end
     else
       flash[:notice] = "Failed: #{@review.errors.full_messages.join('<br/>')}"
@@ -34,10 +35,7 @@ class ReviewsController < ApplicationController
       if current_user.share_on_facebook?
         redirect_to facebook_publish_url(
             'updated_review', @review.id,
-            :next_to => restaurant_long_url(
-                :id => @review.restaurant.id,
-                :name => url_escape(@review.restaurant.name),
-                :page => :reviews))
+            :next_to => restaurant_long_url(@review.any))
       else
         redirect_to :back
       end

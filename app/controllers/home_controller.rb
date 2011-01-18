@@ -89,7 +89,7 @@ class HomeController < ApplicationController
         pager.total_entries = Restaurant.count_recently_reviewed(@topic)
       end
     end
-
+    
     load_module_preferences
     
     @title = I18n.t('header.reviewed_places')
@@ -102,29 +102,30 @@ class HomeController < ApplicationController
   end
 
   def who_havent_been_there_before
-    restaurant = Restaurant.find(params[:id].to_i)
+    model_type = (params[:mt] || 'restaurant').camelize.constantize
+    model_instance = model_type.find(params[:id].to_i)
 
     offset = params[:page].to_i
     offset = 1 if offset == 0
 
-    @reviews = WillPaginate::Collection.create(offset, Restaurant::per_page) do |pager|
-      result = restaurant.reviews.by_topic(@topic.id).wanna_go.all(
-          :offset => (offset - 1), :limit => Restaurant::per_page, :include => [:user])
+    @reviews = WillPaginate::Collection.create(offset, model_type::per_page) do |pager|
+      result = model_instance.reviews.by_topic(@topic.id).wanna_go.all(
+          :offset => (offset - 1), :limit => model_type::per_page, :include => [:user])
       pager.replace(result)
 
       unless pager.total_entries
-        pager.total_entries = restaurant.reviews.by_topic(@topic.id).wanna_go.count
+        pager.total_entries = model_instance.reviews.by_topic(@topic.id).wanna_go.count
       end
     end
 
     load_module_preferences
     
-    @title = I18n.t("header.wannago")
+    @title = I18n.t("header.wannago", :place => model_instance.name)
     @site_title = @title
 
     @left_modules = [:render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
-    @breadcrumbs = [['All', root_url], [restaurant.name, restaurant_long_url(:id => restaurant.id, :name => url_escape(restaurant.name))]]
-    @restaurant = restaurant
+    @breadcrumbs = [['All', root_or_specific_root_url(model_instance)], [model_instance.name, event_or_restaurant_url(model_instance)]]
+    @restaurant = model_instance
   end
 
   def tag_details

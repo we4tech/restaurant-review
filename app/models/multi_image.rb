@@ -11,10 +11,16 @@ class MultiImage
         @images << Image.new(
             :caption => image_attributes[:captions],
             :uploaded_data => image_attributes[:uploaded_datum],
-            :group => image_attributes[:groups],
+            :group => image_attributes[:groups].blank? ? nil : image_attributes[:groups],
             :description => image_attributes[:descriptions],
             :link => image_attributes[:links]
         )
+
+        @uploaded_datum = image_attributes[:uploaded_datum]
+        @captions = image_attributes[:captions]
+        @descriptions = image_attributes[:descriptions]
+        @links = image_attributes[:links]
+        (@groups ||= []) << image_attributes[:groups]
       end
     end
 

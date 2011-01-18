@@ -82,7 +82,7 @@ class RestaurantsController < ApplicationController
         
     respond_to do |format|
       format.html { render }
-	  format.mobile { render }
+	    format.mobile { render :text => 'Disabled'}
       format.xml {
       	options = {}
       	options[:only] = params[:fields] if params[:fields]
@@ -93,10 +93,7 @@ class RestaurantsController < ApplicationController
 
   def redirected_to_long_url_if_its_not?
     if params[:topic_name].nil?
-      redirect_to restaurant_long_route_url(
-          :topic_name => url_escape(@topic.name.pluralize), 
-          :name => url_escape(@restaurant.name),
-          :id => @restaurant.id)
+      redirect_to restaurant_long_url(@restaurant)
     end
   end
 
@@ -228,9 +225,7 @@ class RestaurantsController < ApplicationController
       update_tag_mappings(tag_ids, @restaurant)
 
       flash[:success] = 'Stored tag maps!'
-      redirect_to session[:last_url] || restaurant_long_route_url(
-          url_escape(@topic.name.pluralize),
-          url_escape(@restaurant.name), @restaurant.id)
+      redirect_to session[:last_url] || restaurant_long_url(@restaurant)
     end
 
   end

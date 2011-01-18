@@ -81,12 +81,12 @@ class FacebookConnectController < ApplicationController
     images = restaurant.images
     images = restaurant.other_images if images.empty?
 
-    url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
+    url = "http://#{request.host}"
     if images && !images.empty?
       images.shuffle.each do |image|
         attached_images << {
             :type => 'image',
-            :src => "#{url[0..url.length - 2]}#{image.public_filename(:large)}",
+            :src => "#{url}#{image.public_filename(:large)}",
             :href => link
         }
       end
@@ -102,7 +102,7 @@ class FacebookConnectController < ApplicationController
                 :description => remove_html_entities(restaurant_review_content(p_review, shared)),
                 :media => attached_images},
             :action_links => {
-                'text' => 'add your review!',
+                'text' => 'Add your review!',
                 'href' => link}});
   end
 
@@ -116,7 +116,7 @@ class FacebookConnectController < ApplicationController
 
   def publish_story_of_photo_comment(facebook_session, photo_comment)
     restaurant = photo_comment.restaurant
-    url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
+    url = "http://#{request.host}"
 
     user = facebook_session.user
     FacebookerPublisher::deliver_publish_stream(
@@ -128,11 +128,11 @@ class FacebookConnectController < ApplicationController
                 :description => remove_html_entities(photo_comment.content),
                 :media => [{
                     :type => 'image',
-                    :src => "#{url[0..url.length - 2]}#{photo_comment.image.public_filename(:large)}",
+                    :src => "#{url}#{photo_comment.image.public_filename(:large)}",
                     :href => image_url(photo_comment.image_id)
                 }]},
             :action_links => {
-                'text' => 'add your review!',
+                'text' => 'Add your review!',
                 'href' => restaurant_long_url(restaurant)}});
   end
 
@@ -141,13 +141,13 @@ class FacebookConnectController < ApplicationController
     images = restaurant.images
     images = restaurant.other_images if images.empty?
 
-    url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
+    url = "http://#{request.host}"
 
     if images && !images.empty?
       images.shuffle.each do |image|
         attached_images << {
             :type => 'image',
-            :src => "#{url[0..url.length - 2]}#{image.public_filename(:large)}",
+            :src => "#{url}#{image.public_filename(:large)}",
             :href => link
         }
       end
@@ -166,10 +166,10 @@ class FacebookConnectController < ApplicationController
     user = p_facebook_session.user
     message = 'uploaded a new image of'
     if p_restaurant.user_id != p_image.user_id
-      message = 'contributed by uploading a new image of'
+      message = 'shared a new image of'
     end
 
-    url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
+    url = "http://#{request.host}"
     FacebookerPublisher::deliver_publish_stream(
         user, user, {
             :attachment => {
@@ -178,11 +178,11 @@ class FacebookConnectController < ApplicationController
                 :description => remove_html_entities(p_restaurant.description),
                 :media => [{
                     :type => 'image',
-                    :src => "#{url[0..url.length - 2]}#{p_image.public_filename(:large)}",
+                    :src => "#{url}#{p_image.public_filename(:large)}",
                     :href => link
                 }]},
             :action_links => {
-                'text' => 'add your review!',
+                'text' => 'Add your review!',
                 'href' => link}});
   end
 
@@ -196,8 +196,7 @@ class FacebookConnectController < ApplicationController
     images = p_restaurant.images
     images = p_restaurant.other_images if images.empty?
     if !images.empty?
-      url = root_url.gsub(/(\?l=#{I18n.locale.to_s})/, '')
-      url_base = url[0..url.length - 2]
+      url_base = "http://#{request.host}"
       images.each do |image|
         images << {
             :type => 'image',
@@ -220,7 +219,7 @@ class FacebookConnectController < ApplicationController
                 :description => remove_html_entities(p_restaurant.description),
                 :media => images},
             :action_links => {
-                'text' => 'add your review!',
+                'text' => 'Add your review!',
                 'href' => link}});
   end
 

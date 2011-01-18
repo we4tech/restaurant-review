@@ -1,17 +1,18 @@
 <%
-   attached_options = attached_options || {}
-   restaurant = restaurant || @restaurant
+   attached_options = defined?(attached_options) ? attached_options : {}
+   model_instance = defined?(restaurant) ? restaurant : (defined?(topic_event) ? topic_event : (@restaurant || @event))
+   model_name = model_instance.class.name.underscore.to_sym
 %>
 
 <% if logged_in? %>
   <%= render :partial => 'reviews/parts/form',
-             :locals => {:restaurant => restaurant,
+             :locals => {model_name => model_instance,
                          :attached_options => attached_options} %>
 <% else %>
   <%= t('label.login_required_to_review',
         :link => link_to(t('nav.login'), login_url, :class => 'login_button')) %>
   <%= render :partial => 'reviews/parts/form',
-             :locals => {:restaurant => restaurant,
+             :locals => {model_name => model_instance,
                          :attached_options => attached_options} %>
 
   <script type="text/javascript">

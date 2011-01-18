@@ -1,0 +1,33 @@
+<div class='events grid_11'>
+
+</div>
+
+<div class="grid_8" id="site_center_list">
+  <h1>
+    <% @breadcrumbs.each do |link| %>
+      <%= link_to link.first, link.last %> &raquo;
+    <% end %><%= @title %>
+    <% if logged_in? %>
+      &raquo; <%= link_to t('nav.add_event'), new_event_path %>
+    <% end %>
+  </h1>
+
+  <div class="break space_5"></div>
+  <% if @topic_events.empty? %>
+    No available event found
+  <% else %>
+    <% @topic_events.each do |event| %>
+      <%= render :partial => 'topic_events/parts/event', :locals => {:topic_event => event} %>
+    <% end %>
+    <div class='clear'></div>
+
+  <% end %>
+
+  <div class='pagination'>
+    <%= will_paginate @topic_events %>
+  </div>
+</div>
+
+<div class="grid_4" id="site_center_boxes">
+  <%= render :partial => 'layouts/fresh_parts/modules' %>
+</div>

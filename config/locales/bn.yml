@@ -1,8 +1,5 @@
-bn:
-  notice:
-    thanks_for_signing_in: "Thanks for signing up!  We're sending you an email with your activation code."
-    user_creation_failed: "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-
+--- !map:HashWithIndifferentAccess 
+bn: !map:HashWithIndifferentAccess 
   label: !map:HashWithIndifferentAccess 
     this_place: !binary |
       4KaP4KaHIOCmuOCnjeCmpeCmvuCmqOCmn+Cmv+CmpOCnhw==
@@ -344,6 +341,9 @@ bn:
       admin: !binary |
         4KaV4Kao4KeN4Kaf4KeN4Kaw4KeL4KayIOCmquCnh+CmqOCnh+Cmsg==
 
+      events: !binary |
+        4KaH4Kat4KeH4Kao4KeN4Kaf4Ka4
+
       fb_login: !binary |
         4Kar4KeH4KaH4Ka44Kas4KeB4KaVIOCmpuCmv+Cnn+CnhyDgprLgppfgpofg
         pqg=
@@ -497,8 +497,7 @@ bn:
       4KaP4KaV4Kaf4Ka/IOCmj+CmleCmvuCmieCmqOCnjeCmnyDgpqTgp4jgprDg
       pr8g4KaV4Kaw4KeB4Kao
 
-  nav: !map:HashWithIndifferentAccess
-    share_on_fb: "Share on facebook"
+  nav: !map:HashWithIndifferentAccess 
     add_new_food_menu: !binary |
       4Kao4Kak4KeB4KaoIOCmluCmvuCmrOCmvuCmsOCnh+CmsCDgpq7gp4fgpqjg
       p43gpq/gp4Eg4Ka44KaC4Kav4KeL4Kac4Kao
@@ -568,6 +567,11 @@ bn:
     edit_tags: !binary |
       4Kaf4KeN4Kav4Ka+4KaXIOCmquCmsOCmv+CmruCmvuCmsOCnjeCmnOCmqA==
 
+    add_event: !binary |
+      4KaP4KaV4Kaf4Ka/IOCmh+CmreCnh+CmqOCnjeCmnyDgprjgpoLgpq/gp4vg
+      ppcg4KaV4Kaw4KeB4Kao
+
+    share_on_fb: Share on facebook
     add_page: !binary |
       4KaP4KaV4Kaf4Ka+IOCmquCnh+Cmh+CmnCDgpo/gpqEg4KaV4Kaw4KeB4Kao
 
@@ -604,6 +608,10 @@ bn:
       4Kaw4KeH4Ka44KeN4Kak4KeL4Kaw4Ka+IOCmheCmqOCngeCmuOCmqOCnjeCm
       p+CmvuCmqCDgppXgprDgp4Hgpqg=
 
+    Recent Activity: !binary |
+      4Ka44Kau4KeN4Kaq4KeN4Kaw4Kak4Ka/4KaVIOCmleCmvuCmsOCnjeCmr+Cm
+      leCmsuCmvuCmqg==
+
     Recently reviewed places!: !binary |
       4Ka44Ka+4Kau4KeN4Kaq4KeN4Kaw4Kak4Ka/4KaVIOCmsOCmv+CmreCmv+Cm
       iSDgppXgprDgpr4g4Ka44KeN4Kal4Ka+4Kao4Ka44Kau4KeB4Ka5IQ==
@@ -616,6 +624,9 @@ bn:
       4KaG4KawIOCmleCnhyDgpo/gppbgpr7gpqjgp4cg4KaG4Ka44Kak4KeHIOCm
       muCnh+Cnn+Cnh+Cmm+Cnh+CmqCAh
 
+  notice: !map:HashWithIndifferentAccess 
+    user_creation_failed: We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above).
+    thanks_for_signing_in: Thanks for signing up!  We're sending you an email with your activation code.
   frontpage: !map:HashWithIndifferentAccess 
     recommend: !binary |
       4KaG4KacIOCmleCni+CmpeCmvuCnnyDgppbgpr7gpqzgp4fgpqggPw==
@@ -626,12 +637,15 @@ bn:
       q+CmsiE=
 
     wannago: !binary |
-      4KaG4KawIOCmleCnhyDgppXgp4cg4KaP4KaW4Ka+4Kao4KeHIOCmr+Cnh+Cm
-      pOCnhyDgpprgpr7gpprgp43gppvgp4fgpqgh
+      4KaG4KawIOCmleCnhyDgppXgp4cge3twbGFjZX19IOCmr+Cnh+CmpOCnhyDg
+      pprgpr7gpprgp43gppvgp4fgpqgh
 
     reviewed_places: !binary |
       4Ka44Kaw4KeN4Kas4Ka24KeH4Ka3IOCmsOCmv+CmreCmv+CmiSDgppXgprDg
       pr4g4Ka44KeN4Kal4Ka+4KaoIQ==
+
+    all_events: !binary |
+      4Ka44KaV4KayIOCmj+CmreCnh+CmqOCnjeCmnyDgprjgpq7gp4Lgprk=
 
     best_for: !binary |
       4KaW4KeB4Kac4KeH4Kao4Ka/4KaoIOCmuOCmruCmmuCmvuCmh+CmpOCnhyDg
@@ -676,10 +690,10 @@ bn:
       4KaP4KaHIOCmn+CnjeCmr+CmvuCmlyDgpp/gpr8g4Ka44Kag4Ka/4KaVIOCm
       qOCnnyAtIHt7dGFnfX0=
 
+    user_creation_failed: Please revise your registration form, we have found some errors
     no_matched_type: !binary |
       4KaG4Kaq4Kao4Ka+4KawIOCmruCmpOCmqCDgppbgp4Hgppzgp4cg4Kaq4Ka+
       4KaT4Kav4Ka84Ka+IOCmr+CmvuCmhyDgpqjgpr8h
-    user_creation_failed: Please revise your registration form, we have found some errors
 
   time: !map:HashWithIndifferentAccess 
     am: am

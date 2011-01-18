@@ -60,7 +60,8 @@
       <div class="break"></div>
       <div class="space_10"></div>
       <% @reviews.each do |review| %>
-        <%= render :partial => 'reviews/parts/review_small', :locals => {:review => review, :grid_class => 'grid_5'} %>
+        <%= render :partial => 'reviews/parts/review_small', 
+                   :locals => {:review => review, :grid_class => 'grid_5'} %>
         <div class="clear"></div>
       <% end %>
       <div class='date'>

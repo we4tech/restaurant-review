@@ -1,7 +1,12 @@
 <% form_for review, :url => review_url(:id => review.id), :html => {:method => :put, :style => 'display: none'} do |f| %>
   <div class="">
     <%= render :partial => 'reviews/parts/fields', :locals => {:f => f} %>
-    <%= f.hidden_field :restaurant_id, :value => review.restaurant.id %>
+
+    <% if review.any.is_a?(Restaurant) %>
+      <%= f.hidden_field :restaurant_id, :value => review.any.id %>
+    <% elsif review.any.is_a?(TopicEvent) %>
+      <%= f.hidden_field :topic_event_id, :value => review.any.id %>
+    <% end %>
 
     <%= f.submit t('button.update_review') %>
   </div>

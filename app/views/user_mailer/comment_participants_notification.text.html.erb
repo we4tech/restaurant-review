@@ -14,7 +14,7 @@
       Hi <%= user_link @participant %>,
     </h1>
     <h4 style="margin: 0">
-      "<%= user_link @review_comment.user %>" commented after your comment on review at "<%= restaurant_link @review_comment.restaurant %>"
+      "<%= user_link @review_comment.user %>" commented after your comment on review at "<%= event_or_restaurant_link @review_comment.any %>"
     </h4>
 
     <blockquote>
@@ -32,7 +32,7 @@
     Related restaurant -
     <div class='break'></div>
     <div class='space_10'></div>
-    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => @review_comment.restaurant} %>
+    <%= render_partially_item @review_comment.any %>
     <div class='space_10'></div>
 
     <pre class='footer'><%= @topic.email_footer %></pre>

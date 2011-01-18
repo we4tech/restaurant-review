@@ -9,7 +9,9 @@ class ProductsController < ApplicationController
     @products_count = @restaurant.products.image_attached.count
 
     if logged_in? && @restaurant.author?(current_user)
-      @products_for_admin = @restaurant.products.paginate(:page => params[:page])
+      page_index = params[:page].to_i
+      page_index = page_index == 0 ? 1 : page_index
+      @products_for_admin = @restaurant.products.paginate(:page => page_index)
     end
 
     render_view('products/index')
@@ -77,7 +79,9 @@ class ProductsController < ApplicationController
   end
 
   def next
-    @products = @restaurant.products.image_attached.paginate(:page => params[:page])
+    page_index = params[:page].to_i
+    page_index = page_index == 0 ? 1 : page_index
+    @products = @restaurant.products.image_attached.paginate(:page => page_index)
     respond_to do |f|
       f.ajax {render :layout => false}
     end

@@ -8,21 +8,16 @@ class ReviewCommentsController < ApplicationController
 
     @review_comment.user_id = current_user.id
     @review_comment.topic_id = @topic.id
-    @review_comment.restaurant_id = @review.restaurant_id
+    @review_comment.__send__("#{@review.ref_id_name.to_s}=".to_sym, @review.ref_id)
+
     @review.review_comments << @review_comment
 
     if @review_comment.id.to_i > 0
       flash[:notice] = "You have added a comment on review - ##{@review.id}"
-      redirect_to "#{restaurant_long_url(
-          :name => @review.restaurant.name.parameterize.to_s,
-          :id => @review.restaurant.id,
-          :page => :reviews)}#review-#{@review.id}"
+      redirect_to "#{event_or_restaurant_url(@review.any)}#review-#{@review.id}"
     else
       flash[:notice] = "Failed to add comment on review - ##{@review.id}"
-      redirect_to "#{restaurant_long_url(
-          :name => @review.restaurant.name.parameterize.to_s,
-          :id => @review.restaurant.id,
-          :page => :reviews)}#review-#{@review.id}"
+      redirect_to "#{event_or_restaurant_url(@review.any)}#review-#{@review.id}"
     end
   end
 
@@ -43,9 +38,6 @@ class ReviewCommentsController < ApplicationController
       end
     end
 
-    redirect_to "#{restaurant_long_url(
-          :name => @review_comment.restaurant.name.parameterize.to_s,
-          :id => @review_comment.restaurant.id,
-          :page => :reviews)}#review-#{@review_comment.review_id}"
+    redirect_to "#{event_or_restaurant_url(@review_comment.any)}#review-#{@review_comment.review_id}"
   end
 end

@@ -1,10 +1,11 @@
 <div style='background: #fff'>
-  <div class='grid_12' id='recommendBox'>
+  <div class='grid_12' id='recommendBox'>	
     <%= render :partial => 'restaurants/parts/recommend' %>
     <div class='clear'></div>
     <div class='space_10'></div>
   </div>
   <div class='clear'></div>
+  <div class='space_10'></div>
 
   <% if params[:page].to_i < 2 %>
     <div class='grid_12' id='featureBox'>

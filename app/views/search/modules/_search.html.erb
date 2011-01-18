@@ -1,18 +1,69 @@
 <div class='module search'>
-  <style type="text/css">
-  @import url(http://www.google.com/cse/api/branding.css);
-  </style>
-  <div class="cse-branding-right" style="background-color:#FFFFFF;color:#000000">
-    <div class="cse-branding-form">
-      <form action="<%= search_url %>" id="cse-search-box">
-        <div>
-          <input type="hidden" name="cx" value="001546331286308569180:kqp6_zmlafi" />
-          <input type="hidden" name="cof" value="FORID:10" />
-          <input type="hidden" name="ie" value="UTF-8" />
-          <input type="text" name="q" size="31" />
-          <input type="submit" name="sa" value="Search" />
+  <div class="cse-branding-form">
+    <form action="<%= search_url %>" id="cse-search-box" style='display:inline;'>
+      <input type="hidden" name="_models" value="Restaurant"/>
+      <input type="text" id="searchField"
+             class='searchIcon'
+             name="name|short_array|long_array|description[]"
+             value="<%= @searched_tags ? @searched_tags.join(' ') : '' %>"
+             size="20"/>
+
+      <div class='geoSearchFields' id='geoSearchFields' style="display: none;">
+        <div class='geoSearchPanel'>
+          <div>
+            <label for='geoLat'>Latitude</label>
+            <input type='text' name='lat' id='geoLat'
+                   value="<%= @location ? @location[:lat].to_f : 0 %>"/>
+            <label for='geoLng'>Longitude</label>
+            <input type='text' name='lng' id='geoLng'
+                   value="<%= @location ? @location[:long].to_f : 0 %>"/>
+
+            <% selected_meter = @location ? @location[:meter].to_i : 100 %>
+            <select name='meter'>
+              <% (1..5).each do |meter| %>
+                <option value="<%= meter * 1000 %>" <%= selected_meter == (meter * 1000) ? 'selected="selected"' : '' %>>
+                  <%= meter %> km
+                </option>
+              <% end %>
+            </select>
+            <input type="button" value='X' onclick="$('#geoSearchFields').fadeOut()"/>
+          </div>
+          <div class="space_10"></div>
+          <div id="geoSearchMap"
+               title="<%= @location && @location[:lat].to_f > 0 && @location[:long].to_f > 0 ? "#{@location[:lat]},#{@location[:long]}" : '23.79,90.42' %>"
+               markerMessage="<h4>Where are you NOW?</h4><br/>show us your current location<br/>so that we can <b>suggest</b><br/>you the <b>NEARBY</b> <%= @topic.name.pluralize %>."
+               infoWindowMessagePrefix="You are NOW @"
+               mapWidth="auto"
+               style="height: 300px"></div>
+          <div class='clear'></div>
         </div>
-      </form>
-    </div>
+      </div>
+      <input type="submit" value="<%= t('button.search') %>"/>
+    </form>
   </div>
 </div>
+
+<script type="text/javascript">
+  $('#searchField').focus(function() {
+    try {
+      var $geoPanel = $('#geoSearchFields');
+      if ($geoPanel.css('display') == 'none') {
+        try {
+          App.MapWidget.createMap($('#geoSearchMap'), function(pPlacemark) {
+            //$('#restaurant_address').val(pPlacemark.address);
+            $('#geoLat').val(pPlacemark.Point.coordinates[1]);
+            $('#geoLng').val(pPlacemark.Point.coordinates[0]);
+          });
+        } catch (e) { }
+
+        $geoPanel.appear();
+        App.MapWidget.mInitiatedMaps['geoSearchMap'].checkResize();
+
+      }
+    } catch ($e) {
+      // alert($e);
+    }
+
+    return true;
+  });
+</script>

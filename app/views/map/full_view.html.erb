@@ -1,19 +1,19 @@
 <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
-    "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
+    "#{@model_instance.lat},#{@model_instance.lng}&zoom=14&" +
     "sensor=false&markers=color:green|label:R|" +
-    "#{@restaurant.lat},#{@restaurant.lng}&key=#{@topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key}&size=1000x1000"
+    "#{@model_instance.lat},#{@model_instance.lng}&key=#{@topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key}&size=1000x1000"
    details_link = "http://maps.google.com/maps?f=q&" +
-       "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
-       "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"
+       "q=#{CGI.escape(@model_instance.address)}&hl=en&" +
+       "geocode=&sll=#{@model_instance.lat},#{@model_instance.lng}"
 %>
 <div id="site_center">
   <div class="grid_12 restaurant_details">
     <div class="restaurant_details">
       <div class="breadcrumbs">
-        <%= link_to t("topic.#{@topic.name.humanize.pluralize}"), root_url %> &raquo;
+        <%= link_to @model_instance.class.name.titleize.pluralize, root_or_specific_root_url(@model_instance) %> &raquo;
       </div>
       <h1>
-        <%= link_to @restaurant.name, restaurant_long_url(@restaurant) %> &raquo; Details map
+        <%= link_to @model_instance.name, event_or_restaurant_url(@model_instance) %> &raquo; Details map
         <%= link_to '[Download]', map_url %>, <%= link_to '[On google map]', details_link %>
         <% selected_meter = params[:meter].to_i %>
         [Within <select name='meter' id="distance_select">
@@ -26,8 +26,8 @@
       </h1>
       <div class='space_10'></div>
       <div id="google_map_canvas"
-           title="<%= @restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982" %>"
-           markerMessage="<h4><%= @restaurant.name %></h4><p><%= @restaurant.address %></p>"
+           title="<%= @model_instance.lat.to_i > 0 ? "#{@model_instance.lat},#{@model_instance.lng}" : "23.7272119,90.4094982" %>"
+           markerMessage="<h4><%= @model_instance.name %></h4><p><%= @model_instance.address %></p>"
            infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
            mapWidth="100%"
            mapHeight="600px"
@@ -47,12 +47,12 @@
 
     // Load markers
     $('#google_map_canvas').loadNearbyRestaurants(
-        "<%= search_url(:lat => @restaurant.lat, :lng => @restaurant.lng, :meter => 1000, :format => 'json') %>",
+        "<%= search_url(:lat => @model_instance.lat, :lng => @model_instance.lng, :meter => 1000, :format => 'json') %>",
         $('#map_marker_content'));
 
     $('#distance_select').change(function() {
       $('#google_map_canvas').loadNearbyRestaurants(
-        "<%= search_url(:lat => @restaurant.lat, :lng => @restaurant.lng, :format => 'json') %>&amp;meter=" + this.value,
+        "<%= search_url(:lat => @model_instance.lat, :lng => @model_instance.lng, :format => 'json') %>&amp;meter=" + this.value,
         $('#map_marker_content'), true);
     });
   });

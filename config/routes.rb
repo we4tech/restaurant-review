@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :events, :controller => 'topic_events'
+
   map.resources :products, :collection => {:next => :get}, :member => {:slide => :get, :reviews => :get}
 
   map.resources :premium_service_subscribers
@@ -133,6 +135,10 @@ ActionController::Routing::Routes.draw do |map|
   map.topic_items '/:topic_name/:restaurant_id/items',
                      :controller => 'food_items', :action => 'index',
                      :requirements => {:topic_name => /[\w\d\.\-]+/}
+
+  map.event_long_route '/events/:name/:id', :controller => 'topic_events',
+                       :action => 'show',
+                       :requirements => {:name => /[\w\d\.\-]+/}
   
 
   # Feeds related routing

@@ -5,11 +5,9 @@
   <% elsif review_comment.hated? %>
     <span class="highlight"><%= tt('label.disliked') %></span> <%= t('label.and') %>
   <% end %>
-  <%= t('label.review_of', :link =>
-      link_to(review_comment.restaurant.name,
-              restaurant_long_url(
-                  :id => review_comment.restaurant.id,
-                  :name => url_escape(review_comment.restaurant.name)))) %>
+  <%= t('label.review_of',
+        :link => link_to(review_comment.any.name,
+                         event_or_restaurant_url(review_comment.any))) %>
 </span>
 <span class="date" title="<%= review_comment.updated_at.strftime('%d %b %Y') %>">
   - <%= t('label.added') %> <%= distance_of_time_in_words(review_comment.updated_at, Time.now) %> <%= t('label.ago') %>

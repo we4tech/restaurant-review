@@ -26,8 +26,8 @@
           <% elsif review.wanna_go? %>
             <%= tt('label.wannago') %>
           <% end %>
-          <%= link_to review.restaurant.name, restaurant_long_url(
-              review.restaurant) %>
+
+          <%= event_or_restaurant_link(review.any) %>
         </span>
       </div>
       <div class="clear space_5"></div>

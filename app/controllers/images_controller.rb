@@ -4,11 +4,12 @@ class ImagesController < ApplicationController
 
   def create
     @multi_images = prepare_image_object
-    @group = @multi_images.group
 
     if @multi_images.saved_all?
       class_name = determine_mapping_class_name
-      cleanup_image_relation(class_name, @group)
+      @multi_images.groups.each do |group|
+        cleanup_image_relation(class_name, group)
+      end
       object_id, field_name, return_url = create_image_relation(class_name)
 
       flash[:notice] = 'Successfully added your image!'
@@ -49,7 +50,7 @@ class ImagesController < ApplicationController
   def edit
     @image = Image.find(params[:id].to_i)
     if_permits?(@image) do
-      @restaurant = @image.discover_relation_with_restaurant
+      @restaurant = @image.discover_relation_with_any
       if @restaurant
         render_view('images/edit')
       end
@@ -75,10 +76,8 @@ class ImagesController < ApplicationController
   def show
     @image = Image.find_by_id(params[:id].to_i)
     if @image
-      @restaurant = @image.discover_relation_with_restaurant
-      if @restaurant
-        render_view('images/show', :inner => true)
-      end
+      @related_object = @image.discover_relation_with_any
+      render_view('images/show', :inner => true)
     else
       flash[:notice] = 'Image not found'
       redirect_to root_url
@@ -107,14 +106,14 @@ class ImagesController < ApplicationController
     end
 
     def create_image_relation(class_name)
-      object_id, field_name, return_url = determine_object_id_field_and_return_url
+      object_type, object_id, field_name, return_url = determine_object_id_field_and_return_url
 
       @multi_images.each do |image|
         class_name.create({
           :image_id => image.id,
-          :model => Restaurant.name,
+          :model => object_type,
           :topic_id => @topic.id,
-          :group => @group,
+          :group => image.group,
           :user_id => current_user.id,
         }.merge({field_name => object_id}))
       end
@@ -151,6 +150,7 @@ class ImagesController < ApplicationController
     end
 
     def determine_object_id_field_and_return_url
+      object_type = Restaurant.name
       field_name = nil
       object_id = nil
       return_url = nil
@@ -175,6 +175,12 @@ class ImagesController < ApplicationController
       elsif params[:product_id]
         field_name = :product_id
         object_id = params[:product_id].to_i
+
+      elsif params[:topic_event_id]
+        field_name = :topic_event_id
+        object_id = params[:topic_event_id]
+        object_type = TopicEvent.name
+        return_url = edit_event_url(object_id)
       end
 
       # Override mapping with :food_item_id
@@ -202,7 +208,7 @@ class ImagesController < ApplicationController
         return_url = params[:return_to]
       end
 
-      return object_id, field_name, return_url
+      return object_type, object_id, field_name, return_url
     end
 
     def determine_mapping_class_name

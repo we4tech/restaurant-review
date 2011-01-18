@@ -1,37 +1,29 @@
-<% images = @restaurant.related_images.by_group(nil).collect(&:image) %>
+<%
+   object = object || nil
+   images = images || (object || @restaurant).related_images.by_group(nil).collect(&:image)
+%>
 <% if !images.empty? %>
   <%
      images = images.shuffle
      first_image = images.first
   %>
-  <table class="image_gallery">
-    <tbody>
-      <tr>
-        <td align="center">
-          <%= link_to(image_tag(first_image.public_filename(:large),
-                                :class => 'large_image',
+  <div class="image_gallery">
+    <%= link_to(image_tag(first_image.public_filename(:large),
+                          :class => 'large_image',
+                          :alt => 'N/A'),
+                image_url(first_image.id),
+                :title => first_image.caption) %>
+
+    <% rest_images = images[1..images.length] %>
+    <% if !rest_images.empty? %>
+      <div class="gallery_links">
+        <% rest_images.each do |image| %>
+          <%= link_to(image_tag(image.public_filename(:small),
                                 :alt => 'N/A'),
-                      image_url(first_image.id),
-                      :title => first_image.caption,
-                      :rel => 'prettyPhoto[gallery]') %>
-
-        </td>
-      </tr>
-
-      <tr align="center">
-        <% rest_images = images[1..images.length] %>
-        <% if !rest_images.empty? %>
-          <td class="gallery_links">
-            <% rest_images.each do |image| %>
-              <%= link_to(image_tag(image.public_filename(:small),
-                                    :alt => 'N/A'),
-                          image_url(image.id),
-                          :rel => 'prettyPhoto[gallery]',
-                          :title => image.caption) %>
-            <% end %>
-          </td>
+                      image_url(image.id),
+                      :title => image.caption) %>
         <% end %>
-      </tr>
-    </tbody>
-  </table>
+      </div>
+    <% end %>
+  </div>
 <% end %>

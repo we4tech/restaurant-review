@@ -8,8 +8,8 @@
   <div class='info'><%= page_entries_info @restaurants %></div>
   <div class="space_5"></div>
   <div class="break space_5"></div>
-  <% @restaurants.each_with_index do |restaurant, index| %>
-    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :index => index} %>
+  <% @restaurants.each_with_index do |restaurant_or_event, index| %>
+	<%= render_partially_item(restaurant_or_event) %>
   <% end %>
 
   <div class='pagination'>

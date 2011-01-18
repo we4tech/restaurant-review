@@ -4,7 +4,13 @@
   <% form_for Review.new, :html => {:method => :post} do |f| %>
     <h4><%= t('subheader.my_review') %></h4>
     <%= render :partial => 'reviews/parts/fields', :locals => {:f => f} %>
-    <%= f.hidden_field :restaurant_id, :value => restaurant.id %>
+
+    <% if defined?(restaurant) %>
+      <%= f.hidden_field :restaurant_id, :value => restaurant.id %>
+    <% elsif defined?(topic_event) %>
+      <%= f.hidden_field :topic_event_id, :value => topic_event.id %>
+    <% end %>
+
     <% if !attached_options.empty? %>
       <%= f.hidden_field :attached_model, :value => attached_options[:attached_model] %>
       <%= f.hidden_field :attached_id, :value => attached_options[:attached_id] %>

@@ -8,13 +8,13 @@ class ReviewCommentObserver < ActiveRecord::Observer
 
     notify_other_participants(review_comment)
 
-    StuffEvent.create(
+    StuffEvent.create({
         :topic_id => review_comment.topic_id,
-        :restaurant_id => review_comment.restaurant_id,
         :user_id => review_comment.user_id,
         :review_id => review_comment.review.id,
         :review_comment_id => review_comment.id,
-        :event_type => StuffEvent::TYPE_REVIEW_COMMENT)
+        :event_type => StuffEvent::TYPE_REVIEW_COMMENT
+    }.merge(review_comment.map_any))
   end
 
   def after_destroy(review_comment)

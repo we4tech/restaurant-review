@@ -1,21 +1,30 @@
-<% pages = @restaurant.pages %>
+<%
+   object = defined?(object) ? object : nil
+   if object.nil?
+     object = @restaurant || @related_object
+   end
+
+   pages = object.pages
+%>
 <% if !pages.empty? %>
   <div class='menu'>
-    <b><%= t('label.pages') %> <%= @restaurant.author?(current_user) ? "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id))})" : '' %></b>
-    <%= link_to t('nav.news'), restaurant_messages_path(@restaurant) %> .
-    <%= link_to t('nav.food_menu'), restaurant_food_items_path(@restaurant) %> .
+    <b><%= t('label.pages') %> <%= object.author?(current_user) ?
+        "(#{link_to(t('nav.add_page'), new_restaurant_page_url(object.id))})" :
+        '' %></b>
+    <%= link_to t('nav.news'), topic_messages_path(:topic_name => @topic.name.pluralize, :restaurant_id => object.id) %> .
+    <%= link_to t('nav.food_menu'), topic_items_path(:topic_name => @topic.name.pluralize, :restaurant_id => object) %> .
 
     <% if @page %>
-      <%= link_to @restaurant.name, restaurant_long_url(@restaurant) %> .
+      <%= link_to object.name, restaurant_long_url(object) %> .
 
       <%= pages.collect{ |apage|
         if @page && apage.id != @page.id
-          link_to(apage.title, readable_page_path(@restaurant, apage.url))
+          link_to(apage.title, readable_page_path(object, apage.url))
         end}.compact.join(' . ')
       %>
     <% else %>
       <%= pages.collect{ |apage|
-          link_to(apage.title, readable_page_path(@restaurant, apage.url))
+          link_to(apage.title, readable_page_path(object, apage.url))
         }.compact.join(' . ')
       %>
     <% end %>
@@ -24,9 +33,10 @@
   <div class='break'></div>
 <% else %>
   <div class='menu'>
-    <b><%= t('label.pages') %> <%= @restaurant.author?(current_user) ? "(#{link_to(t('nav.add_page'), new_restaurant_page_url(@restaurant.id))})" : '' %> - </b>
-    <%= link_to t('nav.news'), restaurant_messages_path(@restaurant) %> .
-    <%= link_to t('nav.food_menu'), restaurant_food_items_path(@restaurant) %>
+    <b><%= t('label.pages') %> <%= object.author?(current_user) ?
+        "(#{link_to(t('nav.add_page'), new_restaurant_page_url(object.id))})" : '' %></b>
+    <%= link_to t('nav.news'), topic_messages_path(:topic_name => @topic.name.pluralize, :restaurant_id => object.id) %> .
+    <%= link_to t('nav.food_menu'), topic_items_path(:topic_name => @topic.name.pluralize, :restaurant_id => object) %>
   </div>
   <div class='space_10'></div>
   <div class='break'></div>

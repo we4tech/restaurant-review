@@ -7,11 +7,11 @@ atom_feed(:url => feed_reviews_url(:format => :atom)) do |feed|
 
   @reviews.each do |review|
     feed.entry(review) do |entry|
-      if review.restaurant
-        entry.title("Review on #{review.restaurant.name}")
+      if review.any
+        entry.title("Review on #{review.any.name}")
         entry.summary(review.comment)
         entry.link(:rel => :alternate,
-                   :href => "#{restaurant_long_url(review.restaurant)}#review-#{review.id}",
+                   :href => "#{event_or_restaurant_url(review.any)}#review-#{review.id}",
                    :type => 'text/html')
         entry.issued(review.created_at)
         entry.modified(review.updated_at)
@@ -21,7 +21,15 @@ atom_feed(:url => feed_reviews_url(:format => :atom)) do |feed|
         entry.content :type => 'xhtml' do |xhtml|
           xhtml.div review.comment
           xhtml.div '<hr/>This review is attached with - '
-          xhtml.div render(:partial => 'restaurants/parts/restaurant.html.erb', :locals => {:restaurant => review.restaurant, :only_html => true})
+          case review.any
+            when Restaurant
+              xhtml.div render(:partial => 'restaurants/parts/restaurant.html.erb', 
+                               :locals => {:only_html => true}.merge(review.map_any_object))
+            when TopicEvent
+              xhtml.div render(:partial => 'topic_events/parts/event.html.erb',
+                               :locals => {:only_html => true}.merge(review.map_any_object))
+          end
+
         end
       end
     end

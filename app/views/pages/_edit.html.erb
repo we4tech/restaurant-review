@@ -1,7 +1,5 @@
 <div class='breadcrumbs'>
-  <%= link_to @restaurant.name, restaurant_long_url(
-      :id => @restaurant.id,
-      :name => url_escape(@restaurant.name)) %> &raquo;
+  <%= link_to @restaurant.name, restaurant_long_url(@restaurant) %> &raquo;
 </div>
 
 <h1>Edit Page</h1>

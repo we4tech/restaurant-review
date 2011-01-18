@@ -42,12 +42,17 @@ module RestaurantsHelper
         :restaurants => Restaurant.recently_added_pictures(p_limit)}
   end
 
-  def render_who_wanna_go_there(p_restaurant, p_limit = 5)
-    wanna_go_reviews = p_restaurant.reviews.by_topic(@topic.id).wanna_go.all(:limit => p_limit, :include => [:user])
+  def render_who_wanna_go_there(restaurant_or_event, limit = 5)
+    wanna_go_reviews = restaurant_or_event.reviews.by_topic(@topic.id).wanna_go.all(:limit => limit, :include => [:user])
+    link_options = {:id => restaurant_or_event.id, :name => url_escape(restaurant_or_event.name)}
+    if restaurant_or_event.is_a?(TopicEvent)
+      link_options[:mt] = :topic_event
+    end
+
     render :partial => 'restaurants/parts/who_wanna_go_there', :locals => {
         :title => 'Who wanna visit here!',
         :reviews => wanna_go_reviews,
-        :more_link => who_wanna_go_place_url(:id => p_restaurant.id, :name => p_restaurant.name.parameterize.to_s)
+        :more_link => who_wanna_go_place_url(link_options)
     }
   end
 

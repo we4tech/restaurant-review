@@ -8,6 +8,8 @@ class Review < ActiveRecord::Base
   belongs_to :user
   belongs_to :restaurant
   belongs_to :topic
+  belongs_to :topic_event
+
   has_many :review_comments
   has_many :stuff_events, :dependent => :destroy
 
@@ -33,6 +35,9 @@ class Review < ActiveRecord::Base
 
   validate :ensure_not_duplicate
 
+  include CommonModel::Common
+  include CommonModel::CommonTopModel
+
   def loved?
     self.loved == LOVED
   end
@@ -55,10 +60,6 @@ class Review < ActiveRecord::Base
     else
       nil
     end
-  end
-
-  def author?(p_user)
-    p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
   end
 
   protected

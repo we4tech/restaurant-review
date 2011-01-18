@@ -18,7 +18,7 @@
     <h1>No page found</h1>
     <p>
       You can create a new
-      page <%= link_to "Create #{params[:page_name].gsub(/\-/, ' ').humanize}",
+      page <%= link_to "Create #{params[:page_name].to_s.gsub(/\-/, ' ').humanize}",
                        new_restaurant_page_path(@restaurant, :page_name => params[:page_name]) %>
     </p>
   <% end %>

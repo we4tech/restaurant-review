@@ -160,6 +160,47 @@ module UrlOverrideHelper
                '_models' => 'Restaurant')
   end
 
+  def event_long_url(event)
+    event_long_route_url(:name => url_escape(event.name), :id => event.id)
+  end
+
+  def event_link(event)
+    link_to event.name, event_long_url(event)
+  end
+
+  #
+  # Return url for either event home page or restaurant home page based
+  # on specified model type
+  def event_or_restaurant_url(model_instance)
+    case model_instance
+      when Restaurant
+        restaurant_long_url(model_instance)
+      when TopicEvent
+        event_long_url(model_instance)
+      else
+        nil
+    end
+  end
+
+  #
+  # Return a HTML anchor tag either for the event or restaurant based
+  # on the object type
+  def event_or_restaurant_link(model_instance)
+    link_to model_instance.name, event_or_restaurant_url(model_instance)
+  end
+
+  #
+  # Determine site root url based on the specific topic, either select
+  # default site root or select event's page root.
+  def root_or_specific_root_url (model_instance)
+    case model_instance
+      when TopicEvent
+        events_url
+      else
+        root_url
+    end
+  end
+
   private
     @@current_ajaxified_url_index = 0
 

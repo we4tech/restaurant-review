@@ -29,6 +29,14 @@
     return options;
   },
 
+  $.executeSafe = function(callback) {
+    try {
+      return callback();
+    } catch (exception) {
+      alert(exception);
+    }
+  },
+
   /**
    * Find existing map instance
    */
@@ -304,10 +312,14 @@
   $.fn.whenClicked = function(options) {
     var $duplicable = options['duplicate'];
     var $container = options['to'];
+    var addedCallback = options['added'];
 
     if ($duplicable && $container) {
-      $(this).click(function() {
+      $(this).bind('click', function() {
         $container.append($duplicable.html());
+        if (addedCallback) {
+          addedCallback($container);
+        }
       })
     } else {
       alert('Invalid (whenClicked) usages, please use "duplicate" and "to" attributes');
@@ -318,6 +330,8 @@
 })(jQuery);
 
 App = {
+
+  mTimer : null
 };
 
 App.MapWidget = {
@@ -755,14 +769,13 @@ $(function() {
     var $self = $(this);
     var x = $self.offset().left;
     var y = $self.offset().top;
+
     if ($menuPanel.css('display') == 'block' || $menuPanel.css('display') == 'inline') {
-      $menuPanel.slideUp(function() {
-        $(this).hide();
-        $self.removeClass('menuSel');
-      })
+      $menuPanel.hide();
+      $self.removeClass('menuSel');
     } else {
+      $menuPanel.css('left', x - 7).css('top', y + $self.css('height') + 10).show();
       $self.removeClass('menuSel').addClass('menuSel');
-      $menuPanel.css('left', x - 7).css('top', y + $self.css('height') + 10).slideDown();
     }
   });
 });

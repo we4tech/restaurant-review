@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
   include PremiumTemplatesHelper
   include SearchHelper
   include MultidomainCookieHelper
+  include PartialViewHelperHelper
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -140,7 +141,7 @@ class ApplicationController < ActionController::Base
       restaurant = nil
 
       if p_review.is_a?(Review)
-        restaurant = p_review.restaurant
+        restaurant = p_review.any
       elsif p_review.is_a?(Restaurant)
         restaurant = p_review
       end

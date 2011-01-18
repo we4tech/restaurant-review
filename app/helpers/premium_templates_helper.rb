@@ -52,7 +52,19 @@ module PremiumTemplatesHelper
   end
 
   def pt_render_template(file)
-    render :template => "templates/#{@premium_template.template}/#{file}", :layout => false
+    template_dir = File.join(RAILS_ROOT, 'app', 'views', "templates/#{@premium_template.template}")
+
+    if File.exists?(template_dir)
+      dir_files = Dir.glob(File.join(template_dir, '*'))
+      dir_files.each do |dir_file|
+        if dir_file.match(/#{file}/)
+          render :template => "templates/#{@premium_template.template}/#{file}.html.erb", :layout => false
+          return
+        end
+      end
+    end
+
+    render :text => "No template found called - '#{file}'", :layout => false
   end
 
   def pt_render_view

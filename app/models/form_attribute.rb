@@ -4,6 +4,9 @@ class FormAttribute < ActiveRecord::Base
   SINGLE_RECORD = 1
   LIMITED_RECORDS = 2
   FIELD_TYPES = [:text_field, :text_area, :checkbox, :combobox, :options]
+  DYNAMIC_ATTRIBUTE_TYPES = {
+      :text => 0, :link => 1, :email => 2,
+      :notes => 3, :address => 4}
 
   serialize :fields
   belongs_to :topic

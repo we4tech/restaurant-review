@@ -1,5 +1,6 @@
 class UserMailer < ActionMailer::Base
 
+  include StringHelper
   include UrlOverrideHelper
   helper :restaurants
   helper :url_override
@@ -43,43 +44,31 @@ class UserMailer < ActionMailer::Base
   def comment_notification(review_comment)
     css :fresh
     
-    setup_email(review_comment.review.user, review_comment.topic, review_comment.restaurant)
-    @subject += "#{review_comment.user.login.humanize} has commented on your review at '#{review_comment.restaurant.name}'"
+    setup_email(review_comment.review.user, review_comment.topic, review_comment.any)
+    @subject += "#{review_comment.user.login.humanize} has commented on your review at '#{review_comment.any.name}'"
     @body[:review_comment] = review_comment
-    @body[:url] = "#{restaurant_long_route_url(
-        :topic_name => review_comment.topic.subdomain,
-        :name => review_comment.restaurant.name.parameterize.to_s,
-        :id => review_comment.restaurant.id,
-        :subdomain => review_comment.topic.subdomain)}#review-#{review_comment.review_id}"
+    @body[:url] = "#{event_or_restaurant_url(review_comment.any)}#review-#{review_comment.review_id}"
     @body[:topic] = review_comment.topic
   end
 
   def comment_participants_notification(participant, review_comment)
     css :fresh
 
-    setup_email(participant, review_comment.topic, review_comment.restaurant)
-    @subject += "#{review_comment.user.login.humanize} has commented after your comment at '#{review_comment.restaurant.name}'"
+    setup_email(participant, review_comment.topic, review_comment.any)
+    @subject += "#{review_comment.user.login.humanize} has commented after your comment at '#{review_comment.any.name}'"
     @body[:review_comment] = review_comment
     @body[:participant] = participant
-    @body[:url] = "#{restaurant_long_route_url(
-        :topic_name => review_comment.topic.subdomain,
-        :name => review_comment.restaurant.name.parameterize.to_s,
-        :id => review_comment.restaurant.id,
-        :subdomain => review_comment.topic.subdomain)}#review-#{review_comment.review_id}"
+    @body[:url] = "#{event_or_restaurant_url(review_comment.any)}#review-#{review_comment.review_id}"
     @body[:topic] = review_comment.topic
   end
 
   def review_notification(review)
     css :fresh
-    
-    setup_email(review.restaurant.user, review.topic, review.restaurant)
-    @subject += "#{review.user.login.humanize} has reviewed your #{review.topic.subdomain} '#{review.restaurant.name}'"
+
+    setup_email(review.any.user, review.topic, review.any)
+    @subject += "#{review.user.login.humanize} has reviewed your #{review.topic.subdomain} '#{review.any.name}'"
     @body[:review] = review
-    @body[:url] = "#{restaurant_long_route_url(
-        :topic_name => review.topic.subdomain,
-        :name => review.restaurant.name.parameterize.to_s,
-        :id => review.restaurant.id,
-        :subdomain => review.topic.subdomain)}#review-#{review.id}"
+    @body[:url] = event_or_restaurant_url(review.any)
     @body[:topic] = review.topic
   end
 
@@ -93,11 +82,11 @@ class UserMailer < ActionMailer::Base
   end
 
   protected
-    def setup_email(user, topic, restaurant = nil)
+    def setup_email(user, topic, restaurant_or_event = nil)
       cc_emails = []
 
-      if restaurant && !(restaurant.extra_notification_recipients || []).empty?
-        restaurant.extra_notification_recipients.each{|e| cc_emails << e}
+      if restaurant_or_event && !(restaurant_or_event.extra_notification_recipients || []).empty?
+        restaurant_or_event.extra_notification_recipients.each{|e| cc_emails << e}
       end
 
       @recipients  = "#{user.email}"

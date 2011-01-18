@@ -1,5 +1,5 @@
-Hi <%= @review.restaurant.user.login.humanize %>,
-"<%= @review.user.login.humanize %>" just reviewed "<%= @review.restaurant.name %>".
+Hi <%= @review.any.user.login.humanize %>,
+"<%= @review.user.login.humanize %>" just reviewed "<%= @review.any.name %>".
 
 "<%= h @review.comment %>"
 

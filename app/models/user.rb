@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
   has_many :messages
   has_one :related_image
   has_one :image, :through => :related_image
+  has_many :topic_events
 
   FACEBOOK_CONNECT_ENABLED = 1
   FACEBOOK_CONNECT_DISABLED = 0

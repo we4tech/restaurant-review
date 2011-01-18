@@ -1,0 +1,168 @@
+<%
+   parent_event_options = @parent_events.collect{|te| [te.name, te.id]}
+%>
+
+<div class='event form'>
+  <div class='space_10'></div>
+
+  <% form_for :event, @event,
+              :url => (@event.new_record? ? events_path : event_path(@event)),
+              :html => {:method => (@event.new_record? ? :post : :put)} do |f| %>
+    <%= f.label :event_type, nil, :class => 'grid_2' %>
+    <%= f.select :event_type, TopicEvent::EVENT_TYPES_MAP, {}, :class => 'grid_3' %>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :parent_event_id, nil, :class => 'grid_2' %>
+    <%= f.select :parent_event_id, parent_event_options,
+                 {:include_blank => 'Select Parent Event'},
+                 :class => 'grid_3' %>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :start_at, nil, :class => 'grid_2' %>
+    <div class='grid_5'><%= f.datetime_select :start_at %></div>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :end_at, nil, :class => 'grid_2' %>
+    <div class='grid_5'><%= f.datetime_select :end_at %></div>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :name, nil, :class => 'grid_2' %>
+    <%= f.text_field :name, :class => 'grid_6' %>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :description, nil, :class => 'grid_2' %>
+    <div class='grid_6'>
+      <%= f.text_area :description %>
+    </div>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :description_fields, 'Event attributes', :class => 'grid_2' %>
+    <div class='grid_8'>
+      <%= render_dynamic_fields_container :event, :description_fields %>
+    </div>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :address, nil, :class => 'grid_2' %>
+    <div class='grid_6'>
+      <div id='event_map'
+           title="<%= @event.lat.to_i > 0 && @event.lng.to_i > 0 ? "#{@event.lat},#{@event.lng}" : '23.79,90.42' %>"
+           markerMessage="<h4>Where is the Venue?</h4><small><i style='color: #888; font-size: 10px;'>Set the event venue on the map.</i></small>"
+           infoWindowMessagePrefix="Even will be arranged @"></div>
+      <%= f.text_field :address %>
+      <%= f.hidden_field :lat %>
+      <%= f.hidden_field :lng %>
+    </div>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :completed, nil, :class => 'grid_2' %>
+    <%= f.check_box :completed %>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <%= f.label :suspended, nil, :class => 'grid_2' %>
+    <%= f.check_box :suspended, :onclick => "$('#suspending_reason').toggle('slide')" %>
+    <div class='clear'></div>
+    <div class='space_10'></div>
+
+    <div id='suspending_reason' style="display: <%= @event.suspending_reason.blank? ? 'none' : 'block' %>">
+      <%= f.label :suspending_reason, nil, :class => 'grid_2' %>
+      <%= f.text_area :suspending_reason, :class => 'grid_6', :rows => 5 %>
+      <div class='clear'></div>
+      <div class='space_10'></div>
+    </div>
+
+    <% if current_user.admin? %>
+      <%= f.label :custom_css, nil, :class => 'grid_2' %>
+      <%= f.text_area :custom_css, :class => 'grid_6', :rows => 10 %>
+    <% end %>
+
+    <div class='grid_11' style='text-align: right'>
+      <%= f.submit 'Save', :style => 'height: 30px; width: 100px;' %>
+    </div>
+
+  <% end %>
+
+  <div class='clear'></div>
+  <div class='space_10'></div>
+  <h3>Attachments</h3>
+
+  <div class='space_10'></div>
+
+  <div class="edit_image_gallery">
+    <h3><%= t('subheader.upload_pictures') %></h3>
+
+    <div class="break"></div>
+    <div class="space_5 break"></div>
+    <% form_for MultiImage.new, :url => images_url, :html => {:method => :post, :multipart => true} do |f| %>
+      <input type="hidden" name="topic_event_id" value="<%= @event.id %>"/>
+
+      <div id="duplicable">
+        <div style='margin-bottom: 10px'>
+          <%= f.select :groups, TopicEvent::IMAGE_GROUPS, {}, :index => '' %>
+          <%= f.file_field :uploaded_datum, :index => '' %>
+          <%= f.text_field :captions, :index => '' %>
+        </div>
+      </div>
+
+      <div id='duplicatedItems'></div>
+      <input type="button" value="Add more" id="addMoreImage"/>
+      <%= f.submit t('button.upload') %>
+    <% end %>
+
+    <div class="clear"></div>
+    <div class="space_10"></div>
+    <div class="break"></div>
+    <div class="space_10"></div>
+
+    <% if !@event.images.empty? %>
+      <div class="image_preview">
+        <% @event.images.each do |image| %>
+          <div class="image grid_1">
+            <%= image_tag image.public_filename(:small),
+                          :alt => t('label.not_available'),
+                          :width => '60px' %>
+            <div class="tools">
+              <%= link_to t('nav.delete'), image_url(image),
+                          :method => :delete,
+                          :confirm => t('confirm.delete_image') %>
+            </div>
+          </div>
+        <% end %>
+        <div class="clear"></div>
+      </div>
+    <% else %>
+      No image added!
+    <% end %>
+
+    <div class="space_10"></div>
+    <h3><%= t('subheader.contributed_images') %></h3>
+
+    <div class="break"></div>
+  </div>
+</div>
+
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script type="text/javascript">
+  $.executeSafe(function() {new nicEditor({buttonList : ['bold','italic','underline','left','center','right','ol','ul','fontFormat','indent','outdent','link','unlink','image','upload','xhtml']}).panelInstance('event_description');});
+
+  App.Tasks.addTask(function() {
+    $.executeSafe(function() {
+      App.MapWidget.createMap($('#event_map'), function(pPlacemark) {
+        $('#event_address').val(pPlacemark.address);
+        $('#event_lat').val(pPlacemark.Point.coordinates[1]);
+        $('#event_lng').val(pPlacemark.Point.coordinates[0]);
+      });
+    });
+  });
+
+  $('#addMoreImage').whenClicked({duplicate: $('#duplicable'), to: $('#duplicatedItems')});
+
+</script>

@@ -10,9 +10,9 @@
   </div>
 
   <div class='mailContent'>
-    <h1 style="margin: 0;">Hi <%= link_to @review.restaurant.user.login.humanize, user_long_url(@review.restaurant.user) %>,</h1>
+    <h1 style="margin: 0;">Hi <%= user_link(@review.any.user) %>,</h1>
     <h4 style="margin: 0">"<%= link_to @review.user.login.humanize, user_long_url(@review.user) %>" just reviewed
-      "<%= link_to @review.restaurant.name, restaurant_long_url(@review.restaurant) %>".</h4>
+      "<%= link_to @review.any.name, @url %>".</h4>
 
     <blockquote><%= h @review.comment %></blockquote>
 
@@ -24,11 +24,19 @@
     </div>
     <div class='space_10'></div>
 
-    Related restaurant -
-    <div class='break'></div>
-    <div class='space_10'></div>
-    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => @review.restaurant} %>
-    <div class='space_10'></div>
+    <% if @review.any.is_a?(Restaurant) %>
+      Related restaurant -
+      <div class='break'></div>
+      <div class='space_10'></div>
+      <% if @review.any.is_a?(Restaurant) %>
+        <%= render :partial => 'restaurants/parts/restaurant',
+                   :locals => {:restaurant => @review.any} %>
+      <% elsif @review.any.is_a?(TopicEvent) %>
+        <%= render :partial => 'topic_events/parts/event',
+                   :locals => {:topic_event => @review.any} %>
+      <% end %>
+      <div class='space_10'></div>
+    <% end %>
 
     <pre class='footer'><%= @topic.email_footer %></pre>
   </div>

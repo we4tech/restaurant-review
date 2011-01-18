@@ -1,6 +1,6 @@
 Hi <%= @review_comment.review.user.login.humanize %>,
 
-"<%= @review_comment.user.login.humanize %>" commented on your review at "<%= @review_comment.restaurant.name %>"
+"<%= @review_comment.user.login.humanize %>" commented on your review at "<%= @review_comment.any.name %>"
 
 <%= h @review_comment.content %>
 

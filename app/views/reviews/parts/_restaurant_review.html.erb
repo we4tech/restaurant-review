@@ -1,15 +1,16 @@
 <%
    attached_options = attached_options || {}
+   model_instance = defined?(restaurant) ? restaurant : (defined?(topic_event) ? topic_event : nil)
 %>
 
 <div class="reviews">
-  <% reviews = restaurant.reviews.attached_with(attached_options) %>
+  <% reviews = model_instance.reviews.attached_with(attached_options) %>
 
   <% if !reviews.empty? %>
     <%
-       total_reviews_count = restaurant.reviews.attached_with(attached_options).count
-       loved_count = restaurant.reviews.loved.attached_with(attached_options).count
-       wannago_count = restaurant.reviews.wanna_go.attached_with(attached_options).count
+       total_reviews_count = model_instance.reviews.attached_with(attached_options).count
+       loved_count = model_instance.reviews.loved.attached_with(attached_options).count
+       wannago_count = model_instance.reviews.wanna_go.attached_with(attached_options).count
        loved_percentage = (100 / total_reviews_count) * loved_count
     %>
     <div class='reviewStats'>

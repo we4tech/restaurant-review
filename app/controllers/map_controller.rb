@@ -3,7 +3,15 @@ class MapController < ApplicationController
   layout 'fresh'
 
   def full_view
-    @restaurant = Restaurant.find(params[:rid])
-    @site_title = @restaurant.name
+    if params[:rid]
+      @model_instance = Restaurant.find(params[:rid])
+    elsif params[:eid]
+      @model_instance = TopicEvent.find(params[:eid])
+    else
+      flash[:notice] = 'Invalid parameter'
+      redirect_to :back
+    end
+
+    @site_title = @model_instance.name
   end
 end

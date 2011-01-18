@@ -5,7 +5,7 @@ isp_en: !map:HashWithIndifferentAccess
   notice:
     thanks_for_signing_in: "Thanks for signing up!  We're sending you an email with your activation code."
     user_creation_failed: "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-  label: !map:HashWithIndifferentAccess 
+  label: !map:HashWithIndifferentAccess
     this_place: this ISP
     login: login
     updated: updated
@@ -82,7 +82,7 @@ isp_en: !map:HashWithIndifferentAccess
     review_of: commented a review of {{link}}
     added: added
     sync_tags: Sync tags!
-  button: !map:HashWithIndifferentAccess 
+  button: !map:HashWithIndifferentAccess
     add_review: add my review!
     change_password: Change password
     reset_password: Reset password
@@ -98,9 +98,9 @@ isp_en: !map:HashWithIndifferentAccess
     update: Update
     add_comment: Add comment
     search: Search
-  layout: !map:HashWithIndifferentAccess 
+  layout: !map:HashWithIndifferentAccess
     passionate_food_lovers_community: passionate IPS users community!
-    links: !map:HashWithIndifferentAccess 
+    links: !map:HashWithIndifferentAccess
       update_record: Update your record
       add: Add ISP information
       logout: Logout
@@ -113,22 +113,23 @@ isp_en: !map:HashWithIndifferentAccess
       fb_login: Login with facebook
       home: Home
       login: Login
+      events: Events
       share_on_facebook: Share on facebook
-  featurebox: !map:HashWithIndifferentAccess 
+  featurebox: !map:HashWithIndifferentAccess
     readmore: read more...
     rating: "{{loves_count}} people <span class='icon_loved'>loved</span> it!"
     address: "Address:"
-  confirm: !map:HashWithIndifferentAccess 
+  confirm: !map:HashWithIndifferentAccess
     delete_comment: Do you want to remove this comment?
     delete_image: do you want to delete this image?
     delete_entry: do you really want to remove this entry?
-  title: !map:HashWithIndifferentAccess 
+  title: !map:HashWithIndifferentAccess
     logout: Log out
     image_delete_message: FYI, You can remove this comment with in 10 minutes of its submission time.
     own_this: Do you own this ISP?
     login: Log in
     create_an_account: Create an account
-  nav: !map:HashWithIndifferentAccess 
+  nav: !map:HashWithIndifferentAccess
     share_on_fb: "Shared on facebook"
     add_new_food_menu: Add new ISP Service
     add_news: Add ISP news
@@ -162,16 +163,19 @@ isp_en: !map:HashWithIndifferentAccess
     login: login
     add_image: Add image ({{count}})
     more: Read more
-  module: !map:HashWithIndifferentAccess 
+    add_event: "Add Event"
+    share_on_fb: "Share on facebook"
+  module: !map:HashWithIndifferentAccess
     Most loved places!: Top internet service providers
     Search restaurants: Search internet providers
     Recently reviewed places!: Recent reviewes
     Cuisines & tags: Internet providers services in tags
     Who wanna visit here!: Who wanna try this!
     "Tag cloud!": Find ISP by services
-  frontpage: !map:HashWithIndifferentAccess 
+    Recent Activity: Recent Activity
+  frontpage: !map:HashWithIndifferentAccess
     recommend: Find Internet Service At ?
-  header: !map:HashWithIndifferentAccess 
+  header: !map:HashWithIndifferentAccess
     search_results: Search results!
     wannago: Who else wanna try this ISP!
     reviewed_places: Reviewed internet service providers
@@ -185,7 +189,8 @@ isp_en: !map:HashWithIndifferentAccess
     restaurant_show_page: "{{link}}  \xC2\xBB Edit"
     recommend: Recommend Internet Service Provider!
     login: Log in
-  errors: !map:HashWithIndifferentAccess 
+    all_events: All Events
+  errors: !map:HashWithIndifferentAccess
     invalid_tag: Invalid tag label - {{tag}}
     authorization: You are not authorized
     no_matched_type: Not matched type!
@@ -209,14 +214,14 @@ isp_en: !map:HashWithIndifferentAccess
     login: login
     web_site_url: Web site link
     services: Available services
-  subheader: !map:HashWithIndifferentAccess 
+  subheader: !map:HashWithIndifferentAccess
     contributed_images: User contributed images
     review_on_more_topics: Review on more topics!
     upload_avatar: Upload your avatar
     change_password: Change your account password
     reset_password: Reset your account password
     my_review: Write a review
-    admin: !map:HashWithIndifferentAccess 
+    admin: !map:HashWithIndifferentAccess
       form_attributes_edit: Edit topic
     top_contributors: Top contributors
     active_share: Active share with friends!
@@ -230,7 +235,7 @@ isp_en: !map:HashWithIndifferentAccess
     ongoing_activities: On going activities
   footer: !map:HashWithIndifferentAccess
     copyrights: "\xC2\xA9 Well Treat Us, All rights reserved!"
-    links: !map:HashWithIndifferentAccess 
+    links: !map:HashWithIndifferentAccess
       opensource: Fork on github!
       mobile: Mobile version
       biz_contact: Business Contact

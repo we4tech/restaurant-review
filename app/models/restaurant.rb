@@ -90,7 +90,7 @@ class Restaurant < ActiveRecord::Base
         :include => [:restaurant],
         :offset => p_offset,
         :limit => limit})
-    reviews.collect{|r| r.restaurant}
+    reviews.collect{|r| r.restaurant || r.topic_event}
   end
 
   def self.recently_added_pictures(p_limit = 5, p_offset = 0)

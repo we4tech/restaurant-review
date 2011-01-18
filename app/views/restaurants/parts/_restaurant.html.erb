@@ -1,5 +1,9 @@
 <%
-   images = restaurant.related_images.by_group(nil).collect(&:image)
+   images = []
+   if restaurant.related_images
+     images = restaurant.related_images.by_group(nil).collect(&:image)
+   end
+
    if images.empty?
      images = restaurant.other_images
    end
@@ -75,8 +79,7 @@
           <div class="space_5"></div>
           <div class="break"></div>
           <div class="space_5"></div>
-          <%= link_to tt('nav.read_more_reviews'), restaurant_long_url(
-              :name => url_escape(restaurant.name), :id => restaurant.id) %>
+          <%= link_to tt('nav.read_more_reviews'), restaurant_long_url(restaurant) %>
         </div>
       <% end %>
     <% end %>

@@ -1,14 +1,16 @@
 <%
    attached_options = attached_options || {}
+   model_instance = defined?(restaurant) ? restaurant : (defined?(topic_event) ? topic_event : nil)
 %>
 
 <div class="reviews">
-  <% reviews = restaurant.reviews %>
+  <% reviews = model_instance.reviews.attached_with(attached_options) %>
 
   <% if !reviews.empty? %>
     <%
-       total_reviews_count = restaurant.reviews.count
-       loved_count = restaurant.reviews.loved.count
+       total_reviews_count = model_instance.reviews.attached_with(attached_options).count
+       loved_count = model_instance.reviews.loved.attached_with(attached_options).count
+       wannago_count = model_instance.reviews.wanna_go.attached_with(attached_options).count
        loved_percentage = (100 / total_reviews_count) * loved_count
     %>
     <div class='reviewStats'>
@@ -19,20 +21,20 @@
       <span class="stat_item icon_loved">
         <%= t('label.loves_count', :count => loved_count) %>
       </span>
+      <span class="stat_item icon_wannago">
+        <%= t('label.wanna_go', :count => wannago_count) %>
+      </span>
     </div>
+    <div class='clear'></div>
+    <div class="space_10"></div>
     <div class="break"></div>
     <div class="clear space_10"></div>
 
-    <table>
-      <tbody>
-        <% reviews.each do |review| %>
-          <tr class='reviewBox'>
-            <%= render :partial => 'reviews/parts/review',
-                     :locals => {:tag_name => 'td', :review => review} %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <% reviews.each do |review| %>
+      <%= render :partial => 'reviews/parts/review',
+                 :locals => {:review => review} %>
+      <div class="clear space_5"></div>
+    <% end %>
   <% else %>
     <h4><%= t('label.no_review_added') %></h4>
   <% end %>

@@ -1,5 +1,9 @@
 <div class='attachedWithObjects'>
   <div class='attachedWithObject'>
-    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => object} %>
+    <% if object.is_a?(Restaurant) %>
+      <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => object} %>
+    <% else %>
+      <%= render :partial => 'topic_events/parts/event', :locals => {:topic_event => object} %>
+    <% end %>
   </div>
 </div>

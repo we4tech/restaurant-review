@@ -26,10 +26,7 @@
           <% elsif review.wanna_go? %>
             <%= tt('label.wannago') %>
           <% end %>
-          <%= link_to restaurant.name,
-                      restaurant_long_url(
-                          :name => url_escape(restaurant.name),
-                          :id => restaurant.id)%>
+          <%= link_to restaurant.name, restaurant_long_url(restaurant) %>
         </span>
       </div>
       <div class="clear space_5"></div>

@@ -39,6 +39,9 @@ class StuffEventsController < ApplicationController
       }
 
       format.ajax { render :layout => false}
+      format.mobile {
+        @breadcrumbs = [['All', root_url]] 
+      }
     end
 
   end

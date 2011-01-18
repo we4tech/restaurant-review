@@ -277,6 +277,10 @@ h1, h2, h3, h4, h5, h6 {
   color: crimson !important;
 }
 
+.restaurant_details h1 {
+  font-size: 20px;
+}
+
 .reviews .review {
   padding: 5px;
   background: #f0f0f0;
@@ -1221,11 +1225,13 @@ form .hints {
 
 .geoSearchFields {
   position: absolute;
-  top: 40px;
-  left: 67px;
-  background: #fff;
+  /*top: 60px;*/
+  left: -100%;
+  background: lightyellow;
   padding: 5px;
   border: 2px solid #ccc;
+  z-index: 1000;
+  width: 570px;
 }
 
 #geoSearchMap {
@@ -1244,4 +1250,17 @@ form .hints {
 .searchIcon {
   background: url("/images/fresh/search_icon.png") no-repeat scroll 2px 2px #FFFFFF;
   padding: 2px 2px 2px 20px;
+}
+
+a.link, .ui-widget-content a.link {
+  color: #0066CC;
+}
+
+.add_comment_link {
+  color: #0066cc;
+  font-weight: bold;
+}
+
+.event_banner {
+  text-align: center;
 }

@@ -32,7 +32,7 @@ class Image < ActiveRecord::Base
     p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
   end
 
-  def discover_relation_with_restaurant
+  def discover_relation_with_any
     applicable_keys = RelatedImage.new.attributes.keys.collect{|key| key if key.to_s.match(/_id/)}
     applicable_keys.delete('user_id')
     applicable_keys.delete('image_id')
@@ -81,8 +81,8 @@ class Image < ActiveRecord::Base
           if key != 'restaurant_id'
             model = key.to_s.gsub('_id', '').to_sym
             object = related_image.send(model)
-            if object.respond_to?(:restaurant_id)
-              return object.restaurant
+            if object.is_a?(Restaurant) || object.is_a?(TopicEvent)
+              return object
             end
           else
             return related_image.restaurant
