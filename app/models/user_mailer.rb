@@ -2,6 +2,7 @@ class UserMailer < ActionMailer::Base
 
   include StringHelper
   include UrlOverrideHelper
+  helper :partial_view_helper
   helper :restaurants
   helper :url_override
   helper :topic_based_translation
