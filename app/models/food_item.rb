@@ -10,4 +10,8 @@ class FoodItem < ActiveRecord::Base
   serialize :related_objects
 
   validates_presence_of :name, :restaurant_id, :user_id
+
+  def all_images
+    [image]
+  end
 end

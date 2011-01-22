@@ -2,8 +2,10 @@
   <div class='attachedWithObject'>
     <% if object.is_a?(Restaurant) %>
       <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => object} %>
-    <% else %>
+    <% elsif object.is_a?(TopicEvent) %>
       <%= render :partial => 'topic_events/parts/event', :locals => {:topic_event => object} %>
+    <% elsif object.is_a?(FoodItem) %>
+      <%= render :partial => 'food_items/parts/food_item', :locals => {:food_item => object} %>
     <% end %>
   </div>
 </div>

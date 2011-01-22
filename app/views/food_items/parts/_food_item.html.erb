@@ -1,0 +1,3 @@
+Food menu: <%= food_item.name %>
+<%- if food_item.price.to_f > 0 %>, <%= food_item.price %>/-<% end -%>
+Of <%= restaurant_link(food_item.restaurant) %>

@@ -81,7 +81,7 @@ class Image < ActiveRecord::Base
           if key != 'restaurant_id'
             model = key.to_s.gsub('_id', '').to_sym
             object = related_image.send(model)
-            if object.is_a?(Restaurant) || object.is_a?(TopicEvent)
+            if object.is_a?(Restaurant) || object.is_a?(TopicEvent) || object.is_a?(FoodItem)
               return object
             end
           else
@@ -89,6 +89,8 @@ class Image < ActiveRecord::Base
           end
         end
       end
+
+      nil
     end
   
 end

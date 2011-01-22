@@ -82,7 +82,7 @@ class RestaurantsController < ApplicationController
         
     respond_to do |format|
       format.html { render }
-	    format.mobile { render :text => 'Disabled'}
+	    format.mobile { render }
       format.xml {
       	options = {}
       	options[:only] = params[:fields] if params[:fields]

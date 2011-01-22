@@ -1,4 +1,10 @@
-<% object_instance = @restaurant || @related_object %>
+<% 
+  object_instance = @restaurant || @related_object 
+  case object_instance
+	when FoodItem
+		object_instance = object_instance.restaurant
+  end
+%>
 
 <div id="site_center">
   <div class=" restaurant_details">
@@ -18,7 +24,7 @@
 
   <div class="" id="site_center_boxes">
 
-    <% if @topic.name == 'restaurant' && object_instance.is_a?(Restaurant) %>
+    <% if object_instance && @topic.name == 'restaurant' && object_instance.is_a?(Restaurant) %>
       <div class="site_simple_box restaurant_address" align="center">
         <a href='mailto:biz@welltreat.us?subject=[BIZ knock knock]'
            title="<%= t('title.own_this') %>">
@@ -29,7 +35,7 @@
       <div class="space_10"></div>
     <% end %>
 
-    <% if !(object_instance.address || '').blank? %>
+    <% if object_instance && !(object_instance.address || '').blank? %>
       <div class="site_simple_box restaurant_address">
         <h4>
           <%= t('fields.address') %>
@@ -53,11 +59,12 @@
       </div>
     <% end %>
     <div class="clear"></div>
-
-    <%= render_who_wanna_go_there(object_instance) %>
+	<% if object_instance %>
+    	<%= render_who_wanna_go_there(object_instance) %>
+	<% end %>
   </div>
 </div>
-
+<% if object_instance %>
 <div class="hreview-aggregate">
    <span class="item">
       <span class="<%= I18n.locale.to_s %>"><%= object_instance.name %></span>
@@ -86,3 +93,4 @@
       </span>
    </span>
 </div>
+<% end %>
