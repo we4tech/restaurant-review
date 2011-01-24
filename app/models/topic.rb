@@ -1,6 +1,7 @@
 class Topic < ActiveRecord::Base
 
   CACHES = {}
+  TEMPLATE_DIR = '_generated'
   @@topic_caches = {}
   @@topics_host_maps = {}
 

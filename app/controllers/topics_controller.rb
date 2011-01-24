@@ -56,12 +56,12 @@ class TopicsController < ApplicationController
 
   def new
     @topic_object = Topic.new
-    @themes = detect_themes
+    @themes = detect_themes(nil)
   end
 
   def edit
     @topic_object = Topic.find(params[:id].to_i)
-    @themes = detect_themes
+    @themes = detect_themes(@topic_object)
   end
 
   def update
@@ -71,7 +71,7 @@ class TopicsController < ApplicationController
       flash[:notice] = "Updated topic - '#{@topic_object.name}'"
       redirect_to edit_topic_url(:id => @topic_object.id)
     else
-      @themes = detect_themes
+      @themes = detect_themes(@topic_object)
       render :action => :edit
     end
   end
@@ -92,7 +92,7 @@ class TopicsController < ApplicationController
       redirect_to topics_url
     else
       flash[:notice] = "Please fill up the red marked fields."
-      @themes = detect_themes
+      @themes = detect_themes(nil)
       render :action => :new
     end
   end
@@ -188,18 +188,16 @@ class TopicsController < ApplicationController
       topic.update_attributes(importable_topic_attributes)
     end
 
-    def detect_themes
-      if @@themes.empty?
-        Dir.glob(File.join(RAILS_ROOT, 'config', 'themes', '*.yml')).each do |file|
-          file_name = file.split('/').last.split('.').first
-          @@themes << file_name
+    def detect_themes(topic)
+      themes = []
+      if topic
+        Dir.glob(File.join(RAILS_ROOT, Topic::TEMPLATE_DIR, topic.subdomain, 'templates', '*')).each do |file|
+          file_name = file.split('/').last
+          themes << file_name
         end
-
-        @@themes.sort!
-        @@themes.collect{|t| [t.humanize, t]}
-      else
-        @@themes.collect{|t| [t.humanize, t]}
       end
+
+      themes
     end
 
 end

@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   include SearchHelper
   include MultidomainCookieHelper
   include PartialViewHelperHelper
+  include TemplateServiceHelper
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details

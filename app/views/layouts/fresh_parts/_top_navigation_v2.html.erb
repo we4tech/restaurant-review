@@ -16,7 +16,8 @@
       </fb:login-button>
       |
       <%= link_to tt('layout.links.register'), signup_url, :class => 'register_button' %> |
-      <%= link_to tt('layout.links.photos'), photos_url %>
+      <%= link_to tt('layout.links.photos'), photos_url %> |
+      <%= link_to tt('layout.links.events'), events_url %>
     <% else %>
       <% if !@record_already_added %>
         <%= link_to tt('layout.links.add'), new_restaurant_url, :style => "font-weight: bold; color:yellow;" %> |

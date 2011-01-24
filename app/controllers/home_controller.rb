@@ -42,7 +42,7 @@ class HomeController < ApplicationController
     @breadcrumbs = []
     
     respond_to do |format|
-      format.html { render }
+      format.html { render_topic_template('frontpage', :default => 'home/frontpage.html.erb') }
 	    format.mobile { render }
       format.xml {
       	options = {}

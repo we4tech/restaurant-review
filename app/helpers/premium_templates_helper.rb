@@ -58,6 +58,7 @@ module PremiumTemplatesHelper
       dir_files = Dir.glob(File.join(template_dir, '*'))
       dir_files.each do |dir_file|
         if dir_file.match(/#{file}/)
+          params[:format] = :html
           render :template => "templates/#{@premium_template.template}/#{file}.html.erb", :layout => false
           return
         end

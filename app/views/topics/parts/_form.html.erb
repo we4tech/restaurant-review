@@ -86,7 +86,7 @@
 <div class="space_5"></div>
 
 <label class="grid_2">Theme</label>
-<%= f.select :theme, @themes %>
+<%= f.select :theme, @themes, {:include_blank => 'Default template'} %>
 <div class="clear"></div>
 
 
