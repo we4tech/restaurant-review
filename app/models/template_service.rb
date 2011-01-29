@@ -20,23 +20,26 @@ module TemplateService
       # found return nil
       def find_template_path(topic, file_name, format, options = {})
         path_prefix = RAILS_ROOT
+        format = format || :html
 
-        raise options.inspect
         if options[:layout]
           path_prefix = '../../../'    
         end
 
-        template_file = File.join(path_prefix, Topic::TEMPLATE_DIR,
-                                  topic.subdomain, 'templates',
-                                  topic.theme, "#{file_name}.html.liquid")
-        raise template_file.inspect
-        if File.exists?(template_file)
-          template_file
-        else
-          nil
-        end
+        File.join(path_prefix, Topic::TEMPLATE_DIR,
+                  topic.subdomain, 'templates',
+                  topic.theme, "#{file_name}.#{format.to_s}.liquid")
       end
 
+    end
+  end
+
+  class Util
+    class << self
+      
+      def public_asset_file(topic, file)
+        File.join('/', Topic::TEMPLATE_DIR, topic.subdomain, topic.theme, "#{file}")
+      end
     end
   end
 end

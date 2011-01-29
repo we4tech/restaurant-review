@@ -17,7 +17,7 @@
     <% end %>
 
     <p><%= label_tag 'login', t('fields.login') %><br/>
-      <%= text_field_tag 'login', @login %></p>
+      <%= text_field_tag 'login', @login, :id => 'user_login_field' %></p>
 
     <p><%= label_tag 'password', t('fields.password') %><br/>
       <%= password_field_tag 'password', nil %></p>
@@ -38,3 +38,7 @@
   <% end -%>
 
 </div>
+
+<script type="text/javascript">
+  $('#user_login_field').focus();
+</script>

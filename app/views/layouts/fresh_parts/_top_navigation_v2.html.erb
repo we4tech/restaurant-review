@@ -167,7 +167,6 @@
 <script type="text/javascript">
   App.Tasks.executeTasks();
 
-
   <% if !logged_in? %>
     $('.login_button').click(function() {
       $('#login_form').dialog({
@@ -195,7 +194,7 @@
   });
 
   $('#activities_link').click(function() {
-    $.get("<%= updates_url(:format => :ajax) %>", function(data) {
+    $.get("<%= updates_path(:format => :ajax) %>", function(data) {
       $('#activities_submenu').html(data);
     });
     return false;

@@ -163,6 +163,10 @@ class Topic < ActiveRecord::Base
     end
   end
 
+  def to_liquid
+    self.attributes
+  end
+
   private
     def self.populate_topic_caches
       Topic.all.each do |topic|

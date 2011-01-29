@@ -300,6 +300,10 @@ class HomeController < ApplicationController
     
     redirect_to search_url(url_params)
   end
+  
+  def to_liquid
+    self
+  end
 
   private
     def load_paginated_restaurants

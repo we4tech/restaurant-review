@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
       # Force for url locale
       options[:l] = I18n.locale if !options.keys.include?(:l)
 
-      determine_subdomain! options
+      determine_host! options
 
       # Force Content Format
       if defined?(params) && options[:format].nil? && params[:format]
@@ -60,11 +60,12 @@ class ApplicationController < ActionController::Base
       options
     end
 
-    def determine_subdomain!(options)
+    def determine_host! (options)
       # If ajax is request host, forcefully set different
-      # topic subdomain as url host
+      # topic sub domain as url host
       if request && !options.include?(:subdomain)
         host_parts = request.host.split('.')
+
         if (host_parts.first || '').match(/^ajax\d+$/)
           if @subdomain_routing_stop
             options[:subdomain] = 'www'
@@ -73,6 +74,8 @@ class ApplicationController < ActionController::Base
           end
         elsif @topic.user_subdomain?
           options[:subdomain] = 'www'
+        elsif @topic
+          options[:host] = @topic.public_host
         end
       end
     end
