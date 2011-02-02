@@ -83,8 +83,38 @@ class RestaurantsController < ApplicationController
     respond_to do |format|
       format.html { render }
 	    format.mobile { render }
+	    format.json {
+	      options = {}
+        if (image_versions = params[:image_versions])
+          options = {
+              :include => {
+                  :images => {
+                      :methods => image_versions.collect{|iv| "#{iv}_public_filename".to_sym}},
+                  :other_images => {
+                      :methods => image_versions.collect{|iv| "#{iv}_public_filename".to_sym}
+                  }
+              }
+          }
+        end
+        
+      	options[:only] = params[:fields] if params[:fields]
+      	render :json => @restaurant.to_json(options)
+	    }
       format.xml {
-      	options = {}
+        options = {}
+
+        if (image_versions = params[:image_versions])
+          options = {
+              :include => {
+                  :images => {
+                      :methods => image_versions.collect{|iv| "#{iv}_public_filename".to_sym}},
+                  :other_images => {
+                      :methods => image_versions.collect{|iv| "#{iv}_public_filename".to_sym}
+                  }
+              }
+          }
+        end
+
       	options[:only] = params[:fields] if params[:fields]
       	render :xml => @restaurant.to_xml(options)
       }

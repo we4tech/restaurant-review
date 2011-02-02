@@ -8,14 +8,15 @@ module TemplateServiceHelper
     format = options[:format] || :html
 
     if @topic.theme
-    template_file = TemplateService::Engine.find_template_path(
-        @topic, file_name, format, options)
-    layout_file = TemplateService::Engine.find_template_path(
-        @topic, 'layout', format, options.merge({:layout => true}))
+      template_file = TemplateService::Engine.find_template_path(
+          @topic, file_name, format, options)
+      layout_file = TemplateService::Engine.find_template_path(
+          @topic, 'layout', format, options.merge({:layout => true}))
 
-    assign_common_variables
+      assign_common_variables
+    end
 
-    if template_file
+    if defined?(template_file) && template_file
       render :template => template_file,
              :locals => options[:locals],
              :layout => layout_file

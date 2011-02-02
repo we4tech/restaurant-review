@@ -107,7 +107,7 @@ class Topic < ActiveRecord::Base
   #
   # Determine public host based on if host is defined otherwise standard host with topic.subdomain
   def public_host_config
-    config = {:host => 'welltreat.us', :subdomain => subdomain, :l => locale(:en)}
+    config = {:host => SERVER_DOMAIN[RAILS_ENV.to_sym], :subdomain => subdomain, :l => locale(:en)}
     if default_host
       config = {:host => default_host, :subdomain => 'www', :l => locale(:en)}
     end

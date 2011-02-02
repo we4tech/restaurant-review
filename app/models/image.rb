@@ -1,6 +1,14 @@
 class Image < ActiveRecord::Base
 
   GROUP_MENU = 'food_menu'
+  THUMBNAILS = {
+      :very_small => 'x40',
+      :small => '60x60',
+      :c_small => 'c100x100',
+      :large => 'x200',
+      :very_large => 'x400',
+      :c_very_large => 'c822x515'
+  }
 
   belongs_to :user
   belongs_to :topic
@@ -13,20 +21,22 @@ class Image < ActiveRecord::Base
                   :content_type => :image,
                   :path_prefix => 'public/uploaded_images',
                   :storage => :file_system,
-                  :thumbnails => {
-                      :very_small => 'x40',
-                      :small => '60x60',
-                      :c_small => 'c100x100',
-                      :large => 'x200',
-                      :very_large => 'x400',
-                      :c_very_large => 'c822x515'
-                  }
+                  :thumbnails => THUMBNAILS
   validates_as_attachment
 
   named_scope :recent, :order => 'created_at DESC'
   named_scope :by_topic, lambda{|topic_id| {:conditions => {:topic_id => topic_id}}}
 
   attr_accessor :group
+
+  # Define method for thumbnails
+  THUMBNAILS.keys.each do |image_thumb_name|
+    self.class_eval %{
+      def #{image_thumb_name.to_s}_public_filename      # def very_small_public_filename
+        public_filename(:#{image_thumb_name.to_s})      #   public_filename(:very_small)
+      end                                               # end
+    }
+  end
 
   def author?(p_user)
     p_user && p_user.id == self.user.id || (p_user && p_user.admin?)

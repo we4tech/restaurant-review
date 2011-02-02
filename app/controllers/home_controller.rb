@@ -221,20 +221,46 @@ class HomeController < ApplicationController
       format.html { render :action => :recommend }
       format.mobile { render :action => :recommend }
       format.ajax { render :action => :recommend, :layout => false }
-      format.json { 
+      format.json do 
       	options = {}
       	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]
+      	excepts = params[:excepts] ? params[:excepts] : []
+      	image_versions = params[:image_versions] ? params[:image_versions] : []
+      	
       	@display_last_review = true
-      	render :json => @restaurants.collect{|r| {
-      		:id => r.id, :address => r.address, 
-      		:lat => r.lat, :lng => r.lng, 
-      		:name => r.name, :reviews_count => r.reviews.count,
-      		:reviews_loved => r.reviews.loved.count, :reviews_hated => r.reviews.hated.count,
-      		:marker_icon => 'http://maps.google.com/mapfiles/kml/pal2/icon40.png',
-      		:marker_icon_shadow => 'http://maps.google.com/mapfiles/kml/pal2/icon40s.png',
-      		:marker_html => render_to_string(:partial => 'restaurants/parts/restaurant.html.erb', :locals => {:restaurant => r, :only_html => true}),
-      		:url => restaurant_long_url(r)}}.to_json
-      }
+      	json_attributes = @restaurants.collect do |r| 
+      	  attributes = {
+      		  :id => r.id, :address => r.address, 
+      		  :lat => r.lat, :lng => r.lng, 
+      		  :name => r.name, :reviews_count => r.reviews.count,
+      		  :reviews_loved => r.reviews.loved.count, :reviews_hated => r.reviews.hated.count,
+      		  :marker_icon => 'http://maps.google.com/mapfiles/kml/pal2/icon40.png',
+      		  :marker_icon_shadow => 'http://maps.google.com/mapfiles/kml/pal2/icon40s.png',
+      		  :url => restaurant_long_url(r)
+    		  }
+      		  
+      		['marker_html', 'description'].each do |field|
+      		  if !excepts.include?(field)
+      		    attributes[field.to_sym] = render_to_string(
+      		      :partial => 'restaurants/parts/restaurant.html.erb', 
+      		      :locals => {:restaurant => r, :only_html => true})
+      		  end
+    		  end
+    		  
+    		  # Add images
+    		  if !image_versions.empty? && !r.all_images.empty?
+    		    image_versions.each do |version|
+    		      version.strip!
+    		      attributes["image_#{version}".to_sym] = r.all_images.collect{|img| "http://#{request.host}#{img.public_filename(version.to_sym)}" }
+  		      end
+  		    end
+  		    
+  		    attributes
+  		  end
+  		  
+  		  render :json => json_attributes
+      end
+      
       format.xml { 
       	options = {}
       	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]
