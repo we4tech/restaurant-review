@@ -542,7 +542,9 @@ App.MapWidget = {
           if (navigator.geolocation) {
             mBrowserSupportFlag = true;
             navigator.geolocation.getCurrentPosition(function(position) {
-              marker.setPosition(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+              var currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+              marker.setPosition(currentLocation);
+              mMap.setCenter(currentLocation);
             }, function() {
               alert("Couldn't locate your current location");
             });
