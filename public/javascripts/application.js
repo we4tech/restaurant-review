@@ -535,6 +535,21 @@ App.MapWidget = {
         }
       }
 
+      var mBrowserSupportFlag = true;
+      function detectCurrentPosition() {
+        if (!$pMapWidgetElement.isEmptyAttr('detectCurrentPosition') &&
+            'true' == $pMapWidgetElement.attr('detectCurrentPosition').toLowerCase()) {
+          if (navigator.geolocation) {
+            mBrowserSupportFlag = true;
+            navigator.geolocation.getCurrentPosition(function(position) {
+              mMap.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+            }, function() {
+              alert("Couldn't locate your current location");
+            });
+          }
+        }
+      }
+
       /**
        * Initiate new map object and register in global scope
        */
@@ -544,6 +559,7 @@ App.MapWidget = {
         postConfigureMap();
         setupDraggableMarker();
         //setupGlobalEvents();
+        detectCurrentPosition();
         appearMap();
       }
 

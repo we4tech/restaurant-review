@@ -38,6 +38,7 @@
              title="<%= @restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982" %>"
              markerMessage="<h4>Where is your <%= @topic.name.humanize %>?</h4>"
              infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
+             detectCurrentPosition='true'
              style="width: 100%; height: 100%"></div>
       </div>
       <div>
