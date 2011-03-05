@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -144,8 +145,9 @@
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'notice', :d => Time.now.to_i) %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'top_menu', :d => Time.now.to_i) %>
 <% end %>
-<script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= @topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key %>&hl=en"></script>
+<!--script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= @topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key %>&hl=en"></script-->
 <!--script type="text/javascript" src="http://gmaps-utility-library.googlecode.com/svn/trunk/markermanager/release/src/markermanager.js"/-->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script type="text/javascript">
@@ -196,6 +198,8 @@
       failurelimit : 10
   });
 </script>
+
+<%= yield :bottom %>
 
 </body>
 </html>

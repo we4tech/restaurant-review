@@ -6,6 +6,7 @@
   </title>
 
   <%= stylesheet_link_tag 'fresh/site.mobile.css' %>
+  
   <%= javascript_include_tag 'jquery.min', 'application', :cache => 'mobile-cache' %>
 
   <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
@@ -23,6 +24,7 @@
     <meta name="keywords" content="Mobile Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
   <% end %>
 
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
 
 </head>
@@ -101,6 +103,7 @@
   </script>
 <% end %>
 
+<%= yield :bottom %>
 
 </body>
 </html>

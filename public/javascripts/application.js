@@ -46,53 +46,52 @@
 
   $.fn.markerManager = null,
   $.fn.markersInfo = {},
+  $.fn.mMarkers = [],
 
   $.fn.storeMarkerInfo = function(markerInfo) {
     this.markersInfo[markerInfo.name] = markerInfo;
   },
       
-  $.fn.getMarkerInfo = function(marker) {
-    return this.markersInfo[marker.getTitle()];
+  $.fn.getMarkerInfo = function(markerName) {
+    return this.markersInfo[markerName];
   },
 
   $.fn.mapBuildMarker = function(markerInfo, options) {
     this.storeMarkerInfo(markerInfo);
 
-    var position = new GLatLng(markerInfo.lat, markerInfo.lng);
-    var markerIcon = new GIcon();
-
-    markerIcon.image = markerInfo.marker_icon;
-    markerIcon.shadow = markerIcon.marker_icon_shadow;
-    markerIcon.iconSize = new GSize(32, 32);
-    markerIcon.shadowSize = new GSize(59, 32);
-    markerIcon.iconAnchor = new GPoint(5, 32);
+    var position = new google.maps.LatLng(markerInfo.lat, markerInfo.lng);
+    var markerIcon = new google.maps.MarkerImage({
+      url: '',
+      size: new google.maps.Size(32, 32),
+      anchor: new google.maps.Point(5, 32) 
+    });
 
     var clickCallback = options['onclick'];
 
-    var marker = new GMarker(position, {
+    var marker = new google.maps.Marker({
       title: markerInfo.name + " (" + markerInfo.reviews_count + ' reviews, ' + markerInfo.reviews_loved + ' loves' + ')',
-      icon: markerIcon
+      icon: markerInfo.marker_icon,
+      visible: true,
+      position: position,
+      map: this.mapInstance(),
+      animation: google.maps.Animation.DROP,
+      clickable: true
     });
 
+    marker.markerInfo = markerInfo;
+
     if (clickCallback) {
-      GEvent.addListener(marker, 'click', function() {
+      google.maps.event.addListener(marker, 'click', function() {
         clickCallback(marker, markerInfo);
       });
     }
     return marker;
   },
 
-  /**
-   * Add marker for the specific map instance
-   */
-  $.fn.mapAddMarkers = function(markers) {
-    var $this = $(this);
-    var map = $this.mapInstance();
-
-    for (var i = 0; i < markers.length; i++) {
-      map.addOverlay(markers[i]);
+  $.fn.clearMarkers = function() {
+    for (var i = 0; i < this.mMarkers.length; i++) {
+      this.mMarkers[i].setMap(null);
     }
-
   },
 
   $.executeLater = function(callback, duration) {
@@ -106,22 +105,22 @@
       if (data) {
         $.executeLater(function() {
           if (clear) {
-            $this.mapInstance().clearOverlays();
+            //$this.clearMarkers();
           }
           var markers = [];
 
           for (var i = 0; i < data.length; i++) {
-            markers.push($this.mapBuildMarker(data[i], {
-              onclick: function(marker, markerInfo) {
-                pHiddenDialogContent.html(markerInfo.marker_html).dialog({
-                  'title': markerInfo.name + " (" + markerInfo.reviews_count + ' reviews, ' + markerInfo.reviews_loved + ' loves' + ')',
-                  'width': '600px',
-                  'modal': true,
-                  'closeOnEscape': true})
-              }}));
+            if (data[i] && $this.getMarkerInfo(data[i].name) == null) {
+              markers.push($this.mapBuildMarker(data[i], {
+                onclick: function(marker, markerInfo) {
+                  pHiddenDialogContent.html(markerInfo.marker_html).dialog({
+                    'title': markerInfo.name + " (" + markerInfo.reviews_count + ' reviews, ' + markerInfo.reviews_loved + ' loves' + ')',
+                    'width': '600px',
+                    'modal': true,
+                    'closeOnEscape': true})
+                }}));
+            }
           }
-
-          $this.mapAddMarkers(markers);
         }, 1000);
       }
     });
@@ -342,6 +341,24 @@ App.MapWidget = {
   mTextField : null,
   mInitiatedMaps : {},
 
+  Position: function(latLng, address) {
+    this.mLatLng = latLng;
+    this.mAddress = address;
+
+    this.getLatLng = function() {
+      return this.mLatLng;
+    };
+
+    this.getAddress = function() {
+      return this.mAddress;
+    };
+
+    this.address = this.getAddress;
+
+    this.lat = function() { return this.mLatLng.lat() };
+    this.lng = function() { return this.mLatLng.lng() };
+  },
+
   createMap: function($pMapWidgetElement, pCallback) {
     if (!$pMapWidgetElement.mapInstance()) {
 
@@ -352,6 +369,13 @@ App.MapWidget = {
         'mapHeight': '300px',
         'title': '23.7230556,90.4086111',
         'mapReadOnly': 'false'
+      };
+
+      var instanceOptions = {
+        zoom: 13,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoomControl: true,
+        animation: google.maps.Animation.DROP
       };
 
       /**
@@ -368,7 +392,7 @@ App.MapWidget = {
 
       }
 
-      var center = null;
+      var mCenter = null;
 
       /**
        * Set default location from the "title" attribute or use the default one
@@ -376,8 +400,8 @@ App.MapWidget = {
       function setCenter() {
         var defaultLocation = mapOptions['title'];
         var locationParts = defaultLocation.split(",");
-        center = new GLatLng(locationParts[0], locationParts[1]);
-        map.setCenter(center, 13);
+        mCenter = new google.maps.LatLng(locationParts[0], locationParts[1]);
+        mMap.setCenter(mCenter, 13);
       }
 
       /**
@@ -385,8 +409,8 @@ App.MapWidget = {
        */
       function postConfigureMap() {
         try {
-          map.setUIToDefault();
-          map.enableGoogleBar();
+          //map.setUIToDefault();
+          //map.enableGoogleBar();
 
           setCenter();
         } catch ($e) {
@@ -405,29 +429,42 @@ App.MapWidget = {
           markerOptions['draggable'] = true;
         }
 
-        marker = new GMarker(center, markerOptions);
-        marker.openInfoWindowHtml(mapOptions['markerMessage']);
-        map.addOverlay(marker);
+        markerOptions['position'] = mCenter;
+        markerOptions['map'] = mMap;
+        markerOptions['title'] = mapOptions['markerMessage']; 
+
+        marker = new google.maps.Marker(markerOptions);
+        var infoWindow = new google.maps.InfoWindow({
+          content: mapOptions['markerMessage']
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infoWindow.open(mMap, marker);
+        });
+
 
         if (mapOptions['mapReadOnly'] == 'false') {
-          GEvent.addListener(marker, "dragstart", function() {
-            map.closeInfoWindow();
+          google.maps.event.addListener(marker, "dragstart", function() {
+            infoWindow.close();
           });
 
-          GEvent.addListener(marker, "dragend", function() {
-            var place = marker.getLatLng();
+          google.maps.event.addListener(marker, "dragend", function() {
+            var position = marker.getPosition();
             var address = null;
-            marker.openInfoWindowHtml("Retrieving address...");
+
+            infoWindow.setContent("Retrieving address...");
+            infoWindow.open(mMap, marker);
+
             if (App.MapWidget.mGeoCoder == null) {
-              App.MapWidget.mGeoCoder = new GClientGeocoder();
+              App.MapWidget.mGeoCoder = new google.maps.Geocoder();
             }
 
-            App.MapWidget.mGeoCoder.getLocations(place, function(response) {
-              if (response || response.Status.code == 200) {
-                var placemark = response.Placemark[0];
-                marker.openInfoWindowHtml(mapOptions['infoWindowMessagePrefix'] + placemark.address);
+            App.MapWidget.mGeoCoder.geocode({'latLng': position}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                var location = new App.MapWidget.Position(position, results[1].formatted_address);
+                infoWindow.setContent(mapOptions['infoWindowMessagePrefix'] + location.getAddress());
                 if (pCallback) {
-                  pCallback(placemark);
+                  pCallback(location);
                 }
               }
             });
@@ -440,7 +477,7 @@ App.MapWidget = {
        */
       function addEventForAnyMarkerPlacement() {
         if (mapOptions['mapReadOnly'] == 'false') {
-          GEvent.addListener(map, 'addoverlay', function(pOverlay) {
+          GEvent.addListener(mMap, 'addoverlay', function(pOverlay) {
             if (pOverlay instanceof GMarker) {
               var place = pOverlay.getLatLng();
               marker.setLatLng(place);
@@ -478,21 +515,23 @@ App.MapWidget = {
        * Appear map object
        */
       function appearMap() {
-        $pMapWidgetElement.appear();
-        map.checkResize();
+        if ($pMapWidgetElement.appear) {
+          $pMapWidgetElement.appear();
+        }
+        //mMap.checkResize();
       }
 
-      var map = null;
+      var mMap = null;
 
       /**
        * Create new map instance
        */
       function createInstance() {
         try {
-          map = new GMap2(document.getElementById($pMapWidgetElement.attr('id')));
-          App.MapWidget.mInitiatedMaps[$pMapWidgetElement.attr('id')] = map;
+          mMap = new google.maps.Map($pMapWidgetElement[0], instanceOptions);
+          App.MapWidget.mInitiatedMaps[$pMapWidgetElement.attr('id')] = mMap;
         } catch ($e) {
-          // alert("Failed to create map - " + $e);
+          alert("Failed to create map - " + $e);
         }
       }
 
@@ -504,7 +543,7 @@ App.MapWidget = {
         createInstance();
         postConfigureMap();
         setupDraggableMarker();
-        setupGlobalEvents();
+        //setupGlobalEvents();
         appearMap();
       }
 

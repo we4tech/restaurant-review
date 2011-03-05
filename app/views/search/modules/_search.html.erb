@@ -50,9 +50,8 @@
       if ($geoPanel.css('display') == 'none') {
         try {
           App.MapWidget.createMap($('#geoSearchMap'), function(pPlacemark) {
-            //$('#restaurant_address').val(pPlacemark.address);
-            $('#geoLat').val(pPlacemark.Point.coordinates[1]);
-            $('#geoLng').val(pPlacemark.Point.coordinates[0]);
+            $('#geoLat').val(pPlacemark.lat());
+            $('#geoLng').val(pPlacemark.lng());
           });
         } catch (e) { }
 

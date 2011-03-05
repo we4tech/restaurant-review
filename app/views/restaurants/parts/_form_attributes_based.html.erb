@@ -108,9 +108,9 @@
   <script type="text/javascript">
     $.executeLater(function() {
       App.MapWidget.createMap($('#google_map_canvas'), function(pPlacemark) {
-        $('#restaurant_address').val(pPlacemark.address);
-        $('#restaurant_lat').val(pPlacemark.Point.coordinates[1]);
-        $('#restaurant_lng').val(pPlacemark.Point.coordinates[0]);
+        $('#restaurant_address').val(pPlacemark.address());
+        $('#restaurant_lat').val(pPlacemark.lat());
+        $('#restaurant_lng').val(pPlacemark.lng());
       });
     });
   </script>

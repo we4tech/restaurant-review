@@ -62,7 +62,8 @@
 	  <div class='mobile_buttons'>
 		<ul>
 			<% if !(@restaurant.string1 || '').blank? %>
-				<li class='leftEnabled'><a href='wtai://wp/mc;<%= @restaurant.string1 %>;'>Call</a></li>
+        <!-- Nokia - wtai://wp/mc; -->
+				<li class='leftEnabled'><a href='<%= @restaurant.string1 %>;'>Call</a></li>
 			<% else %>
 				<li class='leftDisabled'>Call</li>
 			<% end %>

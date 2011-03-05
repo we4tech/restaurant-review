@@ -147,6 +147,9 @@ ActionController::Routing::Routes.draw do |map|
   # Full map
   map.full_map '/full_map', :controller => 'map', :action => 'full_view'
 
+  # Custom url handler
+  #map.custom '/ud/:url', :controller => ''
+
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.

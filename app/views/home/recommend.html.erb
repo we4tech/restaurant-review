@@ -31,7 +31,10 @@
         <input type='hidden' name='_models' value='Restaurant'/>
 
         <div class="tags">
-          <h4>Filter by location - </h4>
+          <h4>Filter by <small>(keywords, location & tags)</small> - </h4>
+          <div class="space_10"></div>
+          <input type="text" name="name|short_array|long_array|description[]"
+                 style="width: 100%" value="<%= params['name|short_array|long_array|description'] %>"/>
           <div class="space_10"></div>
           <div class="highlight">
             <label for='smallMapLat' class="grid_1">Latitude</label>
@@ -71,10 +74,10 @@
                 //App.MapWidget.mMap.checkResize();
             });
 			var gmailCheckInterval = setTimeout(function() {
-				if (GMap2 != null) {					
+				if (google != null && google.maps != null) {					
 					App.MapWidget.createMap($('#smallMap'), function(pPlacemark) {
-		                $('#geoLat, #smallMapLat').val(pPlacemark.Point.coordinates[1]);
-		                $('#geoLng, #smallMapLng').val(pPlacemark.Point.coordinates[0]);
+		                $('#geoLat, #smallMapLat').val(pPlacemark.lat());
+		                $('#geoLng, #smallMapLng').val(pPlacemark.lng());
 		            });
 					//clearInterval(gmailCheckInterval);
 				}

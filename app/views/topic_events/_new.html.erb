@@ -156,9 +156,9 @@
   App.Tasks.addTask(function() {
     $.executeSafe(function() {
       App.MapWidget.createMap($('#event_map'), function(pPlacemark) {
-        $('#event_address').val(pPlacemark.address);
-        $('#event_lat').val(pPlacemark.Point.coordinates[1]);
-        $('#event_lng').val(pPlacemark.Point.coordinates[0]);
+        $('#event_address').val(pPlacemark.address());
+        $('#event_lat').val(pPlacemark.lat());
+        $('#event_lng').val(pPlacemark.lng());
       });
     });
   });

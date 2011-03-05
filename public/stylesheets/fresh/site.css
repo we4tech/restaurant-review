@@ -1264,3 +1264,7 @@ a.link, .ui-widget-content a.link {
 .event_banner {
   text-align: center;
 }
+
+h4 small {
+  font-size: 60%;
+}

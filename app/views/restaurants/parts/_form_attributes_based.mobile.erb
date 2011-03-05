@@ -20,25 +20,29 @@
      default_value = field['default_value']
   %>
   <% if text_field && !address_field %>
-    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
-    <%= f.text_field field_name, :class => field_type %>
+    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
+    <%= f.text_field field_name, :class => "#{field_type} full_field" %>
     <%= f.error_message_on field_name %>
     <br/>
   <% elsif text_area && !address_field %>
-    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
-    <%= f.text_area field_name, :class => field_type %>
+    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
+    <%= f.text_area field_name, :class => "#{field_type} full_field" %>
     <%= f.error_message_on field_name %>
     <% text_area_included = true %>
     <br/>
   <% elsif text_field && address_field %>
-    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
     <div class="grid_6">
       <div>
-        <div id="google_map_canvas" title="<%= "#{@restaurant.lat},#{@restaurant.lng}" %>" style="width: 300px; height: 300px"></div>
+        <div id="google_map_canvas"
+             title="<%= @restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982" %>"
+             markerMessage="<h4>Where is your <%= @topic.name.humanize %>?</h4>"
+             infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
+             style="width: 100%; height: 100%"></div>
       </div>
       <div>
         <%= f.text_field field_name,
-                         :class => field_type,
+                         :class => "#{field_type} full_field",
                          :onkeyup => 'App.MapWidget.displayOnKeyPress(this, \'google_map_canvas\')' %>
         <%= f.error_message_on field_name %>
         <br/>
@@ -48,35 +52,39 @@
     </div>
     <div class="clear"></div>
     <% location_included = true %>
+    <br/>
 
   <% elsif combobox %>
-    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
-    <%= f.select field_name, default_value.split('|'), {}, :class => field_type %>
+    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
+    <%= f.select field_name, default_value.split('|'), {}, :class => "#{field_type} full_field" %>
     <%= f.error_message_on field_name %>
     <br/>
 
   <% elsif checkbox %>
-    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
     <%= f.check_box field_name, :class => field_type %>
     <%= f.error_message_on field_name %>
     <br/>
 
   <% elsif options %>
-    <label><%= tt field_label %><%= required ? ' (*)' : '' %></label><br/>
+    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
     <div class='options_box'>
+      
       <% existing_value = @restaurant.send(field_name) || []  %>
 
-      <% (default_value || '').split(/\|/).sort.each do |option| %>
-        <% option.strip! %>
-        <div class='option'>
-          <input id='<%= option_field_id = "option_#{option}" %>'
-                 type='checkbox' name='restaurant[<%= field_name %>][]'
-                 value="<%= option %>" class="<%= field_type %>"
-                 <%= existing_value.include?(option) ? 'checked="checked"' : '' %>
-                 />
-          <label for="<%= option_field_id %>"><%= option %></label>
-        </div>
-      <% end %>
+      <div class="tags" id="field_<%= field_name %>">
+        <% parse_default_value(default_value).sort.each do |option| %>
+          <% option.strip! %>
+          <div class='option'>
+            <input id='<%= option_field_id = "option_#{url_escape(option)}" %>'
+                   type='checkbox' name='restaurant[<%= field_name %>][]'
+                   value="<%= option %>" class="<%= field_type %>"
+                   <%= existing_value.include?(option) ? 'checked="checked"' : '' %>
+                   />
+            <label for="<%= option_field_id %>"><%= option %></label>
+          </div>
+        <% end %>
+      </div>
     </div>
     <%= f.error_message_on field_name %>
     <br clear="all"/>
@@ -88,18 +96,25 @@
 
 
 <% if location_included && params[:no_script].nil? %>
-  <script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= @topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key %>&hl=en"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
   <script type="text/javascript">
-    App.MapWidget.createMap($('#google_map_canvas'), function(pPlacemark) {
-      $('#restaurant_address').val(pPlacemark.address);
-      $('#restaurant_lat').val(pPlacemark.Point.coordinates[1]);
-      $('#restaurant_lng').val(pPlacemark.Point.coordinates[0]);
+    $.executeLater(function() {
+      App.MapWidget.createMap($('#google_map_canvas'), function(pPlacemark) {
+        $('#restaurant_address').val(pPlacemark.address());
+        $('#restaurant_lat').val(pPlacemark.lat());
+        $('#restaurant_lng').val(pPlacemark.lng());
+      });
     });
   </script>
 <% end %>
 
 <script type="text/javascript">
-  $('input, textarea').bind('keypress', function(pEvent) {
-    mFormContentChanged = true;  
+  $('input, textarea, .nicEdit-main').bind('keypress', function(pEvent) {
+    mFormContentChanged = true;
   });
+
+  $('.tagSearchField').each(function() {
+    new App.TagSearcher($(this));
+  });
+
 </script>
