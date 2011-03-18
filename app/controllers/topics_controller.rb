@@ -184,6 +184,9 @@ class TopicsController < ApplicationController
 
       # Remove id
       importable_topic_attributes.delete('id')
+      if importable_topic_attributes.include?('form_attribute')
+        importable_topic_attributes[:form_attribute] = FormAttribute.new(importable_topic_attributes['form_attribute'])
+      end
 
       # Update attributes
       topic.update_attributes(importable_topic_attributes)
