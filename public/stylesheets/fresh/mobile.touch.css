@@ -1,0 +1,24 @@
+.siteInfo {
+  color: #ccc;
+  font-size: 80%;
+  margin-bottom: 10px;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.copyrights {
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.logo {
+  position: relative;
+  top: -15px;
+}
+.logo img {
+  width: 100px;  
+}
+
+.ui-header {
+  height: 40px;
+}

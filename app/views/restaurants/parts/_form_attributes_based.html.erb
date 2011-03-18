@@ -19,19 +19,20 @@
      field_label = field['label']
      default_value = field['default_value']
   %>
+
   <% if text_field && !address_field %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
+    <label><%= tt("fields.#{(field_label.blank? ? field_name : field_label)}") %><%= required ? ' (*)' : '' %></label><br/>
     <%= f.text_field field_name, :class => field_type %>
     <%= f.error_message_on field_name %>
     <br/>
   <% elsif text_area && !address_field %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
+    <label><%= tt("fields.#{(field_label.blank? ? field_name : field_label)}") %><%= required ? ' (*)' : '' %></label><br/>
     <%= f.text_area field_name, :class => field_type %>
     <%= f.error_message_on field_name %>
     <% text_area_included = true %>
     <br/>
   <% elsif text_field && address_field %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
+    <label><%= tt("fields.#{(field_label.blank? ? field_name : field_label)}") %><%= required ? ' (*)' : '' %></label><br/>
     <div class="grid_6">
       <div>
         <div id="google_map_canvas"
@@ -56,19 +57,19 @@
     <br/>
 
   <% elsif combobox %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
+    <label><%= tt("fields.#{(field_label.blank? ? field_name : field_label)}") %><%= required ? ' (*)' : '' %></label><br/>
     <%= f.select field_name, default_value.split('|'), {}, :class => field_type %>
     <%= f.error_message_on field_name %>
     <br/>
 
   <% elsif checkbox %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
+    <label><%= tt("fields.#{(field_label.blank? ? field_name : field_label)}") %><%= required ? ' (*)' : '' %></label><br/>
     <%= f.check_box field_name, :class => field_type %>
     <%= f.error_message_on field_name %>
     <br/>
 
   <% elsif options %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
+    <label><%= tt("fields.#{(field_label.blank? ? field_name : field_label)}") %><%= required ? ' (*)' : '' %></label><br/>
     <div class='options_box'>
       <input name='tag_search_keywords' class="tagSearchField searchIcon"
              type="text" title="field_<%= field_name %>"

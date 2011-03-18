@@ -67,6 +67,7 @@ class TopicsController < ApplicationController
   def update
     @topic_object = Topic.find(params[:id].to_i)
     @site_labels = params[:site_labels]
+    @site_labels = Topic::sanitize_site_labels(@site_labels)
     if @topic_object.update_attributes(params[:topic].merge(:site_labels => @site_labels))
       flash[:notice] = "Updated topic - '#{@topic_object.name}'"
       redirect_to edit_topic_url(:id => @topic_object.id)
@@ -80,6 +81,7 @@ class TopicsController < ApplicationController
     @topic_object = Topic.new(params[:topic])
     @site_labels = params[:site_labels]
     @topic_object.site_labels = @site_labels
+    @topic_object.sanitize_site_labels!
     @topic_object.form_attribute = FormAttribute.new
     @topic_object.form_attribute.fields = [
             {'field' => 'name', 'type' => 'text_field', 'required' => true, 'index' => 0},
@@ -135,7 +137,7 @@ class TopicsController < ApplicationController
     respond_to do |format|
       format.xml {render(:xml => @topic_object)}
       format.json {
-        send_data(@topic_object.to_json,
+        send_data(@topic_object.to_json(:include => :form_attribute),
                   :filename => "#{@topic_object.name}.json",
                   :disposition => "attachment; filename=\"#{@topic_object.name}.json\"")
       }
@@ -182,7 +184,6 @@ class TopicsController < ApplicationController
 
       # Remove id
       importable_topic_attributes.delete('id')
-      importable_topic_attributes.delete('name')
 
       # Update attributes
       topic.update_attributes(importable_topic_attributes)

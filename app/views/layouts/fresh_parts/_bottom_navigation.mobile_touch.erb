@@ -1,0 +1,63 @@
+<ul data-role="listview" data-inset='true'>
+  <li data-role='list-divider'>Navigation</li>
+
+  <%= yield :navigation %>
+
+  <li>
+    <% if I18n.locale.to_s == 'en' %>
+      <a href='/?l=bn'>বাংলা</a>
+    <% else %>
+      <a href='/?l=en'>English</a>
+    <% end %>
+  </li>
+
+  <li>
+    <%= link_to t('layout.links.home'), root_path %>
+  </li>
+
+  <% if not logged_in? %>
+    <li><%= link_to tt('layout.links.login'), login_path(:dialog => true),
+                    :'data-rel' => 'dialog', :'data-transition' => 'slideup' %></li>
+    <li>
+      <fb:login-button perms="email,publish_stream,create_event,rsvp_event">
+        <%= t('layout.links.fb_login') %>
+      </fb:login-button>
+    </li>
+    <li><%= link_to tt('layout.links.register'), signup_path %></li>
+    <li><%= link_to tt('layout.links.photos'), photos_path %></li>
+    <li><%= link_to 'PC version', root_path(:format => :html) %></li>
+  <% else %>
+    <% if !@record_already_added %>
+      <li><%= link_to tt('layout.links.add'), new_restaurant_path %></li>
+    <% else %>
+      <li><%= link_to tt('layout.links.update_record'), update_your_record_path %></li>
+    <% end %>
+    <li><%= render_activities_link %></li>
+    <li><%= link_to tt('layout.links.my_page'), user_long_path(current_user) %></li>
+    <li><%= link_to tt('layout.links.photos'), photos_path %></li>
+    <% if current_user.facebook_session_exists? %>
+      <li>
+        <%= link_to t('layout.links.share_on_facebook'), facebook_account_status_update_path(
+            :status => current_user.facebook_connect_enabled? ? 1 : 0) %>
+      </li>
+    <% else %>
+      <li>
+        <fb:login-button perms="email,publish_stream,create_event,rsvp_event"
+                         onlogin='window.location.reload()'>
+          <%= t('layout.links.auto_share_on_facebook') %>
+        </fb:login-button>
+      </li>
+    <% end %>
+
+    <% if current_user.admin? %>
+      <li><%= link_to t('layout.links.admin'), admin_path %></li>
+    <% end %>
+
+    <li><%= link_to t('layout.links.edit_user'), edit_user_path(current_user) %></li>
+    <% if current_user.facebook_session_exists? %>
+      <li><%= link_to t('layout.links.logout'), fb_logout_path %></li>
+    <% else %>
+      <li><%= link_to t('layout.links.logout'), logout_path %></li>
+    <% end %>
+  <% end %>
+</ul>

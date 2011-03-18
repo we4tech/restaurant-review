@@ -44,6 +44,7 @@ class HomeController < ApplicationController
     respond_to do |format|
       format.html { render_topic_template('frontpage', :default => 'home/frontpage.html.erb') }
 	    format.mobile { render }
+      format.mobile_touch { render }
       format.xml {
       	options = {}
       	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]

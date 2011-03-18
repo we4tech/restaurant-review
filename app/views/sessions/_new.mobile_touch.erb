@@ -1,0 +1,20 @@
+<% content_for :content do %>
+
+  <a href="#" class='ui-collapsible-heading-toggle ui-btn ui-btn-icon-left ui-shadow ui-corner-all ui-btn-up-e'>
+    <span class="ui-btn-inner ui-corner-all">
+      <%= flash[:notice] || flash[:error] %>
+    </span>
+  </a>
+
+  <% form_tag session_path(:dialog => true), :'data-rel' => 'dialog' do -%>
+    <%= text_field_tag 'login', @login, :placeholder => t('fields.login') %>
+    <%= password_field_tag 'password', nil, :placeholder => t('fields.password') %>
+    <%= label_tag 'remember_me', t('fields.remember') %>
+    <%= check_box_tag 'remember_me', '1', @remember_me %>
+    <%= submit_tag t('button.login') %>
+  <% end -%>
+<% end %>
+
+<% content_for :navigation do %>
+  <li><%= link_to t('nav.did_you_forgot'), reset_password_url %></li>
+<% end %>

@@ -14,8 +14,8 @@
         <h4>Facts:</h4>
         <%= @user.login.camelcase %> <%= t('label.joined_our_community') %>
         <span class="highlight"><%= distance_of_time_in_words(Time.now, @user.created_at) %></span> <%= t('label.back') %>.<br/>
-        <%= t('label.already_added') %> <span class="highlight"><%= @user.restaurants.count %></span> <%= @topic.name.pluralize %>.<br/>
-        <%= t('label.already_reviewed') %> <span class="highlight"><%= @user.reviews.count %></span> <%= @topic.name.pluralize %>. <br/>
+        <%= t('label.already_added') %> <span class="highlight"><%= @user.restaurants.count %></span> <%= @topic.name.humanize.pluralize %>.<br/>
+        <%= t('label.already_reviewed') %> <span class="highlight"><%= @user.reviews.count %></span> <%= @topic.name.humanize.pluralize %>. <br/>
         <%= t('label.already_commented')%> <span class="highlight"><%= @user.review_comments.count %> <%= t('label.times')%></span> <%= t('label.on_other_reviews')%><br/>
         <%= t('label.already') %> <span class="icon_loved"><%= t('label.loved') %></span> <span class="highlight"><%= @user.reviews.loved.count %></span> <%= t('label.and') %>
         <span class="icon_hated"><%= t('label.disliked') %></span> <span class="highlight"><%= @user.reviews.hated.count %></span> <%= @topic.label.pluralize %>.<br/>

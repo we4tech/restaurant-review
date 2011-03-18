@@ -18,6 +18,9 @@ module UrlOverrideHelper
     end
   end
 
+  alias :user_long_path :user_long_url
+
+
   def user_link(user)
     link_to user.login.humanize, user_long_url(user)
   end
@@ -192,7 +195,7 @@ module UrlOverrideHelper
   #
   # Determine site root url based on the specific topic, either select
   # default site root or select event's page root.
-  def root_or_specific_root_url (model_instance)
+  def root_or_specific_root_url(model_instance)
     case model_instance
       when TopicEvent
         events_url

@@ -1,6 +1,7 @@
 module StringHelper
 
   def url_escape(text)
+    return if text.nil?
     text.parameterize.to_s
   end
 

@@ -11,7 +11,7 @@
     <% if !@topics.empty? %>
       <% @topics.each do |topic| %>
         <div class='admin_topic'>
-          <b style="color: <%= topic.enabled? ? '' : 'red' %>">#<%= topic.id %> - <%= topic.label %></b>
+          <b style="color: <%= topic.enabled? ? '' : 'red' %>">#<%= topic.id %> - <%= link_to topic.label, "http://#{topic.public_host}" %></b>
           [
           <%= link_to 'edit', edit_topic_url(:id => topic.id) %> |
           <%= link_to 'form attributes', form_attribute_by_topic_url(:topic_id => topic.id) %> |

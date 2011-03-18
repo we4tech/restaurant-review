@@ -1,0 +1,13 @@
+<% if logged_in? %>
+  <% if !@record_already_added %>
+    <%= link_to tt('layout.links.add'), new_restaurant_path(:dialog => true),
+                :class => 'ui-btn-right', :'data-rel' => 'dialog', :'data-transition' => 'slideup' %>
+  <% else %>
+    <%= link_to tt('layout.links.update_record'), update_your_record_path(:dialog => true),
+                :class => 'ui-btn-right', :'data-rel' => 'dialog', :'data-transition' => 'slideup' %>
+  <% end %>
+<% else %>
+  <%= link_to tt('layout.links.login'), login_path(:dialog => true),
+              :class => 'ui-btn-right', :'data-rel' => 'dialog', :'data-transition' => 'slideup' %>
+<% end %>
+

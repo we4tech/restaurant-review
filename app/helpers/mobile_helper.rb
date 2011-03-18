@@ -1,21 +1,30 @@
 module MobileHelper
 
   NON_MOBILE_FORMATS = ['html', 'ajax']
+  MOBILE_DEFAULT_FORMAT = MOBILE_FORMAT = 'mobile'
+  MOBILE_TOUCH_FORMAT = 'mobile_touch'
 
   def detect_mobile_view
-    if params[:format].to_s.downcase == 'mobile'
+    if format_type = params[:format].to_s.downcase =~ /#{MOBILE_FORMAT}|#{MOBILE_TOUCH_FORMAT}/
       @mobile = true
-      session[:mobile_format] = true
+      session[:mobile_format] = format_type
     elsif NON_MOBILE_FORMATS.include? params[:format].to_s.downcase
       session[:mobile_format] = nil
       @mobile = false
-    elsif session[:mobile_format]
+    elsif backward_compatible session[:mobile_format]
       @mobile = true
-      params[:format] = 'mobile'
+      params[:format] = backward_compatible session[:mobile_format]
     elsif mobile_device?
       @mobile = true
-      session[:mobile_format] = true
-      params[:format] = 'mobile'
+      session[:mobile_format] = params[:format] = MOBILE_DEFAULT_FORMAT
+    end
+  end
+
+  def backward_compatible(old_format)
+    if old_format.is_a?(String)
+      old_format
+    else
+      old_format.is_a?(TrueClass) ? MOBILE_DEFAULT_FORMAT : nil
     end
   end
 

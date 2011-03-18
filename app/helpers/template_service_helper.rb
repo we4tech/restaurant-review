@@ -7,7 +7,7 @@ module TemplateServiceHelper
   def render_topic_template(file_name, options = {})
     format = options[:format] || :html
 
-    if @topic.theme
+    if !@topic.theme.blank?
       template_file = TemplateService::Engine.find_template_path(
           @topic, file_name, format, options)
       layout_file = TemplateService::Engine.find_template_path(

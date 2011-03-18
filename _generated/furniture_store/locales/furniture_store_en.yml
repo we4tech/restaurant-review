@@ -1,0 +1,423 @@
+--- !map:HashWithIndifferentAccess
+furniture_store_en: !map:HashWithIndifferentAccess
+  topic:
+    Furniture stores: Bangladeshi Furniture Stores
+  notice:
+    thanks_for_signing_in: "Thanks for signing up!  We're sending you an email with your activation code."
+    user_creation_failed: "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
+  label: !map:HashWithIndifferentAccess
+    this_place: this Furniture Store
+    login: login
+    updated: updated
+    located_at: Located at
+    contributors: Contributors
+    loves_count: "{{count}} loves"
+    already_added: Already added
+    wannago: wanna buy
+    disliked: disliked
+    back: back
+    message_meta_info: "{{type}} was added by {{link}} about {{days}} ago"
+    password_change_error: Set your new password, if you find any problem let us know at
+    fb_connected: You have connected your account with your facebook account!
+    confirm_password: Confirm password
+    related_images: Related Images
+    no_review_added: No review added yet!
+    reset_password_description: Please remember, we will send you an email with the password reset link.     if you have problem with your email account you can inform us at
+    email: email
+    select_parent_product: Select parent product
+    pages: Pages -
+    times: times
+    already_commented: Already commented
+    enter_password: Enter password
+    custom_search: Custom Search
+    not_available: N/A
+    logged_in_as: Logged in as
+    i_love: i'm using
+    loved: already using
+    existing_review_edit: You have reviewed {{place}} before!,           do you think {{place}} is no longer cOoL ?? why don't you change it right here!           say your strong opinion :)_) <br/> -
+    parent_menu: Parent menu
+    already_showed_interest: Already showed interest
+    added_by: added by
+    based_on: based on
+    ask_for_treat: Ask him/her to treat you!
+    weee: Weee!!
+    logout_in_progress: Logout In progress....
+    select_parent_menu: Select parent menu
+    contributed_to: contributed to
+    no_image_added: No image added!
+    parent_product: Parent product
+    this_review: this review.
+    and: and
+    and_reviewed: and reviewed
+    full_view: full view
+    enter_email: Enter your email address
+    not_logged_in: Not logged in
+    remove_from_featured: Remove from featured
+    suggested_restaurants: You may also check!
+    attached_with: Attached with
+    i_wannago: i wanna buy
+    to_visit: to buy
+    author_added_on: author has added this picture on
+    write_comment: Write your comment
+    joined_our_community: has joined our community about
+    select_file: Select file
+    fb_not_connected: You haven't yet connected your account with your facebook account.     please click on 'Auto share on Facebook' button on the top of the page
+    delete_comment: Do you want to DELETE this comment ?
+    no_review: Hola! you haven't reviewed any {{name}} yet!
+    login_required_to_review: Please {{link}} to review this Store!
+    filter_by: Filter results by -
+    user_contributed_on: has contributed to
+    image_caption: Write image caption....
+    already: Already
+    i_like: i like
+    make_as_featured: Make as featured
+    on_other_reviews: on other's reviews.
+    ago: ago
+    already_reviewed: Already reviewed
+    caption: Caption
+    reviews_count: "{{count}} reviews"
+    i_dislike: i dislike
+    wanna_go: "{{count}} wanna buy"
+    review_stat: Review status -
+    review_of: commented a review of {{link}}
+    added: added
+    sync_tags: Sync tags!
+  button: !map:HashWithIndifferentAccess
+    add_review: add my review!
+    change_password: Change password
+    reset_password: Reset password
+    add_tags: Add tags!
+    upload_tags: Update tags
+    upload: Upload
+    signup: Sign up
+    search_again: Search again!
+    update_review: update your review!
+    find: Find!
+    create: Create
+    login: Log in
+    update: Update
+    add_comment: Add comment
+    search: Search
+  layout: !map:HashWithIndifferentAccess
+    passionate_food_lovers_community: Passionate Furniture Store's Users community!
+    links: !map:HashWithIndifferentAccess
+      update_record: Update your record
+      add: Add Store
+      logout: Logout
+      auto_share_on_facebook: Auto share on Facebook
+      edit_user: Settings
+      register: Register
+      photos: Photos
+      my_page: Profile
+      admin: Admin
+      fb_login: Login with facebook
+      home: Home
+      login: Login
+      events: Events
+      share_on_facebook: Share on facebook
+  featurebox: !map:HashWithIndifferentAccess
+    readmore: read more...
+    rating: "{{loves_count}} people <span class='icon_loved'>bought</span> it!"
+    address: "Address:"
+  confirm: !map:HashWithIndifferentAccess
+    delete_comment: Do you want to remove this comment?
+    delete_image: do you want to delete this image?
+    delete_entry: do you really want to remove this entry?
+  title: !map:HashWithIndifferentAccess
+    logout: Log out
+    image_delete_message: FYI, You can remove this comment with in 10 minutes of its submission time.
+    own_this: Do you own this Furniture Store?
+    login: Log in
+    create_an_account: Create an account
+  nav: !map:HashWithIndifferentAccess
+    share_on_fb: "Shared on facebook"
+    add_new_food_menu: Add store service
+    add_news: Add store news
+    logout: Logout
+    are_you_new_user: Are you new user?
+    edit: Edit
+    previous: "\xC2\xAB Previous"
+    food_menu: Store services
+    show_comments: show comments
+    delete: Delete
+    more_places: "more furniture stores \xC2\xBB"
+    more_tags: More tags
+    updates: Notification ({{count}})
+    reply: reply!
+    edit_existing_review: edit your existing review!
+    manage_news: Manage Store News
+    signup: Signup
+    review_now: "[review now!]"
+    did_you_forgot: Did you forget your password?
+    interested_people: "see all interested people \xC2\xBB"
+    edit_tags: Edit tags
+    products: Products
+    add_page: Add page
+    add_new_product: Add new product
+    less: Read less
+    show: Show
+    reviews: Reviews
+    news: Store News
+    read_more_reviews: check rest of the reviews...
+    next: "Next \xC2\xBB"
+    login: login
+    add_image: Add image ({{count}})
+    more: Read more
+    add_event: "Add Event"
+    share_on_fb: "Share on facebook"
+  module: !map:HashWithIndifferentAccess
+    Most loved places!: Top Furniture stores
+    Search restaurants: Search Furniture Stores
+    Recently reviewed places!: Recent reviewes
+    Cuisines & tags: Furniture stores in tags
+    Who wanna visit here!: Who wanna try this!
+    "Tag cloud!": Find furniture stores by services
+    Recent Activity: Recent Activity
+  frontpage: !map:HashWithIndifferentAccess
+    recommend: Find Furniture Store At ?
+  header: !map:HashWithIndifferentAccess
+    search_results: Search results!
+    wannago: Who else wanna try this furniture store!
+    reviewed_places: Reviewed furniture stores
+    best_for: Find out which stores are the best for what!
+    photos: Store pictures!
+    edit_tags: "Edit tags \xC2\xBB {{name}}"
+    loved_places: Top furniture stores
+    tag_details: "Selected tag \xC2\xBB {{tag}}"
+    recent_restaurants: Recently added furniture stores
+    restaurant_create: Create Furniture Store Profile
+    restaurant_show_page: "{{link}}  \xC2\xBB Edit"
+    recommend: Recommend Furniture Store!
+    login: Log in
+    all_events: All Events
+  errors: !map:HashWithIndifferentAccess
+    invalid_tag: Invalid tag label - {{tag}}
+    authorization: You are not authorized
+    no_matched_type: Not matched type!
+  fields:
+    products: Products
+    branches: Branches
+    coverage_areas: Network Coverage Areas
+    head_office_address: Head Office Address
+    contact_details: Contact details
+    group_name: Group Name
+    address: Address
+    name: name
+    confirm_password: Confirm password
+    remember: Remember me
+    map: Browse on google map
+    phone: phone
+    features: Features & Locations
+    Branches Located at: Branches Located at
+    cuisine & tags: "Furniture store's tags"
+    description: description
+    comments_count: Comments ({{count}})
+    password: password
+    login: login
+    web_site_url: Web site link
+    services: Available services
+  subheader: !map:HashWithIndifferentAccess
+    contributed_images: User contributed images
+    review_on_more_topics: Review on more topics!
+    upload_avatar: Upload your avatar
+    change_password: Change your account password
+    reset_password: Reset your account password
+    my_review: Write a review
+    admin: !map:HashWithIndifferentAccess
+      form_attributes_edit: Edit topic
+    top_contributors: Top contributors
+    active_share: Active share with friends!
+    activities: Activities on my participated stores
+    upload_pictures: Upload pictures
+    top_reviewers: Top reviewers
+    signup_new_user: Sign up as a new user
+    no_recommendation_found: Nothing matched! with your requirements!, please try again! :)_)
+    user_contributed_pictures: Upload your pictures
+    recently_commented_on_reviews: Recently commented on reviews
+    ongoing_activities: On going activities
+  footer: !map:HashWithIndifferentAccess
+    copyrights: "\xC2\xA9 Well Treat Us, All rights reserved!"
+    links: !map:HashWithIndifferentAccess
+      opensource: Fork on github!
+      mobile: Mobile version
+      biz_contact: Business Contact
+      dev_blogs: Developer's blog
+  select_parent_product: Select parent product
+
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      short: "%d %b %H:%M"
+      long: "%B %d, %Y %H:%M"
+    am: "am"
+    pm: "pm"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " and "
+      last_word_connector: ", and "
+
+    select:
+      prompt: "Please select"
+
+  number:
+    format:
+      separator: "."
+      delimiter: ","
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+
+    currency:
+      format:
+        format: "%u%n"
+        unit: "$"
+        separator: "."
+        delimiter: ","
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+
+    percentage:
+      format:
+        delimiter: ""
+
+    precision:
+      format:
+        delimiter: ""
+
+    human:
+      format:
+        delimiter: ""
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          unit: ""
+          thousand: Thousand
+          million: Million
+          billion: Billion
+          trillion: Trillion
+          quadrillion: Quadrillion
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "half a minute"
+      less_than_x_seconds:
+        one:   "less than 1 second"
+        other: "less than {{count}} seconds"
+      x_seconds:
+        one:   "1 second"
+        other: "{{count}} seconds"
+      less_than_x_minutes:
+        one:   "less than a minute"
+        other: "less than {{count}} minutes"
+      x_minutes:
+        one:   "1 minute"
+        other: "{{count}} minutes"
+      about_x_hours:
+        one:   "about 1 hour"
+        other: "about {{count}} hours"
+      x_days:
+        one:   "1 day"
+        other: "{{count}} days"
+      about_x_months:
+        one:   "about 1 month"
+        other: "about {{count}} months"
+      x_months:
+        one:   "1 month"
+        other: "{{count}} months"
+      about_x_years:
+        one:   "about 1 year"
+        other: "about {{count}} years"
+      over_x_years:
+        one:   "over 1 year"
+        other: "over {{count}} years"
+      almost_x_years:
+        one:   "almost 1 year"
+        other: "almost {{count}} years"
+    prompts:
+      year:   "Year"
+      month:  "Month"
+      day:    "Day"
+      hour:   "Hour"
+      minute: "Minute"
+      second: "Seconds"
+
+  helpers:
+    select:
+      prompt: "Please select"
+
+    submit:
+      create: 'Create {{model}}'
+      update: 'Update {{model}}'
+      submit: 'Save {{model}}'
+
+  errors:
+    format: "{{attribute}} {{message}}"
+
+    messages: &errors_messages
+      inclusion: "is not included in the list"
+      exclusion: "is reserved"
+      invalid: "is invalid"
+      confirmation: "doesn't match confirmation"
+      accepted: "must be accepted"
+      empty: "can't be empty"
+      blank: "can't be blank"
+      too_long: "is too long (maximum is {{count}} characters)"
+      too_short: "is too short (minimum is {{count}} characters)"
+      wrong_length: "is the wrong length (should be {{count}} characters)"
+      not_a_number: "is not a number"
+      not_an_integer: "must be an integer"
+      greater_than: "must be greater than {{count}}"
+      greater_than_or_equal_to: "must be greater than or equal to {{count}}"
+      equal_to: "must be equal to {{count}}"
+      less_than: "must be less than {{count}}"
+      less_than_or_equal_to: "must be less than or equal to {{count}}"
+      odd: "must be odd"
+      even: "must be even"
+
+  activerecord:
+    errors:
+      template:
+        header:
+          one:    "1 error prohibited this {{model}} from being saved"
+          other:  "{{count}} errors prohibited this {{model}} from being saved"
+        body: "There were problems with the following fields:"
+
+      messages:
+        taken: "has already been taken"
+        record_invalid: "Validation failed: {{errors}}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "{{attribute}}{{message}}"

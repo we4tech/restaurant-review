@@ -1,10 +1,3 @@
-<div class='site_simple_box'>
-  <h4><%= t('module.Search restaurants')%></h4>
-  <div class='space_10'></div>
-  <%= render_search({'label' => 'Content Search'}) %>
-</div>
-<div class='space_10'></div>
-
 <% if ViewContext::CONTEXT_RESTAURANT_DETAILS != @view_context %>
   <div class='site_simple_box'>
     <h4><%= t('module.Recent Activity') %></h4>

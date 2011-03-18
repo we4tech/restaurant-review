@@ -12,6 +12,10 @@ module LocaleHelper
       else
         @locale = I18n.default_locale
       end
+    else
+      if topic_wise_valid?("#{@topic.name}_#{@locale}")
+        @locale = "#{@topic.name}_#{@locale}"
+      end
     end
 
     I18n.locale = @locale

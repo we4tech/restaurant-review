@@ -167,6 +167,21 @@ class Topic < ActiveRecord::Base
     self.attributes
   end
 
+  def sanitize_site_labels!
+    self.site_labels = Topic::sanitize_site_labels(self.site_labels)
+  end
+
+  def self.sanitize_site_labels(site_labels)
+    not_empty_site_labels = []
+    site_labels.each do |site_label|
+      if site_label && (!site_label['old'].blank? || !site_label['new'].blank?)
+        not_empty_site_labels << site_label
+      end
+    end
+
+    not_empty_site_labels
+  end
+
   private
     def self.populate_topic_caches
       Topic.all.each do |topic|

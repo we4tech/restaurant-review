@@ -1,0 +1,29 @@
+#site_top_navigation {
+  background: url("/images/fresh/furniture_site_top_nav_bg.png") repeat scroll 0 0 transparent;
+}
+
+.submenu {
+  background: url("/images/fresh/furniture_store_downarrow.png") no-repeat scroll right center transparent;
+}
+
+body {
+  background: url("/images/fresh/gradient_black_wood.png") repeat-x scroll 0 0 #A88777;
+}
+
+#site_logo {
+  background: url("/images/promotion/reviewer-shuchi.png") no-repeat scroll 100% 100% transparent;
+  height: 181px;
+  margin-top: 5px;
+}
+
+.site_center_head {
+  background: url("/images/fresh/body-box-head-woodies.png") no-repeat scroll 0 0 transparent;
+}
+
+a {
+  color: hotPink;
+}
+
+#site_bottom {
+    background: url("/images/fresh/furniture_bottom.png") repeat-x scroll 0 0 #000000;
+}

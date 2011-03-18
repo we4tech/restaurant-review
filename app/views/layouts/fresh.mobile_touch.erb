@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="/jquery.mobile-1.0a3/jquery.mobile-1.0a3.min.css"/>
+  <%= stylesheet_link_tag 'fresh/mobile.touch' %>
+
+  <script type="text/javascript" src="/jquery.mobile-1.0a3/jquery-1.5.1.min.js"></script>
+  <script type="text/javascript" src="/jquery.mobile-1.0a3/jquery.mobile-1.0a3.min.js"></script>
+
+  <title>
+    <%= yield(:site_title) || @site_title || @topic.site_title %>
+  </title>
+
+  <meta name="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+
+  <meta name="Robots" content="index,follow"/>
+  <% if @meta_description %>
+    <meta content="<%= @meta_description %>" name="description">
+  <% else %>
+    <meta name="description" content="Bangladeshi restaurant, cafe & eat out place review mobile site"/>
+  <% end %>
+
+  <% if @meta_keywords %>
+    <meta name="keywords" content="<%= @meta_keywords %>"/>
+  <% else %>
+    <meta name="keywords" content="Mobile Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
+  <% end %>
+
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+  <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
+</head>
+
+<body>
+<div data-role="<%= 'true' == params[:dialog] ? 'dialog' : 'page' %>" data-theme='b'>
+  <div data-role="header" data-theme='a'>
+    
+    <h1 class="logo">
+      <% if @topic.banner_image_path %>
+        <%= image_tag(@topic.banner_image_path) %>
+      <% else %>
+        No banner SET!
+      <% end %>
+    </h1>
+
+    <% if params[:dialog].nil? || 'false' == params[:dialog] %>
+      <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
+    <% end %>
+
+    <%= yield :header %>
+  </div>
+  <div data-role="content">
+    <%= yield :content %>
+
+    <% if params[:dialog] && 'true' == params[:dialog] %>
+      <ul data-role="listview" data-inset='true' data-theme='e'>
+        <%= yield :navigation %>
+      </ul>
+    <% else %>
+      <%= render :partial => 'layouts/fresh_parts/bottom_navigation' %>
+    <% end %>
+  </div>
+  <div data-role="footer">
+    <%= yield :footer %>
+
+    <% if params[:dialog].nil? || 'false' == params[:dialog] %>
+      <div class='siteInfo'>
+        <%= @topic.description %>
+      </div>
+      <div class='copyrights'>
+        <%= t('footer.copyrights') %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div id="fb-root"></div>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+  $(function() {
+    try {
+      FB.init({appId: '<%= @topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key  %>', status: true, cookie: true, xfbml: true});
+      <% if !logged_in? %>
+      FB.Event.subscribe('auth.sessionChange', function(response) {
+        if (response.session) {
+          var path = location.href;
+          window.location = path + (path.match(/\?/) ? '&' : '?') + "fskey=" +
+              response.session.session_key + "&fuid=" +
+              response.session.uid + '&fexpires=' +
+              response.session.expires + '&fsecret=' +
+              response.session.secret + '&fat=' +
+              response.session.access_token
+        }
+      });
+      <% end %>
+    } catch (e) { }
+  });
+</script>
+<% if logged_in? %>
+  <%= render :partial => 'users/parts/facebook_app_script.mobile.erb' %>
+<% end %>
+
+</body>
+
+</html>

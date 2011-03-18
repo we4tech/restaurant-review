@@ -56,6 +56,9 @@ class SessionsController < ApplicationController
       respond_to do |format|
         format.html { render_view('sessions/new') }
         format.ajax { render :partial => 'sessions/new.ajax.erb', :layout => false}
+        format.mobile_touch {
+          render_view('sessions/new')
+        }
       end
     end
   end

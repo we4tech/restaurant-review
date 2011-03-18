@@ -6,7 +6,13 @@
   </h4>
   <div class="break"></div>
 
-  <%= link_to 'Manage topics', topics_url %>
+  <%= link_to 'Manage topics', topics_url %> |
+  <%= link_to 'Form attributes', form_attribute_by_topic_url(:topic_id => @topic_object.id) %> |
+  <%= link_to 'Modules', edit_topic_modules_url(:id => @topic_object.id) %> |
+  <%= link_to 'Export', export_topic_path(:id => @topic_object.id, :format => :json) %> |
+  <%= link_to 'Import', import_topic_path(:id => @topic_object.id) %> |
+  <%= link_to 'Delete', topic_url(:id => @topic_object.id), :method => :delete, :confirm => 'Do you really want to remove this topic?' %>
+  
   <div class="clear"></div>
   <div class="break"></div>
   <div class="space_10"></div>
