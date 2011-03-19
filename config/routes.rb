@@ -32,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.facebook_resources :tag_mappings
 
-  map.resources :tags, :collection => {:sync => :post}
+  map.resources :tags, :collection => {:sync => :post, :import => :post}
 
   map.resources :translations
 

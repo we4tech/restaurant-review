@@ -50,6 +50,13 @@ class TagsController < ApplicationController
     end
   end
 
+  def import
+    data = params[:data]
+    if data
+      
+    end
+  end
+
   def sync
     tag_names_string = CGI.unescape(params[:tags])
     tag_names = tag_names_string.split("|").collect(&:strip)

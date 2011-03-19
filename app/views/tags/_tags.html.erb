@@ -42,4 +42,12 @@
       <%= f.submit t('button.update') %>
     <% end %>
   <% end %>
+
+  <div class="space_10"></div>
+  <h4>Import tags</h4>
+  <% form_tag import_tags_path, :multipart => true do %>
+    <input type="file" name="data"/>
+    <input type="submit" value="Import"/>
+  <% end %>
+  <div class="space_10"></div>
 </div>
