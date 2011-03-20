@@ -166,8 +166,8 @@ furniture_store_en: !map:HashWithIndifferentAccess
     add_event: "Add Event"
     share_on_fb: "Share on facebook"
   module: !map:HashWithIndifferentAccess
-    Most loved places!: Top Furniture stores
-    Search restaurants: Search Furniture Stores
+    Most loved places!: Top furniture stores
+    Search restaurants: Search furniture stores
     Recently reviewed places!: Recent reviewes
     Cuisines & tags: Furniture stores in tags
     Who wanna visit here!: Who wanna try this!
@@ -180,7 +180,7 @@ furniture_store_en: !map:HashWithIndifferentAccess
     wannago: Who else wanna try this furniture store!
     reviewed_places: Reviewed furniture stores
     best_for: Find out which stores are the best for what!
-    photos: Store pictures!
+    photos: Furniture store's pictures
     edit_tags: "Edit tags \xC2\xBB {{name}}"
     loved_places: Top furniture stores
     tag_details: "Selected tag \xC2\xBB {{tag}}"

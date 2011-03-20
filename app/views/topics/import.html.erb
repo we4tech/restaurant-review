@@ -1,6 +1,10 @@
 <div class="grid_12">
   <h1>Import will override all configurations for topic - <%= @topic_object.name %></h1>
   <div class='break'></div>
+  <%= render :partial => 'topics/navigation' %>
+  <div class='break'></div>
+
+
   <div class='space_10'></div>
 
   <% form_tag import_uploaded_file_topic_path(@topic_object.id), :multipart => true do %>

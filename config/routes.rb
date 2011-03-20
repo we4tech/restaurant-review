@@ -106,6 +106,7 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_topic_modules '/topics/:id/modules', :controller => 'topics', :action => 'edit_modules'
   map.update_topic_modules '/topics/:id/modules/save', :controller => 'topics', :action => 'update_modules'
   map.tag_details '/tags/:label/:tag', :controller => 'home', :action => 'tag_details'
+  map.import_tags '/import/tags', :controller => 'tags', :action => 'import'
   map.edit_restaurant '/records/:id/edit', :controller => 'restaurants', :action => 'edit'
   map.new_restaurant '/records/new', :controller => 'restaurants', :action => 'new'
   map.search '/search', :controller => 'home', :action => 'search'

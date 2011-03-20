@@ -1,0 +1,11 @@
+<%= link_to 'Dashboard', admin_path %> |
+<%= link_to 'Manage topics', topics_url %> |
+<%= link_to 'New topic', new_topic_path %> |
+<%= link_to 'Edit topic', edit_topic_path(@topic_object.id) %> |
+<%= link_to 'Form attributes', form_attribute_by_topic_url(:topic_id => @topic_object.id) %> |
+<%= link_to 'Modules', edit_topic_modules_url(:id => @topic_object.id) %> |
+<%= link_to 'Tags', tags_url %> |
+<%= link_to 'Tag groups', tag_groups_url %> |
+<%= link_to 'Export', export_topic_path(:id => @topic_object.id, :format => :json) %> |
+<%= link_to 'Import', import_topic_path(:id => @topic_object.id) %> |
+<%= link_to 'Delete', topic_url(:id => @topic_object.id), :method => :delete, :confirm => 'Do you really want to remove this topic?' %>

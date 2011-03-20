@@ -111,14 +111,14 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def notify(type, redirect)
+    def notify(type, redirect, options = {})
       case type
         when :success
-          flash[:success] = 'Successfully completed!'
+          flash[:success] = options[:success_message] || 'Successfully completed!'
           redirect_to redirect
 
         when :failure
-          flash[:notice] = 'Failed to complete!'
+          flash[:notice] = options[:failure_message] || 'Failed to complete!'
           if redirect.is_a?(Symbol) && redirect != :back
             render :action => redirect
           else

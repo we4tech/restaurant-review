@@ -28,6 +28,7 @@
   <div class='break'></div>
   <div class='space_10'></div>
   <h4>Add new tag</h4>
+  <div class='break'></div>
   <div class='space_10'></div>
   <% form_for form_model = (@tag || Tag.new) do |f| %>
     <%= f.label :name %>
@@ -45,9 +46,30 @@
 
   <div class="space_10"></div>
   <h4>Import tags</h4>
-  <% form_tag import_tags_path, :multipart => true do %>
-    <input type="file" name="data"/>
-    <input type="submit" value="Import"/>
+  <div class='break'></div>
+  <% form_for Tag::ImportableTag.new, :url => import_tags_path, :html => {:multipart => true} do |f| %>
+    <%= f.label :pre_processing_code, nil,
+                :style => "background: lightYellow; padding: 5px; border: 1px solid orange;cursor: pointer",
+                :onclick => "$('#tag_importable_tag_pre_processing_code').toggle('slide')" %><br/>
+    <%= f.text_area :pre_processing_code, :style => 'display: none' %><br/>
+
+    <%= f.label :post_processing_code, nil,
+                :style => "background: lightYellow; padding: 5px; border: 1px solid orange; cursor: pointer",
+                :onclick => "$('#tag_importable_tag_post_processing_code').toggle('slide')" %><br/>
+    <%= f.text_area :post_processing_code, :style => 'display: none' %><br/>
+
+    <%= f.label :tag_group_id %><br/>
+    <%= f.select :tag_group_id, @topic.tag_groups.collect{|tg| [tg.name, tg.id] }, :include_blank => true %><br/>
+    <%= f.label :separator_type %><br/>
+    <%= f.select :separator_type, Tag::ImportableTag::SEPARATOR_TYPE %><br/>
+
+    <%= f.label :custom_separator %><br/>
+    <%= f.text_field :custom_separator, :disabled => 'disabled' %><br/>
+
+    <%= f.label :data %><br/>
+    <%= f.file_field :data %><br/>
+    <%= f.submit 'Import tags' %>
+
   <% end %>
   <div class="space_10"></div>
 </div>

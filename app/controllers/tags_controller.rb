@@ -51,9 +51,13 @@ class TagsController < ApplicationController
   end
 
   def import
-    data = params[:data]
-    if data
-      
+    @importable_tag = Tag::ImportableTag.new(params[:tag_importable_tag])
+    @importable_tag.topic_id = @topic.id
+    @importable_tag.import!
+    if @importable_tag.succeeded?
+      notify :success, :back, :success_message => "Successfully imported - #{@importable_tag.tag_objects.length}"
+    else
+      notify :failure, :back, :failure_message => "Failed to import"
     end
   end
 
