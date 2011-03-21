@@ -1,7 +1,7 @@
 <meta property="og:site_name" content="<%= @topic.label %>"/>
-<meta property="og:type" content="<%= @topic.og_type || @topic.name %>"/>
 
 <%- if @restaurant -%>
+  <meta property="og:type" content="<%= @topic.og_type || @topic.name %>"/>
   <meta property="og:title" content="<%= @restaurant.name %>"/>
   <meta property="og:description" content="<%= strip_tags(truncate(@restaurant.description.to_s.strip.gsub(/\n/, ' '), 200, "...")) %>"/>
   <meta property="og:url" content="<%= restaurant_long_url(@restaurant) %>"/>
