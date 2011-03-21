@@ -54,7 +54,7 @@
     </div>
 
     <% if !restaurant.tags.empty? %>
-      <div class="associated_tags">
+      <div class="associated_tags" onmouseover="this.style.maxHeight='inherit'">
         <b><%= tt('fields.features') %>:</b>
         <%= restaurant.tags.collect {|tag|
           link_to(tag.name, tag_details_url(
