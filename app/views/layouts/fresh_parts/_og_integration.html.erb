@@ -3,7 +3,7 @@
 
 <%- if @restaurant -%>
   <meta property="og:title" content="<%= @restaurant.name %>"/>
-  <meta property="og:description" content="<%= truncate(@restaurant.description.to_s.strip.gsub(/\n/, ' '), 200, "...") %>"/>
+  <meta property="og:description" content="<%= strip_tags(truncate(@restaurant.description.to_s.strip.gsub(/\n/, ' '), 200, "...")) %>"/>
   <meta property="og:url" content="<%= restaurant_long_url(@restaurant) %>"/>
   <%- if first_image = @restaurant.rand_image -%>
     <meta property="og:image" content="http://<%= request.host %><%= first_image.public_filename(:large) %>"/>
