@@ -1,0 +1,37 @@
+<meta property="og:site_name" content="<%= @topic.label %>"/>
+<meta property="og:type" content="<%= @topic.og_type || @topic.name %>"/>
+
+<%- if @restaurant -%>
+  <meta property="og:title" content="<%= @restaurant.name %>"/>
+  <meta property="og:description" content="<%= truncate(@restaurant.description.to_s.strip, 200, "...") %>"/>
+  <meta property="og:url" content="<%= restaurant_long_url(@restaurant) %>"/>
+  <%- if first_image = @restaurant.rand_image -%>
+    <meta property="og:image" content="http://<%= request.host %><%= first_image.public_filename(:large) %>"/>
+  <%- else -%>
+    <meta property="og:image" content="http://<%= request.host %><%= @topic.banner_image_path %>"/>
+  <%- end -%>
+  <%- if @restaurant.located_in_map? -%>
+    <meta property="og:latitude" content="<%= @restaurant.lat %>"/>
+    <meta property="og:longitude" content="<%= @restaurant.lng %>"/>
+    <meta property="og:street-address" content="<%= @restaurant.address %>"/>
+    <meta property="og:country-name" content="<%= @restaurant.country %>"/>
+  <%- end -%>
+  <%- if @restaurant.string1.present? -%>
+    <meta property="og:phone_number" content="<%= @restaurant.string1 %>"/>
+  <%- end -%>
+<%- else -%>
+  <meta property="og:title" content="<%= @topic ? (@site_title ? "#{@site_title} - " : '') : '' %><%= @topic.site_title %>"/>
+  <%- if @meta_description -%>
+    <meta property="og:description" content="<%= @meta_description %>">
+  <%- else -%>
+    <meta property="og:description" content="Bangladeshi and Dhaka Restaurant, cafe & eat out place review site"/>
+  <%- end -%>
+  <meta property="og:url" content="<%= request.url %>"/>
+  <meta property="og:image" content="http://<%= request.host %><%= @topic.banner_image_path %>"/>
+<%- end -%>
+<%- if @topic.fb_id.present? -%>
+  <meta property="fb:app_id" content="<%= @topic.fb_id %>" />
+<%- end -%>
+<%- if @topic.fb_admins.present? -%>
+  <meta property="fb:admins" content="<%= @topic.fb_admins %>" />
+<%- end -%>

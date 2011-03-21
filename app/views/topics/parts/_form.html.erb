@@ -49,6 +49,24 @@
 <div class="clear"></div>
 <div class="space_5"></div>
 
+<label class="grid_2">FB app id</label>
+<%= f.text_field :fb_id %>
+<%= f.error_message_on :fb_id %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
+<label class="grid_2">FB admins</label>
+<%= f.text_field :fb_admins %>
+<%= f.error_message_on :fb_admins %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
+<label class="grid_2">Open Graph type</label>
+<%= f.text_field :og_type %>
+<%= f.error_message_on :og_type %>
+<div class="clear"></div>
+<div class="space_5"></div>
+
 <label class="grid_2">FB connect key</label>
 <%= f.text_field :fb_connect_key %>
 <%= f.error_message_on :fb_connect_key %>

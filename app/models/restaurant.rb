@@ -51,7 +51,7 @@ class Restaurant < ActiveRecord::Base
   RATING_LIMIT = 5
 
   def author?(p_user)
-    return p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
+    p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
   end
 
   def selected_premium_template
@@ -180,6 +180,16 @@ class Restaurant < ActiveRecord::Base
           attributes[field] = modified_values
         end
       end
+    end
+  end
+
+  #
+  # Find country from +address+ field, separate address by comma and take the last one
+  def country
+    if address.present?
+      address.split(/,/).last
+    else
+      nil
     end
   end
 
