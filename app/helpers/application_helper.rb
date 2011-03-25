@@ -168,4 +168,12 @@ module ApplicationHelper
       object.type.name.humanize
     end
   end
+
+  def flash_message_exists?
+    flash_message_any
+  end
+
+  def flash_message_any
+    flash[:notice] || flash[:error]
+  end
 end

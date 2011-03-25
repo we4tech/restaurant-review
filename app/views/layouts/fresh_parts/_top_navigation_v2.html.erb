@@ -130,26 +130,28 @@
 </div>
 
 <div id="fb-root"></div>
-<script src="http://connect.facebook.net/en_US/all.js"></script>
-<script type="text/javascript">
-  FB.init({appId: '<%= @topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key %>', status: true, cookie: true, xfbml: true});
+<% if params[:no_script].nil? %>
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script type="text/javascript">
+    FB.init({appId: '<%= @topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key %>', status: true, cookie: true, xfbml: true});
 
-  <% if !logged_in? %>
-    FB.Event.subscribe('auth.sessionChange', function(response) {
-      if (response.session) {
-        var locationParts = location.href.split('#');
-        window.location = locationParts[0] + (locationParts[0].match(/\?/) ? '&' : '?') + "fskey=" +
-                          response.session.session_key + "&fuid=" +
-                          response.session.uid + '&fexpires=' +
-                          response.session.expires + '&fsecret=' +
-                          response.session.secret + '&fat=' +
-                          response.session.access_token
-      }
-    });
-  <% end %>
-</script>
+    <% if !logged_in? %>
+      FB.Event.subscribe('auth.sessionChange', function(response) {
+        if (response.session) {
+          var locationParts = location.href.split('#');
+          window.location = locationParts[0] + (locationParts[0].match(/\?/) ? '&' : '?') + "fskey=" +
+                            response.session.session_key + "&fuid=" +
+                            response.session.uid + '&fexpires=' +
+                            response.session.expires + '&fsecret=' +
+                            response.session.secret + '&fat=' +
+                            response.session.access_token
+        }
+      });
+    <% end %>
+  </script>
+<% end %>
 
-<% if logged_in? %>
+<% if logged_in? && params[:no_script].nil? %>
   <%= render :partial => 'users/parts/facebook_app_script' %>
 <% end %>
 

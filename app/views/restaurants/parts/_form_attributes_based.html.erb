@@ -69,27 +69,9 @@
     <br/>
 
   <% elsif options %>
-    <label><%= tt("fields.#{(field_label.blank? ? field_name : field_label)}") %><%= required ? ' (*)' : '' %></label><br/>
-    <div class='options_box'>
-      <input name='tag_search_keywords' class="tagSearchField searchIcon"
-             type="text" title="field_<%= field_name %>"
-             value="Search tags..." />
-      <% existing_value = @restaurant.send(field_name) || []  %>
-
-      <div class="tags" id="field_<%= field_name %>">
-        <% parse_default_value(default_value).sort.each do |option| %>
-          <% option.strip! %>
-          <div class='option'>
-            <input id='<%= option_field_id = "option_#{url_escape(option)}" %>'
-                   type='checkbox' name='restaurant[<%= field_name %>][]'
-                   value="<%= option %>" class="<%= field_type %>"
-                   <%= existing_value.include?(option) ? 'checked="checked"' : '' %>
-                   />
-            <label for="<%= option_field_id %>"><%= option %></label>
-          </div>
-        <% end %>
-      </div>
-    </div>
+    <%= render_options_field :name => field_name, :label => field_label,
+                             :type => field_type, :required => required,
+                             :value => default_value, :placeholder => 'Search or add tags...' %>
     <%= f.error_message_on field_name %>
     <br clear="all"/>
 

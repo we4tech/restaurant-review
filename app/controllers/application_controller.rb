@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
     alias :rescue_action_locally :rescue_action_in_public
   end
 
+  rescue_from ActionController::InvalidAuthenticityToken, :with => :bad_auth_token
+
   # Be sure to include AuthenticationSystem in Application Controller instead
   include CacheHelper
   include AuthenticatedSystem
@@ -43,6 +45,12 @@ class ApplicationController < ActionController::Base
   before_filter :detect_fake_email
 
   protected
+
+    def bad_auth_token
+      logger.warn('Caught invalid authenticity request')
+      flash[:notice] = 'Invalid authenticity token, please try again'
+      redirect_to request.referer.present? ? request.referer : root_url
+    end
 
     def default_url_options(options = {})
       # Force for url locale

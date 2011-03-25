@@ -45,10 +45,12 @@ class Restaurant < ActiveRecord::Base
   @@per_page = 20
   cattr_reader :per_page
 
-  attr_accessor :hit_count
+  attr_accessor :hit_count, :new_tags
 
   NO_LIMIT = -1
   RATING_LIMIT = 5
+
+  include CommonModel::LocationModel
 
   def author?(p_user)
     p_user && p_user.id == self.user.id || (p_user && p_user.admin?)
@@ -56,10 +58,6 @@ class Restaurant < ActiveRecord::Base
 
   def selected_premium_template
     self.premium_templates.published.first || self.premium_templates.first
-  end
-
-  def located_in_map?
-    lat.to_i > 0 && lng.to_i > 0
   end
 
   #
@@ -180,16 +178,6 @@ class Restaurant < ActiveRecord::Base
           attributes[field] = modified_values
         end
       end
-    end
-  end
-
-  #
-  # Find country from +address+ field, separate address by comma and take the last one
-  def country
-    if address.present?
-      address.split(/,/).last
-    else
-      nil
     end
   end
 

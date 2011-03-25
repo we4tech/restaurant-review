@@ -5,6 +5,17 @@ class RestaurantObserver < ActiveRecord::Observer
     store_tags(restaurant)
   end
 
+  def before_validation(restaurant)
+    (restaurant.new_tags || {}).each do |field_name, new_tags|
+      existing_tags = restaurant.__send__(field_name.to_sym) || []
+      new_tags.each do |tag|
+         existing_tags << tag
+      end
+      restaurant.__send__("#{field_name}=".to_sym, existing_tags)
+    end
+
+  end
+
   def after_update(restaurant)
     create_stuff_event(restaurant, StuffEvent::TYPE_RESTAURANT_UPDATE)
     remove_tags(restaurant)

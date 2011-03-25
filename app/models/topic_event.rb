@@ -44,6 +44,10 @@ class TopicEvent < ActiveRecord::Base
     self.images
   end
 
+  def rand_image
+    (all_images || []).rand
+  end
+
   def extra_notification_recipients
     []
   end

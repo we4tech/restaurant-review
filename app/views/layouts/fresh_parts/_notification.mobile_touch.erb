@@ -1,0 +1,7 @@
+<% if flash_message_exists? %>
+  <a href="#" class='ui-collapsible-heading-toggle ui-btn ui-btn-icon-left ui-shadow ui-corner-all ui-btn-up-e'>
+      <span class="ui-btn-inner ui-corner-all">
+        <%= flash[:notice] || flash[:error] %>
+      </span>
+  </a>
+<% end %>

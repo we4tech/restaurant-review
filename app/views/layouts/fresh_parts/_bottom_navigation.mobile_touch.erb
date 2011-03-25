@@ -23,7 +23,7 @@
         <%= t('layout.links.fb_login') %>
       </fb:login-button>
     </li>
-    <li><%= link_to tt('layout.links.register'), signup_path %></li>
+    <li><%= link_to tt('layout.links.register'), signup_path(:dialog => true) %></li>
     <li><%= link_to tt('layout.links.photos'), photos_path %></li>
     <li><%= link_to 'PC version', root_path(:format => :html) %></li>
   <% else %>

@@ -1,10 +1,12 @@
 <% content_for :content do %>
 
-  <a href="#" class='ui-collapsible-heading-toggle ui-btn ui-btn-icon-left ui-shadow ui-corner-all ui-btn-up-e'>
-    <span class="ui-btn-inner ui-corner-all">
-      <%= flash[:notice] || flash[:error] %>
-    </span>
-  </a>
+  <% if flash_message_exists? %>
+    <a href="#" class='ui-collapsible-heading-toggle ui-btn ui-btn-icon-left ui-shadow ui-corner-all ui-btn-up-e'>
+      <span class="ui-btn-inner ui-corner-all">
+        <%= flash[:notice] || flash[:error] %>
+      </span>
+    </a>
+  <% end %>
 
   <% form_tag session_path(:dialog => true), :'data-rel' => 'dialog' do -%>
     <%= text_field_tag 'login', @login, :placeholder => t('fields.login') %>
@@ -16,5 +18,7 @@
 <% end %>
 
 <% content_for :navigation do %>
-  <li><%= link_to t('nav.did_you_forgot'), reset_password_url %></li>
+  <li><%= link_to t('nav.did_you_forgot'), reset_password_path(:dialog => true) %></li>
+  <li><%= link_to t('layout.links.register'), signup_path(:dialog => true) %></li>
+  <li><%= link_to t('layout.links.home'), root_path %></li>
 <% end %>

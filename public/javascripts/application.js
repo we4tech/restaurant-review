@@ -237,7 +237,7 @@
   },
 
   $.debug = function(message) {
-    // console.debug(message);
+    // aconsole.debug(message);
   },
 
   $.visualizeMatrix = function(firstText, secondText) {
@@ -573,101 +573,6 @@ App.MapWidget = {
     }
   }
 };
-
-App.TagSearcher = function(pTextField) {
-
-  var mLastSearchedKey = null;
-  var mCachedOptions = [];
-  var mTagsPanel = null;
-  var mSearchingWorker = null;
-  var mDefaultValue = null;
-
-  function indexOptions() {
-    mTagsPanel = $('#' + pTextField.attr('title'));
-    $('#' + pTextField.attr('title') + ' label').each(function() {
-      var $label = $(this);
-      var labelId = $label.attr('id');
-      if (labelId == null || labelId.length == 0) {
-        labelId = ("option_" + Math.random()).replace('.', '');
-        $label.attr('id', labelId);
-      }
-
-      mCachedOptions.push([$label.html().toLowerCase(), labelId])
-    });
-
-    $.debug(mCachedOptions)
-  }
-
-  function clearVisualHighlights() {
-    $('#' + pTextField.attr('title') + ' label').css('border-bottom', '0');
-  }
-
-  function performSearch() {
-    if ((mSearchingWorker) != null) {
-      clearVisualHighlights();
-      clearTimeout(mSearchingWorker);
-    }
-
-    mSearchingWorker = setTimeout(function() {
-      var text = pTextField.val().trim().toLowerCase();
-      if (text.length > 0 && text != mLastSearchedKey) {
-        var parts = text.split(",");
-        for (var ti = 0; ti < parts.length; ti++) {
-          var textPart = parts[ti].trim();
-          var mostRelevant = $.fuzzySearch(textPart, mCachedOptions);
-          $.debug(mostRelevant);
-
-          if (mostRelevant) {
-            var $selectedLabel = $('#' + mostRelevant[2]);
-            $selectedLabel.animate({borderBottom: '2px solid red'}, 1000);
-            mTagsPanel.scrollTo($selectedLabel, 500);
-
-            if (mostRelevant[1] == textPart) {
-              $('#' + $selectedLabel.attr('for')).attr('checked', 'checked');
-              pTextField.val('').focus();
-            }
-          }
-        }
-      }
-    }, 1000);
-  }
-
-  function observeKeyPress() {
-    pTextField.keyup(function() {
-      performSearch()
-    });
-
-    pTextField.keypress(function(e) {
-      var code = (e.keyCode ? e.keyCode : e.which);
-      if(code == 13) {
-        return false;
-      }
-    });
-  }
-
-  function clearDefaultMessage() {
-    mDefaultValue = pTextField.attr('value');
-    pTextField.focus(function() {
-      var $this = $(this);
-      if (!$this.isEmptyAttr('value') && $this.attr('value') == mDefaultValue) {
-        $this.attr('value', '');
-      }
-    });
-
-    pTextField.blur(function() {
-      var $this = $(this);
-      if ($this.isEmptyAttr('value')) {
-        $this.attr('value', mDefaultValue);
-      }
-    });
-  }
-
-  clearDefaultMessage();
-  indexOptions();
-  observeKeyPress();
-
-};
-
 
 App.UI = {
 

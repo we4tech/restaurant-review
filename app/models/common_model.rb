@@ -4,6 +4,16 @@ module CommonModel
     def located_in_map?
       self.lat.to_i > 0 && self.lng.to_i > 0
     end
+
+    #
+    # Find country from +address+ field, separate address by comma and take the last one
+    def country
+      if address.present?
+        address.split(/,/).last.strip
+      else
+        nil
+      end
+    end
   end
 
   module CommonTopModel
@@ -72,7 +82,7 @@ module CommonModel
     end
 
     def rating_out_of(p_scale = 5.0)
-      total_loves = self.reviews.loved.count.to_f
+      total_loves   = self.reviews.loved.count.to_f
       total_reviews = self.reviews.count.to_f
       (total_loves / total_reviews) * p_scale
     end

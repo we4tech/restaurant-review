@@ -1,37 +1,34 @@
-<meta property="og:site_name" content="<%= @topic.label %>"/>
+<%= render_meta_tags({'og:site_name' => @topic.label}) %>
 
 <%- if @restaurant && !@restaurant.new_record? -%>
-  <meta property="og:type" content="<%= @topic.og_type || @topic.name %>"/>
-  <meta property="og:title" content="<%= @restaurant.name %>"/>
-  <meta property="og:description" content="<%= strip_tags(truncate(@restaurant.description.to_s.strip.gsub(/\n/, ' '), 200, "...")) %>"/>
-  <meta property="og:url" content="<%= restaurant_long_url(@restaurant) %>"/>
+  <%= render_meta_tags({
+      'og:type' => @topic.og_type || @topic.name,
+      'og:title' => @restaurant.name,
+      'og:description' => @meta_description || strip_tags(truncate(@restaurant.description.to_s.strip.gsub(/\n/, ' '), 200, "...")),
+      'og:url' => event_or_restaurant_url(@restaurant)}) %>
+
   <%- if first_image = @restaurant.rand_image -%>
-    <meta property="og:image" content="http://<%= request.host %><%= first_image.public_filename(:large) %>"/>
+    <%= render_meta_tags({'og:image' => "http://#{request.host}#{first_image.public_filename(:large)}"})%>
   <%- else -%>
-    <meta property="og:image" content="http://<%= request.host %><%= @topic.banner_image_path %>"/>
+    <%= render_meta_tags({'og:image' => "http://#{request.host}#{@topic.banner_image_path}"})%>
   <%- end -%>
+
   <%- if @restaurant.located_in_map? -%>
-    <meta property="og:latitude" content="<%= @restaurant.lat %>"/>
-    <meta property="og:longitude" content="<%= @restaurant.lng %>"/>
-    <meta property="og:street-address" content="<%= @restaurant.address %>"/>
-    <meta property="og:country-name" content="<%= @restaurant.country %>"/>
+    <%= render_meta_tags({
+        'og:latitude' => @restaurant.lat,
+        'og:longitude' => @restaurant.lng,
+        'og:street-address' => @restaurant.address,
+        'og:country-name' => @restaurant.country}) %>
   <%- end -%>
-  <%- if @restaurant.string1.present? -%>
-    <meta property="og:phone_number" content="<%= @restaurant.string1 %>"/>
+  <%- if @restaurant.respond_to?(:string1) && @restaurant.string1.present? -%>
+    <%= render_meta_tags({'og:phone_number' => @restaurant.string1})%>
   <%- end -%>
 <%- else -%>
-  <meta property="og:title" content="<%= @topic ? (@site_title ? "#{@site_title} - " : '') : '' %><%= @topic.site_title %>"/>
-  <%- if @meta_description -%>
-    <meta property="og:description" content="<%= @meta_description %>">
-  <%- else -%>
-    <meta property="og:description" content="Bangladeshi and Dhaka Restaurant, cafe & eat out place review site"/>
-  <%- end -%>
-  <meta property="og:url" content="<%= request.url %>"/>
-  <meta property="og:image" content="http://<%= request.host %><%= @topic.banner_image_path %>"/>
+  <%= render_meta_tags({
+      'og:title' => "#{@topic ? (@site_title ? "#{@site_title} - " : '') : ''}#{@topic.site_title}",
+      'og:description' => @meta_description || 'Bangladeshi and Dhaka Restaurant, cafe & eat out place review site',
+      'og:url' => request.url,
+      'og:image' => "http://#{request.host}#{@topic.banner_image_path}"})%>
 <%- end -%>
-<%- if @topic.fb_id.present? -%>
-  <meta property="fb:app_id" content="<%= @topic.fb_id %>" />
-<%- end -%>
-<%- if @topic.fb_admins.present? -%>
-  <meta property="fb:admins" content="<%= @topic.fb_admins %>" />
-<%- end -%>
+
+<%= render_meta_tags({'fb:app_id' => @topic.fb_id, 'fb:admins' => @topic.fb_admins}) %>
