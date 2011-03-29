@@ -1,7 +1,10 @@
 class TopicEvent < ActiveRecord::Base
 
   EVENT_TYPES_MAP = {
-      'Food Festival' => 1
+      'Food festival' => 1,
+      'Fair' => 2,
+      'Inauguration party' => 3,
+      'Special day celebration' => 4
   }
 
   IMAGE_GROUPS = {
