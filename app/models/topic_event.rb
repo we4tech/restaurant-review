@@ -4,7 +4,10 @@ class TopicEvent < ActiveRecord::Base
       'Food festival' => 1,
       'Fair' => 2,
       'Inauguration party' => 3,
-      'Special day celebration' => 4
+      'Special day celebration' => 4,
+      'Musical event' => 5,
+      'Magic show' => 6,
+      'Comedy show' => 7
   }
 
   IMAGE_GROUPS = {
