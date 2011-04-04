@@ -9,7 +9,7 @@ namespace :welltreat do
       # Include all users
       User.all.each do |user|
         if user.email.present? && !user.email.match(/fake/)
-          emails << "#{(user.name.present? ? user.name : user.login.humanize)} <#{user.email}>"
+          emails << "#{(user.name.present? ? user.name : user.login.humanize)}\t#{user.email}"
         end
       end
 
@@ -17,7 +17,7 @@ namespace :welltreat do
       Restaurant.all.each do |restaurant|
         if restaurant.extra_notification_recipients && !restaurant.extra_notification_recipients.empty?
           restaurant.extra_notification_recipients.each do |email|
-            emails << "#{restaurant.name}'s admin <#{email}>"
+            emails << "#{restaurant.name}'s admin\t#{email}"
           end
         end
       end
