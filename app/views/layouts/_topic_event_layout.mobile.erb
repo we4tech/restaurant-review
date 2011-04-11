@@ -1,0 +1,19 @@
+<div class="grid_11" id="site_center_list">
+  <h1>
+    <% @breadcrumbs.each do |link_parts| %>
+      <% if link_parts.length == 2 %>
+        <%= link_to link_parts.first, link_parts.last %> &raquo;
+      <% else %>
+        <%= link_parts.first %>
+      <% end %>
+    <% end %>
+    <% if current_user.admin? %>
+      <span class="review_tools">
+        (<%= link_to 'New Event', new_event_path %>)
+      </span>
+    <% end %>
+  </h1>
+  <div class="break space_5"></div>
+
+  <%= render :partial => @inner_page %>
+</div>

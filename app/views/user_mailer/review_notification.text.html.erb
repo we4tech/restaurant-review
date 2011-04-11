@@ -25,7 +25,7 @@
     <div class='space_10'></div>
 
     <% if @review.any.is_a?(Restaurant) %>
-      Related restaurant -
+      Related <%= @topic.name.humanize.downcase %> -
       <div class='break'></div>
       <div class='space_10'></div>
       <% if @review.any.is_a?(Restaurant) %>

@@ -5,3 +5,16 @@
 <% content_for :header do %>
 
 <% end %>
+
+<% content_for :content do %>
+  <ul data-role="listview">
+    <% @restaurants.each_with_index do |restaurant, index| %>
+      <li>
+        <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :index => index} %>
+      </li>
+    <% end %>
+  </ul>
+  <div data-role='controlgroup'>
+    <%= will_paginate @restaurants %>
+  </div>
+<% end %>

@@ -76,7 +76,8 @@
 
   <div class='bottom'>
     <div class='siteInfo'>
-      <%= @topic.description %>
+      <%= @topic.description %><br/>
+      <%= link_to 'view in desktop version', root_url(:format => :html) %>
     </div>
     <div class='copyrights'>
       <%= t('footer.copyrights') %>

@@ -2,6 +2,14 @@ class Topic < ActiveRecord::Base
 
   CACHES = {}
   TEMPLATE_DIR = '_generated'
+  SUBDOMAIN_CONTENT_TYPE = {
+      'User profile page' => 1,
+      'Tag page' => 2,
+      'Restaurant page' => 3
+  }
+
+  cattr_accessor :per_page
+  @@per_page = 20
   @@topic_caches = {}
   @@topics_host_maps = {}
 
@@ -17,6 +25,7 @@ class Topic < ActiveRecord::Base
   has_many :tag_groups
   has_many :messages
   has_many :topic_events
+  has_many :resource_importers
   has_one  :form_attribute
 
   validates_presence_of :name, :label
@@ -26,13 +35,7 @@ class Topic < ActiveRecord::Base
   named_scope :recent, :order => 'created_at DESC'
   named_scope :enabled, :conditions => {:enabled => true}
   
-  @@per_page = 20
 
-  SUBDOMAIN_CONTENT_TYPE = {
-      'User profile page' => 1,
-      'Tag page' => 2,
-      'Restaurant page' => 3
-  }
 
   # TODO: Setup domain matcher based on SUBDOMAIN content type configuration
 
@@ -67,7 +70,7 @@ class Topic < ActiveRecord::Base
   # Parameters -
   #   +bind_column+ - this column must be database specific column
   #                   which are mapped over topic module editor
-  def module_conf(bind_column)
+  def   module_conf(bind_column)
     (self.modules && self.modules.reject{|m| m['bind_column'] != bind_column} || []).first
   end
 
@@ -180,6 +183,12 @@ class Topic < ActiveRecord::Base
     end
 
     not_empty_site_labels
+  end
+
+  #
+  # Retrieve all topic models
+  def self.models
+    Topic.all.collect{|t| [t.name.humanize, t.name]}
   end
 
   private

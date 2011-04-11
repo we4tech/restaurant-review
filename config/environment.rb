@@ -25,6 +25,7 @@ Rails::Initializer.run do |config|
   config.gem "mail_style"
   config.gem "chronic"
   config.gem "i18n"
+  config.gem "RedCloth"
 
   #config.gem 'jammit', :version => '0.5.1'
 

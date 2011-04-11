@@ -1,0 +1,68 @@
+<div class='dynamic_fields' id='<%= dynamic_field_container_id = "Container#{rand}".gsub(/\./, '') %>'>
+  <% if value && !value.empty? %>
+    <% value.each do |attribute| %>
+      <% if !attribute['label'].blank? && !attribute['value'].blank? %>
+        <select class='attribute_type' name="<%= "#{name}[field_type]"%>">
+          <% FormAttribute::DYNAMIC_ATTRIBUTE_TYPES.each do |attribute_type, attribute_id| %>
+            <option value='<%= attribute_id %>'<%= attribute_id == attribute['field_type'].to_i ? 'selected="selected"' : '' %>><%= attribute_type %></option>
+          <% end %>
+        </select>
+        <input type='text' name='<%= "#{name}[label]" %>' value="<%= attribute['label'] %>" />
+        <input type='text' name='<%= "#{name}[value]" %>' value="<%= attribute['value']%>" />
+        <div class='clear'></div>
+        <div class='space_5'></div>
+      <% end %>
+    <% end %>
+  <% else %>
+    <select class='attribute_type' name="<%= "#{name}[field_type]"%>">
+      <% FormAttribute::DYNAMIC_ATTRIBUTE_TYPES.each do |attribute_type, attribute_id| %>
+        <option value='<%= attribute_id %>'><%= attribute_type %></option>
+      <% end %>
+    </select>
+    <input type='text' name='<%= "#{name}[label]" %>' />
+    <input type='text' name='<%= "#{name}[value]" %>' />
+    <div class='clear'></div>
+    <div class='space_5'></div>
+  <% end %>
+</div>
+<input type='button' value='Add Attribute' id='duplicableButton'/>
+
+<div id='duplicable_dynamic_fields' style='display: none'>
+  <div>
+    <select class='attribute_type' name="<%= "#{name}[field_type]" %>">
+      <% FormAttribute::DYNAMIC_ATTRIBUTE_TYPES.each do |attribute_type, attribute_id| %>
+        <option value='<%= attribute_id %>'><%= attribute_type %></option>
+      <% end %>
+    </select>
+    <input type='text' name='<%= "#{name}[label]" %>'
+           onfocus="this.value.match(/Attribute\sName/i) ? this.value = '' : ''"
+           onblur="this.value.trim().length == 0 ? this.value = 'Write Attribute Name' : ''"/>
+    <input type='text' name='<%= "#{name}[value]" %>'
+           onfocus="this.value.match(/Attribute\sValue/i) ? this.value = '' : ''"
+           onblur="this.value.trim().length == 0 ? this.value = 'Write Attribute Value' : ''"/>
+    <input type='button' value='X' onclick="$(this).parent().remove()"/>
+    <div class='clear'></div>
+    <div class='space_5'></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var DynamicFields = {
+    bindOnDelete: function() {
+
+    }
+  };
+
+  $('#duplicableButton').whenClicked({
+    duplicate: $('#duplicable_dynamic_fields'),
+    to: $('#<%= dynamic_field_container_id %>'),
+    added: function(container) {
+      var items = container.children('div:last');
+      if (items && items.length > 0) {
+        var $addedElement = $(items[0]);
+        var fields = $addedElement.children('input');
+        $(fields[0]).val('Write Attribute Name...');
+        $(fields[1]).val('Write Attribute Value...');
+      }
+    }});
+</script>

@@ -44,7 +44,7 @@ module FormAttributesHelper
 
       box_html << content_tag('div', :class => 'tags', :id => "field_#{field_name}") do
         options_html = ""
-        parse_default_value(default_value).sort.each do |option_name|
+        parse_default_value(default_value, existing_value).sort.each do |option_name|
           option_name.strip!
           input_field_name = "restaurant[#{field_name}][]"
           options_html << build_option_field(option_name, existing_value, input_field_name, field_type)

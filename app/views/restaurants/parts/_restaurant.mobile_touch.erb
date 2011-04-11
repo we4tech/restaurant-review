@@ -1,0 +1,40 @@
+<%
+   images = restaurant.related_images.by_group(nil).collect(&:image)
+   if images.empty?
+     images = restaurant.other_images
+   end
+   index = index || 0
+   grid_class = grid_class || 'grid_6'
+%>
+<% if !images.empty? %>
+  <%= image_tag(images.rand.public_filename(:small), :alt => '') %>
+<% end %>
+<h3>
+  <%= link_to restaurant.name, restaurant_long_url(restaurant) %>
+  <span class="ui-li-count"><%= restaurant.reviews.count %> Reviews, <%= restaurant.reviews.loved.count %> Loves</span>
+</h3>
+<p>
+  <%= restaurant.address %>
+</p>
+
+<ul>
+  <li>Map</li>
+  <li>Write Review</li>
+  <li>Tags</li>
+</ul>
+
+<p>
+
+</p>
+
+<% if !restaurant.tags.empty? %>
+  <!--p>
+    <b><%= tt('fields.features') %>:</b>
+    <%= restaurant.tags.collect { |tag|
+      link_to(tag.name, tag_details_url(
+          :label => 'cuisines-tags', :tag => url_escape(tag.name)),
+              :class => "#{@tags && @tags.include?(tag.name.downcase) ? 'selectedTag' : ''}")
+    }.join(', ') %>
+  </p-->
+<% end %>
+

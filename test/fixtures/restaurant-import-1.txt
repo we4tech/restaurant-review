@@ -1,0 +1,31 @@
+restaurants:
+  -
+    name: Test 1
+    description: Description 1
+    user_id: 1
+    address: 11 dhaka
+    lat: 23.79
+    lng: 90.40
+    topic_id: 1
+    string1: Cafe
+    short_array:
+      - Banani
+      - Dhanmondi
+    short_map:
+      a: b
+      c: d
+    extra_notification_recipients:
+      - hasan@abc.com
+
+  -
+    name: Test 2
+    description: Description 2
+    user_id: 1
+    address: 12 dhaka
+    lat: 23.70
+    lng: 90.30
+    topic_id: 1
+    string1: Cafe
+    short_array:
+      - Gulshan
+

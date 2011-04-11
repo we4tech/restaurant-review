@@ -8,4 +8,6 @@
 <%= link_to 'Tag groups', tag_groups_url %> |
 <%= link_to 'Export', export_topic_path(:id => @topic_object.id, :format => :json) %> |
 <%= link_to 'Import', import_topic_path(:id => @topic_object.id) %> |
+<%= link_to "Import #{@topic.name.humanize.pluralize}", resource_importers_path %> |
+<%= link_to "New import #{@topic.name.humanize.pluralize}", new_resource_importer_path %> |
 <%= link_to 'Delete', topic_url(:id => @topic_object.id), :method => :delete, :confirm => 'Do you really want to remove this topic?' %>

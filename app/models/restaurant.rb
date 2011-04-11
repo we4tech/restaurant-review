@@ -9,6 +9,7 @@ class Restaurant < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :topic
+
   has_many :related_images, :include => [:image], :order => 'created_at DESC', :dependent => :destroy
   has_many :images, :through => :related_images, :dependent => :destroy
   has_many :contributed_images, :order => 'created_at DESC', :dependent => :destroy

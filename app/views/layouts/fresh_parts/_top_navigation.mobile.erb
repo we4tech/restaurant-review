@@ -17,6 +17,7 @@
       </fb:login-button> .
       <%= link_to tt('layout.links.register'), signup_url %> .
       <%= link_to tt('layout.links.photos'), photos_url %> .
+      <%= link_to tt('layout.links.events'), events_url %> .
       <%= link_to 'PC version', root_url(:format => :html) %>
     <% else %>
       <% if !@record_already_added %>
@@ -27,6 +28,7 @@
       <%= render_activities_link %> .
       <%= link_to tt('layout.links.my_page'), user_long_url(current_user) %> .
       <%= link_to tt('layout.links.photos'), photos_url %> .
+      <%= link_to tt('layout.links.events'), events_url %> .
       <% if current_user.facebook_session_exists? %>
         <span class='facebook_connect_control'>
           <% form_tag facebook_account_status_update_url, :id => 'facebook_connect_control_form' do %>
@@ -64,6 +66,7 @@
       <% else %>
         <%= link_to t('layout.links.logout'), logout_url %>
       <% end %>
+
     <% end %>
   </div>
 </div>

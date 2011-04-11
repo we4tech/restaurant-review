@@ -166,6 +166,29 @@ class TopicsController < ApplicationController
     end
   end
 
+  def skeleton
+    @topic_object = Topic.find(params[:id])
+    default_fields = {'name' => 'Item name', 'description' => 'Item description',
+                      'user_id' => 'Author name', 'topic_id' => 'Import under the specified topic'}
+
+    customized_fields = {}
+    @topic_object.form_attribute.fields.each do |fc|
+      field = fc['field']
+      label = fc['label']
+      if !default_fields.keys.include?(field)
+        customized_fields[field] = I18n.t("fields.#{(label.present? ? label : field)}")
+      end
+    end
+    skeleton_text = "---\n#{@topic_object.name.pluralize.downcase}:\n  -\n"
+
+    default_fields.merge(customized_fields).each do |column, comment|
+      skeleton_text << "    # " << comment.to_s << "\n"
+      skeleton_text << "    " << column.to_s << ": \n\n"
+    end
+
+    send_data skeleton_text, :filename => @topic_object.name.pluralize.downcase, :disposition => "attachment; filename=\"#{@topic_object.name.pluralize.downcase}_import.yml\""
+  end
+
   private
     def process_uploaded_file(topic, file)
       extension = file.original_filename.split('.').last.downcase

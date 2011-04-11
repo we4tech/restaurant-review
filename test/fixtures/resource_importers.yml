@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  model: MyString
+  import_status: MyString
+  error: MyText
+  imported_items: 1
+  failure_items: 1
+  failure_items_inspection: MyText
+
+two:
+  model: MyString
+  import_status: MyString
+  error: MyText
+  imported_items: 1
+  failure_items: 1
+  failure_items_inspection: MyText

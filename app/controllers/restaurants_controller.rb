@@ -288,6 +288,17 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.find(params[:id].to_i)
   end
 
+  def generic_routing
+    redirect_to root_path if !params[:id].present?
+
+    if Restaurant.exists?(params[:id])
+      redirect_to restaurant_long_url(Restaurant.find(params[:id]))
+    else
+      flash[:notice] = "Nothing found with id - #{params[:id]}"
+      redirect_to root_path
+    end
+  end
+
   private
     def update_tag_mappings(tag_ids, restaurant)
       tags = Tag.find(tag_ids)

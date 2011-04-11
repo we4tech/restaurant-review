@@ -1,0 +1,84 @@
+<div class="grid_12">
+  <h4><%= link_to 'Administration panel', admin_path %> &raquo; Previous Imports</h4>
+
+  <div class="break"></div>
+
+  <%= link_to 'New import', new_resource_importer_path %>,
+  <%= link_to 'Generate Skeleton', skeleton_topic_path(@topic) %>
+  <div class="clear"></div>
+  <div class="break"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topics'>
+    <% if !@resource_importers.empty? %>
+      <table class="boxTable">
+        <tbody>
+        <tr>
+          <th>Model</th>
+          <th>Status</th>
+          <th>No. Imports</th>
+          <th>No. Failures</th>
+          <th>Imported items</th>
+          <th>Error</th>
+        </tr>
+        <% @resource_importers.each do |ri| %>
+          <tr>
+            <td><%= ri.model %></td>
+            <td><%= ri.import_status %></td>
+            <td><%= ri.imported_items.to_i %></td>
+            <td><%= ri.failure_items.to_i %></td>
+            <td>
+              <% if ri.imported_item_ids.present? %>
+                <%= ri.imported_item_ids.collect{|ii| link_to(ii, generic_url(ii))}.join(', ') %>
+              <% end %>
+            </td>
+            <td>
+              <%- if ri.error? -%>
+                <%= h ri.read_attribute :error %>
+              <% end %>
+
+              <% if ri.partially_completed? %>
+                <table>
+                  <tr>
+                    <th>Error fields</th>
+                    <th>Attributes</th>
+                  </tr>
+                  <% ri.failure_items_inspection.each do |fii| %>
+                    <tr>
+                      <td>
+                        <table>
+                          <% fii.first.each_full do |message| %>
+                            <tr>
+                              <td><%= message %></td>
+                            </tr>
+                          <% end %>
+                        </table>
+                      </td>
+                      <td>
+                        <a href="javascript:void(0)" onclick="$('#attbs_<%= ri.id %>').toggle('slide')">Show attributes</a>
+                        <table id="attbs_<%= ri.id %>" style="display: none">
+                          <% fii.last.each do |field, value| %>
+                            <tr>
+                              <td><%= field %></td><td><%= value %></td>
+                            </tr>
+                          <% end %>
+                        </table>
+                      </td>
+                    </tr>
+                  <% end %>
+                </table>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      Nothing was imported before!
+    <% end %>
+
+    <div class='pagination'>
+      <%= will_paginate @resource_importers %>
+    </div>
+  </div>
+</div>

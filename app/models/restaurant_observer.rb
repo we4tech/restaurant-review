@@ -1,5 +1,10 @@
 class RestaurantObserver < ActiveRecord::Observer
 
+  def before_save(restaurant)
+    restaurant.long_array = (restaurant.long_array || []).collect{|t| t.strip if t}.compact
+    restaurant.short_array = (restaurant.short_array || []).collect{|t| t.strip if t}.compact
+  end
+
   def after_create(restaurant)
     create_stuff_event(restaurant, StuffEvent::TYPE_RESTAURANT)
     store_tags(restaurant)
@@ -42,10 +47,10 @@ class RestaurantObserver < ActiveRecord::Observer
 
     def store_tags(restaurant)
       # only applicable for long & short array fields
-      tags1 = (restaurant.long_array || [])
+      tags1 = (restaurant.long_array || []).compact
       process_tags(tags1, restaurant)
 
-      tags2 = (restaurant.short_array || [])
+      tags2 = (restaurant.short_array || []).compact
       process_tags(tags2, restaurant)
     end
 

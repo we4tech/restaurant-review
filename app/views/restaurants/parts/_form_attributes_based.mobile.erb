@@ -74,7 +74,7 @@
       <% existing_value = @restaurant.send(field_name) || []  %>
 
       <div class="tags" id="field_<%= field_name %>">
-        <% parse_default_value(default_value).sort.each do |option| %>
+        <% parse_default_value(default_value, existing_value).sort.each do |option| %>
           <% option.strip! %>
           <div class='option'>
             <input id='<%= option_field_id = "option_#{url_escape(option)}" %>'

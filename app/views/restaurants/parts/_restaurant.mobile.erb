@@ -44,21 +44,21 @@
 
           <div class="summary">
             <% words = (restaurant.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
-            <%= words[0..20].join(' ') %>
+            <%= sanitize strip_tags(words[0..20].join(' ')) %>
             <% if words.length > 20 %>...
             <% end %>
             <%= link_to t('nav.more'), restaurant_long_url(restaurant) %>
             <% if !(restaurant.address || '').blank? %>
               <br/>
               <b><%= tt('fields.address') %>:</b>
-              <%= restaurant.address %>
+              <%= sanitize strip_tags(restaurant.address) %>
             <% end %>
           </div>
 
           <% if !restaurant.tags.empty? %>
             <div class="associated_tags">
               <b><%= tt('fields.features') %>:</b>
-              <%= restaurant.tags.collect {|tag|
+              <%= restaurant.tags.shuffle[0..10].collect {|tag|
                 link_to(tag.name, tag_details_url(
                     :label => 'cuisines-tags', :tag => url_escape(tag.name)),
                         :class => "#{@tags && @tags.include?(tag.name.downcase) ? 'selectedTag' : ''}")

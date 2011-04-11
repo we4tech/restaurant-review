@@ -1270,3 +1270,20 @@ a.link, .ui-widget-content a.link {
 h4 small {
   font-size: 60%;
 }
+
+.boxTable {
+  border: 1px solid #ccc;
+}
+
+.boxTable tr th {
+  background: #f0f0f0;
+  border-bottom: 2px solid #ccc;
+  padding: 5px;
+  font-size: 80%;
+}
+
+.boxTable tr td {
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+  font-size: 80%;
+}

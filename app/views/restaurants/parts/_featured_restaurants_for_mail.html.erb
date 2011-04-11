@@ -1,5 +1,5 @@
 <div class="weeeFeatureBox">
-  <h3>Featured bangladeshi restaurants</h3>
+  <h3>Featured bangladeshi <%= @topic.name.humanize.pluralize %></h3>
   <% @top_rated_restaurants.shuffle.each_with_index do |restaurant, index| %>
     <div class='restaurant'>
       <div class='image'>

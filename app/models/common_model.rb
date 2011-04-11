@@ -1,5 +1,9 @@
 module CommonModel
 
+  module SyntheticExtentions
+
+  end
+
   module LocationModel
     def located_in_map?
       self.lat.to_i > 0 && self.lng.to_i > 0

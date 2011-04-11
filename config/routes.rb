@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :resource_importers
+
   map.resources :events, :controller => 'topic_events'
 
   map.resources :products, :collection => {:next => :get}, :member => {:slide => :get, :reviews => :get}
@@ -61,7 +63,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :contributed_images
 
-  map.resources :topics, :member => {:export => :get, :import => :get, :import_uploaded_file => :post}
+  map.resources :topics, :member => {
+      :export => :get, :import => :get,
+      :import_uploaded_file => :post, :skeleton => :get}
 
   map.resources :review_comments
 
@@ -147,6 +151,9 @@ ActionController::Routing::Routes.draw do |map|
 
   # Full map
   map.full_map '/full_map', :controller => 'map', :action => 'full_view'
+
+  # Redirect to specific url
+  map.generic 'link/:id', :controller => 'restaurants', :action => 'generic_routing'
 
   # Custom url handler
   #map.custom '/ud/:url', :controller => ''

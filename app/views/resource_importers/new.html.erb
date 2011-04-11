@@ -1,0 +1,19 @@
+<div class="grid_12">
+  <h4><%= link_to 'Administration panel', admin_path %> &raquo; Previous Imports</h4>
+  <div class="break"></div>
+
+  <%= link_to 'New import', new_resource_importer_path %>,
+  <%= link_to 'Generate Skeleton', skeleton_topic_path(@topic) %>
+  <div class="clear"></div>
+  <div class="break"></div>
+  <div class="space_10"></div>
+
+  <div class='admin_topics'>
+    <% form_for @resource_importer, :html => {:multipart => true} do |f| %>
+      <%= f.label :model %>
+      <%= f.select :model, Topic::models %><br/>
+      <%= f.file_field :data %>
+      <%= f.submit 'Import' %>
+    <% end %>
+  </div>
+</div>

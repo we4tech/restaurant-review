@@ -173,8 +173,9 @@ furniture_store_en: !map:HashWithIndifferentAccess
     Who wanna visit here!: Who wanna try this!
     "Tag cloud!": Find furniture stores by services
     Recent Activity: Recent Activity
+    "Products": Products
   frontpage: !map:HashWithIndifferentAccess
-    recommend: Find Furniture Store At ?
+    recommend: Find furniture store at ?
   header: !map:HashWithIndifferentAccess
     search_results: Search results!
     wannago: Who else wanna try this furniture store!

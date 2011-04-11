@@ -39,14 +39,14 @@
 
     <div class="summary">
       <% words = (restaurant.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
-      <%= words[0..20].join(' ') %>
+      <%= sanitize strip_tags(words[0..20].join(' ')) %>
       <% if words.length > 20 %>...
       <% end %>
       <%= link_to t('nav.more'), restaurant_long_url(restaurant) %>
       <% if !(restaurant.address || '').blank? %>
         <br/>
         <b><%= tt('fields.address') %>:</b>
-        <%= restaurant.address %>
+        <%= sanitize strip_tags(restaurant.address) %>
         <% if restaurant.lat.to_i > 0 && restaurant.lng.to_i > 0 %>
           <%= link_to '[Map]', full_map_url(:rid => restaurant.id) %>
         <% end %>

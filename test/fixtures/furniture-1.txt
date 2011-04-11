@@ -1,0 +1,122 @@
+---
+furniture_stores:
+  -
+    # Branches
+    short_array:
+      - Farmgate
+      - Gulshan-2
+      - Moghbazar
+      - Panthpath
+      - Sylhet
+      - Sylhet
+      - Khulna
+      - Noakali
+      - Chittagong
+      - Moulvibazar
+      - Kushtia
+      - Mymensingh
+      - Rajshahi
+      - Bogra
+      - Chandpur
+      - Naogaon
+      - Rangpur
+      - Chuadanga
+      - Narsingdi
+      - Comilla
+      - Faridpur
+      - Thakurgoan
+      - Feni
+      - Tangail
+      - Sirajganj
+      - Jessore
+      - Mohammadpur
+      - Natore
+      - Savar
+      - Iswardi
+      - Kurigram
+
+    # Address
+    address: |
+      Partex Furniture Industries Limited
+      Baitus Sharaf Mosque Complex (4th Floor)
+      149/A, Monipuri Para
+      Bir Uttam Ziaur Rahman Sarak
+      Email - furniture@partex.net
+      Phone: +88028126666
+      Phone: +88028127777
+      Phone: +88028128888
+
+    # Item name
+    name: Partext Furniture
+
+    # Web site link
+    string1: |
+      "Official Web Site":http://www.partexgroup.com/
+
+    # Author name
+    user_id: 1
+
+    # Item description
+    description:  "PARTEX Furniture - A world of Style and Elegance.\n\n    PARTEX Furniture manufactures a diversity of solid timber as well as timber-substitutes products maximizing the resources of both ends. We offer a combination of timber, special particleboard, and decorative plywood making the best quality and cost effective substitute for natural timber for custom-made innovative and stylish furniture. Within a short span of time the company has been able to claim a sizable portion of the market. This is a commitment of PARTEX GROUP to use eco-friendly materials, as much as possible. Currently, we are providing an ever-increasing range of products to meet the greater than ever demand of furniture for households, offices and schools.\n\n\nPARTEX Furniture Industries Ltd.\nWe put value when you tend to change your lifestyle\n\n    VISION\n    We are the leading furniture solution provider in Bangladesh achieving our business vision through growth in market reach, increasing operation size, international distribution, total service and consistent branding activities by the being most customer focused & Innovative, cost effective & efficient, environmentally responsible & quality concerned company in the business.\n\n\n    MISSION\n    To be the most consumer-focused, competitive, efficient, innovative, and environmentally responsible and quality concerned leading market oriented furniture manufacturer, sales and distributor of Bangladesh by the year 2010.\n\n\n    VALUES\n\n\nCUSTOMER FOCUSED & INNOVATIVE\n\n\n    We believe our success depends on our customers. Thus, our primary value is fulfillment of our customer's needs. Our manner of achieving this success is to include value for money, different price ranged functional products, complete solutions, free technical consultancy services, after sales support, efficient delivery, and above all quality products that exceeds expectations. We believe in providing our customers new and innovative products with international standards to match wit the changing lifestyle of today.\n\n \n  \nCOMPETITIVE & EFFICIENT\n\n    We believe our competitive nature thoroughly ensured as when we provide highest quality products in the most perceived prices. We are committed to our value in relationship with our stakeholders where our core product is associated with efficient and reliable services.\n\n  \nENVIRONMENTAL STEWARDSHIP & EXCELLENCE IN QUALITY\n\n\n    We believe in maintaining, operating our business in such a manner so that it is sustainable for the future. We want to combine economic use of wood and create wood substitute products for our furnishing needs and constantly devote our production, research & development to remain environmentally responsible. We are committed to find new methods and technologies to improve our services. We believe excellence is our only standard for all our approaches.\n\n  \nINTEGRITY\n\n\n    We are committed to conduct our business in such a way that demonstrates highest ethical standards. We believe integrity is our imperative utility to succeed in what we do.\n"
+
+    # Products
+    long_array:
+      - Forest Bedroom Set
+      - Fish Bedroom Set
+      - Nile Bedroom Set
+      - Swan Bedroom Set
+      - Evening Bedroom Set
+      - Horn Bedroom Set
+      - Morning Bell Series
+      - Flying Geese Series
+      - Eagle Beadroom Set
+      - Wheel Beadroom Set
+      - Nokshi Beadroom Set
+      - Prince Beadroom Set
+      - Bed
+      - Dressing table
+      - Almirah
+      - Show case
+      - Chest of drawer
+      - Divan
+      - Sofa set
+      - Dining table
+      - Chair
+      - Console table
+      - Reading table
+      - Book self
+      - Display self
+      - Dining wagon
+      - Room cabinet
+      - Computer table
+      - TV trolley
+      - Shoe rack
+      - Kitchen cabinet
+      - Cabinet
+      - Workstation
+      - Meeting table
+      - Desktop
+      - Side rack
+      - Drawer
+      - Household almirah
+      - Office almirah
+      - Filing cabinet
+      - Hospital furniture
+      - Metal furniture
+      - Gynecology Bed
+      - High-Low Trolley
+      - ICU Bed
+      - Patient Trolley
+      - Patient Examination Table
+      - Hospital Bed
+      - Instrument Trolley
+      - Bowl Stand
+      - Baby Cot
+      - Medicine Trolley
+      - Bed Side Cabinet
+      - Saline Stand
+      - Household accessories
+      -
+
+    # Import under the specified topic
+    topic_id: 5
