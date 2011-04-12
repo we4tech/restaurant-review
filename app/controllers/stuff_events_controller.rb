@@ -8,14 +8,13 @@ class StuffEventsController < ApplicationController
     @site_title = 'Activities from others'
     @subscribed_restaurants = []
     @user_log = nil
-    conditions = nil
 
     if current_user
-      @subscribed_restaurants = current_user.subscribed_restaurants.
+      @subscribed_restaurants = current_user.subscribed_restaurants.by_topic(@topic.id).
           find(:all, :group => 'restaurants.id')
       @user_log = current_user.user_logs.by_topic(@topic.id).first
       conditions = [
-          'topic_id = ? AND restaurant_id IN (?) AND user_id != ?',
+          'topic_id = ?   AND restaurant_id IN (?) AND user_id != ?',
           @topic.id, @subscribed_restaurants.collect(&:id), current_user.id]
     else
       conditions = ['topic_id = ?', @topic.id]

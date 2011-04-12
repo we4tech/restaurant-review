@@ -47,7 +47,7 @@ class RestaurantsController < ApplicationController
   def show
     @restaurant = Restaurant.find(params[:id].to_i)
 
-    if redirected_to_long_url_if_its_not?
+    if redirected_to_long_url? or redirected_to_original_topic_based_url?
       return true
     end
 
@@ -121,9 +121,23 @@ class RestaurantsController < ApplicationController
     end
   end
 
-  def redirected_to_long_url_if_its_not?
+  def redirected_to_original_topic_based_url?
+    not_same_topic = params[:topic_name].downcase != @restaurant.topic.name.pluralize.downcase
+    not_same_domain = request.host.downcase != @restaurant.topic.public_host
+    if (params[:topic_name] && not_same_topic) || not_same_domain
+      redirect_to restaurant_long_url(@restaurant, :topic => @restaurant.topic, :host => @restaurant.topic.public_host)
+      true
+    else
+      false
+    end
+  end
+
+  def redirected_to_long_url?
     if params[:topic_name].nil?
       redirect_to restaurant_long_url(@restaurant)
+      true
+    else
+      false
     end
   end
 

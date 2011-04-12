@@ -70,7 +70,7 @@ class Topic < ActiveRecord::Base
   # Parameters -
   #   +bind_column+ - this column must be database specific column
   #                   which are mapped over topic module editor
-  def   module_conf(bind_column)
+  def module_conf(bind_column)
     (self.modules && self.modules.reject{|m| m['bind_column'] != bind_column} || []).first
   end
 

@@ -26,7 +26,8 @@ module UrlOverrideHelper
   end
 
   def restaurant_long_url(p_options, options2 = {})
-    topic = @topic
+    topic = options2.delete(:topic)
+    topic = @topic if topic.nil?
     topic = (p_options.is_a?(Restaurant) ? p_options.topic : nil) if topic.nil?
     topic = Topic.default if topic.nil?
 
