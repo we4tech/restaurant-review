@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
       # button. Uncomment if you understand the tradeoffs.
       # reset_session
       self.current_user = user
-      user.log_it!(request.remote_addr)
+      user.log_it!(request.env["HTTP_X_FORWARDED_FOR"] || request.remote_addr)
 
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
