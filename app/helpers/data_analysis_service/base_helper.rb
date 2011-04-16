@@ -1,0 +1,2 @@
+module DataAnalysisService::BaseHelper
+end

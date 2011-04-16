@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :site_policies
+
   map.resources :resource_importers
 
   map.resources :events, :controller => 'topic_events'

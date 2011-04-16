@@ -32,7 +32,9 @@ module RestaurantsHelper
     render :partial => 'restaurants/parts/recently_reviewed_places', :locals => {
         :config => p_config,
         :more_link => recently_reviewed_places_url,
-        :reviews => Review.by_topic(@topic.id).recent.all(:include => [:restaurant], :limit => p_limit)}
+        :reviews => Review.recent.all(
+            :include => [:restaurant], :limit => p_limit,
+            :conditions => {:topic_id => @topic.id})}
   end
 
   def render_recently_added_pictures(p_limit = 5)

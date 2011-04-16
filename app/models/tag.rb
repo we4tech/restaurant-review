@@ -40,6 +40,18 @@ class Tag < ActiveRecord::Base
           'reviews.loved' => Review::LOVED}).collect(&:restaurant)
   end
 
+  def restaurants_not_reviewed_by(reviewer, limit = 5)
+    TagMapping.all(
+        :joins => ['LEFT JOIN reviews ON reviews.restaurant_id = tag_mappings.restaurant_id',
+                   'LEFT JOIN restaurants ON restaurants.id = tag_mappings.restaurant_id',
+                   'LEFT JOIN users ON reviews.user_id = users.id'],
+        :select => 'tag_mappings.*, restaurants.*',
+        :limit => limit,
+        :group => 'reviews.restaurant_id',
+        :conditions => ['tag_id = ? AND reviews.user_id <> ? AND restaurants.user_id <> ?',
+                        self.id, reviewer.id, reviewer.id]).collect(&:restaurant)
+  end
+
   #
   # Create a new class to process imported tags from text file
   class ImportableTag

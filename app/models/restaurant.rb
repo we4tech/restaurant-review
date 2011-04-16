@@ -25,6 +25,7 @@ class Restaurant < ActiveRecord::Base
   has_many :food_items
   has_many :premium_service_subscribers
   has_many :products
+  has_many :site_policies
 
   validates_presence_of :name, :topic_id
   validates_uniqueness_of :name
@@ -179,6 +180,20 @@ class Restaurant < ActiveRecord::Base
           attributes[field] = modified_values
         end
       end
+    end
+  end
+
+  #
+  # Find associated tags which belongs to the specific tag group
+  # if noting found from the specified tag group return an empty array.
+  def tags_belongs_to(tag_group)
+    found_tags = []
+    tag_group_tags = tag_group.tags.collect{|t| t.name.to_s.downcase}
+
+    if self.long_array && !self.long_array.empty?
+      found_tags = self.long_array.collect{|t| t if tag_group_tags.include?(t.to_s.downcase)}.compact
+    else
+      []
     end
   end
 

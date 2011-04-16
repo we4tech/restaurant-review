@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   attr_accessible :login, :email, :name, :password,
                   :password_confirmation, :facebook_sid,
                   :facebook_uid, :remember_token,
-                  :remember_token_expires_at
+                  :remember_token_expires_at, :last_logged_in_ip, :last_logged_in_at
 
   has_many :restaurants
   has_many :images
@@ -38,9 +38,11 @@ class User < ActiveRecord::Base
   has_many :user_logs
   has_many :messages
   has_many :resource_importers
+  has_many :topic_events
+  has_many :site_policies
+
   has_one :related_image
   has_one :image, :through => :related_image
-  has_many :topic_events
 
   FACEBOOK_CONNECT_ENABLED = 1
   FACEBOOK_CONNECT_DISABLED = 0
@@ -245,7 +247,7 @@ class User < ActiveRecord::Base
 
   def share_on_facebook?
     reloaded_me = self.reload
-    return reloaded_me.facebook_connect_enabled == User::FACEBOOK_CONNECT_ENABLED &&
+    reloaded_me.facebook_connect_enabled == User::FACEBOOK_CONNECT_ENABLED &&
         reloaded_me.facebook_sid.to_i > 0 &&
         reloaded_me.facebook_uid.to_i > 0
   end
@@ -276,6 +278,11 @@ class User < ActiveRecord::Base
     else
       0
     end
+  end
+
+  def log_it!(client_ip, logged_in_at = Time.now)
+    update_attributes :last_logged_in_ip => client_ip,
+                      :last_logged_in_at => logged_in_at
   end
   
   protected

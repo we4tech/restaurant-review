@@ -1,7 +1,11 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
+#require 'user_activity_monitoring_helper'
 
 class ApplicationController < ActionController::Base
+
+  include UserActivityMonitoringService
+  policy :keep_away_ip_banned_visitors
 
   include ExceptionNotification::ExceptionNotifiable
 

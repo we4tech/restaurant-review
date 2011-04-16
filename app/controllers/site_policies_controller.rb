@@ -1,0 +1,2 @@
+class SitePoliciesController < ApplicationController
+end

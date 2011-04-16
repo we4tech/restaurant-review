@@ -50,6 +50,11 @@ Capistrano::Configuration.instance.load do
     task :mongrel do
       run "cd #{current_path} && /usr/local/bin/mongrel_rails cluster::configure -c #{current_path} -e production -p 8000 -N 5"
     end
+
+    desc 'Configure ultrasphinx'
+    task :ultrasphinx do
+      run "cd #{current_path} && rake ultrasphinx:configure RAILS_ENV=production"
+    end
   end
 
   namespace :service do
@@ -60,7 +65,7 @@ Capistrano::Configuration.instance.load do
   end
 
   after "deploy:setup",           "shared_directories:setup"
-  after "deploy:update", "shared_directories:symlink", "configuration:mongrel", "service:mongrel_restart"
+  after "deploy:update", "shared_directories:symlink", "configuration:mongrel", "service:mongrel_restart", "configuration:ultrasphinx"
   #after "deploy:web:disable", "shared_directories:web_disable"
   #after "deploy:web:enable", "shared_directories:web_enable"
 

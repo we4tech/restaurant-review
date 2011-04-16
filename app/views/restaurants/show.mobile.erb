@@ -84,7 +84,7 @@
           %>
 
           <div class="space_5"></div>
-          <%= link_to image_tag(map_url + "300x300"), "#{map_url}800x800",
+          <%= link_to image_tag(map_url + "300x300"), full_map_url(:rid => @restaurant.id),
                       :class => 'openUpinLightBox',
                       :title => link_to(t('fields.map'), details_link) %>
         <% end %>
