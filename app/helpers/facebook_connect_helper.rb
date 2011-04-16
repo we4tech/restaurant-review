@@ -20,9 +20,11 @@ module FacebookConnectHelper
         # otherwise create new user and assign on session
 
         if !User.exists?(:facebook_uid => fb_uid)
-          User.register_by_facebook_account(fb_session, fb_uid)
+          user = User.register_by_facebook_account(fb_session, fb_uid)
+          user.log_it!(request.remote_addr)
         else
-          User.update_facebook_session(fb_uid, fb_session)
+          user = User.update_facebook_session(fb_uid, fb_session)
+          user.log_it!(request.remote_addr)
         end
 
         self.current_user = User.find_by_facebook_uid(fb_uid)

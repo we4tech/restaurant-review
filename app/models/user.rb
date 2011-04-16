@@ -183,6 +183,7 @@ class User < ActiveRecord::Base
         existing_user.save(false)
 
         existing_user.update_attribute(:state, 'active')
+        existing_user
       else
         attributes = {
             :login => find_or_build_unique_user_name(name),
@@ -199,6 +200,7 @@ class User < ActiveRecord::Base
         user.save(false)
 
         user.update_attribute(:state, 'activate')
+        user
       end
     else
       # Do something else let's log him out from facebook
@@ -213,6 +215,7 @@ class User < ActiveRecord::Base
     existing_user = User.find_by_facebook_uid(fb_uid)
     existing_user.facebook_sid = fb_session.auth_token
     existing_user.save(false)
+    existing_user
   end
 
   private
