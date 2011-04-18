@@ -157,6 +157,9 @@ ActionController::Routing::Routes.draw do |map|
   # Redirect to specific url
   map.generic 'link/:id', :controller => 'restaurants', :action => 'generic_routing'
 
+  # Exposed Services
+  map.service_mobile_image_upload '/service/mobile/image_upload', :controller => 'images', :action => 'mobile_upload'
+
   # Custom url handler
   #map.custom '/ud/:url', :controller => ''
 

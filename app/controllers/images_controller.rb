@@ -1,6 +1,7 @@
 class ImagesController < ApplicationController
 
-  before_filter :login_required, :except => [:show]
+  before_filter :login_required, :except => [:show, :mobile_upload]
+  skip_before_filter :verify_authenticity_token, :only => [:mobile_upload]
 
   def create
     @multi_images = prepare_image_object
@@ -90,6 +91,27 @@ class ImagesController < ApplicationController
       notify :success, :back
     else
       notify :failure, :back
+    end
+  end
+
+  #
+  # Find specific restaurant and use 1 as a default user
+  # Create new image object and assign with it.
+  #
+  def mobile_upload
+    self.current_user = User.find(1)
+    @multi_images = prepare_image_object
+
+    if @multi_images.saved_all?
+      class_name = determine_mapping_class_name
+      @multi_images.groups.each do |group|
+        cleanup_image_relation(class_name, group)
+      end
+      object_id, field_name, return_url = create_image_relation(class_name)
+
+      render :text => 'Successfully added your image!'
+    else
+      render :text => 'Failed to add your image!'
     end
   end
 

@@ -10,7 +10,7 @@
 
     <% caption_default_text = t('label.image_caption') %>
     <%= f.text_field :captions, :index => '',
-                     :onclick => "$(this).val() == '#{caption_default_text}' ? $(this).val('') : ''", 
+                     :onclick => "$(this).val() == '#{caption_default_text}' ? $(this).val('') : ''",
                      :onblur => "$(this).val().length == 0 ? $(this).val('#{caption_default_text}') : ''" %>
     <%= f.submit t('button.upload') %>
   <% end %>
