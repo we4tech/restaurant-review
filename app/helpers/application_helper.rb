@@ -176,4 +176,8 @@ module ApplicationHelper
   def flash_message_any
     flash[:notice] || flash[:error]
   end
+
+  def embedded_view?
+    'true' == params[:embed_view]
+  end
 end

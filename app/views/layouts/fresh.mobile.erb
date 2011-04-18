@@ -33,30 +33,30 @@
 
 <body>
 <div class='mobileContainer'>
-  <div class='top'>
-    <table>
-      <tbody>
-        <tr>
-          <td>
-            <div class='logo'>
-              <% if @topic.banner_image_path %>
-                <%= link_to image_tag(@topic.banner_image_path), root_url %>
-              <% else %>
-                No banner SET!
-              <% end %>
-            </div>
-          </td>
-          <td>
-            <div class='navigation'>
-              <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-
-  </div>
+  <% if !embedded_view? %>
+    <div class='top'>
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <div class='logo'>
+                <% if @topic.banner_image_path %>
+                  <%= link_to image_tag(@topic.banner_image_path), root_url %>
+                <% else %>
+                  No banner SET!
+                <% end %>
+              </div>
+            </td>
+            <td>
+              <div class='navigation'>
+                <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
   <div class='clear'></div>
 
   <div class='contentArea'>
