@@ -1,8 +1,8 @@
 module StringHelper
 
-  def url_escape(text)
+  def url_escape(text, sep = '-')
     return if text.nil?
-    text.parameterize.to_s
+    text.gsub(/[~`@#\$%\^&*()_\-\+=\|\\\}\]\{\["':;\?\/>\.<,\s]+/i, sep).downcase
   end
 
   #

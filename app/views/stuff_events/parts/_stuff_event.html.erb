@@ -18,7 +18,7 @@
       <% if stuff_event.restaurant %>
         <%= link_to stuff_event.restaurant.name,
                     "#{restaurant_long_url(
-                        :name => stuff_event.restaurant.name.parameterize.to_s,
+                        :name => url_escape(stuff_event.restaurant.name),
                         :id => stuff_event.restaurant.id)}#review-#{stuff_event.review.id}" %>
       <% end %>
 
@@ -26,7 +26,7 @@
         updated review on
         <%= link_to stuff_event.restaurant.name,
                     "#{restaurant_long_url(
-                        :name => stuff_event.restaurant.name.parameterize.to_s,
+                        :name => url_escape(stuff_event.restaurant.name),
                         :id => stuff_event.restaurant.id)}#review-#{stuff_event.review.id}" %>
 
 
@@ -34,18 +34,18 @@
       commented on
       <%= link_to "#{stuff_event.review.user.login.camelize}'s review",
                   "#{restaurant_long_url(
-                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :name => url_escape(stuff_event.restaurant.name),
                       :id => stuff_event.restaurant.id)}#review-#{stuff_event.review.id}" %> at
       <%= link_to stuff_event.restaurant.name,
                   restaurant_long_url(
-                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :name => url_escape(stuff_event.restaurant.name),
                       :id => stuff_event.restaurant.id) %>
 
     <% elsif stuff_event.event_type == StuffEvent::TYPE_RESTAURANT %>
       created
       <%= link_to stuff_event.restaurant.name,
                   restaurant_long_url(
-                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :name => url_escape(stuff_event.restaurant.name),
                       :id => stuff_event.restaurant.id) %>
       <%= @topic.name %>
 
@@ -53,7 +53,7 @@
       updated
       <%= link_to stuff_event.restaurant.name,
                   restaurant_long_url(
-                      :name => stuff_event.restaurant.name.parameterize.to_s,
+                      :name => url_escape(stuff_event.restaurant.name),
                       :id => stuff_event.restaurant.id) %>
       <%= @topic.name %>
     <% end %> <acronym class="date" title="<%= stuff_event.created_at %>"> - <%= distance_of_time_in_words(Time.now, stuff_event.created_at) %> ago</acronym>

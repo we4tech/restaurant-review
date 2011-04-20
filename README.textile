@@ -1,5 +1,104 @@
 h2. WellTreat.US release change logs.
 
+h4. Release - 0.21 - Bug fixes.
+
+* 323. Fix problem with Mobile version restaurant details page (shows not supported)
+* 324. Integrate Google Map V3
+* 325. Integrated auto current location detection
+* 322. Fix On user profile page, "activities" ajax call url
+* 325. Fix ISP details page's tag links it goes to cuisine-tags
+* 326. Bring furniture reviewer community
+* 300. Attach meta data with tags (ie. location, multiple choice etc..)
+* 337. Mass tag importer
+* 330. Make Featured furniture image
+* 331. Integrated OpenGraph and Facebook Like meta attributes
+* 329. Show expandable tag's viewer
+* 332. Add Easy tagging option
+* 344. Fix cross topic URL
+* 344. Add mobile view for events page
+* 334. Restaurant Importer
+* 343. Fix cross topic notification display If user has latest notification over multiple topics.
+* 345. Fix mobile view for full map
+* 348. Setup ip banning feature
+* 349. Introduced mobile service for uploading picture
+* 346. Set map url for mobile version
+* 343. FIX full unicode url
+
+h4. Release - 0.20 - user.khadok.com.
+
+* 208. Use Location tag group for restaurant admin panel
+* 290. Configure google analytics code
+* 286. Setup m.khadok.com for format=mobile
+* 287. Setup name.khadok.com domain
+* 276. On user profile page translation missing
+* 294. Fixed fb like box
+* 293. Fix Open search xml not found
+* 292. Multiple image upload
+* 291. Full map if user click on map
+* 295. Show nearby restaurants  on full map
+* 297. Change Email prefix
+* 296. Have different logo for map markers
+* 299. FB share on review
+* 260. Display list of recent activities over the top panel
+* 301. Rename Site title, new convention - "Product name" user's reviews and ratings - khadok.com
+* 308. Fix Wanna go box on event module
+* 309. Fix Event Big Map
+* 310. Replace Do u want this button on event page
+* 311. Fix Events index page
+* 312. Event Image details page
+* 313. Add Top banner
+* 320. Add Event Schedule info
+* 314. Change event details page color
+* 315. Fix mobile version
+* 316. Fix translation
+* 318. Replace review/review_comment.restaurant with .any
+* 305. Event module, Add/Edit/Delete/ReSchedule event
+* 302. FIx FB Share review image related problem
+* 307. Event module
+
+
+h4. Release - 0.19 - www.khadok.com.
+
+* 246. Fix old fb user email related bug - mahtonu@gmail.com
+* 236. Fix FB activity box with domain name
+* 222. Light box based login
+* 242. Auto link for reply comment
+* 238. Make web site link clickable
+* 271. Set max ttl for sub domains (ajax, asset)
+* 272. Show other topics in a combo box on top menu
+* 273. Incorporate Topic search trends in meta tags
+* 246. Fix height for "add new restaurant" tags panel
+* 247. Add tag searching option for "add new restaurant" tags panel
+* 240. Fix map on create isp page
+* 241. Fix refresh warning correction
+* 223. Use location tag group for add restaurant
+* 278. Fix issue with ISP language shifting en|bn should be isp_en|isp_bn
+* 275. Delay image loading
+* 284. Embed login/registration with review form
+* 279. Enable Khadok.com
+* 283. Use "www" prefixed for defined host
+* 282. Set permanent redirection for restaurant.welltreat.us
+* 281. Fix facebook connect for different domain
+
+h4. Release - 0.18 - More topics on.
+
+* 217. Fix asset host for js push
+* 218. Move to multi domain cookie plugin
+* 218. Fix FB logout interval for failed FB sign out
+* 219. Expire fragment_for fragmented cache
+* 221. Fix wrong image referencing on server
+* 216. Group sphinix index
+* 194. Revise localization
+* 228. ISP review center
+* 223. Topic configuration exporter
+* 237. Integrate facebook widget
+* 234. Nearby search with sphinx
+* 235. Automatically rotate tabs if not clicked on any tab
+* 230. Fix email notification
+* 232. Fix restaurant cached page where upload page doesn't show up
+* 231. Picture upload option
+* 229. Fix spelling "Lound" to "lound"
+
 h4. Release - 0.17_LAALSHOP.
 
 * 186. Fix problem with Unbiased rating
