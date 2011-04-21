@@ -4,10 +4,11 @@ body {
 
 a {
   color: #0066cc;
+  text-decoration: none;
 }
 
 a:hover {
-  color: red;
+  text-decoration: underline;
 }
 
 a:visited {
@@ -69,14 +70,22 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 5px;
 }
 
+h4 {
+  font-size: 120%;
+}
+
 h1 {
   border-bottom: 1px solid #ccc;
-  font-size: 120%;
+  font-size: 140%;
+}
+
+h6 {
+  font-size: 95%;
 }
 
 .restaurant {
   margin-bottom: 10px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #E5EAF1;
   width: 100%;
 }
 
@@ -178,7 +187,7 @@ textarea {
 
 .mobile_buttons ul li, .mobile_buttons ul li a {
   font-size: 15px !important;
-  
+
   padding-bottom: 14px;
   padding-top: 14px;
   text-decoration: none;
@@ -223,4 +232,81 @@ textarea {
   border: 1px solid #ccc;
   margin-bottom: 5px;
   margin-top: 5px;
+}
+
+.mobile_button_block button {
+  width: 140px;
+  text-align: left;
+}
+
+.tbl_reviews tr td {
+  margin-bottom: 10px;
+
+}
+
+.tbl_reviews tr td .review .content p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.tbl_reviews tr td .review .reviewer, .tbl_reviews tr td .review .date {
+  font-size: 80%;
+  color: #888;
+  font-style: italic;
+}
+
+.tbl_reviews tr td .review .date a {
+  color: #0066cc;
+  font-size: 120%;
+}
+
+.review_comment_author {
+  width: 20px;
+  overflow: hidden;
+  font-size: 10px;
+  text-align: center;
+}
+
+.review_comment_author img {
+  height: 20px;
+  width: auto;
+}
+
+.site_list_item_rating {
+  font-size: 80%;
+  font-weight: bold;
+  color: #999;
+}
+
+#site_center_list .site_list_item_rating a, #site_center_list .summary a, #site_center_list .associated_tags a {
+  color: #6D84B4;
+}
+
+.recommendRestaurants {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#site_center_list .summary, #site_center_list .associated_tags {
+  font-size: 90%;
+  color: #333333;
+}
+
+#site_center_list .restaurant td img {
+  border: 1px solid #CCCCCC;
+  margin-top: 5px;
+  padding: 3px;
+  width: 50px;
+}
+
+.lovable_places td {
+  margin-bottom: 10px;
+}
+
+.lovable_places .stat_item {
+
+}
+
+.bookmark_tools {
+  color: #999;
 }

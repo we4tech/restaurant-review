@@ -2,8 +2,9 @@
   <div class="site_simple_box">
     <<%= config['heading'] || 'h4' %>><%= tt("module.#{config['label']}") %></<%= config['heading'] || 'h4' %>>
 
-    <div class="space_5"></div>
+  <div class="space_5"></div>
 
+  <table class="lovable_places">
     <% restaurants.each_with_index do |restaurant, index| %>
       <%
          images = restaurant.related_images.by_group(nil).collect(&:image)
@@ -11,30 +12,34 @@
            images = restaurant.other_images
          end
       %>
-      <div class="item">
-        <% if !images.empty? %>
-          <%= link_to(image_tag(
-              images.rand.public_filename(:small), :alt => ''),
-                      images.first.public_filename(:large), :class => 'image_small') %>
-        <% end %>
-        <div class="push_1">
+      <tr>
+        <td>
+          <% if !images.empty? %>
+            <%= link_to(image_tag(
+                            images.rand.public_filename(:very_small), :alt => ''),
+                        images.first.public_filename(:large), :class => 'image_small') %>
+          <% end %>
+        </td>
+        <td>
           <h6>
             <%= link_to restaurant.name,
                         restaurant_long_url(restaurant) %>
           </h6>
 
           <div class="site_list_item_rating"><%= render_restaurant_review_stats(restaurant) %></div>
-        </div>
-      </div>
+        </td>
+      </tr>
+
       <div class="space_5 clear"></div>
       <% if index + 1 != restaurants.length %>
         <div class="break"></div>
         <div class="space_5 clear"></div>
       <% end %>
     <% end %>
-    <div class="break"></div>
-    <div class="small">
-      <%= link_to tt('nav.more_places'), more_link %>
-    </div>
+  </table>
+  <div class="break"></div>
+  <div class="small">
+    <%= link_to tt('nav.more_places'), more_link %>
+  </div>
   </div>
 <% end %>

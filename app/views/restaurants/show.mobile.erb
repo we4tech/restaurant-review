@@ -30,37 +30,13 @@
   </div>
   <div class="break"></div>
   <div class="space_5"></div>
-  <%= render :partial => 'pages/parts/links' %>
-  <div class='space_10'></div>
-
   <div class="restaurant_details">
     <h1>
       <%= @restaurant.name %>
       <fb:like href="<%= request.url %>" layout="button_count" show_faces="false" font=""></fb:like>
     </h1>
     <%= render_restaurant_review_stats(@restaurant) %>
-    <div class='space_10'></div>
-    <div class='mobile_buttons'>
-      <ul>
-        <% if !(@restaurant.string1 || '').blank? %>
-          <!-- Nokia - wtai://wp/mc; -->
-          <li class='leftEnabled'><a href='<%= @restaurant.string1 %>;'>Call</a></li>
-        <% else %>
-          <li class='leftDisabled'>Call</li>
-        <% end %>
-        <li class='centerEnabled'><a href='#new_review'>Reviews</a></li>
-        <% if !(@restaurant.address || '').blank? && @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
-          <li class='rightEnabled'>
-            <a href='services://C2A?C2Aid=2305&Version=1.0&2305=Landmark(lat=<%= @restaurant.lat %>&long=<%= @restaurant.lng %>&name=<%= u(@restaurant.name) %>)'>Map</a>
-          </li>
-        <% else %>
-          <li class='rightDisabled'>Map
-          <li>
-        <% end %>
-      </ul>
-    </div>
-    <div class='clear'></div>
-    <div class='space_10'></div>
+    <div class='space_10'></div>    
     <p>
       <%= strip_tags truncate(@restaurant.description, 100) %>
     </p>
@@ -90,9 +66,21 @@
         <% end %>
 
       </div>
-    <% end %>
-
+    <% end %>	
     <div class='clear space_10'></div>
+	<%= render :partial => 'pages/parts/links' %>
+  	<div class='space_10'></div>
+	<div class='mobile_button_block'>
+	    <button onclick="$('#srr_<%= @restaurant.id %>').toggle('slide');">Show reviews (<%= @restaurant.reviews.count %>)</button>
+	  </div>
+	  <div id='srr_<%= @restaurant.id %>' style='display: none'>	
+		<div class='space_10'></div>
+	    <%= render :partial => 'reviews/parts/restaurant_review',
+	               :locals  => {:restaurant => @restaurant} %>
+		<div class='break'></div>
+		<div class='clear'></div>
+	  </div>
+	<div class='space_10'></div>
     <div class="mobile_button_block">
       <button onclick="$('#rig_<%= @restaurant.id %>').toggle('slide');">Show images</button>
     </div>
@@ -173,12 +161,10 @@
     <div class="break"></div>
     <div class='space_10'></div>
     <%= render :partial => 'reviews/parts/review_editor' %>
+	<div class='space_10'></div>
     <div class='break'></div>
     <div class='clear'></div>
-    <div class='space_10'></div>
-    <%= render :partial => 'reviews/parts/restaurant_review',
-               :locals  => {:restaurant => @restaurant} %>
-  </div>
+  </div>  
 
   <div class="space_10"></div>
     <div class="bookmark_tools">
