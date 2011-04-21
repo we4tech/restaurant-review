@@ -310,3 +310,26 @@ textarea {
 .bookmark_tools {
   color: #999;
 }
+
+.updates_item  {
+  width: 100%;
+}
+
+.updates_item td {
+  text-align: left;
+}
+
+.updates_item .date {
+  color: #999;
+  font-size: 80%;
+}
+
+.popup_message {
+  background: #daa520;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+.popup_message h1 {
+  border-bottom: 0;
+}

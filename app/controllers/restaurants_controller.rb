@@ -4,18 +4,18 @@ class RestaurantsController < ApplicationController
   before_filter :log_new_feature_visiting_status
   before_filter :set_premium_session, :only => [:premium]
   before_filter :unset_premium_session, :except => [:premium]
-   
-  caches_action :show, :cache_path => Proc.new {|c| 
+
+  caches_action :show, :cache_path => Proc.new { |c|
     c.cache_path(c, [:id])
-  }, :if => Proc.new {|c| !c.send(:mobile?)}
+  },            :if                => Proc.new { |c| !c.send(:mobile?) }
 
   def new
     if topic_imposed_limit_allows?
-      @restaurant = Restaurant.new
-      @form_fields = @topic.form_attribute.fields
-      @allow_image_upload = @topic.form_attribute.allow_image_upload
+      @restaurant                     = Restaurant.new
+      @form_fields                    = @topic.form_attribute.fields
+      @allow_image_upload             = @topic.form_attribute.allow_image_upload
       @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
-      @edit_mode = true
+      @edit_mode                      = true
     else
       flash[:notice] = 'You already have a profile with us, you can update!'
       redirect_to edit_restaurant_url(current_user.restaurants.by_topic(@topic.id).first.id)
@@ -23,11 +23,11 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    @allow_image_upload = @topic.form_attribute.allow_image_upload
+    @allow_image_upload             = @topic.form_attribute.allow_image_upload
     @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
-    @restaurant = Restaurant.new(params[:restaurant])
-    @restaurant.user = current_user
-    @restaurant.topic_id = @topic.id
+    @restaurant                     = Restaurant.new(params[:restaurant])
+    @restaurant.user                = current_user
+    @restaurant.topic_id            = @topic.id
 
     if @restaurant.save
       flash[:notice] = 'Successfully saved new restaurant!'
@@ -37,8 +37,8 @@ class RestaurantsController < ApplicationController
         redirect_to edit_restaurant_url(@restaurant)
       end
     else
-      @form_fields = @topic.form_attribute.fields
-      @edit_mode = true
+      @form_fields   = @topic.form_attribute.fields
+      @edit_mode     = true
       flash[:notice] = "Failed to store new #{@topic.name.humanize} information!"
       render :action => :new
     end
@@ -52,24 +52,24 @@ class RestaurantsController < ApplicationController
     end
 
     @cached = true if params[:jsonp].nil? || params[:jsonp] != 'false'
-    @site_title = "#{@restaurant.name} #{@restaurant.address.blank? ? '' : "@ #{@restaurant.address}"} "
-    @form_fields = @topic.form_attribute.fields
-    @allow_image_upload = @topic.form_attribute.allow_image_upload
+    @site_title                     = "#{@restaurant.name} #{@restaurant.address.blank? ? '' : "@ #{@restaurant.address}"} "
+    @form_fields                    = @topic.form_attribute.fields
+    @allow_image_upload             = @topic.form_attribute.allow_image_upload
     @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
 
     if @restaurant.reviews.count > 0
       user_given_rating = @restaurant.rating_out_of(Restaurant::RATING_LIMIT)
       @meta_description = "Read unbiased reviews of " +
-                          "#{@restaurant.reviews.count} people, who loved and rated " +
-                          "'#{@restaurant.name}' in average " +
-                          "#{user_given_rating > 0 ? user_given_rating.round(1) : 0}" +
-                          " out of #{Restaurant::RATING_LIMIT.to_f} "
+          "#{@restaurant.reviews.count} people, who loved and rated " +
+          "'#{@restaurant.name}' in average " +
+          "#{user_given_rating > 0 ? user_given_rating.round(1) : 0}" +
+          " out of #{Restaurant::RATING_LIMIT.to_f} "
     else
       @meta_description = "Read unbiased reviews of '#{@restaurant.name}'"
     end
     @meta_keywords = "#{@restaurant.tags.collect(&:name).join(', ')} " +
-                     "#{@restaurant.address}, Bangladeshi, restaurant, review," +
-                     " community".gsub('"', '\'')
+        "#{@restaurant.address}, Bangladeshi, restaurant, review," +
+        " community".gsub('"', '\'')
 
     load_module_preferences
     @view_context = ViewContext::CONTEXT_RESTAURANT_DETAILS
@@ -79,50 +79,50 @@ class RestaurantsController < ApplicationController
         :render_most_lovable_places,
         :render_recently_added_places,
         :render_topic_box]
-        
+
     respond_to do |format|
       format.html { render }
-	    format.mobile { render }
-	    format.json {
-	      options = {}
+      format.mobile { render }
+      format.json {
+        options = {}
         if (image_versions = params[:image_versions])
           options = {
               :include => {
-                  :images => {
-                      :methods => image_versions.collect{|iv| "#{iv}_public_filename".to_sym}},
+                  :images       => {
+                      :methods => image_versions.collect { |iv| "#{iv}_public_filename".to_sym }},
                   :other_images => {
-                      :methods => image_versions.collect{|iv| "#{iv}_public_filename".to_sym}
+                      :methods => image_versions.collect { |iv| "#{iv}_public_filename".to_sym }
                   }
               }
           }
         end
-        
-      	options[:only] = params[:fields] if params[:fields]
-      	render :json => @restaurant.to_json(options)
-	    }
+
+        options[:only] = params[:fields] if params[:fields]
+        render :json => @restaurant.to_json(options)
+      }
       format.xml {
         options = {}
 
         if (image_versions = params[:image_versions])
           options = {
               :include => {
-                  :images => {
-                      :methods => image_versions.collect{|iv| "#{iv}_public_filename".to_sym}},
+                  :images       => {
+                      :methods => image_versions.collect { |iv| "#{iv}_public_filename".to_sym }},
                   :other_images => {
-                      :methods => image_versions.collect{|iv| "#{iv}_public_filename".to_sym}
+                      :methods => image_versions.collect { |iv| "#{iv}_public_filename".to_sym }
                   }
               }
           }
         end
 
-      	options[:only] = params[:fields] if params[:fields]
-      	render :xml => @restaurant.to_xml(options)
+        options[:only] = params[:fields] if params[:fields]
+        render :xml => @restaurant.to_xml(options)
       }
     end
   end
 
   def redirected_to_original_topic_based_url?
-    not_same_topic = params[:topic_name].downcase != @restaurant.topic.name.pluralize.downcase
+    not_same_topic  = params[:topic_name].downcase != @restaurant.topic.name.pluralize.downcase
     not_same_domain = request.host.downcase != @restaurant.topic.public_host
     if (params[:topic_name] && not_same_topic) || not_same_domain
       redirect_to restaurant_long_url(@restaurant, :topic => @restaurant.topic, :host => @restaurant.topic.public_host)
@@ -148,10 +148,10 @@ class RestaurantsController < ApplicationController
 
     if @restaurant.premium?
       @premium_template = @restaurant.selected_premium_template
-      @context = :home
+      @context          = :home
       respond_to do |format|
         format.html { pt_render_template 'layout' }
-        format.mobile { render :text => 'Sorry, We don\'t have support for mobile view.'}
+        format.mobile { render :text => 'Sorry, We don\'t have support for mobile view.' }
       end
     else
       flash[:notice] = 'this is not a premium restaurant!'
@@ -163,9 +163,9 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.find(params[:id].to_i)
 
     if @restaurant.premium?
-      @premium_template = @restaurant.selected_premium_template
+      @premium_template           = @restaurant.selected_premium_template
       @premium_service_subscriber = PremiumServiceSubscriber.new
-      @context = :home
+      @context                    = :home
       pt_render_template 'coming_soon'
     else
       flash[:notice] = 'this is not a premium restaurant!'
@@ -177,11 +177,11 @@ class RestaurantsController < ApplicationController
     restaurant = Restaurant.find(params[:id].to_i)
 
     if restaurant.author?(current_user)
-      @form_fields = @topic.form_attribute.fields
-      @allow_image_upload = @topic.form_attribute.allow_image_upload
+      @form_fields                    = @topic.form_attribute.fields
+      @allow_image_upload             = @topic.form_attribute.allow_image_upload
       @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
-      @edit_mode = true
-      @restaurant = restaurant
+      @edit_mode                      = true
+      @restaurant                     = restaurant
     else
       flash[:notice] = "You are not authorized to edit this entry!"
       redirect_to root_url
@@ -190,7 +190,7 @@ class RestaurantsController < ApplicationController
 
   def update
     restaurant = Restaurant.find(params[:id].to_i)
-    user_id = current_user.id
+    user_id    = current_user.id
 
     # Don't change original author if super admin is performing this operation
     if current_user.admin?
@@ -218,17 +218,17 @@ class RestaurantsController < ApplicationController
         if (params[:fb_share].nil? || params[:fb_share] == 'true') &&
             current_user.share_on_facebook?
           flash[:notice] = 'Saved and shared your updates!'
-          return_to = params[:return_to] || edit_restaurant_url(restaurant)
+          return_to      = params[:return_to] || edit_restaurant_url(restaurant)
           redirect_to facebook_publish_url('updated_restaurant', restaurant.id, :next_to => return_to)
         else
           flash[:notice] = 'Saved your updates!'
           redirect_to params[:return_to] || edit_restaurant_url(restaurant)
         end
       else
-        @form_fields = @topic.form_attribute.fields
+        @form_fields   = @topic.form_attribute.fields
         flash[:notice] = 'Failed to store your updated!'
-        @restaurant = restaurant
-        @edit_mode = true
+        @restaurant    = restaurant
+        @edit_mode     = true
         render :action => :edit
       end
     else
@@ -257,8 +257,8 @@ class RestaurantsController < ApplicationController
   end
 
   def edit_tags
-    @restaurant = Restaurant.find(params[:id].to_i)
-    @tags = @topic.tags
+    @restaurant        = Restaurant.find(params[:id].to_i)
+    @tags              = @topic.tags
     session[:last_url] = request.env['HTTP_REFERER']
   end
 
@@ -268,7 +268,7 @@ class RestaurantsController < ApplicationController
   def save_tags
     @restaurant = Restaurant.find(params[:id].to_i)
 
-    tag_ids = (params[:tag_ids] || []).collect(&:to_i).compact
+    tag_ids     = (params[:tag_ids] || []).collect(&:to_i).compact
     if tag_ids.empty?
       flash[:notice] = 'No tags were selected!'
       redirect_to edit_tags_restaurant_path(@restaurant)
@@ -322,22 +322,22 @@ class RestaurantsController < ApplicationController
   end
 
   private
-    def update_tag_mappings(tag_ids, restaurant)
-      tags = Tag.find(tag_ids)
-      tags.each do |tag|
-        TagMapping.create(
-            :topic => @topic,
-            :restaurant => restaurant,
-            :tag => tag,
-            :user => restaurant.user)
-      end
-
-      restaurant.update_attribute(:long_array, tags.collect(&:name))
+  def update_tag_mappings(tag_ids, restaurant)
+    tags = Tag.find(tag_ids)
+    tags.each do |tag|
+      TagMapping.create(
+          :topic      => @topic,
+          :restaurant => restaurant,
+          :tag        => tag,
+          :user       => restaurant.user)
     end
 
-    def topic_imposed_limit_allows?
-      form_attribute = @topic.form_attribute
-      form_attribute && form_attribute.allows_more_entry?(@topic, current_user)
-    end
+    restaurant.update_attribute(:long_array, tags.collect(&:name))
+  end
+
+  def topic_imposed_limit_allows?
+    form_attribute = @topic.form_attribute
+    form_attribute && form_attribute.allows_more_entry?(@topic, current_user)
+  end
 
 end

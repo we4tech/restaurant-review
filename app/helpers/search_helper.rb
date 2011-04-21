@@ -69,8 +69,9 @@ module SearchHelper
            :sort_by => sort_by,
            :page => page_index.nil? ? 1 : page_index.to_i}.merge(options))
       search.run
-      search
-    rescue => $e
+    rescue => e
+      raise e if %w{development test}.include?(RAILS_ENV)
+      
       logger.error($e)
       if $e.is_a?(Errno::ECONNREFUSED)
         UserMailer::deliver_server_status_notification('DOWN Ultrasphinx', %{

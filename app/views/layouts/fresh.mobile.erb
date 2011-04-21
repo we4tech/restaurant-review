@@ -7,7 +7,7 @@
   </title>
 
   <%= stylesheet_link_tag 'fresh/site.mobile.css' %>
-  
+
   <%= javascript_include_tag 'jquery.min', 'application', :cache => 'cache_mobile' %>
 
   <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
@@ -25,7 +25,7 @@
     <meta name="keywords" content="Mobile Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
   <% end %>
 
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
   <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
 
   <%= yield :head %>
@@ -37,22 +37,22 @@
     <div class='top'>
       <table>
         <tbody>
-          <tr>
-            <td>
-              <div class='logo'>
-                <% if @topic.banner_image_path %>
-                  <%= link_to image_tag(@topic.banner_image_path), root_url %>
-                <% else %>
-                  No banner SET!
-                <% end %>
-              </div>
-            </td>
-            <td>
-              <div class='navigation'>
-                <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
-              </div>
-            </td>
-          </tr>
+        <tr>
+          <td>
+            <div class='logo'>
+              <% if @topic.banner_image_path %>
+                <%= link_to image_tag(@topic.banner_image_path), root_url %>
+              <% else %>
+                No banner SET!
+              <% end %>
+            </div>
+          </td>
+          <td>
+            <div class='navigation'>
+              <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
+            </div>
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
@@ -77,7 +77,8 @@
 
   <div class='bottom'>
     <div class='siteInfo'>
-      <%= @topic.description %><br/>
+      <%= @topic.description %>
+      <br/>
       <%= link_to 'view in desktop version', root_url(:format => :html) %>
     </div>
     <div class='copyrights'>

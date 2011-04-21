@@ -10,7 +10,8 @@
         <% end %>
       <% end %>
     </select>
-    <input type='submit' value='<%= t('button.find') %>'/>
+    <input type='submit' value='<%= t('button.find') %>'/> .
+    <span id="nearby_places"><%= link_to "Nearby #{@topic.name.humanize.pluralize}", search_path %></span>
   </form>
 </div>
 <div class='clear'></div>
