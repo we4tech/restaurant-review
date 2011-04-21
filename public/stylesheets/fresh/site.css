@@ -119,23 +119,33 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 10px;
 }
 
+.site_list_item .grid_1 img {
+  border: 1px solid #ccc;
+  padding: 3px;
+  margin-top: 5px;
+}
+
 .site_list_item h4 {
   font-weight: normal;
-  font-size: 15px;
-  line-height: 10px;
-  margin-bottom: 5px;
+  font-size: 130%!important;
+  margin-bottom: 0;
 }
 
 .site_list_item .summary {
   font-size: 10px;
-  margin-top: 10px;
 }
 
 .site_list_item_rating {
   margin: 0;
   display: inline;
   font-weight: bold;
-  font-size: 10px;
+  color: #999;
+  font-size: 70%;
+  line-height: 10px;
+}
+
+.site_list_item_rating a {
+  color: #6D84B4;
 }
 
 .tags {
@@ -688,12 +698,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .associated_tags {
   font-size: 10px;
-  margin-top: 10px;
   max-height: 30px;
   overflow-y: hidden;
 }
 
 .associated_tags a {
+  color: #6D84B4;
 }
 
 .big_picture_holder {
@@ -1192,11 +1202,9 @@ form .hints {
 }
 
 .bestForItem {
-  border-bottom: 1px solid #CCCCCC;
-  border-left: 1px solid #CCCCCC;
   float: left;
-  height: 100px;
-  margin-bottom: 10px;
+  height: 90px;
+  margin-bottom: 5px;
   margin-right: 5px;
   padding: 0;
   overflow-y: hidden;
@@ -1221,8 +1229,11 @@ form .hints {
 .bestForBox .info .stat {
   font-size: 10px;
   font-weight: bolder;
-  color: red;
-  margin-bottom: 5px;
+  color: #999;
+}
+
+.bestForBox .info strong a {
+  font-size: 110%;  
 }
 
 .geoSearchFields {
@@ -1287,3 +1298,4 @@ h4 small {
   padding: 5px;
   font-size: 80%;
 }
+
