@@ -241,7 +241,6 @@ textarea {
 
 .tbl_reviews tr td {
   margin-bottom: 10px;
-
 }
 
 .tbl_reviews tr td .review .content p {
@@ -325,11 +324,20 @@ textarea {
 }
 
 .popup_message {
-  background: #daa520;
-  padding: 10px;
+  background: none repeat scroll 0 0 red;
+  border-bottom: 4px solid #000000;
+  color: #FFFFFF;
   margin: 0 auto;
+  opacity: 0.8;
+  padding: 10px;
+  text-align: center;
+  width: 100%;
 }
 
 .popup_message h1 {
   border-bottom: 0;
+}
+
+.popup_message a {
+  color: yellow;
 }

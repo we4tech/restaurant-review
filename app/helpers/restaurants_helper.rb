@@ -100,7 +100,10 @@ module RestaurantsHelper
       queries << "@long_array #{cuisine_tags.join('|')}"
     end
 
-    queries << "@name -(#{@restaurant.name.sphinxify})"
+    sphinxify_text = @restaurant.name.sphinxify
+    if !sphinxify_text.strip.blank?
+      queries << "@name -(#{sphinxify_text})"
+    end
 
     restaurants = perform_search([:Restaurant], (queries.join(' ')), {:per_page => per_page, :page => 1})
     restaurants.uniq!

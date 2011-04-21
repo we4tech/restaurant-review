@@ -38,7 +38,7 @@
           try {
             $.get("<%= search_path %>&meter=1000&format=json&lat=" + lat + '&lng=' + lng, function(result) {
               if (result && result.length > 0) {
-                var html = "<h1>Hi r nearby '" + result[0].address + "' ?</h1> <h4>discover nearby more <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>.</h4><br/><a href='javascript:void(0)' onclick='$(this).parent().parent().remove();'>[Hide]</a>";
+                var html = "<h1>Hi r u nearby '" + result[0].address + "' ?</h1> <h4>discover nearby more <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>.</h4><br/><a href='javascript:void(0)' onclick='$(this).parent().parent().remove();'>[Hide]</a>";
                 var newElement = document.createElement('div');
                 newElement.innerHTML = html;
                 newElement.style.position = 'fixed';

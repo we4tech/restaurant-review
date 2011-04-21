@@ -23,7 +23,7 @@ module SearchHelper
   end
 
   def perform_search(models, query, options = {})
-
+    
     sort_by = '@weight DESC'
 
     # Apply specific model
@@ -72,8 +72,8 @@ module SearchHelper
     rescue => e
       raise e if %w{development test}.include?(RAILS_ENV)
       
-      logger.error($e)
-      if $e.is_a?(Errno::ECONNREFUSED)
+      logger.error(e)
+      if e.is_a?(Errno::ECONNREFUSED)
         UserMailer::deliver_server_status_notification('DOWN Ultrasphinx', %{
 Dear server admin,
 could you please turn on sphinx server? we can't reach it here!
