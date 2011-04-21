@@ -26,4 +26,8 @@ class RestaurantTest < ActiveSupport::TestCase
     assert_equal restaurants_count + 1, Restaurant.count
     assert_equal tags_count + 4, Tag.count 
   end
+
+  test 'Generic data storage' do
+
+  end
 end

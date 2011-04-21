@@ -200,9 +200,17 @@ class RestaurantsController < ApplicationController
     if restaurant.author?(current_user)
       attributes = params[:restaurant].merge(
           :user_id => user_id, :topic_id => @topic.id)
-      attributes[:long_array] ||= []
-      attributes[:short_array] ||= []
-      attributes[:extra_notification_recipients] ||= []
+      if attributes.include?(:long_array)
+        attributes[:long_array] ||= []
+      end
+
+      if attributes.include?(:short_array)
+        attributes[:short_array] ||= []
+      end
+
+      if attributes.include?(:extra_notification_recipients)
+        attributes[:extra_notification_recipients] ||= []
+      end
 
       restaurant.apply_filters(params[:filters], attributes)
 

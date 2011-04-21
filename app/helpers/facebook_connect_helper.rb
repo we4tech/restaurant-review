@@ -21,7 +21,7 @@ module FacebookConnectHelper
 
         if !User.exists?(:facebook_uid => fb_uid)
           user = User.register_by_facebook_account(fb_session, fb_uid)
-          user.log_it!(request.remote_addr)
+          user.log_it!(request.env["HTTP_X_FORWARDED_FOR"] || request.remote_addr)
         else
           user = User.update_facebook_session(fb_uid, fb_session)
           user.log_it!(request.env["HTTP_X_FORWARDED_FOR"] || request.remote_addr)

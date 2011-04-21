@@ -26,7 +26,7 @@ module UserActivityMonitoringService
       policies = SitePolicy.of(:ip_banned)
       if policies && !policies.empty?
         policies.each do |policy|
-          allowed = policy.allowed?(request.remote_addr)
+          allowed = policy.allowed?(request.env['HTTP_X_FORWARDED_FOR'])
           if not allowed
             render :text => 'You are not allowed to access this site! you are banned!! weeee! :) contact to why.did.you.banned.me@welltreat.us'
             return false
