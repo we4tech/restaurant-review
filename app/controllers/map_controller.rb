@@ -10,6 +10,7 @@ class MapController < ApplicationController
     else
       flash[:notice] = 'Invalid parameter'
       redirect_to :back
+      return
     end
 
     @site_title = @model_instance.name

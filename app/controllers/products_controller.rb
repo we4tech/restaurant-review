@@ -41,6 +41,7 @@ class ProductsController < ApplicationController
     if @product && !@product.author?(current_user)
       flash[:notice] = t('errors.authorization')
       redirect_to site_products_url(@restaurant)
+      return
     end
 
     render_view('products/edit')
@@ -50,6 +51,7 @@ class ProductsController < ApplicationController
     if @product && !@product.author?(current_user)
       flash[:notice] = t('errors.authorization')
       redirect_to site_products_url(@restaurant)
+      return
     end
 
     product_params = params[:product]
@@ -69,6 +71,7 @@ class ProductsController < ApplicationController
     if @product && !@product.author?(current_user)
       flash[:notice] = t('errors.authorization')
       redirect_to site_products_url(@restaurant)
+      return
     end
     
     if @product.destroy
