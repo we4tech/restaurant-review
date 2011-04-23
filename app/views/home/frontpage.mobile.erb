@@ -38,11 +38,10 @@
           if (!currentLocationSearchingInProgress) {
             currentLocationSearchingInProgress = true;
             try {
-              var url = "<%= search_path %>&meter=1000&format=json&lat=" + lat + '&lng=' + lng;
+              var url = "<%= search_path.gsub(/format=mobile/, 'format=json') %>&format=json&meter=1000&lat=" + lat + '&lng=' + lng;
               alert("Url - " + url);
 
               $.get(url, function(result) {
-                alert(result);
                 console.debug(result);
                 if (result && result.length > 0) {
                   var html = "<h1>Hi r u nearby '" + result[0].address + "' ?</h1> <h4>discover nearby more <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>.</h4><br/><a href='javascript:void(0)' onclick='$(this).parent().parent().remove();'>[Hide]</a>";
