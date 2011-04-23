@@ -196,6 +196,8 @@ class HomeController < ApplicationController
    	# Determine location parameters
    	options = {}
    	
+   	options[:per_page] = params[:limit].to_i if params[:limit]
+   	
    	if params[:lat].to_f > 0 && params[:lng].to_f > 0 && params[:meter].to_i > 0
    	  options[:location] = {
    	    :lat => params[:lat],
@@ -208,7 +210,7 @@ class HomeController < ApplicationController
    		
 	  @tag_ids = []
     @restaurants = perform_search(models, build_search_query(query_map, @tags), options)
-
+    
     # pending module - :render_recently_added_pictures
     load_module_preferences
 

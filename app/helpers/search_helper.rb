@@ -25,6 +25,9 @@ module SearchHelper
   def perform_search(models, query, options = {})
     
     sort_by = '@weight DESC'
+    per_page = Restaurant::per_page
+
+    per_page = options.delete(:per_page).to_i if options && options.include?(:per_page)
 
     # Apply specific model
     if models && !models.empty?
@@ -65,7 +68,7 @@ module SearchHelper
                'long_array' => 2.5,
                'address' => 3.0
            },
-           :per_page => Restaurant::per_page,
+           :per_page => per_page,
            :sort_by => sort_by,
            :page => page_index.nil? ? 1 : page_index.to_i}.merge(options))
       search.run
