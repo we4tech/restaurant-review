@@ -41,10 +41,10 @@
               var url = "<%= search_path.gsub(/format=mobile/, 'format=json') %>&format=json&limit=1&fields[]=address&excepts[]=marker_html&excepts[]=description&meter=1000&lat=" + lat + '&lng=' + lng;
               alert("Url - " + url);
 
-              $.get(url, function(result) {
+              $.getJSON(url, function(result) {
                 console.debug(result);
                 if (result && result.length > 0) {
-                  var html = "<h1>Hi r u nearby '" + result[0].address + "' ?</h1> <h4>discover nearby more <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>.</h4><br/><a href='#' onclick='$(this).parent().parent().remove();'>[Hide]</a>";
+                  var html = "<h1>Hi r u nearby '" + result[0].address + "' ?</h1> <h4>discover nearby more <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>.</h4><br/><button onclick='$(this).parent().parent().remove();'>[Hide]</button>";
                   var newElement = document.createElement('div');
                   newElement.innerHTML = html;
                   newElement.style.position = 'fixed';
