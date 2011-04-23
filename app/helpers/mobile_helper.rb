@@ -1,6 +1,6 @@
 module MobileHelper
 
-  NON_MOBILE_FORMATS = ['html', 'ajax']
+  NON_MOBILE_FORMATS = ['html', 'ajax', 'json']
   MOBILE_DEFAULT_FORMAT = MOBILE_FORMAT = 'mobile'
   MOBILE_TOUCH_FORMAT = 'mobile_touch'
 

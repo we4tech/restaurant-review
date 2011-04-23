@@ -45,8 +45,8 @@
                 url: url,
                 data: {
                   format: 'json', limit: 1,
-                  'fields[]': 'address', 'excepts[]': 'marker_html',
-                  'excepts[]': 'description', 'meter': 1000, lat: lat, lng: lng
+                  'fields[]': 'address', 'excepts[]': ['marker_html', 'description'],
+                  'meter': 1000, lat: lat, lng: lng
                 },
                 dataTypeString: 'json',
                 success: function(result) {
