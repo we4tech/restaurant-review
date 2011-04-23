@@ -29,38 +29,48 @@
 <% content_for :bottom do %>
   <script type="text/javascript">
     var currentLocationSearchingInProgress = false;
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        if (!currentLocationSearchingInProgress) {
-          currentLocationSearchingInProgress = true;
-          try {
-            $.get("<%= search_path %>&meter=1000&format=json&lat=" + lat + '&lng=' + lng, function(result) {
-              if (result && result.length > 0) {
-                var html = "<h1>Hi r u nearby '" + result[0].address + "' ?</h1> <h4>discover nearby more <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>.</h4><br/><a href='javascript:void(0)' onclick='$(this).parent().parent().remove();'>[Hide]</a>";
-                var newElement = document.createElement('div');
-                newElement.innerHTML = html;
-                newElement.style.position = 'fixed';
-                newElement.style.top = document.body.clientTop;
-                newElement.className = 'popup_message';
-                document.body.appendChild(newElement);
+    try {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+          alert("Lat - " + lat + ', Lng - ' + lng);
+          if (!currentLocationSearchingInProgress) {
+            currentLocationSearchingInProgress = true;
+            try {
+              var url = "<%= search_path %>&meter=1000&format=json&lat=" + lat + '&lng=' + lng;
+              alert("Url - " + url);
 
-                // update nearby restaurants search link
-                var link = $('#nearby_places a');
-                link.attr('href', link.attr('href') + "&lat=" + lat + '&lng=' + lng);
-                link.html(link.html() + ' (' + result[0].address + ')');
-                currentLocationSearchingInProgress = false;
-              }
-            });
-          } catch(e) {
-            currentLocationSearchingInProgress = false;
+              $.get(url, function(result) {
+                alert(result);
+                console.debug(result);
+                if (result && result.length > 0) {
+                  var html = "<h1>Hi r u nearby '" + result[0].address + "' ?</h1> <h4>discover nearby more <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>.</h4><br/><a href='javascript:void(0)' onclick='$(this).parent().parent().remove();'>[Hide]</a>";
+                  var newElement = document.createElement('div');
+                  newElement.innerHTML = html;
+                  newElement.style.position = 'fixed';
+                  newElement.style.top = document.body.clientTop;
+                  newElement.className = 'popup_message';
+                  document.body.appendChild(newElement);
+
+                  // update nearby restaurants search link
+                  var link = $('#nearby_places a');
+                  link.attr('href', link.attr('href') + "&lat=" + lat + '&lng=' + lng);
+                  link.html(link.html() + ' (' + result[0].address + ')');
+                  currentLocationSearchingInProgress = false;
+                }
+              });
+            } catch(e) {
+              currentLocationSearchingInProgress = false;
+            }
+
           }
+        }, function() {
 
-        }
-      }, function() {
-
-      });
+        });
+      }
+    } catch (e) {
+      alert(e);
     }
   </script>
 <% end %>
