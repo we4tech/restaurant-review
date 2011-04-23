@@ -38,10 +38,14 @@
           if (!currentLocationSearchingInProgress) {
             currentLocationSearchingInProgress = true;
             try {
-              var url = "<%= search_path.gsub(/format=mobile/, 'format=json') %>&format=json&limit=1&fields[]=address&excepts[]=marker_html&excepts[]=description&meter=1000&lat=" + lat + '&lng=' + lng;
+              var url = "<%= search_path.gsub(/format=mobile/, 'format=json') %>";
               alert("Url - " + url);
 
-              $.get(url, function(result) {
+              $.get(url, {
+                  format: 'json', limit: 1,
+                  'fields[]': 'address', 'excepts[]': 'marker_html',
+                  'excepts[]': 'description', 'meter': 1000, lat: lat, lng: lng
+                }, function(result) {
                 alert(result);
                 console.debug(result);
                 if (result && result.length > 0) {
