@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   
   # render new.rhtml
   def new
-    store_location
+    session[:return_to] = request.env['HTTP_REFERER'] || root_url
     render_view('sessions/new')
   end
 
@@ -30,6 +30,7 @@ class SessionsController < ApplicationController
       if user.image
         flash[:notice] = "Logged in successfully"
         respond_to do |format|
+          format.mobile { redirect_back_or_default(updates_url) }
           format.html { redirect_back_or_default(updates_url) }
           format.ajax {
             @redirect_url = session[:return_to] || updates_url
@@ -39,6 +40,7 @@ class SessionsController < ApplicationController
       else
         flash[:notice] = "Logged in successfully, please upload your display picture (avatar)!"
         respond_to do |format|
+          format.mobile { redirect_to edit_user_url(user) }
           format.html { redirect_to edit_user_url(user) }
           format.ajax {
             @redirect_url = edit_user_url(user)
@@ -57,6 +59,7 @@ class SessionsController < ApplicationController
 
       respond_to do |format|
         format.html { render_view('sessions/new') }
+        format.mobile { render_view('sessions/new') }
         format.ajax { render :partial => 'sessions/new.ajax.erb', :layout => false}
         format.mobile_touch {
           render_view('sessions/new')

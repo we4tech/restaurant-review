@@ -1,5 +1,9 @@
 <script type="text/javascript">
   $(function() {
+    setTimeout(function() {
+      window.location = '<%= logout_url %>';
+    }, 10000);
+
     FB.logout(function() {
       $.get('<%= facebook_connect_update_url %>', {'sid': ''}, function() {
         window.location = '<%= logout_url %>';

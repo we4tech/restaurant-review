@@ -34,12 +34,19 @@ class UsersController < ApplicationController
           flash[:notice] = t('notice.thanks_for_signing_in')
           redirect_back_or_default('/')
         }
+
+        format.mobile {
+          flash[:notice] = t('notice.thanks_for_signing_in')
+          redirect_back_or_default('/')
+        }
+
         format.ajax { render :layout => false}
       end
     else
       flash[:error]  = t('notice.user_creation_failed')
       respond_to do |format|
         format.html {render_view('users/new')}
+        format.mobile {render_view('users/new')}
         format.ajax {
           render :partial => 'users/new'
         }

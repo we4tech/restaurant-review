@@ -2,7 +2,7 @@
 <div class="grid_8 restaurant_details">
   <% if @restaurant.author?(current_user) %>
     <div class="mobile_button_block">
-      <button onclick="$('#rb_<%= @restaurant.id %>').toggle('slide');">Show admin links</button>
+      <button onclick="$('#rb_<%= @restaurant.id %>').toggle('slide');">Show</button> admin links
     </div>
   <% end %>
 
@@ -71,7 +71,7 @@
 	<%= render :partial => 'pages/parts/links' %>
   	<div class='space_10'></div>
 	<div class='mobile_button_block'>
-	    <button onclick="$('#srr_<%= @restaurant.id %>').toggle('slide');">Show reviews (<%= @restaurant.reviews.count %>)</button>
+	    <button onclick="$('#srr_<%= @restaurant.id %>').toggle('slide');">Show</button> reviews (<%= @restaurant.reviews.count %>)
 	  </div>
 	  <div id='srr_<%= @restaurant.id %>' style='display: none'>	
 		<div class='space_10'></div>
@@ -82,7 +82,7 @@
 	  </div>
 	<div class='space_10'></div>
     <div class="mobile_button_block">
-      <button onclick="$('#rig_<%= @restaurant.id %>').toggle('slide');">Show images</button>
+      <button onclick="$('#rig_<%= @restaurant.id %>').toggle('slide');">Show</button> images
     </div>
     <div id="rig_<%= @restaurant.id %>" style="display:none">
       <%= render :partial => 'images/parts/image_gallery' %>
@@ -101,7 +101,7 @@
         %>
         <% if field_value && display %>
           <div class="mobile_button_block">
-            <button onclick="$('#<%= field_name %>_<%= @restaurant.id %>').toggle('slide');">Show <%= tt("fields.#{field_label}", :group => :view) %></button>
+            <button onclick="$('#<%= field_name %>_<%= @restaurant.id %>').toggle('slide');">Show</button> <%= tt("fields.#{field_label}", :group => :view) %>
           </div>
           <div class="grid_4" id="<%= field_name %>_<%= @restaurant.id %>" style="display: none">
             <% if field_type == 'checkbox' %>
@@ -123,7 +123,7 @@
     <div class='clear space_10'></div>
 
     <div class="mobile_button_block">
-      <button onclick="$('#rr_<%= @restaurant.id %>').toggle('slide');">Show similar items</button>
+      <button onclick="$('#rr_<%= @restaurant.id %>').toggle('slide');">Show</button> similar items
     </div>
     <div id="rr_<%= @restaurant.id %>" style="display: none">
       <%= render_related_restaurants(5) %>
@@ -133,7 +133,7 @@
     <div class="space_10"></div>
 
     <div class="mobile_button_block">
-      <button onclick="$('#rd_<%= @restaurant.id %>').toggle('slide');">Show description</button>
+      <button onclick="$('#rd_<%= @restaurant.id %>').toggle('slide');">Show</button> description
     </div>
 
     <div class='contentDetails' style="display:none" id="rd_<%= @restaurant.id %>">
@@ -144,7 +144,7 @@
 
     <% if current_user && @allow_contributed_image_upload %>
       <div class="mobile_button_block">
-        <button onclick="$('#rcia_<%= @restaurant.id %>').toggle('slide');">Add image</button>
+        <button onclick="$('#rcia_<%= @restaurant.id %>').toggle('slide');">Add</button> image
       </div>
       <div id="rcia_<%= @restaurant.id %>" style="display: none">
         <%= render :partial => 'contributed_images/parts/add' %>
@@ -154,7 +154,7 @@
 
   <div class="clear space_10"></div>
   <div class="mobile_button_block">
-    <button onclick="$('#rrp_<%= @restaurant.id %>').toggle('slide');">Add review</button>
+    <button onclick="$('#rrp_<%= @restaurant.id %>').toggle('slide');">Add</button> review
   </div>
 
   <div id="rrp_<%= @restaurant.id %>" style="display: none">

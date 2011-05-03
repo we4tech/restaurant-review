@@ -31,7 +31,7 @@ a img {
 }
 
 .top {
-  margin-bottom: 10px;
+  height: 30px; position: relative; top: -15px;
 }
 
 .logo {
@@ -39,7 +39,7 @@ a img {
 }
 
 .logo a img {
-  width: 200px;
+  width: 100px;
 }
 
 .navigation {
@@ -175,7 +175,6 @@ textarea {
 
 .mobile_buttons ul {
   list-style-type: none;
-  margin: 0;
   padding: 0;
   height: 46px;
   margin: 0 auto;
@@ -235,8 +234,8 @@ textarea {
 }
 
 .mobile_button_block button {
-  width: 140px;
-  text-align: left;
+  text-align: center;
+  width: 70px;
 }
 
 .tbl_reviews tr td {
@@ -310,7 +309,7 @@ textarea {
   color: #999;
 }
 
-.updates_item  {
+.updates_item {
   width: 100%;
 }
 
@@ -340,4 +339,36 @@ textarea {
 
 .popup_message a {
   color: yellow;
+}
+
+.popup_button {
+  display: inline;
+}
+
+.popup_button > a {
+  padding: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.popup_button > a.selected {
+  background: #fff;
+  border: 1px solid #343434;
+}
+
+.popup_button ul {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 1px solid #343434;
+  border-top: 0 none;
+  display: block;
+  list-style-type: none;
+  margin: 0 0 0 44px;
+  padding: 5px;
+  position: absolute;
+  top: 41px;
+}
+
+.popup_button ul li {
+  padding: 5px;
+  color: red;
 }
