@@ -165,8 +165,8 @@ module UrlOverrideHelper
                '_models' => 'Restaurant')
   end
 
-  def event_long_url(event)
-    event_long_route_url(:name => url_escape(event.name), :id => event.id)
+  def event_long_url(event, options = {})
+    event_long_route_url({:name => url_escape(event.name), :id => event.id}.merge(options))
   end
 
   def event_link(event)
@@ -176,12 +176,12 @@ module UrlOverrideHelper
   #
   # Return url for either event home page or restaurant home page based
   # on specified model type
-  def event_or_restaurant_url(model_instance)
+  def event_or_restaurant_url(model_instance, options = {})
     case model_instance
       when Restaurant
-        restaurant_long_url(model_instance)
+        restaurant_long_url(model_instance, options)
       when TopicEvent
-        event_long_url(model_instance)
+        event_long_url(model_instance, options)
       else
         nil
     end
