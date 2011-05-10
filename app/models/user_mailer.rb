@@ -48,7 +48,7 @@ class UserMailer < ActionMailer::Base
     setup_email(review_comment.review.user, review_comment.topic, review_comment.any)
     @subject += "#{review_comment.user.login.humanize} has commented on your review at '#{review_comment.any.name}'"
     @body[:review_comment] = review_comment
-    @body[:url] = "#{event_or_restaurant_url(review_comment.any)}#review-#{review_comment.review_id}"
+    @body[:url] = "#{event_or_restaurant_url(review_comment.any, :format => 'html')}#review-#{review_comment.review_id}"
     @body[:topic] = review_comment.topic
   end
 
@@ -59,7 +59,7 @@ class UserMailer < ActionMailer::Base
     @subject += "#{review_comment.user.login.humanize} has commented after your comment at '#{review_comment.any.name}'"
     @body[:review_comment] = review_comment
     @body[:participant] = participant
-    @body[:url] = "#{event_or_restaurant_url(review_comment.any)}#review-#{review_comment.review_id}"
+    @body[:url] = "#{event_or_restaurant_url(review_comment.any, :format => 'html')}#review-#{review_comment.review_id}"
     @body[:topic] = review_comment.topic
   end
 
@@ -69,7 +69,7 @@ class UserMailer < ActionMailer::Base
     setup_email(review.any.user, review.topic, review.any)
     @subject += "#{review.user.login.humanize} has reviewed your #{review.topic.subdomain} '#{review.any.name}'"
     @body[:review] = review
-    @body[:url] = event_or_restaurant_url(review.any)
+    @body[:url] = event_or_restaurant_url(review.any, :format => 'html')
     @body[:topic] = review.topic
   end
 
@@ -84,17 +84,17 @@ class UserMailer < ActionMailer::Base
 
   protected
     def setup_email(user, topic, restaurant_or_event = nil)
-      cc_emails = []
+      emails_recipients = []
+
+      if (restaurant_or_event.user_id != user.id)
+        emails_recipients << "#{user.email}"
+      end
 
       if restaurant_or_event && !(restaurant_or_event.extra_notification_recipients || []).empty?
-        restaurant_or_event.extra_notification_recipients.each{|e| cc_emails << e}
+        restaurant_or_event.extra_notification_recipients.each{|e| emails_recipients << e}
       end
 
-      @recipients  = "#{user.email}"
-
-      if !cc_emails.empty?
-        @cc          = cc_emails
-      end
+      @recipients  = emails_recipients
 
       @from        = "Notification <support@welltreat.us>"
       @subject     = "[#{topic.public_host}] "
