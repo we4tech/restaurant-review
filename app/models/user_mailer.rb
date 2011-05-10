@@ -86,7 +86,7 @@ class UserMailer < ActionMailer::Base
     def setup_email(user, topic, restaurant_or_event = nil)
       emails_recipients = []
 
-      if (restaurant_or_event.user_id != user.id)
+      if (restaurant_or_event && restaurant_or_event.user_id != user.id)
         emails_recipients << "#{user.email}"
       end
 
