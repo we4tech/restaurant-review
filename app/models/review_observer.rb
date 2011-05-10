@@ -1,8 +1,7 @@
 class ReviewObserver < ActiveRecord::Observer
 
   def after_create(review)
-    if review.any.user_id != review.user_id &&
-       review.any.user.email_comment_notification
+    if review.any.user.email_comment_notification
       UserMailer.deliver_review_notification(review)
     end
     
