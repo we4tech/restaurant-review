@@ -66,7 +66,7 @@ class UserMailer < ActionMailer::Base
   def review_notification(review)
     css :fresh
 
-    setup_email(review.any.user, review.topic, review.any)
+    setup_email(review.any.user, review.topic, review.any, review)
     @subject += "#{review.user.login.humanize} has reviewed your #{review.topic.subdomain} '#{review.any.name}'"
     @body[:review] = review
     @body[:url] = event_or_restaurant_url(review.any, :format => 'html')
@@ -83,18 +83,24 @@ class UserMailer < ActionMailer::Base
   end
 
   protected
-    def setup_email(user, topic, restaurant_or_event = nil)
-      emails_recipients = []
-
-      if (restaurant_or_event && restaurant_or_event.user_id != user.id)
-        emails_recipients << "#{user.email}"
-      end
+    def setup_email(user, topic, restaurant_or_event = nil, review = nil)
+      cc_emails = []
 
       if restaurant_or_event && !(restaurant_or_event.extra_notification_recipients || []).empty?
-        restaurant_or_event.extra_notification_recipients.each{|e| emails_recipients << e}
+        restaurant_or_event.extra_notification_recipients.each{|e| cc_emails << e}
       end
 
-      @recipients  = emails_recipients
+      if (restaurant_or_event && restaurant_or_event.user_id == review.user_id)
+        if (!cc_emails.empty?)
+          @recipients  = cc_emails
+        end
+      else
+        @recipients  = ["#{user.email}"]
+      end
+
+      if !cc_emails.empty?
+        @cc          = cc_emails - @recipients
+      end
 
       @from        = "Notification <support@welltreat.us>"
       @subject     = "[#{topic.public_host}] "

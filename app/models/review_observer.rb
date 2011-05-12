@@ -1,8 +1,11 @@
 class ReviewObserver < ActiveRecord::Observer
 
   def after_create(review)
+    # This settings need to be changed.
     if review.any.user.email_comment_notification
-      UserMailer.deliver_review_notification(review)
+      if (review.user_id != review.any.user_id || !(review.any.extra_notification_recipients || []).empty?)
+        UserMailer.deliver_review_notification(review)
+      end
     end
     
     StuffEvent.create({
