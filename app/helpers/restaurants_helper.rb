@@ -9,23 +9,23 @@ module RestaurantsHelper
 
   def render_restaurant_review_stats(p_restaurant, p_short = true)
     reviews = p_restaurant.reviews
+    variables = {
+       :checkins_count => p_restaurant.checkins_count.to_i
+    }
+
     if !reviews.empty?
       total_reviews_count = p_restaurant.reviews.count
       loved_count = p_restaurant.reviews.loved.count
       loved_percentage = (100 / total_reviews_count) * loved_count
 
-      variables = {
+      variables = variables.merge({
           :total_reviews_count => total_reviews_count,
           :loved_count => loved_count,
           :loved_percentage => loved_percentage
-      }
-
-      render :partial => 'restaurants/parts/review_stats.html.erb', :locals => variables
-      #if defined?(params) && params[:format].to_s == 'atom'
-      #else
-      #  render :partial => 'restaurants/parts/review_stats', :locals => variables
-      #end
+      })
     end
+
+    render :partial => 'restaurants/parts/review_stats.html.erb', :locals => variables
   end
 
   def render_recently_added_places(p_config, p_limit = 10)
