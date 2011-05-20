@@ -164,7 +164,7 @@ class ApplicationController < ActionController::Base
 
       total_reviews_count = restaurant.reviews.count
       loved_count = restaurant.reviews.loved.count
-      "#{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}, #{restaurant.rating_out_of(5).round} out of 5 ratings!"
+      "#{restaurant.checkins_count.to_i} check ins, #{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}, #{restaurant.rating_out_of(5).round} out of 5 ratings!"
     end
 
     def remove_html_entities(p_str)

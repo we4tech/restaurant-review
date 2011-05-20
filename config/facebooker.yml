@@ -12,7 +12,7 @@ development:
   api_key: 15b8a8040af0fe31fc46da4867ab6488
   secret_key: 9dc7287adbe8c57630c38e6b6e6b8c31
   canvas_page_name: wt-games-test
-  callback_url: http://servicedev1.net/
+  callback_url: http://hadok.com/
   pretty_errors: true
   set_asset_host_to_callback_url: true
   tunnel:
@@ -27,7 +27,7 @@ test:
   api_key: 15b8a8040af0fe31fc46da4867ab6488
   secret_key: 492ddee03156bcecd8f57c6f44de3ca9
   canvas_page_name:
-  callback_url: http://servicedev1.net/
+  callback_url: http://hadok.com/
   pretty_errors: true
   set_asset_host_to_callback_url: true
   tunnel:

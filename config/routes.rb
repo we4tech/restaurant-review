@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :checkins
+
   map.resources :site_policies
 
   map.resources :resource_importers
@@ -57,7 +59,7 @@ ActionController::Routing::Routes.draw do |map|
                 :has_many => [:premium_templates,
                               :pages, :messages,
                               :food_items, :reviews,
-                              :products]
+                              :products, :checkins]
 
   map.resources :images, :member => {:show_or_hide => :get}
 
@@ -101,6 +103,8 @@ ActionController::Routing::Routes.draw do |map|
   map.facebook_connect_update '/facebook/connect/update', :controller => 'users', :action => 'update_facebook_connect_status'
   map.facebook_publish '/facebook/publish/:story/:id', :controller => 'facebook_connect', :action => 'publish_story'
   map.facebook_account_status_update '/user/facebook_account/update_status', :controller => 'users', :action => 'update_facebook_connect_account_status'
+  map.facebook_checkin '/facebook/checkin/:model_name/:id', :controller => 'facebook_connect', :action => 'checkin'
+  map.facebook_create_page '/facebook/create/page/for/:id', :controller => 'facebook_connect', :action => 'create_page'
 
   map.admin '/dashboard', :controller => 'admin', :action => 'index'
 
@@ -147,6 +151,8 @@ ActionController::Routing::Routes.draw do |map|
   map.event_long_route '/events/:name/:id', :controller => 'topic_events',
                        :action => 'show',
                        :requirements => {:name => /[\w\d\.\-]+/}
+
+  map.create_checkin '/:topic_name/checkin/:id', :controller => 'checkins', :action => 'create'
   
 
   # Feeds related routing

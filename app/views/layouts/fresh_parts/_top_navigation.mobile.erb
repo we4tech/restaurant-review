@@ -13,7 +13,7 @@
         <ul style="display: none">
           <li><%= link_to tt('layout.links.login'), login_url %></li>
           <li>
-            <fb:login-button perms="email,publish_stream,create_event,rsvp_event"></fb:login-button>
+            <fb:login-button perms="<%= FB_CONNECT_PERM %>"></fb:login-button>
           </li>
           <li><%= link_to tt('layout.links.register'), signup_url %></li>
           <li><%= link_to tt('layout.links.photos'), photos_url %></li>
@@ -58,7 +58,7 @@
             </li>
           <% else %>
             <li>
-              <fb:login-button perms="email,publish_stream,create_event,rsvp_event"
+              <fb:login-button perms="<%= FB_CONNECT_PERM %>"
                                onlogin='window.location.reload()'>
                 <%= t('layout.links.auto_share_on_facebook') %>
               </fb:login-button>
@@ -132,7 +132,7 @@
       $menu.hide();
     }
 
-    $(document).ready(function() {
+    (function() {
       $('div.popup_button').each(function() {
         var $this = $(this);
         var $link = $this.find('a:first');
@@ -151,7 +151,7 @@
           }
         });
       });
-    });
+    })();
   </script>
 <% end %>
 

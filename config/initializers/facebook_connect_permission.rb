@@ -1,0 +1,1 @@
+FB_CONNECT_PERM = 'email,publish_stream,publish_checkins,user_checkins'

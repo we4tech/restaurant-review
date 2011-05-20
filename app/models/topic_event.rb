@@ -30,6 +30,7 @@ class TopicEvent < ActiveRecord::Base
   has_many :images, :through => :related_images
   has_many :reviews
   has_many :review_comments
+  has_many :checkins
 
   named_scope :open_events, :conditions => {
       :suspended => false, :completed => false}

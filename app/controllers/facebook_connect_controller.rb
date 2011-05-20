@@ -39,6 +39,9 @@ class FacebookConnectController < ApplicationController
           when 'new_photo_comment'
             photo_comment = PhotoComment.find(params[:id].to_i)
             status = publish_story_of_photo_comment(facebook_session, photo_comment)
+          when 'checkedin'
+            restaurant = Restaurant.find(params[:id].to_i)
+            status = publish_story_of_checkin(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
         end
 
         if status
@@ -50,15 +53,7 @@ class FacebookConnectController < ApplicationController
         flash[:notice] = 'No active facebook session found.'
       end
     rescue => e
-      if e.is_a?(Facebooker::Session::PermissionError)
-        User.find(current_user.id).update_attributes(
-            :facebook_sid => 0, :facebook_uid => 0,
-            :facebook_connect_enabled => false)
-        flash[:notice] = "You didn't authorize restaurant review application to share your review with facebook friends."
-      else
-        flash[:notice] = "Unknown error - '#{e.type.name}' occurred."
-        logger.warn(e)
-      end
+      handle_fb_connect_error(e)
     end
 
     if params[:next_to]
@@ -68,13 +63,60 @@ class FacebookConnectController < ApplicationController
     end
   end
 
+  def checkin
+    if current_user.facebook_sid.to_i > 0 && current_user.facebook_uid.to_i > 0
+      begin
+        model_name = params[:model_name]
+        model_id = params[:id]
+        session = build_facebook_session
+
+        api = FacebookGraphApi.new(session.session_key, session.user.id)
+
+        case model_name
+          when 'restaurant'
+            restaurant = Restaurant.find(model_id)
+            api.check_in('me', {
+                :message => 'Just checked in',
+                :place => 19292868552,
+                :coordinates => {:latitude => restaurant.lat, :longitude => restaurant.lng}
+            })
+
+          when 'event'
+            event = Restaurant.find(model_id)
+        end
+      rescue => e
+        handle_fb_connect_error(e)
+      end
+    else
+      flash[:notice] = 'No active facebook session found'
+    end
+  end
+
   private
+
+  def handle_fb_connect_error(e)
+    if e.is_a?(Facebooker::Session::PermissionError)
+      User.find(current_user.id).update_attributes(
+          :facebook_sid => 0, :facebook_uid => 0,
+          :facebook_connect_enabled => false)
+      flash[:notice] = "You didn't authorize restaurant review application to share your review with facebook friends."
+    else
+      flash[:notice] = "Unknown error - '#{e.type.name}' occurred."
+      logger.warn(e)
+    end
+
+    if 'development' == RAILS_ENV
+      raise e
+    end
+  end
+
   def publish_story_of_review(p_bundle_id, p_facebook_session, p_review, shared = false)
     restaurant = p_review.reload.restaurant
     link = restaurant_long_route_url(
         :topic_name => p_review.topic.subdomain,
         :name => restaurant.name.parameterize.to_s,
-        :id => restaurant.id
+        :id => restaurant.id,
+        :format => :html
     )
 
     attached_images = []
@@ -100,6 +142,43 @@ class FacebookConnectController < ApplicationController
                 :href => link,
                 :caption => restaurant_review_stat(p_review),
                 :description => remove_html_entities(restaurant_review_content(p_review, shared)),
+                :media => attached_images},
+            :action_links => {
+                'text' => 'Add your review!',
+                'href' => link}});
+  end
+
+  def publish_story_of_checkin(p_bundle_id, p_facebook_session, restaurant, shared = false)
+    link = restaurant_long_route_url(
+        :topic_name => restaurant.topic.subdomain,
+        :name => restaurant.name.parameterize.to_s,
+        :id => restaurant.id,
+        :format => :html
+    )
+
+    attached_images = []
+    images = restaurant.images
+    images = restaurant.other_images if images.empty?
+
+    url = "http://#{request.host}"
+    if images && !images.empty?
+      images.shuffle.each do |image|
+        attached_images << {
+            :type => 'image',
+            :src => "#{url}#{image.public_filename(:large)}",
+            :href => link
+        }
+      end
+    end
+
+    user = p_facebook_session.user
+    FacebookerPublisher::deliver_publish_stream(
+        user, user, {
+            :attachment => {
+                :name => "Checked in '#{restaurant.name}'",
+                :href => link,
+                :caption => restaurant_review_stat(restaurant),
+                :description => '',
                 :media => attached_images},
             :action_links => {
                 'text' => 'Add your review!',
@@ -160,7 +239,8 @@ class FacebookConnectController < ApplicationController
     link = restaurant_long_route_url(
         :topic_name => p_restaurant.topic.subdomain,
         :name => p_restaurant.name.parameterize.to_s,
-        :id => p_restaurant.id
+        :id => p_restaurant.id,
+        :format => :html
     )
 
     user = p_facebook_session.user
@@ -190,7 +270,8 @@ class FacebookConnectController < ApplicationController
     link = restaurant_long_route_url(
         :topic_name => p_restaurant.topic.subdomain,
         :name => p_restaurant.name.parameterize.to_s,
-        :id => p_restaurant.id
+        :id => p_restaurant.id,
+        :format => :html
     )
 
     images = p_restaurant.images

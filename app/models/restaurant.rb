@@ -26,6 +26,7 @@ class Restaurant < ActiveRecord::Base
   has_many :premium_service_subscribers
   has_many :products
   has_many :site_policies
+  has_many :checkins
 
   validates_presence_of :name, :topic_id
   validates_uniqueness_of :name

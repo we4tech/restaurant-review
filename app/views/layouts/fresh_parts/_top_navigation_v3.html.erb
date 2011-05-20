@@ -7,11 +7,11 @@
     <span>
       <%= render_topics_selection_box %>
     </span>
-    
+
     <span> <%= link_to t('layout.links.home'), root_url %> | </span>
     <% if not logged_in? %>
       <%= link_to tt('layout.links.login'), login_url, :class => 'login_button' %> OR
-      <fb:login-button perms="<%= FB_CONNECT_PERM %>">
+      <fb:login-button perms="email,publish_stream,publish_checkins">
         <%= t('layout.links.fb_login') %>
       </fb:login-button>
       |
@@ -34,7 +34,7 @@
       <%= link_to tt('layout.links.photos'), photos_url %> |
       <%= link_to tt('layout.links.events'), events_url %> |
       <a href='javascript:void(0)' class='submenu' rev='#submenu'><%= tt('layout.links.my_page') %></a>
-      
+
       <div id='submenu' class='topMenuSub' style='display: none; position: absolute;'>
         <ul>
           <li>

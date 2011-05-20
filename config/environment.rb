@@ -26,6 +26,7 @@ Rails::Initializer.run do |config|
   config.gem "chronic"
   config.gem "i18n"
   config.gem "RedCloth"
+  config.gem 'rest-client'
 
   #config.gem 'jammit', :version => '0.5.1'
 

@@ -1,0 +1,19 @@
+<% if !@checkins.empty? %>
+  <table>
+    <% checkins_group_count = (@checkins.length.to_f / 10.to_f).ceil %>
+
+    <% checkins_group_count.times do |start_index| %>
+      <tr>
+        <% partial_checkins = @checkins[start_index, 10] %>
+        <% partial_checkins.each do |checkin| %>
+          <td>
+            <%= image_tag checkin.user.display_picture, :width => '40px' %>
+            <div><%= user_link(checkin.user) %></div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  Be the first! no one checked in yet!
+<% end %>

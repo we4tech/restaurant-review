@@ -1,5 +1,6 @@
 require 'json'
 require 'open-uri'
+require 'rest_client'
 
 class FacebookGraphApi
 
@@ -21,6 +22,11 @@ class FacebookGraphApi
     send_request :friends, uid
   end
 
+  def check_in(uid, params)
+    uid = @uid if uid.nil?
+    raise post_request(:checkin, uid, params).inspect
+  end
+
   class << self
     def display_picture(fb_uid, size = 'square')
       "#{FB_GRAPH_BASE_URI}#{fb_uid}/picture?size=#{size}"
@@ -28,15 +34,19 @@ class FacebookGraphApi
   end
 
   private
+    def post_request(type, uid, params)
+      params[:access_token] = URI.encode(@access_token)
+      url = build_url(type, uid)
+      puts "RestClient.post \"#{url}\", #{params.inspect}"
+      response = RestClient.post(url, params)
+      raise response.inspect
+      JSON.load(response.to_str)
+    end
+
     def send_request(type, uid)
       url = build_url(type, uid)
-      json_text = nil
-
-      open(url) do |response|
-        json_text = response.read
-      end
-
-      JSON.load(json_text)
+      response = RestClient.get url
+      JSON.load(response.to_str)
     end
 
     def build_url(type, uid)
@@ -48,6 +58,9 @@ class FacebookGraphApi
 
         when :friends
         url << "friends"
+
+        when :checkin
+        url << 'checkins'
       end
 
       url << "?access_token=#{URI.encode(@access_token)}"

@@ -33,7 +33,6 @@
   <div class="restaurant_details">
     <h1>
       <%= @restaurant.name %>
-      <fb:like href="<%= request.url %>" layout="button_count" show_faces="false" font=""></fb:like>
     </h1>
     <%= render_restaurant_review_stats(@restaurant) %>
     <div class='space_10'></div>    
@@ -48,6 +47,23 @@
           <%= t('fields.address') %>
         </h4>
         <address><%= @restaurant.address %></address>
+        <div class='space_10'></div>
+        <div class='mobile_button_block'>
+          <% checkin_list_element_id = "checkins_list_#{@restaurant.id}" %>
+          <button onclick="window.location='<%= create_checkin_path(url_escape(@topic.name), @restaurant.id) %>';">Check in</button>
+          <% if @restaurant.checkins_count.to_i > 0 %>
+            <i> - already checked in
+              <%= link_to_remote(
+                      "#{@restaurant.checkins_count.to_i} people",
+                      :update => checkin_list_element_id,
+                      :method => :get,
+                      :loading => "$('##{checkin_list_element_id}').html('Loading...')",
+                      :url => restaurant_checkins_path(@restaurant.id)) %>
+            </i>
+          <% end %>
+          <fb:like href="<%= request.url %>" layout="button_count" show_faces="false" font=""></fb:like>
+        </div>
+        <div id="<%= checkin_list_element_id %>"></div>
         <div class='space_10'></div>
         <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
           <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
@@ -70,7 +86,7 @@
     <div class='clear space_10'></div>
 	<%= render :partial => 'pages/parts/links' %>
   	<div class='space_10'></div>
-	<div class='mobile_button_block'>
+	  <div class='mobile_button_block'>
 	    <button onclick="$('#srr_<%= @restaurant.id %>').toggle('slide');">Show</button> reviews (<%= @restaurant.reviews.count %>)
 	  </div>
 	  <div id='srr_<%= @restaurant.id %>' style='display: none'>	

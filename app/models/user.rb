@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
   has_many :resource_importers
   has_many :topic_events
   has_many :site_policies
+  has_many :checkins
 
   has_one :related_image
   has_one :image, :through => :related_image
