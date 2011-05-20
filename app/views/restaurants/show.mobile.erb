@@ -37,7 +37,7 @@
     <%= render_restaurant_review_stats(@restaurant) %>
     <div class='space_10'></div>    
     <p>
-      <%= strip_tags truncate(@restaurant.description, 100) %>
+      <%= truncate(strip_tags(@restaurant.description), 100) %>
     </p>
 
     <% if !(@restaurant.address || '').blank? %>

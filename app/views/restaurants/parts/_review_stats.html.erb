@@ -1,6 +1,16 @@
-<span class="stat_item icon_review">
-  <%= t('label.reviews_count', :count => total_reviews_count) %>
-</span>
-<span class="stat_item icon_loved">
-  <%= t('label.loves_count', :count => loved_count) %>
-</span>
+<%
+   links = []
+   if defined?(checkins_count)
+     links << "<span class='stat_item'>#{checkins_count} check ins</span>"
+   end
+
+   if defined?(total_reviews_count)
+     links << "<span class='stat_item icon_review'>#{t('label.reviews_count', :count => total_reviews_count)}</span>"
+   end
+
+   if defined?(loved_count)
+     links << "<span class='stat_item icon_loved'>#{t('label.loves_count', :count => loved_count)}</span>"
+   end
+%>
+
+<%= links.join(', ') %>
