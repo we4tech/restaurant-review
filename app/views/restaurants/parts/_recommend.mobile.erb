@@ -1,12 +1,19 @@
 <div class='recommendRestaurants'>
   <form action="<%= search_url %>" id='recommend_form'>
-    <%= t('frontpage.recommend') %>
+    <h1><%= t('frontpage.recommend') %></h1>
+    <div class="space_10"></div>
     <input type='hidden' name='_models' value='Restaurant'/>
+    <input value="Search <%= (@topic.name || '').humanize %>" id="search_field"
+           onblur="this.value.length == 0 ? $(this).addClass('greyText').val('Search <%= (@topic.name || '').humanize %>') : true"
+           onfocus="this.value.match(/^Search/) ? $(this).removeClass('greyText').val('') : true"
+           onclick="this.value.match(/^Search/) ? $(this).removeClass('greyText').val('') : true"
+           name="name|short_array|long_array|description[]" class="textField greyText"/>
 
     <select name='short_array|long_array[]' onchange="document.getElementById('recommend_form').submit()">
+      <option value="">At Anywhere</option>
       <% if @location_tag_group %>
         <% @location_tag_group.tags.each do |tag| %>
-          <option value='<%= tag.name %>'><%= tag.name %></option>
+          <option value='<%= tag.name %>'>At <%= tag.name %></option>
         <% end %>
       <% end %>
     </select>

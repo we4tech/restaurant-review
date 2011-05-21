@@ -3,6 +3,12 @@ class CheckinsController < ApplicationController
   before_filter :login_required
 
   def create
+    if duplicate_checkin
+      flash[:notice] = 'You have already checked in this place.'
+      redirect_to :back
+      return
+    end
+
     saved = false
     o = nil
 
@@ -46,6 +52,27 @@ class CheckinsController < ApplicationController
   end
 
   private
+    def duplicate_checkin
+      record_id = params[:id]
+      checkin = nil
+
+      if params[:topic_name] == 'restaurant'
+        checkin = checkin_record(record_id, {:restaurant_id => record_id})
+      elsif params[:topic_name] == 'topic_event'
+        checkin = checkin_record(record_id, {:topic_event_id => record_id})
+      end
+
+      if checkin.nil? || Time.now > (checkin.created_at + 2.hours)
+        false
+      else
+        true
+      end
+    end
+
+    def checkin_record(record_id, attributes)
+      Checkin.last(:conditions => {:user_id => current_user.id, :topic_id => @topic.id}.merge(attributes))
+    end
+
     def create_check_in(attrbutes)
       checkin = Checkin.create(
           {

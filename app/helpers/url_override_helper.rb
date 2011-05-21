@@ -166,7 +166,7 @@ module UrlOverrideHelper
   end
 
   def event_long_url(event, options = {})
-    event_long_route_url({:name => url_escape(event.name), :id => event.id}.merge(options))
+    event_long_route_url({:name => URI.escape(url_escape(event.name)), :id => event.id}.merge(options))
   end
 
   def event_link(event)
