@@ -90,7 +90,7 @@ class UserMailer < ActionMailer::Base
         restaurant_or_event.extra_notification_recipients.each{|e| cc_emails << e}
       end
 
-      if (restaurant_or_event && restaurant_or_event.user_id == review.user_id)
+      if (restaurant_or_event && review && restaurant_or_event.user_id == review.user_id)
         if (!cc_emails.empty?)
           @recipients  = cc_emails
         end
