@@ -8,12 +8,16 @@
     <%= f.hidden_field :id, :value => @restaurant.id %>
     <%= render :partial => 'restaurants/parts/form_attributes_based',
                :locals => {:f => f} %>
-    <%= f.submit t('button.update'), :class => 'submit' %> |
-    <%= link_to t('nav.show'), restaurant_long_url(@restaurant) %>
+    <%= f.submit t('button.update'), :class => 'submit' %>
+    <div class="space_5"></div>
+    <button class="submit" type='button' onclick="window.location = '<%= restaurant_long_url(@restaurant) %>'"><%= t('nav.show') %></button>
+    <div class="space_5"></div>
     <% if @restaurant.author?(current_user) %>
-      | <%= link_to t('nav.delete'), restaurant_url(@restaurant),
-                    :method => :delete,
-                    :confirm => t('confirm.delete_entry') %>
+      <%= link_to '', restaurant_url(@restaurant),
+                  :id => 'del_restaurant_link',
+                  :method => :delete,
+                  :confirm => t('confirm.delete_entry') %>
+      <button type="button" class="submit" onclick="$('#del_restaurant_link').click()"><%= t('nav.delete') %></button>
     <% end %>
   <% end %>
 
@@ -28,7 +32,7 @@
 
         <%= f.file_field :uploaded_datum, :index => '' %>
         <%= f.text_field :captions, :index => '' %>
-        <%= f.submit t('button.upload') %>
+        <%= f.submit t('button.upload'), :class => 'submit' %>
       <% end %>
       <div class="clear"></div>
       <div class="space_10"></div>

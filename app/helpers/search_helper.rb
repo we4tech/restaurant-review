@@ -73,6 +73,7 @@ module SearchHelper
            :page => page_index.nil? ? 1 : page_index.to_i}.merge(options))
       search.run
     rescue => e
+      puts "Query - #{query}"
       raise e if %w{development test}.include?(RAILS_ENV)
       
       logger.error(e)

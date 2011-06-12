@@ -3,22 +3,28 @@
     <h1><%= t('frontpage.recommend') %></h1>
     <div class="space_10"></div>
     <input type='hidden' name='_models' value='Restaurant'/>
-    <input value="Search <%= (@topic.name || '').humanize %>" id="search_field"
+    <input value="Search <%= (@topic.name || '').humanize %>..." id="search_field" type="search"
+           class="top_radius" style="width: 98%; height: 40px; font-size: 20px"
            onblur="this.value.length == 0 ? $(this).addClass('greyText').val('Search <%= (@topic.name || '').humanize %>') : true"
            onfocus="this.value.match(/^Search/) ? $(this).removeClass('greyText').val('') : true"
            onclick="this.value.match(/^Search/) ? $(this).removeClass('greyText').val('') : true"
-           name="name|short_array|long_array|description[]" class="textField greyText"/>
+           name="name|short_array|long_array|description[]" class="textField greyText"/><br/>
 
-    <select name='short_array|long_array[]' onchange="document.getElementById('recommend_form').submit()">
-      <option value="">At Anywhere</option>
-      <% if @location_tag_group %>
-        <% @location_tag_group.tags.each do |tag| %>
-          <option value='<%= tag.name %>'>At <%= tag.name %></option>
-        <% end %>
-      <% end %>
-    </select>
-    <input type='submit' value='<%= t('button.find') %>'/> .
+    <%= render_tags_select_field 'locations',
+                                 :name => 'short_array|long_array[]',
+                                 :include_blank => 'at Anywhere',
+                                 :class => 'bottom_radius',
+                                 :style => 'width: 98%; height: 40px; font-size: 20px',
+                                 :prefix => 'at ',
+                                 :onchange => "document.getElementById('recommend_form').submit()" %>
+
+    <input type='submit' value='<%= t('button.find') %>' class="submit" style="height: 40px; margin-top: 10px"/>
+    <div class='space_10'></div>
+    <div class='border_bottom'></div>
+    <div class='space_10'></div>
     <span id="nearby_places"><%= link_to "Nearby #{@topic.name.humanize.pluralize}", search_path %></span>
+    <div class='space_10'></div>
+    <div class='border_bottom'></div>
   </form>
 </div>
 <div class='clear'></div>

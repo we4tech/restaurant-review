@@ -20,76 +20,81 @@
      default_value = field['default_value']
   %>
   <% if text_field && !address_field %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
-    <%= f.text_field field_name, :class => "#{field_type} full_field" %>
-    <%= f.error_message_on field_name %>
-    <br/>
+    <div class="form_field">
+      <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
+      <%= f.text_field field_name,
+                       :class => "#{field_type} full_field float_#{field_type}",
+                       "#{required ? 'required' : '_'}" => 'true',
+                       :placeholder => "Enter #{field_label}" %>
+      <%= f.error_message_on field_name %>
+    </div>
   <% elsif text_area && !address_field %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
-    <%= f.text_area field_name, :class => "#{field_type} full_field" %>
-    <%= f.error_message_on field_name %>
-    <% text_area_included = true %>
-    <br/>
+    <div class="form_field">
+      <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
+      <%= f.text_area field_name, :class => "#{field_type} full_field float_#{field_type}", :placeholder => "Enter #{field_label}" %>
+      <%= f.error_message_on field_name %>
+      <% text_area_included = true %>
+    </div>
   <% elsif text_field && address_field %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
-    <div class="grid_6">
-      <div>
-        <div id="google_map_canvas"
-             title="<%= @restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982" %>"
-             markerMessage="<h4>Where is your <%= @topic.name.humanize %>?</h4>"
-             infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
-             <%= @restaurant.lat.to_i > 0 ? '' : "detectCurrentPosition='true'" %>
-             style="width: 100%; height: 100%"></div>
-      </div>
-      <div>
-        <%= f.text_field field_name,
-                         :class => "#{field_type} full_field",
-                         :onkeyup => 'App.MapWidget.displayOnKeyPress(this, \'google_map_canvas\')' %>
-        <%= f.error_message_on field_name %>
-        <br/>
-        <%= f.hidden_field :lat %>
-        <%= f.hidden_field :lng %>
+    <div class="form_field">
+      <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
+      <div class="grid_6">
+        <div>
+          <div id="google_map_canvas"
+               title="<%= @restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982" %>"
+               markerMessage="<h4>Where is your <%= @topic.name.humanize %>?</h4>"
+               infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
+               mapWidth='98.5%'
+               <%= @restaurant.lat.to_i > 0 ? '' : "detectCurrentPosition='true'" %>
+               style="width: 100%; height: 100%">
+            <div class="siteMessage">Loading map...</div></div>
+        </div>
+        <div>
+          <%= f.text_field field_name,
+                           :class => "#{field_type} full_field bottom_radius readonly map_address_field",
+                           :onkeyup => 'App.MapWidget.displayOnKeyPress(this, \'google_map_canvas\')' %>
+          <%= f.error_message_on field_name %>
+          <br/>
+          <%= f.hidden_field :lat %>
+          <%= f.hidden_field :lng %>
+        </div>
       </div>
     </div>
-    <div class="clear"></div>
     <% location_included = true %>
-    <br/>
 
   <% elsif combobox %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
-    <%= f.select field_name, default_value.split('|'), {}, :class => "#{field_type} full_field" %>
-    <%= f.error_message_on field_name %>
-    <br/>
+    <div class="form_field">
+      <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
+      <%= f.select field_name, default_value.split('|'), {}, :class => "#{field_type} full_field float_#{field_type}" %>
+      <%= f.error_message_on field_name %>
+    </div>
 
   <% elsif checkbox %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
-    <%= f.check_box field_name, :class => field_type %>
-    <%= f.error_message_on field_name %>
-    <br/>
+    <div class="form_field">
+      <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
+      <%= f.check_box field_name, :class => "#{field_type} float_#{field_type}" %>
+      <%= f.error_message_on field_name %>
+    </div>
 
   <% elsif options %>
-    <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label><br/>
-    <div class='options_box'>
-      
-      <% existing_value = @restaurant.send(field_name) || []  %>
-
-      <div class="tags" id="field_<%= field_name %>">
-        <% parse_default_value(default_value, existing_value).sort.each do |option| %>
-          <% option.strip! %>
-          <div class='option'>
-            <input id='<%= option_field_id = "option_#{url_escape(option)}" %>'
-                   type='checkbox' name='restaurant[<%= field_name %>][]'
-                   value="<%= option %>" class="<%= field_type %>"
-                   <%= existing_value.include?(option) ? 'checked="checked"' : '' %>
-                   />
-            <label for="<%= option_field_id %>"><%= option %></label>
-          </div>
-        <% end %>
+    <div class="form_field">
+      <label class="mobile_button_block">
+        <button type="button" id="<%= field_name %>_button"
+                onclick="$('#<%= field_name %>_options_box').toggle(500, 'easeInOutElastic', function() { var $this=$('#<%= field_name %>_button'); $this.html() == 'Add' ? $this.html('Hide') : $this.html('Add');});">Add</button>
+        <%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %>
+      </label>
+      <div id="<%= field_name %>_options_box" style="display:none">
+        <%= render_options_field :name => field_name, :label => false,
+                                 :group_prefix => 'Tag of ',
+                                 :type => field_type, :required => required,
+                                 :value => default_value, :placeholder => 'Search or add tags...' %>
+        <%= f.error_message_on field_name %>  
       </div>
-    </div>
-    <%= f.error_message_on field_name %>
-    <br clear="all"/>
 
+      <%= f.error_message_on field_name %>
+    </div>
+    <div class='clear'></div>
+    <div class="space_10"></div>
   <% else %>
     <b style='color:red; background: lightYellow'><%= t('errors.no_matched_type') %></b><br/>
   <% end %>
@@ -97,7 +102,7 @@
 
 
 <% if location_included && params[:no_script].nil? %>
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=true"></script>
   <script type="text/javascript">
     $.executeLater(function() {
       App.MapWidget.createMap($('#google_map_canvas'), function(pPlacemark) {
@@ -118,4 +123,57 @@
     new App.TagSearcher($(this));
   });
 
+  $('.new_tag_field').each(function() {
+    var $tf = $(this);
+    var placeholder = $tf.attr('placeholder');
+    var $container = $('#' + $tf.attr('insertValueTo'));
+    var template = $tf.attr('templateHtml');
+    var $clickEventOn = $('#' + $tf.attr('clickEventOn')) || $tf;
+    var $appendGroup = $('#' + $tf.attr('appendGroup'));
+
+    if ($tf.val().length == 0) {
+      $tf.val(placeholder);
+    }
+
+    $tf.focus(function() {
+      if ($tf.val() == placeholder) {
+        $tf.val('');
+      }
+    });
+
+    $tf.blur(function() {
+      if ($tf.val().length == 0) {
+        $tf.val(placeholder);
+      }
+    });
+
+    $tf.keypress(function(e) {
+      if (e.keyCode == 13) {
+        if ($appendGroup) {
+          $appendGroup.focus();
+        }
+        return false;
+      }
+
+      return true;
+    });
+
+    $clickEventOn.click(function() {
+      var value = $tf.val();
+
+      if (value && value.length > 0) {
+        var id = 'option_' + encodeURI(value);
+        var processedTemplate = template.replace(/%ID/gm, id);
+        processedTemplate = processedTemplate.replace(/%V/gm, value);
+
+        if ($appendGroup) {
+          processedTemplate = processedTemplate.replace(/%G/gm, $appendGroup.val());
+        }
+
+        $tf.parent().before(processedTemplate);
+        $tf.val('');
+        $tf.focus();
+      }
+    });
+  });
 </script>

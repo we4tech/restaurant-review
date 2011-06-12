@@ -23,6 +23,7 @@ App.TagSearcher = function(pTextField) {
   var mSearchingWorker = null;
   var mDefaultValue = null;
   var mCachedOptions = [];
+  var mTagTypeField = null;
 
   function indexOptions() {
     mTagsPanel = $('#' + pTextField.attr('title'));
@@ -106,7 +107,7 @@ App.TagSearcher = function(pTextField) {
   function addHtmlElement(tag, labelId, checkBoxId) {
     var html = '<div class="option" id="box_' + labelId + '">' +
         '<input type="checkbox" class="options" ' +
-        'value="' + tag + '" name="restaurant[new_tags][' + pTextField.attr('fieldName') + '][]" ' +
+        'value="' + tag + '|' + mTagTypeField.val() + '" name="restaurant[new_tags][' + pTextField.attr('fieldName') + '][]" ' +
         'id="' + checkBoxId + '">' +
         '<label for="' + checkBoxId + '" ' +
         'id="' + labelId + '" ' +
@@ -163,6 +164,10 @@ App.TagSearcher = function(pTextField) {
   }
 
   function observeKeyPress() {
+    if (mTagTypeField == null) {
+      mTagTypeField = $('#' + pTextField.attr('tag_type_field'));
+    }
+
     pTextField.keyup(function() {
       performSearch()
     });

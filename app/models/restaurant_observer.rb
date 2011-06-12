@@ -14,11 +14,25 @@ class RestaurantObserver < ActiveRecord::Observer
     (restaurant.new_tags || {}).each do |field_name, new_tags|
       existing_tags = restaurant.__send__(field_name.to_sym) || []
       new_tags.each do |tag|
-         existing_tags << tag
+        o = find_or_create_tag(tag, restaurant.topic_id)
+        existing_tags << o.name
       end
       restaurant.__send__("#{field_name}=".to_sym, existing_tags)
     end
+  end
 
+  def after_validation(restaurant)
+    if !restaurant.errors.empty?
+      (restaurant.new_tags || {}).each do |field_name, new_tags|
+        existing_tags = restaurant.__send__(field_name.to_sym) || []
+        new_tags.each do |tag|
+          parts = tag.split('|')
+          if existing_tags.include?(parts.first)
+            existing_tags.delete(parts.first)
+          end
+        end
+      end
+    end
   end
 
   def after_update(restaurant)
@@ -55,6 +69,8 @@ class RestaurantObserver < ActiveRecord::Observer
     end
 
     def process_tags(tags, restaurant)
+      mapped_tags = []
+
       if !tags.empty?
         # Iterate each tag
         tags.each do |tag|
@@ -64,8 +80,11 @@ class RestaurantObserver < ActiveRecord::Observer
 
           # Create new map
           map_tag_with(tag_object, restaurant)
+          mapped_tags << tag_object.name
         end
       end
+
+      mapped_tags
     end
 
     def map_tag_with(tag_object, restaurant)
@@ -77,6 +96,22 @@ class RestaurantObserver < ActiveRecord::Observer
     end
 
     def find_or_create_tag(tag, topic_id)
-      Tag.find_or_create_by_name_and_topic_id(tag, topic_id)
+      tag_group_id = 0
+
+      if tag.match(/\|\d+/)
+        parts = tag.split('|')
+        tag = parts.first
+        tag_group_id = parts.last.to_i
+      end
+
+      o = Tag.find_or_create_by_name_and_topic_id(tag, topic_id)
+      if tag_group_id > 0
+        TagGroupMapping.create(
+            :tag_id => o.id,
+            :topic_id => topic_id,
+            :tag_group_id => tag_group_id
+        )
+      end
+      o
     end
 end

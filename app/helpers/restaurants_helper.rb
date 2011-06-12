@@ -114,9 +114,8 @@ module RestaurantsHelper
       # %{@long_array #{cuisine_tags.join('|')} @name -(#{@restaurant.name})}
       if !cuisine_tags.empty?
         queries << "@long_array #{cuisine_tags.join('|')}"
+        queries << "@name #{@restaurant.name.sphinxify})"
       end
-
-      queries << "@name -(#{@restaurant.name.sphinxify})"
 
       more_restaurants = perform_search([:Restaurant], (queries.join(' ')), {:per_page => per_page, :page => 1})
       more_restaurants.uniq!

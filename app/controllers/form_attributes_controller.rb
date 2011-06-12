@@ -5,6 +5,7 @@ class FormAttributesController < ApplicationController
   def edit
     topic_id = params[:topic_id].to_i
     @available_fields = Restaurant.column_names
+    @tag_groups = @topic.tag_groups
     @available_fields = (@available_fields - [
         'id', 'user_id', 'created_at', 'updated_at', 'lat', 'lng', 'topic_id'])
     @field_types = FormAttribute::FIELD_TYPES

@@ -8,7 +8,9 @@
 
   <%= stylesheet_link_tag 'fresh/site.mobile.css' %>
 
-  <%= javascript_include_tag 'jquery.min', 'application', :cache => 'cache_mobile' %>
+  <%= javascript_include_tag 'jquery.min', 'jquery.easing', 'fuzzy-string',
+                             'application', 'jquery.timers.js', 'jquery.scrollTo-1.4.2-min',
+                             'jquery.tagsearcher', :cache => 'cache_mobile' %>
 
   <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
 
@@ -26,6 +28,9 @@
   <% end %>
 
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
   <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
 
   <%= yield :head %>

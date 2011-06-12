@@ -341,6 +341,14 @@ App.MapWidget = {
   mTextField : null,
   mInitiatedMaps : {},
 
+  getGeoCoder: function() {
+    if (App.MapWidget.mGeoCoder == null) {
+      App.MapWidget.mGeoCoder = new google.maps.Geocoder();
+    }
+
+    return App.MapWidget.mGeoCoder;
+  },
+
   Position: function(latLng, address) {
     this.mLatLng = latLng;
     this.mAddress = address;
@@ -433,36 +441,37 @@ App.MapWidget = {
         markerOptions['map'] = mMap;
         markerOptions['title'] = mapOptions['markerMessage']; 
 
-        marker = new google.maps.Marker(markerOptions);
-        var infoWindow = new google.maps.InfoWindow({
-          content: mapOptions['markerMessage']
-        });
+        if (marker == null) {
+          marker = new google.maps.Marker(markerOptions);
+        }
+
+        if (marker.mInfoWindow == null) {
+          marker.mInfoWindow = new google.maps.InfoWindow({
+            content: mapOptions['markerMessage']
+          });
+        }
 
         google.maps.event.addListener(marker, 'click', function() {
-          infoWindow.open(mMap, marker);
+          marker.mInfoWindow.open(mMap, marker);
         });
 
 
         if (mapOptions['mapReadOnly'] == 'false') {
           google.maps.event.addListener(marker, "dragstart", function() {
-            infoWindow.close();
+            marker.mInfoWindow.close();
           });
 
           google.maps.event.addListener(marker, "dragend", function() {
             var position = marker.getPosition();
             var address = null;
 
-            infoWindow.setContent("Retrieving address...");
-            infoWindow.open(mMap, marker);
+            marker.mInfoWindow.setContent("Retrieving address...");
+            marker.mInfoWindow.open(mMap, marker);
 
-            if (App.MapWidget.mGeoCoder == null) {
-              App.MapWidget.mGeoCoder = new google.maps.Geocoder();
-            }
-
-            App.MapWidget.mGeoCoder.geocode({'latLng': position}, function(results, status) {
+            App.MapWidget.getGeoCoder().geocode({'latLng': position}, function(results, status) {
               if (status == google.maps.GeocoderStatus.OK) {
                 var location = new App.MapWidget.Position(position, results[1].formatted_address);
-                infoWindow.setContent(mapOptions['infoWindowMessagePrefix'] + location.getAddress());
+                marker.mInfoWindow.setContent(mapOptions['infoWindowMessagePrefix'] + location.getAddress());
                 if (pCallback) {
                   pCallback(location);
                 }
@@ -486,16 +495,15 @@ App.MapWidget = {
 
               var address = null;
               marker.openInfoWindowHtml("Retrieving address...");
-              if (App.MapWidget.mGeoCoder == null) {
-                App.MapWidget.mGeoCoder = new GClientGeocoder();
-              }
 
-              App.MapWidget.mGeoCoder.getLocations(place, function(response) {
-                if (response || response.Status.code == 200) {
-                  var placemark = response.Placemark[0];
-                  marker.openInfoWindowHtml(mapOptions['infoWindowMessagePrefix'] + placemark.address);
+              App.MapWidget.getGeoCoder().geocode({'latLng': place}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  if (results[1]) {
+                    marker.openInfoWindowHtml(mapOptions['infoWindowMessagePrefix'] + results[1].formatted_address);
+                  }
                   if (pCallback) {
-                    pCallback(placemark);
+                    var location = new App.MapWidget.Position(place, results[1].formatted_address);
+                    pCallback(location);
                   }
                 }
               });
@@ -545,11 +553,125 @@ App.MapWidget = {
               var currentLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
               marker.setPosition(currentLocation);
               mMap.setCenter(currentLocation);
+
+              App.MapWidget.getGeoCoder().geocode({'latLng': currentLocation}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                  if (results[1]) {
+                    if (marker.mInfoWindow) {
+                      marker.mInfoWindow.setContent(mapOptions['infoWindowMessagePrefix'] + results[1].formatted_address);
+                    }
+
+                  }
+
+                  if (pCallback) {
+                    var location = new App.MapWidget.Position(currentLocation, results[1].formatted_address);
+                    pCallback(location);
+                  }
+                }
+              });
             }, function() {
               alert("Couldn't locate your current location");
             });
           }
         }
+      }
+
+      function retrieveCurrentGeoLocation() {
+        if (marker) {
+
+          if (marker.mInfoWindow == null) {
+            marker.mInfoWindow = new google.maps.InfoWindow({
+              content: mapOptions['markerMessage']
+            });
+          }
+
+          marker.mInfoWindow.setContent('Retrieving address...');
+          marker.mInfoWindow.open(mMap, marker);
+
+          App.MapWidget.getGeoCoder().geocode({'latLng': marker.getPosition()}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[1]) {
+                marker.mInfoWindow.setContent(mapOptions['infoWindowMessagePrefix'] + results[1].formatted_address);
+              }
+
+              if (pCallback) {
+                var location = new App.MapWidget.Position(marker.getPosition(), results[1].formatted_address);
+                pCallback(location);
+              }
+            }
+          });
+        }
+      }
+
+      var $searchField = null;
+      var autoComplete = null;
+      var service = null;
+
+      function addSearchField() {
+        var searchFieldId = $pMapWidgetElement.attr('id') + '_search_field';
+        $searchField = $('<input type="search" id="' + searchFieldId + '" placeholder="Search address..." class="google_map_search_field"/>');
+        $pMapWidgetElement.before($searchField);
+
+        var options = {
+          bounds: mMap.getBounds()
+        };
+        autoComplete = new google.maps.places.Autocomplete($searchField[0]);
+        google.maps.event.addListener(mMap, 'bounds_changed', function() {
+          autoComplete.setBounds(mMap.getBounds());
+        });
+
+        var placeholderText = 'Search address...';
+        $searchField.val(placeholderText);
+        $searchField.focus(function() {
+          var $this = $(this);
+          if ($this.val() == placeholderText) {
+            $this.val('');
+          }
+        });
+
+        $searchField.blur(function() {
+          var $this = $(this);
+          if ($this.val() && $this.val().length == 0) {
+            $this.val(placeholderText);
+          }
+        });
+
+        $searchField.keypress(function(e) {
+          return e.keyCode != 13;
+        });
+
+        google.maps.event.addListener(autoComplete, 'place_changed', function() {
+          var place = autoComplete.getPlace();
+          if (place.geometry.viewport) {
+            mMap.fitBounds(place.geometry.viewport);
+          } else {
+            mMap.setCenter(place.geometry.location);
+            mMap.setZoom(17);
+          }
+          marker.setPosition(place.geometry.location);
+
+          if (marker.mInfoWindow == null) {
+            marker.mInfoWindow = new google.maps.InfoWindow({
+              content: mapOptions['markerMessage']
+            });
+          }
+          marker.mInfoWindow.setContent(mapOptions['infoWindowMessagePrefix'] + place.formatted_address);
+          marker.mInfoWindow.open(mMap, marker);
+
+          if (pCallback) {
+            var location = new App.MapWidget.Position(place.geometry.location, place.formatted_address);
+            pCallback(location);
+          }
+        });
+      }
+
+      function addFullView() {
+//        var $fullViewButton = $('<input type="button" value="Full screen"/>');
+//        $pMapWidgetElement.before($fullViewButton);
+//
+//        $fullViewButton.click(function(e) {
+//          $pMapWidgetElement.css({'width': '100%', 'height': '100%'});
+//        });
       }
 
       /**
@@ -562,7 +684,10 @@ App.MapWidget = {
         setupDraggableMarker();
         //setupGlobalEvents();
         detectCurrentPosition();
+        retrieveCurrentGeoLocation();
         appearMap();
+        addSearchField();
+        addFullView();
       }
 
       /**

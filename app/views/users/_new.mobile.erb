@@ -8,7 +8,7 @@
     <%= f.text_field :login %></p>
 
     <p><%= label_tag 'email', t('label.email') %><br/>
-    <%= f.text_field :email %></p>
+    <input type="email" name="user[email]" id="user_email" value="<%= @user ? @user.email : '' %>"/>
 
     <%= render :partial => 'users/parts/fields', :locals => {:f => f} %>
 

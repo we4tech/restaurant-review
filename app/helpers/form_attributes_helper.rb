@@ -19,8 +19,10 @@ module FormAttributesHelper
     field_label     = options[:label]
     field_name      = options[:name]
     field_type      = options[:type]
+    search_bar      = options[:search_bar] || true
     required        = options[:required]
     placeholder     = options[:placeholder]
+    group_prefix    = options[:group_prefix] || ''
     existing_value  = @restaurant.send(field_name) || []
     unsaved_options = []
 
@@ -29,19 +31,42 @@ module FormAttributesHelper
     end
 
     html = ''
-    html << content_tag('label', "#{tt("fields.#{(field_label.blank? ? field_name : field_label)}")}#{required ? ' (*)' : ''}")
-    html << tag('br')
-    html << content_tag('div', :class => 'options_box') do
-      box_html = tag('input', {
-          :name      => 'tag_search_keywords',
-          :class     => 'tagSearchField searchIcon',
-          :id        => "input_#{field_name}",
-          :type      => 'text',
-          :title     => "field_#{field_name}",
-          :fieldName => field_name,
-          :value     => placeholder
-      })
 
+    # Render label if set
+    if field_label
+      html << content_tag('label', "#{tt("fields.#{(field_label.blank? ? field_name : field_label)}")}#{required ? ' (*)' : ''}")
+      html << tag('br')
+    end
+
+    html << content_tag('div', :class => 'options_box') do
+      box_html = ''
+
+      # Render search bar
+      if search_bar
+        box_html << tag('input', {
+            :name           => 'tag_search_keywords',
+            :class          => 'tagSearchField searchIcon',
+            :id             => "input_#{field_name}",
+            :type           => 'search',
+            :title          => "field_#{field_name}",
+            :tag_type_field => "nt_#{field_name}",
+            :fieldName      => field_name,
+            :value          => placeholder
+        })
+
+        box_html << content_tag('select', :class => 'tagGroupName', :id => "nt_#{field_name}") do
+          options_html = ''
+          @topic.tag_groups.each do |tg|
+            options_html << content_tag('option', "#{group_prefix}#{tg.name}", :value => tg.id)
+          end
+
+          options_html
+        end
+
+        box_html << content_tag('div', '', :class => 'clear')
+      end
+
+      # Render option fields
       box_html << content_tag('div', :class => 'tags', :id => "field_#{field_name}") do
         options_html = ""
         parse_default_value(default_value, existing_value).sort.each do |option_name|
@@ -58,27 +83,29 @@ module FormAttributesHelper
           end
         end
         options_html
+        options_html << content_tag('div', '', :class => 'clear')
       end
 
       box_html
     end
 
+    html << content_tag('div', '', :class => 'clear')
     html
   end
 
   private
-    def build_option_field(option_name, existing_value, input_field_name, field_type)
-      content_tag('div', :class => 'option') do
-        option_field_id    = "option_#{url_escape(option_name)}"
-        checked_state_hash = {}
-        checked_state_hash[:checked] = 'checked' if existing_value.include?(option_name)
+  def build_option_field(option_name, existing_value, input_field_name, field_type)
+    content_tag('div', :class => 'option') do
+      option_field_id    = "option_#{url_escape(option_name)}"
+      checked_state_hash = {}
+      checked_state_hash[:checked] = 'checked' if existing_value.include?(option_name)
 
-        option_html = tag('input',
-                          {:id    => option_field_id, :type => 'checkbox',
-                           :name  => input_field_name,
-                           :value => option_name, :class => field_type}.merge(checked_state_hash))
-        option_html << content_tag('label', option_name, :for => option_field_id)
-        option_html
-      end
+      option_html = tag('input',
+                        {:id    => option_field_id, :type => 'checkbox',
+                         :name  => input_field_name,
+                         :value => option_name, :class => field_type}.merge(checked_state_hash))
+      option_html << content_tag('label', (option_name || '').split('|').first, :for => option_field_id)
+      option_html
     end
+  end
 end
