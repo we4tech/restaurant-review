@@ -10,6 +10,14 @@ var ProjectConfig = {
   serverPort: 4000
 };
 
+function buildServerCommand(start) {
+  return '/usr/bin/ruby1.8 /usr/local/bin/mongrel_rails ' + (start ? 'start -d' : 'stop') + ' -e ' +
+      ProjectConfig.rootDir + ' -c ~/' + ProjectConfig.rootDir + ' -p ' +
+      ProjectConfig.serverPort + ' -P ~/' +
+      ProjectConfig.rootDir + '/tmp/pids/mongrel.' + ProjectConfig.serverPort +
+      '.pid -l ~/' + ProjectConfig.rootDir + '/log/mongrel.' + ProjectConfig.serverPort + '.log';
+}
+
 task('staging', 'Config staging server', function() {
   var config = {
     'welltreat.us': {
@@ -21,8 +29,8 @@ task('staging', 'Config staging server', function() {
   return control.controllers(config)
 });
 
-task('stop_server', 'Stop already running server processes', function(controller) {
-  controller.ssh('date');
+task('stop_server', 'Stop already running server processes', function(c) {
+  c.ssh(buildServerCommand(false));
 });
 
 task('setup_dir', 'Setup project directory', function(c) {
@@ -51,12 +59,7 @@ task('update_code', 'Update code base', function(c) {
 });
 
 task('start_server', 'Start server', function(c) {
-  var cmd = '/usr/bin/ruby1.8 /usr/local/bin/mongrel_rails start -d -e ' +
-      ProjectConfig.rootDir + ' -c ~/' + ProjectConfig.rootDir + ' -p ' +
-      ProjectConfig.serverPort + ' -P ~/' +
-      ProjectConfig.rootDir + '/tmp/pids/mongrel.' + ProjectConfig.serverPort +
-      '.pid -l ~/'  + ProjectConfig.rootDir + '/log/mongrel.' + ProjectConfig.serverPort + '.log';
-  c.ssh(cmd);
+  c.ssh(buildServerCommand(true));
 });
 
 task('update', 'Deploy code in staging server', function(controller) {
