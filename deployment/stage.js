@@ -31,6 +31,9 @@ task('setup_dir', 'Setup project directory', function(c) {
 
 task('setup_code', 'Update code base', function(c) {
   var cmd = 'git clone ' + ProjectConfig.git + ' ' + ProjectConfig.rootDir + '';
+  cmd += ' && mkdir ~/' + ProjectConfig.rootDir + '/log ';
+  cmd += ' && mkdir ~/' + ProjectConfig.rootDir + '/tmp ';
+  cmd += ' && mkdir ~/' + ProjectConfig.rootDir + '/tmp/pids ';
   console.log('Executing command - ' + cmd);
   c.ssh(cmd);
 });
@@ -45,6 +48,15 @@ task('setup', 'Setup whole project', function(c) {
 
 task('update_code', 'Update code base', function(c) {
   c.ssh('cd ' + ProjectConfig.rootDir + ' && git checkout master && git pull');
+});
+
+task('start_server', 'Start server', function(c) {
+  var cmd = '/usr/bin/ruby1.8 /usr/local/bin/mongrel_rails start -d -e ' +
+      ProjectConfig.rootDir + ' -c ~/' + ProjectConfig.rootDir + ' -p ' +
+      ProjectConfig.serverPort + ' -P ~/' +
+      ProjectConfig.rootDir + '/tmp/pids/mongrel.' + ProjectConfig.serverPort +
+      '.pid -l ~/'  + ProjectConfig.rootDir + '/log/mongrel.' + ProjectConfig.serverPort + '.log'
+  c.ssh(cmd);
 });
 
 task('update', 'Deploy code in staging server', function(controller) {

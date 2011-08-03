@@ -40,3 +40,11 @@ production:
   set_asset_host_to_callback_url: false
   tunnel:
 
+staging:
+  api_key: be437507fb7096f8faf2d9d9cda1607f
+  secret_key: af4c511f8d8d41aa940a3226c95eb236
+  canvas_page_name: well_treat_us
+  callback_url: http://www.welltreat.us/games/
+  set_asset_host_to_callback_url: false
+  tunnel:
+
