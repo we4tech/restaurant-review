@@ -1,110 +1,73 @@
 <div id="site_top">
-  <div class="grid_2 site_quote">
+  <div class="grid_2 site_quote" style="display: none">
     <%= tt('layout.passionate_food_lovers_community') %>
   </div>
 
   <div id="site_top_navigation">
-    <span>
+    <div class="navButton navSelectionField">
       <%= render_topics_selection_box %>
-    </span>
+    </div>
 
-    <span> <%= link_to t('layout.links.home'), root_url %> | </span>
+    <div class="navButton">
+      <%= link_to 'Home', root_url %>
+    </div>
+
     <% if not logged_in? %>
-      <%= link_to tt('layout.links.login'), login_url, :class => 'login_button' %> OR
-      <fb:login-button perms="email,publish_stream,publish_checkins">
-        <%= t('layout.links.fb_login') %>
-      </fb:login-button>
-      |
-      <%= link_to tt('layout.links.register'), signup_url, :class => 'register_button' %> |
-      <%= link_to tt('layout.links.photos'), photos_url %> |
-      <%= link_to tt('layout.links.events'), events_url %>
+      <div class="navButton">
+        <%= link_to 'Photos', photos_url %>
+      </div>
+
+      <div class="navButton">
+        <%= link_to 'Events', events_url %>
+      </div>
+
+      <div class="navButton">
+        <%= render_pull_down_menu('Login/Sign up') do
+          %{
+                <li>
+                  <fb:login-button perms="#{FB_CONNECT_PERM}">
+                    Login with Facebook
+                  </fb:login-button>
+                </li>
+                <li>
+                  #{link_to 'Login with us', login_url, :class => 'login_button'}
+                </li>
+                <li>
+                  #{link_to 'Sign up', signup_url, :class => 'register_button'}
+                </li>
+              }
+        end
+        %>
+      </div>
+
     <% else %>
-      <% if !@record_already_added %>
-        <%= link_to tt('layout.links.add'), new_restaurant_url, :style => "font-weight: bold; color:yellow;" %> |
-      <% else %>
-        <%= link_to tt('layout.links.update_record'), update_your_record_url %>
-        |
-      <% end %>
-      <%= render_activities_link %>
-      <div id="activities_submenu" class="topMenuSub" style="display: none; position: absolute;width: 300px; height:500px; overflow-y: scroll;">
-        <ul>
-          <li>Loading...</li>
-        </ul>
-      </div> |
-      <%= link_to tt('layout.links.photos'), photos_url %> |
-      <%= link_to tt('layout.links.events'), events_url %> |
-      <a href='javascript:void(0)' class='submenu' rev='#submenu'><%= tt('layout.links.my_page') %></a>
+      <div class="navButton">
 
-      <div id='submenu' class='topMenuSub' style='display: none; position: absolute;'>
-        <ul>
-          <li>
-            <div style="float:left;margin-right: 5px;">
-              <%= image_tag(current_user.display_picture, :title => current_user.login, :alt => 'N/A') %>
-            </div>
-            <div style="float:left;">
-              <%= link_to current_user.login, user_long_url(current_user) %>
-            </div>
-            <div class='clear'></div>
-          </li>
+        <% if !@record_already_added %>
+          <%= link_to tt('layout.links.add'), new_restaurant_url, :style => "font-weight: bold; color:yellow;" %>
+        <% else %>
+          <%= link_to tt('layout.links.update_record'), update_your_record_url %>
+        <% end %>
+      </div>
 
-          <% if current_user.facebook_session_exists? %>
-            <li>
-              <span class='facebook_connect_control'>
-                <% form_tag facebook_account_status_update_url, :id => 'facebook_connect_control_form' do %>
-                <% if current_user.facebook_connect_enabled? %>
-                  <input id='facebook_share_checkbox'
-                         type='checkbox' value="1"
-                         checked="checked"
-                         name='status'
-                         onclick="$('#facebook_connect_control_form').submit()"/>
-                <% else %>
-                  <input id='facebook_share_checkbox'
-                         type='checkbox' value="1"
-                         name='status'
-                         onclick="$('#facebook_connect_control_form').submit()"/>
-                <% end %>
-                  <label for="facebook_share_checkbox">
-                    <%= t('layout.links.share_on_facebook') %>
-                  </label>
-                <% end %>
-              </span>
-            </li>
-          <% else %>
-            <li>
-              <fb:login-button perms="<%= FB_CONNECT_PERM %>"
-                               onlogin='window.location.reload()'>
-                <%= t('layout.links.auto_share_on_facebook') %>
-              </fb:login-button>
-            </li>
-          <% end %>
+      <div class="navButton">
+        <%= render_user_activities_pull_down_menu %>
+      </div>
 
-          <% if current_user.admin? %>
-            <li>
-              <%= link_to t('layout.links.admin'), admin_url %>
-            </li>
-            <li>
-              <%= link_to 'Site settings', edit_topic_url(@topic) %>
-            </li>
-          <% end %>
+      <div class="navButton">
+        <%= link_to 'Photos', photos_url %>
+      </div>
 
-          <li>
-            <%= link_to t('layout.links.edit_user'), edit_user_url(current_user) %>
-          </li>
+      <div class="navButton">
+        <%= link_to 'Events', events_url %>
+      </div>
 
-          <% if current_user.facebook_session_exists? %>
-            <li>
-              <%= link_to t('layout.links.logout'), fb_logout_url %>
-            </li>
-          <% else %>
-            <li>
-              <%= link_to t('layout.links.logout'), logout_url %>
-            </li>
-          <% end %>
-        </ul>
+      <div class="navButton">
+        <%= render_logged_in_user_links %>
       </div>
     <% end %>
-    |
-    <span>
+
+    <div class="navButton">
       <%
          current_url = request.headers['referer'] || request.host
          # Replace ajax subdomain
@@ -125,7 +88,7 @@
         <option value='<%= @topic.default? ? 'en' : "#{@topic.name}_en" %>' <%= I18n.locale.to_s.match(/en$/i) ? 'selected="selected"' : '' %>>English</option>
         <option value='<%= @topic.default? ? 'bn' : "#{@topic.name}_bn" %>' <%= I18n.locale.to_s.match(/bn$/i) ? 'selected="selected"' : '' %>>বাংলা</option>
       </select>
-    </span>
+    </div>
   </div>
 </div>
 
@@ -136,17 +99,17 @@
     FB.init({appId: '<%= @topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key %>', status: true, cookie: true, xfbml: true});
 
     <% if !logged_in? %>
-      FB.Event.subscribe('auth.sessionChange', function(response) {
-        if (response.session) {
-          var locationParts = location.href.split('#');
-          window.location = locationParts[0] + (locationParts[0].match(/\?/) ? '&' : '?') + "fskey=" +
-                            response.session.session_key + "&fuid=" +
-                            response.session.uid + '&fexpires=' +
-                            response.session.expires + '&fsecret=' +
-                            response.session.secret + '&fat=' +
-                            response.session.access_token
-        }
-      });
+    FB.Event.subscribe('auth.sessionChange', function(response) {
+      if (response.session) {
+        var locationParts = location.href.split('#');
+        window.location = locationParts[0] + (locationParts[0].match(/\?/) ? '&' : '?') + "fskey=" +
+            response.session.session_key + "&fuid=" +
+            response.session.uid + '&fexpires=' +
+            response.session.expires + '&fsecret=' +
+            response.session.secret + '&fat=' +
+            response.session.access_token
+      }
+    });
     <% end %>
   </script>
 <% end %>
@@ -173,20 +136,20 @@
   App.Tasks.executeTasks();
 
   <% if !logged_in? %>
-    $('.login_button').click(function() {
-      $('#login_form').dialog({
-        modal: true, title: "<%= t('title.login')%>", width: 400, height: 410});
-      return false;
-    });
+  $('.login_button').click(function() {
+    $('#login_form').dialog({
+      modal: true, title: "<%= t('title.login')%>", width: 550, height: 410});
+    return false;
+  });
 
-    $('.register_button').click(function() {
-      $.getScript("<%= ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>");
-      $('#registration_form').dialog({
-        modal: true, title: "<%= t('layout.links.register') %>",
-        width: 400
-      });
-      return false;
+  $('.register_button').click(function() {
+    $.getScript("<%= ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>");
+    $('#registration_form').dialog({
+      modal: true, title: "<%= t('layout.links.register') %>",
+      width: 550
     });
+    return false;
+  });
   <% end %>
 
   $('#login_form, #registration_form').ajaxify({urlRef: false});
@@ -198,10 +161,17 @@
     }
   });
 
-  $('#activities_link').click(function() {
-    $.get("<%= updates_path(:format => :ajax) %>", function(data) {
-      $('#activities_submenu').html(data);
-    });
+  var cachedActivities = null;
+
+  $('#activities_link').mouseenter(function() {
+    if (cachedActivities) {
+      $('#activities_submenu').html(cachedActivities);
+    } else {
+      $.get("<%= updates_path(:format => :ajax) %>", function(data) {
+        cachedActivities = data;
+        $('#activities_submenu').html(cachedActivities);
+      });
+    }
     return false;
   });
 </script>

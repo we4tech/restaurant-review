@@ -1,59 +1,100 @@
 <div class="grid_8" id="site_center_list">
-  <h1>
-    <% @breadcrumbs.each do |link| %>
-      <%= link_to link.first, link.last %> &raquo;
-    <% end %><%= @title %>
-  </h1>
-  <div class="break space_5"></div>
+  <%= render_breadcrumbs %>
+  <div class="clear break space_5"></div>
 
   <div class="space_10"></div>
   <div class='pagination'>
     <%= will_paginate @stuff_events %>
   </div>
+  <div class='clear'></div>
 
-  <div class='stuff_events'>
+  <div class='imageDetailsView'>
     <% @stuff_events.each do |stuff_event| %>
-      <div class='stuff_event'>
-        <div class='image'>
-          <% if stuff_event.image %>
-            <%
-               url_title = stuff_event.image.caption
-               if url_title.nil? || url_title.blank?
-                 url_title = stuff_event.restaurant.name
-               end
-               url_title = url_title.parameterize
-            %>
+      <% if (image = stuff_event.image) %>
+        <ul>
+          <li>
+            <%= link_to image_tag(image.c_large_public_filename, :class => 'image'), image_path(image.id) %>
+            <div class="details">
+              <% if image.caption.present? && image.description.present? %>
+                <h5><%= h image.caption %></h5>
+                <blockquote style="max-height: 50px;"
+                            onmousemove="$(this).css('max-height', '');"
+                            onmouseout="$(this).css('max-height', '50px');">
+                  <%= sanitize(h(image.description)) %>
+                </blockquote>
+              <% elsif image.caption.present? %>
+                <blockquote><%= h image.caption %></blockquote>
+              <% elsif image.description.present? %>
+                <blockquote><%= sanitize(h(image.description)) %></blockquote>
+              <% end %>
 
-            <%= link_to image_tag(stuff_event.image.public_filename(:large), :alt => 'N/A'),
-                        image_url(stuff_event.image_id, :page => params[:page]),
-                        :class => 'pic_link',
-                        :title => "#{stuff_event.image.caption} @#{link_to(
-                            stuff_event.restaurant.name, 
-                            restaurant_long_url(:name => stuff_event.restaurant.name.parameterize.to_s,
-                                                :id => stuff_event.restaurant.id))}",
-                        :rel => 'prettyPhoto[pics]' %>
-          <% else %>
-            N/A
-          <% end %>
-        </div>
-        <div class='info'>
-          <% if stuff_event.event_type == StuffEvent::TYPE_CONTRIBUTED_IMAGE %>
-            <%= link_to stuff_event.user.login,
-                        user_long_url(stuff_event.user)  %> contributed to
-          <% else %>
-            <%= t('label.attached_with') %>
-          <% end %>
-          <%= link_to stuff_event.restaurant.name, restaurant_long_url(
-            :name => stuff_event.restaurant.name.parameterize.to_s,
-            :id => stuff_event.restaurant.id) %>
-          <span class='date'>
-            <% comments_count = stuff_event.image.photo_comments_count %>
-            <%= t('fields.comments_count', :count => comments_count) %>
-          </span>
-        </div>
-        <div class="clear"></div>
-      </div>
+              <div class="tools">
+                <small><strong>Added by <%= user_link(image.user) %></strong></small>
+                .
+                <small><%= distance_of_time_in_words(Time.now, image.created_at) %> ago</small>
+                .
+                <small>
+                  <%= link_to "Comments(#{image.photo_comments.count})", "#{image_path(image)}#image_comments"%>
+                </small>
+                <small id='image_<%= image.id %>_tools'></small>
+              </div>
 
+              <div class="space_10"></div>
+              <ul class="comments">
+                <% if (comments = image.photo_comments.recent.retrieve_only(2)).present? %>
+
+                  <% comments.each do |comment| %>
+                    <li>
+                      <div class='displayPicture'>
+                        <%= link_to(image_tag(comment.user.display_picture), user_long_url(comment.user)) %>
+                      </div>
+                      <div class='comment'>
+                        <div class='content'
+                             style="max-height: 100px; overflow-y: hidden;"
+                             onmouseover="$(this).css('max-height', '')"
+                             onmouseout="$(this).css('max-height', '100px')">
+                          <%= user_link(comment.user) %>
+                          <%= h(comment.content) %>
+                        </div>
+                        <div class='tools'>
+                          <span><%= distance_of_time_in_words(Time.now, comment.created_at) %> ago</span>
+
+                        </div>
+                      </div>
+                      <div class='clear'></div>
+                    </li>
+                  <% end %>
+
+                <% end %>
+
+                <li>
+                  <% if logged_in? %>
+                    <div class='form'>
+                      <% form_for PhotoComment.new do |f| %>
+                        <%= f.label t('label.write_comment') %>
+                        <%= f.text_area :content %>
+                        <%= f.hidden_field :image_id, :value => image.id %>
+                        <% related_object = image.discover_relation_with_any %>
+
+                        <% if related_object && related_object.is_a?(Restaurant) %>
+                          <%= f.hidden_field :restaurant_id, :value => related_object.id %>
+                        <% end %>
+
+                        <%= f.submit t('button.add_comment') %>
+                      <% end %>
+                    </div>
+                  <% else %>
+                    You need to <%= link_to t('nav.login'), login_url %> to post your comment
+                  <% end %>
+                </li>
+              </ul>
+              <div class="clear space_10"></div>
+
+            </div>
+            <div class="clear"></div>
+          </li>
+        </ul>
+      <% end %>
     <% end %>
   </div>
 
@@ -65,10 +106,29 @@
 
 <script type="text/javascript">
   /*$(document).ready(function(){
-    $(".stuff_events .image .pic_link").prettyPhoto();
-  });*/
+   $(".stuff_events .image .pic_link").prettyPhoto();
+   });*/
 </script>
 
 <div class="grid_4" id="site_center_boxes">
-  <%= render :partial => 'layouts/fresh_parts/modules' %>
+  <% if not @cached %>
+    <%= render :partial => 'layouts/fresh_parts/modules' %>
+  <% else %>
+    <div id='right_side_boxes' class='loadingIndicator'>
+      <%= image_tag 'loader.gif' %>
+      <br/>
+      Loading boxes …
+    </div>
+  <% end %>
+  <div class="clear"></div>
 </div>
+<div class="clear"></div>
+
+<% if @cached %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>
+
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'image_tools',
+                                                :image_ids => @stuff_events.collect(&:image).compact.collect(&:id)),
+                             :defer => 'defer' %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'page_side_modules'), :defer => 'defer' %>
+<% end %>

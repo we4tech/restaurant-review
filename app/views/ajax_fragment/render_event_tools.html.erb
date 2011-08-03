@@ -1,0 +1,16 @@
+<%
+   jsonable_response = []
+   @events.each do |event|
+     jsonable_response << {
+         :id => event.id,
+         :html => render(:partial => "topic_events/parts/tools",
+                         :locals => {:topic_event => event})}
+   end
+%>
+(function() {
+  var el = null;
+  <% jsonable_response.each do |item| %>
+    el = $('<%= "#topic_event_#{item[:id]}_tools" %>');
+    el.html("<%= escape_javascript(item[:html]) %>");
+  <% end %>
+})();

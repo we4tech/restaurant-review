@@ -10,12 +10,17 @@
    index = index || 0
    grid_class = grid_class || 'grid_6'
    only_html = only_html || false
+   item_id = "list_item_restaurant_#{restaurant.id}_#{Time.now.to_i.to_s.gsub('.', '')}"
 %>
 
-<div class="site_list_item" id="list_item_restaurant_<%= restaurant.id %>">
+<div class="site_list_item restaurant" id="<%= item_id %>">
   <% if !images.empty? %>
     <div class="grid_1">
       <%= image_tag(images.rand.public_filename(:small), :alt => '') %>
+    </div>
+  <% else %>
+    <div class='grid_1'>
+      <img src='/images/fresh/no-dp.png'/>
     </div>
   <% end %>
 
@@ -26,54 +31,60 @@
 
     <div class="site_list_item_rating">
       <%= render_restaurant_review_stats(restaurant) %>
+    </div>
+
+    <div id='<%= item_id %>_hidden_stuffs' style="display: none">
       <% if @display_tools.nil? || @display_tools %>
-        <span id='restaurant_<%= restaurant.id %>_tools' style="display: <%= @cached ? 'none' : 'inline' %>">
+        <div id='restaurant_<%= restaurant.id %>_tools' style="display: <%= @cached ? 'none' : 'inline' %>">
           <% if !only_html %>
             <%= render :partial => 'restaurants/parts/tools', :locals => {:restaurant => restaurant} %>
           <% else %>
             <%= render :partial => 'restaurants/parts/tools.html.erb', :locals => {:restaurant => restaurant} %>
           <% end %>
-        </span>
+        </div>
       <% end %>
-    </div>
 
-    <div class="summary">
-      <% words = (restaurant.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
-      <%= sanitize strip_tags(words[0..20].join(' ')) %>
-      <% if words.length > 20 %>...
-      <% end %>
-      <%= link_to t('nav.more'), restaurant_long_url(restaurant) %>
-      <% if !(restaurant.address || '').blank? %>
-        <br/>
-        <b><%= tt('fields.address') %>:</b>
-        <%= sanitize strip_tags(restaurant.address) %>
-        <% if restaurant.lat.to_i > 0 && restaurant.lng.to_i > 0 %>
-          <%= link_to '[Map]', full_map_url(:rid => restaurant.id) %>
+      <div class="summary" id="<%= item_id %>_summary">
+        <% words = (restaurant.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
+        <%= sanitize strip_tags(words[0..20].join(' ')) %>
+        <% if words.length > 20 %>...
         <% end %>
-      <% end %>
-    </div>
-
-    <% if !restaurant.tags.empty? %>
-      <div class="associated_tags" onmouseover="this.style.maxHeight='inherit'">
-        <b><%= tt('fields.features') %>:</b>
-        <%= restaurant.tags.collect {|tag|
-          link_to(tag.name, tag_details_url(
-              :label => url_escape((@topic.module_conf('long_array') || {})['label'] || 'tags type'), :tag => url_escape(tag.name)),
-                  :class => "#{@tags && @tags.include?(tag.name.downcase) ? 'selectedTag' : ''}")
-        }.join(', ') %>
+        <%= link_to t('nav.more'), restaurant_long_url(restaurant) %>
+        <% if !(restaurant.address || '').blank? %>
+          <br/>
+          <b><%= tt('fields.address') %>:</b>
+          <%= sanitize strip_tags(restaurant.address) %>
+          <% if restaurant.lat.to_i > 0 && restaurant.lng.to_i > 0 %>
+            <%= link_to '[Map]', full_map_url(:rid => restaurant.id) %>
+          <% end %>
+        <% end %>
       </div>
-    <% end %>
+
+      <% if !restaurant.tags.empty? %>
+        <div class="associated_tags" onmouseover="this.style.maxHeight='inherit'" id="<%= item_id %>_tags">
+          <b><%= tt('fields.features') %>:</b>
+          <%= restaurant.tags.collect {|tag|
+            link_to(tag.name, section_url(tag, true),
+                    :class => "#{@tags && @tags.include?(tag.name.downcase) ? 'selectedTag' : ''}")
+          }.join(', ') %>
+        </div>
+      <% end %>
+      <div class="clear"></div>
+    </div>
 
     <% if @display_last_review %>
-      <% last_review = restaurant.last_review %>
+      <% last_review = @show_reviews_from.present? ?
+              Review.by_restaurant(restaurant.id).by_users(@show_reviews_from.collect(&:id)).recent.first :
+              restaurant.reviews.recent.first %>
+
       <% if last_review %>
         <div class='review_quote'>
           <% if !only_html %>
             <%= render :partial => 'reviews/parts/review',
-                       :locals => {:review => last_review, :tag_name => 'span', :grid_class => ''} %>
+                       :locals => {:review => last_review, :tag_name => 'div', :grid_class => ''} %>
           <% else %>
             <%= render :partial => 'reviews/parts/review.html.erb',
-                       :locals => {:review => last_review, :tag_name => 'span', :grid_class => '', :only_html => true} %>
+                       :locals => {:review => last_review, :tag_name => 'div', :grid_class => '', :only_html => true} %>
           <% end %>
           <div class="clear"></div>
           <div class="space_5"></div>

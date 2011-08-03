@@ -1,9 +1,13 @@
 <div class='tags'>
   <% @tags.each do |tag| %>
-    <div class='tag'>
-      <%= tag.name %> <small style='color: green'><%= tag.feature_enlist ? '(featured)' : '' %></small>
+    <div class='tag' style="background: <%= tag.as_section? ? 'lightblue' : '' %>">
+      <%= tag.name %>
+      <small style='color: green'><%= tag.feature_enlist ? '(featured)' : '' %></small>
+      <small style='color: blue'><%= tag.as_section? ? '(section)' : '' %></small>
+
       (<%= [link_to('x', tag_url(tag), :confirm => t('confirm.delete_entry'),
                     :method => :delete),
+           link_to('s', "#{flag_as_section_tag_path(tag.id)}", :title => 'Set as section'),
            link_to('e', "#{edit_tag_path(tag.id)}#edit_tag")].join(', ') %>)
     </div>
   <% end %>
@@ -31,11 +35,19 @@
   <div class='break'></div>
   <div class='space_10'></div>
   <% form_for form_model = (@tag || Tag.new) do |f| %>
-    <%= f.label :name %>
+    <%= f.label :name %><br/>
     <%= f.text_field :name %>
     <%= f.error_message_on :name %>
-    <%= f.check_box :feature_enlist %>
-    <%= f.label :feature_enlist %>
+    <div class="space_10"></div>
+
+    <%= f.check_box :feature_enlist %><%= f.label :feature_enlist %>
+    <div class="space_10"></div>
+    
+    <%= f.check_box :as_section %><%= f.label :as_section %>
+    <div class="space_10"></div>
+
+    <%= f.label :section_index %> <%= f.text_field :section_index, :size => 5 %>
+    <div class="space_10"></div>
 
     <% if form_model.new_record? %>
       <%= f.submit t('button.create') %>

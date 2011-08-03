@@ -1,16 +1,19 @@
 <div class='recommendRestaurants'>
-  <form action="<%= search_url %>" id='recommend_form'>
-    <%= t('frontpage.recommend') %>
+  <form action="<%= search_url %>" id='recommend_form' onsubmit="return function() {$('#search_field').match(/^Search/).val(''); return true;}">
     <input type='hidden' name='_models' value='Restaurant'/>
+    <input value="Search <%= (@topic.name || '').humanize %>" id="search_field"
+           onblur="this.value.length == 0 ? $(this).addClass('greyText').val('Search <%= (@topic.name || '').humanize %>') : true"
+           onfocus="this.value.match(/^Search/) ? $(this).removeClass('greyText').val('') : true"
+           onclick="this.value.match(/^Search/) ? $(this).removeClass('greyText').val('') : true"
+           name="name|short_array|long_array|description[]" class="textField greyText"/>
 
-    <select name='short_array|long_array[]' onchange="document.getElementById('recommend_form').submit()">
-      <% if @location_tag_group %>
-        <% @location_tag_group.tags.each do |tag| %>
-          <option value='<%= tag.name %>'><%= tag.name %></option>
-        <% end %>
-      <% end %>
-    </select>
-    <input type='submit' value='<%= t('button.find') %>'/>
+    <%= render_tags_select_field 'locations',
+                                 :name => 'short_array|long_array[]',
+                                 :include_blank => 'at Anywhere',
+                                 :prefix => 'at ',
+                                 :onchange => "document.getElementById('recommend_form').submit()" %>
+    
+    <input type='submit' class="searchButton" value='<%= t('button.find') %>'/>
   </form>
 </div>
 <div class='clear'></div>

@@ -1,0 +1,53 @@
+<div class='sections'>
+  <% index = 0 %>
+  <div class="sectionTopRow">
+    <% (sections[0..2] || []).each do |section| %>
+      <div class="section clickable" targetLink='<%= section_url(section) %>'
+           style="<%= render_section_editor_selected_item_image(section, true) %>">
+        <div class="title">
+          <%= link_to section.name, section_url(section) %>
+        </div>
+      </div>
+      <% index += 1 %>
+    <% end %>
+
+    <% (sections[3..3] || []).each do |section| %>
+      <div class="section lastInRow clickable"
+           targetLink='<%= section_url(section) %>'
+           style="<%= render_section_editor_selected_item_image(section, true) %>">
+        <div class="title">
+          <%= link_to section.name, section_url(section) %>
+        </div>
+      </div>
+      <% index += 1 %>
+    <% end %>
+    <div class="clear"></div>
+  </div>
+
+  <div class="sectionBottomRow">
+    <% (sections[4..6] || []).each do |section| %>
+      <div class="section clickable" targetLink='<%= section_url(section) %>'
+           style="<%= render_section_editor_selected_item_image(section, true) %>">
+        <div class="title">
+          <%= link_to section.name, section_url(section) %>
+        </div>
+      </div>
+      <% index += 1 %>
+    <% end %>
+
+    <div class="section lastInRow advertisement">
+      <div class="title">
+        Advertisement
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.sections .section').each(function() {
+    $(this).click(function(e) {
+      window.location = $(this).attr('targetLink');
+    });
+  });
+</script>

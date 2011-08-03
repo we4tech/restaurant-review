@@ -1,0 +1,16 @@
+<%
+   links = []
+   if defined?(checkins_count)
+     links << "<span class='stat_item icon_checkin'><acronym title='Checkins'>#{checkins_count}</acronym> Check-ins by #{user.login}</span>"
+   end
+
+   if defined?(reviews_count) && reviews_count > 0
+     links << "<span class='stat_item icon_review'><acronym title='Reviews'>#{reviews_count}</acronym></span>"
+   end
+
+   if defined?(loves_count) && loves_count > 0
+     links << "<span class='stat_item icon_loved'><acronym title='Reviews'>#{pluralize(loves_count, 'time')} loved by #{user.login}</acronym></span>"
+   end
+%>
+
+<%= links.join(' ') %>

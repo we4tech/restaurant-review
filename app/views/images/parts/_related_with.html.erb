@@ -1,7 +1,7 @@
 <div class='attachedWithObjects'>
   <div class='attachedWithObject'>
     <% if object.is_a?(Restaurant) %>
-      <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => object} %>
+      <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => object, :grid_class => 'grid_3'} %>
     <% elsif object.is_a?(TopicEvent) %>
       <%= render :partial => 'topic_events/parts/event', :locals => {:topic_event => object} %>
     <% elsif object.is_a?(FoodItem) %>

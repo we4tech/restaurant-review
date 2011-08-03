@@ -4,7 +4,10 @@ class HomeController < ApplicationController
 
   before_filter :log_new_feature_visiting_status
   before_filter :unset_premium_session 
-  caches_action :frontpage, :index, :cache_path => Proc.new {|c| 
+  
+  caches_action :frontpage, :index, :most_loved_places, 
+                :most_checkedin_places, :recently_reviewed_places, 
+                :recent_places, :photos, :cache_path => Proc.new {|c| 
     c.cache_path(c)
   }, :if => Proc.new {|c| !c.send(:mobile?)}
 
@@ -12,6 +15,7 @@ class HomeController < ApplicationController
     @title = I18n.t('header.recent_restaurants')
     @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => params[:page])
     @cached = true
+    page_context :list_page
     
     # pending module - :render_recently_added_pictures
     load_module_preferences
@@ -19,18 +23,16 @@ class HomeController < ApplicationController
     @left_modules = [
         :render_tagcloud,
         :render_most_lovable_places,
-        :render_recently_added_places]
+        :render_recently_reviewed_places]
     @breadcrumbs = []
   end
 
   def frontpage
-    @title = I18n.t('header.recent_restaurants')
-    page_index = params[:page].to_i > 0 ? params[:page].to_i : 1
-    @restaurants = Restaurant.by_topic(@topic.id).recent.paginate(:page => page_index)
-    @top_rated_restaurants = Restaurant.featured(@topic.id)
+    @title = I18n.t('header.recent_restaurants')    
     @location_tag_group = TagGroup.of(@topic, 'locations')
     @best_for_tags = Tag.featurable(@topic.id)
     @cached = true if params[:jsonp].nil? || params[:jsonp] != 'false'
+    page_context :frontpage
 
     # pending module - :render_recently_added_pictures
     load_module_preferences
@@ -38,7 +40,7 @@ class HomeController < ApplicationController
     @left_modules = [
         :render_tagcloud,
         :render_most_lovable_places,
-        :render_recently_added_places]
+        :render_recently_reviewed_places]
     @breadcrumbs = []
     
     respond_to do |format|
@@ -52,13 +54,41 @@ class HomeController < ApplicationController
       }
     end
   end
+  
+  def recent_places
+    offset = params[:page].to_i
+    offset = 1 if offset == 0
+    filters = params[:filters]
+    page_context :list_page
+    @cached = true
+    
+    if filters && filters[:user_id].present?
+      @restaurants = Restaurant.by_users(filters[:user_id].split('|')).by_topic(@topic.id).recent.paginate :page => params[:page]
+    else
+      @restaurants = Restaurant.by_topic(@topic.id).recent.paginate :page => params[:page]      
+    end
+
+    @title = 'Recently explored places'
+    @site_title = @title
+
+    prepare_breadcrumbs
+    render :action => :index
+  end
 
   def most_loved_places
     offset = params[:page].to_i
     offset = 1 if offset == 0
+    filters = params[:filters]
+    page_context :list_page
+    @cached = true
 
     @restaurants = WillPaginate::Collection.create(offset, Restaurant::per_page) do |pager|
-      result = Restaurant.most_loved(@topic, Restaurant::NO_LIMIT, offset - 1)
+      if filters && filters[:user_id].present?
+        result = Restaurant.most_loved_by_users(@topic, User.find(filters[:user_id].split('|')), Restaurant::per_page, offset - 1)
+      else
+        result = Restaurant.most_loved(@topic, Restaurant::NO_LIMIT, offset - 1)
+      end
+      
       pager.replace(result)
 
       unless pager.total_entries
@@ -67,44 +97,91 @@ class HomeController < ApplicationController
       end
     end
 
-    load_module_preferences
-    
     @title = I18n.t('header.loved_places')
     @site_title = @title
+    prepare_breadcrumbs
+    render :action => :index
+  end
+  
+  def most_checkedin_places
+  	offset = params[:page].to_i
+    offset = 1 if offset == 0
+    filters = params[:filters] || {}
+    page_context :list_page
+    @cached = true
+    
+    if filters[:user_id].present?
+      users = User.find(filters[:user_id].split('|'))
+    else
+      users = []
+    end
 
-    @left_modules = [:render_tagcloud, :render_recently_added_places]
-    @breadcrumbs = [['All', root_url]]
+    @restaurants = WillPaginate::Collection.create(offset, Restaurant::per_page) do |pager|
+      if filters[:user_id].present?
+        result = Restaurant.most_checkined_by_users(@topic, users, Restaurant::per_page, offset - 1)
+      else
+        result = Restaurant.most_checkined(@topic, Restaurant::NO_LIMIT, offset - 1)
+      end      
+      pager.replace(result)
+
+      unless pager.total_entries
+        # the pager didn't manage to guess the total count, do it manually
+        if filters[:user_id].present?
+          pager.total_entries = Restaurant.count_checkined_by_users(@topic, users)
+        else
+          pager.total_entries = Restaurant.count_most_checkined(@topic)
+        end
+      end
+    end
+
+    @title = "Most checked in places"
+    @site_title = @title
+    prepare_breadcrumbs
+    
     render :action => :index
   end
 
   def recently_reviewed_places
     offset = params[:page].to_i
+    filters = params[:filters]
     offset = 1 if offset == 0
-
+    @cached = true
+    page_context :list_page
+    
+    if filters && filters[:user_id].present?
+      @show_reviews_from = User.find(filters[:user_id].split('|'))
+    end
+    
     @restaurants = WillPaginate::Collection.create(offset, Restaurant::per_page) do |pager|
-      result = Restaurant.recently_reviewed(@topic, Restaurant::NO_LIMIT, offset - 1)
+      if @show_reviews_from.present?
+        result = Review.by_topic(@topic.id).by_users(@show_reviews_from.collect(&:id)).recent.all(:limit => Restaurant::per_page, :offset => offset - 1).collect { |r| r.restaurant || r.topic_event }
+      else
+        result = Restaurant.recently_reviewed(@topic, Restaurant::NO_LIMIT, offset - 1)
+      end
       pager.replace(result)
 
       unless pager.total_entries
         # the pager didn't manage to guess the total count, do it manually
-        pager.total_entries = Restaurant.count_recently_reviewed(@topic)
+        if @show_reviews_from.present?
+          pager.total_entries = Review.by_users(@show_reviews_from.collect(&:id)).recent.count
+        else
+          pager.total_entries = Restaurant.count_recently_reviewed(@topic)
+        end
       end
     end
     
-    load_module_preferences
-    
     @title = I18n.t('header.reviewed_places')
     @site_title = @title
-
     @display_last_review = true
-    @left_modules = [:render_tagcloud, :render_most_lovable_places]
-    @breadcrumbs = [['All', root_url]]
+    prepare_breadcrumbs
+    
     render :action => :index
   end
 
   def who_havent_been_there_before
     model_type = (params[:mt] || 'restaurant').camelize.constantize
     model_instance = model_type.find(params[:id].to_i)
+    page_context :list_page
 
     offset = params[:page].to_i
     offset = 1 if offset == 0
@@ -124,7 +201,7 @@ class HomeController < ApplicationController
     @title = I18n.t("header.wannago", :place => model_instance.name)
     @site_title = @title
 
-    @left_modules = [:render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_tagcloud, :render_most_lovable_places, :render_recently_reviewed_places]
     @breadcrumbs = [['All', root_or_specific_root_url(model_instance)], [model_instance.name, event_or_restaurant_url(model_instance)]]
     @restaurant = model_instance
   end
@@ -134,8 +211,12 @@ class HomeController < ApplicationController
     label = label.gsub('-', ' ').downcase
     tag_string = (URI.unescape(params[:tag]) || '').gsub('-', ' ').downcase
     tag = Tag.find_by_name_and_topic_id(tag_string, @topic.id)
+    session[:last_tag_id] = tag.id
+    page_context :list_page
+   	page_module :body, :render_news_feed, {:label => 'News Feed', :limit => 5, :filters => { :tag_id => tag.id }}
 
     # Find out associated label
+=begin
     selected_module = nil
     @topic.modules.each do |m|
       if m['label'].downcase.parameterize.gsub('-', ' ') == label
@@ -147,14 +228,14 @@ class HomeController < ApplicationController
       render :status => 404, :text => 'This url doesn\'t exists'
       return
     end
-
+=end
     if tag
       @restaurants = tag.restaurants.paginate :page => params[:page]
       load_module_preferences
 
-      @title = I18n.t('header.tag_details', :tag => tag.name)
+      @title = tag.name_with_group
       @site_title = @title
-      @left_modules = [:render_tagcloud, :render_recently_added_places]
+      @left_modules = [:render_tagcloud, :render_recently_reviewed_places]
       @breadcrumbs = [['All', root_url]]
       render :action => :index
     else
@@ -169,6 +250,7 @@ class HomeController < ApplicationController
   def search
     @title = I18n.t('header.search_results')
     @site_title = @title
+    page_context :list_page
 
     models = []
     if params[:_models] 
@@ -217,7 +299,7 @@ class HomeController < ApplicationController
     @left_modules = [
         :render_tagcloud,
         :render_most_lovable_places,
-        :render_recently_added_places]
+        :render_recently_reviewed_places]
     @breadcrumbs = []
     @searched_tags = @tags
     respond_to do |format|
@@ -280,6 +362,9 @@ class HomeController < ApplicationController
   end
 
   def photos
+  	page_context :list_page
+  	@cached = true
+  	
     @stuff_events = StuffEvent.paginate(
         :conditions => {
             :topic_id => @topic.id,
@@ -292,14 +377,15 @@ class HomeController < ApplicationController
 
     load_module_preferences
 
-    @title = I18n.t('header.photos')
+    @title = 'Restaurants picture'
     @site_title = @title
     @left_modules = [:render_tagcloud, :render_most_lovable_places,
-                     :render_recently_added_places]
+                     :render_recently_reviewed_places]
     @breadcrumbs = [['All', root_url]]
   end
 
   def show_photo
+  	page_context :list_page
     @stuff_event = StuffEvent.find(params[:id].to_i)
     @related_image = @stuff_event.image
 
@@ -309,7 +395,7 @@ class HomeController < ApplicationController
     @title = nil if @title.nil? || @title.blank?
 
     @site_title = @title
-    @left_modules = [:render_tagcloud, :render_most_lovable_places, :render_recently_added_places]
+    @left_modules = [:render_tagcloud, :render_most_lovable_places, :render_recently_reviewed_places]
     @breadcrumbs = [['All', root_url],
                     ['Photos', photos_url(:page => params[:page])]]
   end
@@ -319,6 +405,7 @@ class HomeController < ApplicationController
   end
 
   def recommend
+  	page_context :list_page
     tag_ids = params[:tag_ids] || []
     tag_ids = tag_ids.values if tag_ids.is_a?(Hash)
     tags = tag_ids.collect{|tag_id| Tag.find(tag_id)}

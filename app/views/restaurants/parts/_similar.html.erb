@@ -1,24 +1,5 @@
-<div class='similarRestaurants'>
-  <h4><%= tt('label.suggested_restaurants') %></h4>
-  <div class="space_5"></div>
-
-  <div class='restaurants'>
-    <% restaurants.each do |restaurant| %>
-      <% image = restaurant.rand_image %>
-
-      <div class='similarRestaurant'>
-        <% if image %>
-          <div class='picture'>
-            <%= link_to image_tag(image.public_filename(:small)), restaurant_long_url(restaurant) %>
-          </div>
-        <% end %>
-        <div class='name'>
-          <%= restaurant_link(restaurant) %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+<div class='relatedRestaurants'>
+  <%= render :partial => 'restaurants/parts/lovable_places' %>
   <div class='clear'></div>
 </div>
-
-<div class="space_5"></div>
+<div class='clear'></div>

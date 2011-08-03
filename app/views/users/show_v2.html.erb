@@ -1,0 +1,93 @@
+<div class="userProfile" id="site_center_list">
+  <div class="grid_2">
+    <div class="userAvatar">
+      <%= image_tag @user.display_picture(:large) %>
+    </div>
+    <div class="clear space_10"></div>
+    <h4 class="buttonWithIcon">
+      <%= image_tag 'icons/dryicons/mail.png' %>
+      <%= link_to 'Send message', '#' %>
+    </h4>
+
+    <div class="space_5"></div>
+    <h4 class="buttonWithIcon">
+      <%= image_tag 'icons/dryicons/back.png' %>
+      <%= link_to 'Offer a treat', '#' %>
+    </h4>
+
+    <div class="space_5"></div>
+    <h4 class="buttonWithIcon">
+      <%= image_tag 'icons/dryicons/star.png' %>
+      <%= link_to 'Follow', '#' %>
+    </h4>
+
+    <div class="clear space_10"></div>
+    <fb:like href="<%= user_long_url(@user) %>" send="false"
+             layout="button_count" width="100" show_faces="false" font=""></fb:like>
+    <a class="addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech"><img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
+    <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech"></script>
+  </div>
+
+  <div class="grid_6">
+    <h1><%= @user.name_or_login %>'s profile</h1>
+
+    <div class="tagLine">
+      member since <%= @user.created_at.year %> (for <%= distance_of_time_in_words(Time.now, @user.created_at) %>)
+    </div>
+
+    <div class="clear space_10"></div>
+    <div class="heading">
+      <div class="metaInfo">
+        <%= render_last_activity(@user) %>
+
+        <% if (most_explored_tags = @user.most_explored_tags(@topic, TagGroup.of(@topic, ['Cuisines', 'Cuisins', 'Food items']))).present? %>
+          <br/><strong>Most explored tags</strong> -
+          <%= most_explored_tags.collect { |t| link_to(t.name, section_url(t, true)) }.join(', ') %>
+        <% end %>
+      </div>
+
+      <div class="clear"></div>
+    </div>
+
+    <div class='clear'></div>
+    <div class='space_10'></div>
+    <div class="userUploadedPictures">
+      <%= render_user_uploaded_pictures(@user) %>
+    </div>
+    <div class='clear space_10'></div>
+
+    <div class="userActivities">
+      <%= render_news_feed(:label => 'Recent activities', :filters => {:user_id => @user.id}, :grid_class => 'grid_5') %>
+    </div>
+  </div>
+
+  <div class="grid_4">
+    <div id="right_module_panel">
+      <h4 class="subHeaderWithIcon">Status</h4>
+      <%= render_user_status(@user, :heading => false) %>
+      <div class="clear space_10"></div>
+
+      <%= render_most_checkined_places({:filters => {:users => [@user]},
+                                        :label => "Mostly Visits",
+                                        :show_contribution => :checkins,
+                                        :link_bar => true,
+                                        :keep_open => true }) %>
+      <div class='clear space_10'></div>
+
+      <%= render_most_lovable_places({:filters => {:users => [@user]},
+                                      :show_contribution => :loves,
+                                      :label => "Most Favorites",
+                                      :keep_open => true,
+                                      :link_bar => true}) %>
+      <div class='clear space_10'></div>
+
+      <%= render_recently_reviewed_places({:filters => {:users => [@user]}, :label => 'Recently Reviewed', :link_bar => true}, 5) %>
+      <div class='clear space_10'></div>
+
+      <%= render_recently_added_places({:filters => {:users => [@user]}, :label => "Recently Explored", :link_bar => true}, 5) %>
+      <div class='clear space_10'></div>
+
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>

@@ -3,12 +3,12 @@
       xmlns:fb="http://www.facebook.com/2008/fbml"
       xmlns:og="http://ogp.me/ns#">
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8"/>
+
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <title><%= @topic ? (@site_title ? "#{@site_title} - " : '') : '' %><%= @topic.site_title %></title>
 
-  <%= render :partial => 'layouts/fresh_parts/og_integration'%>
+  <%= render :partial => 'layouts/fresh_parts/og_integration' %>
 
   <%= stylesheet_link_tag 'fresh/reset.css', 'fresh/960.css',
                           'fresh/text.css', 'fresh/site.css',
@@ -17,13 +17,13 @@
                           'jquery-ui-fresh/jquery.css',
                           :cache => 'cache_supporting.js' %>
 
-  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jrails', 'fuzzy-string',
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.welltreat.us.pulldown.js', 'jrails', 'fuzzy-string',
                              'application', 'jquery.lazyload.mini', 'jquery.tagsearcher',
                              :cache => 'cache_all.js' %>
 
   <%= javascript_include_tag 'jquery.prettyPhoto.js', 'jquery.bt.min.js',
                              'jquery.easing.js', 'jquery.timers.js', 'jquery.scrollTo-1.4.2-min',
-                             'jquery.ajaxify.js',
+                             'jquery.ajaxify.js', 'slider/nivo/jquery.nivo.slider.pack.js',
                              :cache => 'cache_supporting.js' %>
 
 
@@ -33,7 +33,7 @@
   <% if @topic.meta_tags_html.present? %>
     <%= @topic.meta_tags_html %>
   <% else %>
-    <meta name="abstract" content="Bangladeshi and Dhaka restaurant, cafe & eat out place review site"/>
+    <meta name="abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
     <% if @meta_description -%>
       <meta content="<%= @meta_description %>" name="description">
     <%- else -%>
@@ -66,11 +66,19 @@
 </head>
 
 
-<body<%= @edit_mode ? ' onbeforeunload="return (mFormContentChanged) ? \'- Your unsaved changes will be lost.\' : null"' : '' %>>
+<body<%= @edit_mode ? ' onbeforeunload="return (mFormContentChanged) ? \'- Your unsaved changes will be lost.\' : null"' : '' %>
+     class="locale_<%= I18n.locale.to_s %> <%= page_context_as_classes %>"
+     style="background: url('<%= @background_image %>') no-repeat fixed">
 <a href="#" style="display:none" id="siteTopLink">Top</a>
-<div class="navigation" id='topNavigationBar' style="display: <%= @cached ? 'none' : 'block' %>">
-  <% if !@cached %>
-    <%= render :partial => 'layouts/fresh_parts/top_navigation_v2' %>
+
+<div class="navigation" id='topNavigationBar'>
+  <% if not @cached %>
+    <%= render :partial => 'layouts/fresh_parts/top_navigation_v3' %>
+  <% else %>
+    <div class="menuLoadingIndicator">
+      <%= image_tag 'loader.gif' %><br/>
+    	Loading menu …
+    </div>
   <% end %>
 </div>
 <div class="clear"></div>
@@ -78,8 +86,12 @@
 <div class="container_12 site_body">
 
   <div id="site_top">
-    <div class="grid_11" id="site_logo">
-      <div class="site_icon grid_1">
+    <div id='recommendBox'>
+      <%= render :partial => 'restaurants/parts/recommend' %>
+    </div>
+    <div class="clear"></div>
+    <div id="site_logo">
+      <div class="site_icon">
         <% if @topic && @topic.banner_image_path %>
           <%= link_to image_tag(@topic.banner_image_path), root_url %>
         <% else %>
@@ -102,11 +114,9 @@
 
   <div class="site_center_head">
   </div>
-  <div id="site_center" style='background: #fff;'>
+  <div id="site_center">
     <%= yield %>
     <div class="clear"></div>
-  </div>
-  <div class="site_center_tail">
   </div>
 </div>
 
@@ -116,8 +126,11 @@
     <div class="space_5 grid_10"></div>
     <div class="space_5 grid_10"></div>
 
-    <%= render_top_contributors(10) %>
-    <%= render_top_reviewers(10) %>
+
+    <div id='categoryHitRestaurantBox' class="bestForBox grid_7 loadingIndicator">
+    	<%= image_tag 'loader.gif' %><br/>
+    	Loading best for items …
+    </div>
 
     <div class="grid_4 align_right">
       <ul id="site_bottom_navigation">
@@ -131,10 +144,15 @@
         <li>
           <a href="<%= root_url(:format => 'mobile') %>"><%= t('footer.links.mobile') %></a>
         </li>
+        <li>
+          <a href='http://dryicons.com'>Icons by dryicons.com</a>
+        </li>
       </ul>
     </div>
 
     <div class="clear"></div>
+    <div class="break"></div>
+    <center>&copy; <a href='http://www.welltreat.us'>Well Treat Us</a></center>
   </div>
 </div>
 
@@ -143,17 +161,19 @@
   <%= javascript_include_tag 'test.js' %>
 <% end %>
 
-<% if @cached %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'notice', :d => Time.now.to_i) %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'top_menu', :d => Time.now.to_i) %>
-<% end %>
+<%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'notice', :d => Time.now.to_i) %>
+<%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'top_menu', :d => Time.now.to_i) %>
+<%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'best_for_box', :d => Time.now.to_i) %>
 
 <% if params[:no_script].nil? %>
   <!--script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= @topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key %>&hl=en"></script-->
   <!--script type="text/javascript" src="http://gmaps-utility-library.googlecode.com/svn/trunk/markermanager/release/src/markermanager.js"/-->
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=true"></script>
+  <%= yield :after_map_init %>
 
   <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <%= yield :after_fb_init %>
+
   <script type="text/javascript">
     FB.init({appId: '<%= @topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key %>', status: true, cookie: true, xfbml: true});
     App.Tasks.executeTasks();
@@ -166,9 +186,12 @@
     _gaq.push(['_trackPageview']);
 
     (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
     })();
 
   </script>
@@ -195,9 +218,9 @@
 
 <script type="text/javascript">
   $("img").lazyload({
-      placeholder : "/images/grey.gif",
-      effect : "fadeIn",
-      failurelimit : 10
+    placeholder : "/images/fresh/no-dp.png",
+    effect : "appear",
+    failurelimit : 10
   });
 </script>
 

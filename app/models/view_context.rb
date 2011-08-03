@@ -5,4 +5,5 @@ class ViewContext
   CONTEXT_PAGE = 'page'
   CONTEXT_HOME_PAGE = 'page.home'
   CONTEXT_SEARCH_PAGE = 'page.search'
+  CONTEXT_LIST_PAGE = :list_page
 end

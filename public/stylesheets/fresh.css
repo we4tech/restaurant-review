@@ -25,11 +25,24 @@
   margin-top: 20px;
 }
 
+.mailContent h1 {
+  font-size: 150%;
+  margin-top: 0;
+}
+
+.mailContent h4 {
+  background: none repeat scroll 0 0 lightGoldenRodYellow;
+  border: 1px solid orange;
+  margin: 0;
+  padding: 5px;
+}
+
 .mailContent blockquote {
-  border-left: 2px solid #888;
-  margin-left: 15px;
+  color: #858585;
+  font-size: 120%;
+  line-height: 20px;
+  margin-left: 0;
   padding-left: 20px;
-  color: #888
 }
 
 h3 {
@@ -65,9 +78,12 @@ h3 {
 }
 
 .site_list_item {
-  border: 4px solid #ccc;
   padding: 10px;
-  background: #f0f0f0;
+}
+
+.site_list_item h4 {
+  margin-bottom: 5px;
+  font-size: 130%;
 }
 
 .site_list_item .grid_1 {
@@ -89,6 +105,7 @@ h4 {
 .mailActions {
   background: lightYellow;
   padding: 10px;
+  border: 1px solid orange;
 }
 
 a img {

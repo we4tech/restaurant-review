@@ -1,10 +1,9 @@
 <div class="grid_8" id="site_center_list">
-  <h1>
-    <% @breadcrumbs.each do |link| %>
-      <%= link_to link.first, link.last %> &raquo;
-    <% end %><%= @title %>
-  </h1>
-  <div class="break space_5"></div>
+  <%= render_breadcrumbs %>
+  <div class='clear'></div>
+  <div class="break space_10"></div>
+  <%= render_page_modules :body %>
+  <div class="break space_10"></div>
   <div class='info'><%= page_entries_info @restaurants %></div>
   <div class="space_5"></div>
   <div class="break space_5"></div>
@@ -12,11 +11,68 @@
 	<%= render_partially_item(restaurant_or_event) %>
   <% end %>
 
-  <div class='pagination'>
-    <%= will_paginate @restaurants %>
-  </div>
+  <%= will_paginate @restaurants %>
+  <div class='clear'></div>
 </div>
 
 <div class="grid_4" id="site_center_boxes">
-  <%= render :partial => 'layouts/fresh_parts/modules' %>
+  <% if @right_button.present? %>
+	<%= link_to @right_button.first, @right_button.last, :class => "subHeaderWithIcon topBothCornerHeader clickable #{@right_button_icon}" %>
+	<div class='space_10'></div>
+  <% end %>
+  <% if not @cached %>
+  	<%= render :partial => 'layouts/fresh_parts/modules' %>
+  <% else %>
+    <div id='right_side_boxes' class='loadingIndicator'>
+    	<%= image_tag 'loader.gif' %><br/>
+    	Loading boxes …
+    </div>
+  <% end %>
 </div>
+
+<script type='text/javascript'>
+(function() {
+  var timer = null;
+
+  function showOrHide($el, show) {
+    var $hiddenStuffs = $('#' + $el.attr('id') + '_hidden_stuffs');
+    if (show) {
+      $el.removeClass('rowHover').addClass('rowHover');
+      $hiddenStuffs.show();
+
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(function() {
+        $el.removeClass('rowHover');
+        $hiddenStuffs.fadeOut();
+      }, 6000);
+    } else {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(function() {
+        $el.removeClass('rowHover');
+        $hiddenStuffs.fadeOut();
+      }, 1000);
+    }
+  }
+
+  $('#site_center_list .site_list_item').each(function() {
+    var $item = $(this);
+    $item.bind('mouseover', function(e) {
+      showOrHide($(this), true);
+    });
+
+    $item.bind('mouseout', function(e) {
+      showOrHide($(this), false);
+    });
+  });
+})();
+</script>
+
+<% if @cached %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)), :defer => 'defer' %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'page_side_modules'), :defer => 'defer' %>
+<% end %>

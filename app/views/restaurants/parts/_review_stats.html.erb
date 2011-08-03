@@ -1,15 +1,15 @@
 <%
    links = []
    if defined?(checkins_count)
-     links << "<span class='stat_item'>#{checkins_count} check ins</span>"
+     links << "<span class='stat_item icon_checkin'><acronym title='Checkins'>#{checkins_count}</acronym></span>"
    end
 
    if defined?(total_reviews_count)
-     links << "<span class='stat_item icon_review'>#{t('label.reviews_count', :count => total_reviews_count)}</span>"
+     links << "<span class='stat_item icon_review'><acronym title='Reviews'>#{total_reviews_count}</acronym></span>"
    end
 
    if defined?(loved_count)
-     links << "<span class='stat_item icon_loved'>#{t('label.loves_count', :count => loved_count)}</span>"
+     links << "<span class='stat_item icon_loved'><acronym title='Loves'>#{loved_count}</acronym></span>"
    end
 %>
 

@@ -1,33 +1,23 @@
-<div class='events grid_11'>
-
-</div>
-
-<div class="grid_8" id="site_center_list">
-  <h1>
-    <% @breadcrumbs.each do |link| %>
-      <%= link_to link.first, link.last %> &raquo;
-    <% end %><%= @title %>
-    <% if logged_in? %>
-      &raquo; <%= link_to t('nav.add_event'), new_event_path %>
-    <% end %>
-  </h1>
-
-  <div class="break space_5"></div>
+<% html = capture do %>
   <% if @topic_events.empty? %>
     No available event found
   <% else %>
-    <% @topic_events.each do |event| %>
-      <%= render :partial => 'topic_events/parts/event', :locals => {:topic_event => event} %>
+    <% @topic_events.each do |event_type, events| %>
+      <h5><%= event_type.to_s.humanize %></h5>
+      <% if events.present? %>
+        <% events.each do |event| %>
+          <%= render :partial => 'topic_events/parts/event', :locals => {:topic_event => event} %>
+        <% end %>
+      <% else %>
+        <blockquote class="realYellowish" style="padding: 10px; ">
+          There is no <%= event_type.to_s.humanize %> events right this moment.<br/>
+          If you have one please <%= link_to 'add here', new_event_path %>
+        </blockquote>
+      <% end %>
     <% end %>
     <div class='clear'></div>
 
   <% end %>
+<% end %>
 
-  <div class='pagination'>
-    <%= will_paginate @topic_events %>
-  </div>
-</div>
-
-<div class="grid_4" id="site_center_boxes">
-  <%= render :partial => 'layouts/fresh_parts/modules' %>
-</div>
+<%= render :partial => 'layouts/list_layout', :locals => {:__content => html} %>

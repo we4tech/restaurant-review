@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
   include MultidomainCookieHelper
   include PartialViewHelperHelper
   include TemplateServiceHelper
+  include StuffEventsHelper
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -47,6 +48,7 @@ class ApplicationController < ActionController::Base
   before_filter :detect_mobile_view
   before_filter :detect_locale
   before_filter :detect_fake_email
+  before_filter :determine_rotatable_background_image
 
   protected
 
@@ -114,6 +116,54 @@ class ApplicationController < ActionController::Base
           end
         end
       end
+    end
+
+    @@background_images = []
+
+    #
+    # Determine rotatable background image by current time
+    # ie. 0 means default image
+    #     1-12 means 1 AM to 12 PM
+    #     13-18 means 13 PM to 18 PM
+    # Mention *:load_bg* for loading background image
+    def determine_rotatable_background_image
+      if @@background_images.empty? || params[:load_bg]
+        @@background_images = load_background_images
+      end
+
+      @background_image = @@background_images["hour_#{Time.now.hour}"] || @@background_images[:default]
+    end
+
+    def load_background_images
+      hourly_image_files = {}
+
+      Dir.glob(File.join(RAILS_ROOT, 'public', 'bg-pictures', '*.jpg')).each do |path|
+        image_file = path.gsub(/#{File.join(RAILS_ROOT, 'public')}/, '')
+        time_parts = image_file.split('/').last.split('.').first.split('-')
+
+        # Determine default image
+        if time_parts.length == 1 && time_parts.first == '0'
+          hourly_image_files[:default] = image_file
+
+        # Determine time range
+        elsif time_parts.length == 2
+          if time_parts.first.to_i < time_parts.last.to_i
+            (time_parts.first.to_i..time_parts.last.to_i).each do |hour|
+              hourly_image_files["hour_#{hour}"] = image_file
+            end
+          else
+            (time_parts.first.to_i..24).each do |hour|
+              hourly_image_files["hour_#{hour}"] = image_file
+            end
+
+            (0..time_parts.last.to_i).each do |hour|
+              hourly_image_files["hour_#{hour}"] = image_file
+            end
+          end
+        end
+      end
+
+      hourly_image_files
     end
 
     def authorize

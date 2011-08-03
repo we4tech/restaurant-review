@@ -1,41 +1,44 @@
-<div class="centerContent grid_12">
-  <h1><%= t('header.login') %></h1>
+<div class="centerContent grid_8" id="site_center_list">
+  <div class="login_form">
+    <h1><%= t('header.login') %></h1>
 
-  <% if flash[:notice] || flash[:error] %>
-    <div class="highlight">
-      <%= flash[:notice] || flash[:error] %>
-    </div>
-  <% end %>
-
-  <% form_tag session_path do -%>
-    <% if defined?(@js_callback) %>
-      <input type="hidden" name="js_callback" value="<%= @js_callback %>"/>
+    <% if flash[:notice] || flash[:error] %>
+      <div class="highlight">
+        <%= flash[:notice] || flash[:error] %>
+      </div>
     <% end %>
 
-    <% if defined?(@page_reload_off) %>
-      <input type="hidden" name="page_reload_off" value="<%= @page_reload_off %>"/>
-    <% end %>
+    <% form_tag session_path do -%>
+      <% if defined?(@js_callback) %>
+        <input type="hidden" name="js_callback" value="<%= @js_callback %>"/>
+      <% end %>
 
-    <p><%= label_tag 'login', t('fields.login') %><br/>
-      <%= text_field_tag 'login', @login, :id => 'user_login_field' %></p>
+      <% if defined?(@page_reload_off) %>
+        <input type="hidden" name="page_reload_off" value="<%= @page_reload_off %>"/>
+      <% end %>
 
-    <p><%= label_tag 'password', t('fields.password') %><br/>
-      <%= password_field_tag 'password', nil %></p>
+      <p><%= label_tag 'login', t('fields.login') %>
+        <%= text_field_tag 'login', @login, :id => 'user_login_field' %></p>
 
-    <!-- Uncomment this if you want this functionality
-  <p><%= label_tag 'remember_me', t('fields.remember') %>
-  <%= check_box_tag 'remember_me', '1', @remember_me %></p>
-  -->
+      <p><%= label_tag 'password', t('fields.password') %>
+        <%= password_field_tag 'password', nil %></p>
 
-    <p>
-      <%= submit_tag t('button.login'), :class => 'buttonSubmit' %>
-    </p>
+      <!-- Uncomment this if you want this functionality
+    <p><%= label_tag 'remember_me', t('fields.remember') %>
+    <%= check_box_tag 'remember_me', '1', @remember_me %></p>
+    -->
 
-    <p>
-      <%= link_to t('nav.did_you_forgot'), reset_password_url, :class => 'forgot_user_button link' %>
-      Or <%= link_to t('nav.are_you_new_user'), signup_url, :class => 'register_button link' %>
-    </p>
-  <% end -%>
+      <div class="space_10"></div>
+      <p>
+        <%= submit_tag t('button.login'), :class => 'buttonSubmit' %>
+      </p>
+
+      <p>
+        <%= link_to t('nav.did_you_forgot'), reset_password_url, :class => 'forgot_user_button link' %>
+        Or <%= link_to t('nav.are_you_new_user'), signup_url, :class => 'register_button link' %>
+      </p>
+    <% end -%>
+  </div>
 
 </div>
 

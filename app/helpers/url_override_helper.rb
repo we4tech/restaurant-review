@@ -21,8 +21,18 @@ module UrlOverrideHelper
   alias :user_long_path :user_long_url
 
 
-  def user_link(user)
-    link_to user.login.humanize, user_long_url(user)
+  def user_link(user, options = {})
+    same_user_check = options[:same_user_check]
+
+    user_name = user.login.humanize
+
+    if same_user_check
+      if user.id == same_user_check.id
+        user_name = 'Own'
+      end
+    end
+
+    link_to user_name, user_long_url(user)
   end
 
   def restaurant_long_url(p_options, options2 = {})
@@ -55,8 +65,9 @@ module UrlOverrideHelper
     end
   end
 
-  def restaurant_link(restaurant)
-    link_to restaurant.name, restaurant_long_url(restaurant)
+  def restaurant_link(restaurant, options = {})
+    length = options.delete(:length)
+    link_to length ? truncate(restaurant.name, length) : restaurant.name, restaurant_long_url(restaurant)
   end
 
   def discover_url(object)
@@ -169,8 +180,14 @@ module UrlOverrideHelper
     event_long_route_url({:name => URI.escape(url_escape(event.name)), :id => event.id}.merge(options))
   end
 
-  def event_link(event)
-    link_to event.name, event_long_url(event)
+  def event_link(event, options = {})
+    length = options.delete(:length)
+    link_to (length ? truncate(event.name, length) : event.name), event_long_url(event, options)
+  end
+
+  def section_url(section, tag = false)
+    group_name = section.tag_groups.empty? ? (tag ? 'tag' : 'sections') : section.tag_groups.first.name
+    tag_details_url(url_escape(group_name), :tag => url_escape(section.name))
   end
 
   #

@@ -2,56 +2,41 @@
    images = topic_event.related_images.by_group(nil).collect(&:image)
 
    index = index || 0
-   grid_class = grid_class || 'grid_6'
+   grid_class = grid_class || 'grid_7'
    only_html = only_html || false
 %>
 
-<div class="site_list_item" id="list_item_topic_event_<%= topic_event.id %>">
-  <% if !images.empty? %>
-    <div class="grid_1">
-      <%= image_tag(images.rand.public_filename(:small), :alt => '') %>
+<div class="site_list_item listItemEvent event" id="list_item_topic_event_<%= topic_event.id %>">
+  <% if topic_event.rand_image.present? %>
+    <div class="image_small">
+      <%= link_to image_tag(topic_event.rand_image.public_filename(:small)), 'javascript:void(0)' %>
+    </div>
+  <% else %>
+    <div class="image_small">
+      <img alt='N/I'/>
     </div>
   <% end %>
 
   <div class="<%= grid_class %>">
     <h4>
-      <%= event_link(topic_event) %>
+      <%= event_link(topic_event, :length => 30) %>
     </h4>
 
+    <div class="eventStatus">
+      <%= render_friendly_event_schedule(topic_event) %>
+    </div>
     <div class="site_list_item_rating">
       <%= render_restaurant_review_stats(topic_event) %>
       <% if @display_tools.nil? || @display_tools %>
-        <span id='topic_event_<%= topic_event.id %>_tools' style="display: <%= @cached ? 'none' : 'inline' %>">
-          <%
-             links = []
-             if logged_in? && topic_event.author?(current_user)
-               links << link_to(t('nav.edit'), edit_event_path(topic_event))
-               links << link_to(t('nav.delete'), event_path(topic_event),
-                                :method => :delete, :confirm => t('confirm.delete_entry'))
-             end
-          %>
-          <%= links.join(', ') %>
+        <span id='topic_event_<%= topic_event.id %>_tools'>
+          <% if not @cached %>
+            <%= render :partial => 'topic_events/parts/tools', :locals => {:topic_event => topic_event} %>
+          <% end %>
         </span>
       <% end %>
     </div>
 
-    <div class="summary">
-      <% words = (topic_event.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
-      <%= words[0..20].join(' ') %>
-      <% if words.length > 20 %>...
-      <% end %>
-      <%= link_to t('nav.more'), event_long_url(topic_event) %>
-      <% if !(topic_event.address || '').blank? %>
-        <br/>
-        <b><%= tt('fields.address') %>:</b>
-        <%= topic_event.address %>
-        <% if topic_event.lat.to_i > 0 && topic_event.lng.to_i > 0 %>
-          <%
-             # link_to '[Map]', full_map_url(:rid => topic_event.id)
-          %>
-        <% end %>
-      <% end %>
-    </div>
+
     
   </div>
   <div class="clear"></div>

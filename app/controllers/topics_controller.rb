@@ -28,7 +28,7 @@ class TopicsController < ApplicationController
            'label' => 'Most loved places!',
            'bind_column' => ''},
 
-          {'name' => 'render_recently_added_places',
+          {'name' => 'render_recently_reviewed_places',
            'order' => 4,
            'enabled' => true,
            'limit' => 10,
@@ -51,20 +51,24 @@ class TopicsController < ApplicationController
           ]
 
   def index
+    page_context :list_page
     @topics = Topic.recent.paginate(:page => params[:page])
   end
 
   def new
+    page_context :list_page
     @topic_object = Topic.new
     @themes = detect_themes(nil)
   end
 
   def edit
+    page_context :list_page
     @topic_object = Topic.find(params[:id].to_i)
     @themes = detect_themes(@topic_object)
   end
 
   def update
+    page_context :list_page
     @topic_object = Topic.find(params[:id].to_i)
     @site_labels = params[:site_labels]
     @site_labels = Topic::sanitize_site_labels(@site_labels)
@@ -78,6 +82,7 @@ class TopicsController < ApplicationController
   end
 
   def create
+    page_context :list_page
     @topic_object = Topic.new(params[:topic])
     @site_labels = params[:site_labels]
     @topic_object.site_labels = @site_labels
@@ -111,6 +116,7 @@ class TopicsController < ApplicationController
   end
 
   def edit_modules
+    page_context :list_page
     @topic_object = Topic.find(params[:id].to_i)
     @module_names = DEFAULT_MODULES.collect{|m| m['name']}
     @all_modules = DEFAULT_MODULES.clone
@@ -121,6 +127,7 @@ class TopicsController < ApplicationController
   end
 
   def update_modules
+    page_context :list_page
     @topic_object = Topic.find(params[:id].to_i)
     (params[:modules] || []).sort!{|a, b| a['order'] <=> b['order']}
     if @topic_object.update_attribute(:modules, params[:modules])

@@ -70,7 +70,7 @@
 
   <% elsif options %>
     <%= render_options_field :name => field_name, :label => field_label,
-                             :type => field_type, :required => required,
+                             :type => field_type, :required => required, :group_prefix => 'Add as ',
                              :value => default_value, :placeholder => 'Search or add tags...' %>
     <%= f.error_message_on field_name %>
     <br clear="all"/>
@@ -89,15 +89,17 @@
 <% end %>
 
 <% if location_included && params[:no_script].nil? %>
-  <script type="text/javascript">
-    $.executeLater(function() {
-      App.MapWidget.createMap($('#google_map_canvas'), function(pPlacemark) {
-        $('#restaurant_address').val(pPlacemark.address());
-        $('#restaurant_lat').val(pPlacemark.lat());
-        $('#restaurant_lng').val(pPlacemark.lng());
-      });
-    });
-  </script>
+  <% content_for :after_map_init do %>
+    <script type="text/javascript">
+      $.executeLater(function() {
+        App.MapWidget.createMap($('#google_map_canvas'), function(pPlacemark) {
+          $('#restaurant_address').val(pPlacemark.address());
+          $('#restaurant_lat').val(pPlacemark.lat());
+          $('#restaurant_lng').val(pPlacemark.lng());
+        });
+      }, 1000);
+    </script>
+  <% end %>
 <% end %>
 
 <script type="text/javascript">

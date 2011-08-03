@@ -6,6 +6,8 @@ class SessionsController < ApplicationController
   
   # render new.rhtml
   def new
+    page_context [:list_page, :login_page, :form_page]
+
     session[:return_to] = request.env['HTTP_REFERER'] || root_url
     render_view('sessions/new')
   end

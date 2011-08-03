@@ -7,7 +7,9 @@
                          :locals => {:restaurant => restaurant})}
    end
 %>
-
-<% jsonable_response.each do |item| %>
-  $('#restaurant_' + <%= item[:id] %> + '_tools').html("<%= escape_javascript(item[:html]) %>").appear();
-<% end %>
+(function() {
+  <% jsonable_response.each do |item| %>
+    var el = $('<%= "#restaurant_#{item[:id]}_tools" %>');
+    el.html("<%= escape_javascript(item[:html]) %>").appear();
+  <% end %>
+})();

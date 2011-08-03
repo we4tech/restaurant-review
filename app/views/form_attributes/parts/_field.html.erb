@@ -1,5 +1,5 @@
 <%
-   field = field || false
+   field = defined?(field) ? field : false
 %>
 <div class='field' id="<%= field_id = "field_#{rand}".gsub('.', '') %>">
   <div class='label grid_10'>

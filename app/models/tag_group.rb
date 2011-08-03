@@ -17,8 +17,12 @@ class TagGroup < ActiveRecord::Base
   cattr_accessor :per_page
 
   class << self
-    def of(topic, name)
-      TagGroup.find_by_topic_id_and_name(topic.id, name)
+    def of(topic, names)
+      if names && names.is_a?(Array)
+        TagGroup.find_all_by_topic_id_and_name(topic.id, names)
+      else
+        TagGroup.find_by_topic_id_and_name(topic.id, names)
+      end      
     end
 
     def update_caches!

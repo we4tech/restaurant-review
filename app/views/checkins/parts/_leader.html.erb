@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="userSmallBox leader">
+    <div class="status">
+      Position #<%= index + 1 %>
+    </div>
+    <div class="avatar">
+      <%= link_to(image_tag(leader.last.display_picture),
+                  user_long_url(leader.last), :title => leader.last.login) %>
+
+      <div class="name">
+        <%= leader.first %> <%= label %>
+      </div>
+    </div>
+  </div>
+
+  <% if logged_in? && current_user.admin? %>
+    <div class="userAdminBox" style="display:none">
+      <% form_for LeaderBoardExcludeList.new do |f| %>
+        <%= f.hidden_field :object_type, :value => LeaderBoardExcludeList::TYPE_USER %>
+        <%= f.hidden_field :list_name, :value => list_name %>
+        <%= f.hidden_field :ref_id, :value => leader.last.id %>
+        <%= f.hidden_field :topic_id, :value => @topic.id %>
+        <%= f.select :reason, LeaderBoardExcludeList::REASONS %>
+        <%= f.submit 'Save' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

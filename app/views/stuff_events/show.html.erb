@@ -1,16 +1,12 @@
 <div class="grid_8" id="site_center_list">
-  <h4>
-    <% @breadcrumbs.each do |link| %>
-      <%= link_to link.first, link.last %> &raquo;
-    <% end %>
-    <% if current_user %>
-      <%= tt('subheader.activities') %>
-    <% else %>
-      <%= t('subheader.ongoing_activities') %>
-    <% end %>
-  </h4>
+  <h1 class='breadcrumbs'>
+    <%= render_breadcrumbs %>
+  </h1>
+  <div class='clear'></div>
+  <div class="break space_10"></div>
+  <div class='info'><%= page_entries_info @stuff_events %></div>
+  <div class="space_5"></div>
   <div class="break space_5"></div>
-
   <% if !@stuff_events.empty? %>
     <% @stuff_events.each do |stuff_event| %>
       <%= render :partial => 'stuff_events/parts/stuff_event',
@@ -24,8 +20,63 @@
   <% else %>
     <%= t('label.no_review', :name => @topic.name.humanize) %>
   <% end %>
-</div>                            
+  <div class='clear'></div>
+</div>
 
 <div class="grid_4" id="site_center_boxes">
-  <%= render :partial => 'layouts/fresh_parts/modules' %>
+  <% if not @cached %>
+  	<%= render :partial => 'layouts/fresh_parts/modules' %>
+  <% else %>
+    <div id='right_side_boxes' class='loadingIndicator'>
+    	<%= image_tag 'loader.gif' %><br/>
+    	Loading boxes …
+    </div>
+  <% end %>
 </div>
+
+<% if @cached %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)), :defer => 'defer' %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'page_side_modules'), :defer => 'defer' %>
+<% end %>
+
+<script type='text/javascript'>
+	(function() {
+		var timer = null;
+
+		function showOrHide($el, show) {
+			var $hiddenStuffs = $('#' + $el.attr('id') + '_hidden_stuffs');
+			if (show) {
+				$el.removeClass('rowHover').addClass('rowHover');
+				$hiddenStuffs.show();
+
+				if (timer) {
+					clearTimeout(timer);
+				}
+				timer = setTimeout(function() {
+					$el.removeClass('rowHover');
+					$hiddenStuffs.fadeOut();
+				}, 6000);
+			} else {
+				if (timer) {
+					clearTimeout(timer);
+				}
+
+				timer = setTimeout(function() {
+					$el.removeClass('rowHover');
+					$hiddenStuffs.fadeOut();
+				}, 1000);
+			}
+		}
+
+		$('#site_center_list .site_list_item').each(function() {
+			var $item = $(this);
+			$item.bind('mouseover', function(e) {
+				showOrHide($(this), true);
+			});
+
+			$item.bind('mouseout', function(e) {
+				showOrHide($(this), false);
+			});
+		});
+	})();
+</script>

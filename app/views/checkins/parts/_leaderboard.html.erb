@@ -1,0 +1,61 @@
+<% if logged_in? %>
+  <%= render_user_status %>
+  <div class='clear space_10'></div>
+<% end %>
+
+<% hide_leaders_list = :hide == options[:leaders_list] %>
+<% if hide_leaders_list %>
+  <h4 class="subHeaderWithIcon clickable topCornerHeader" onclick="$('#box_leaders_list').toggle(500, 'easeInOutElastic');">Show
+    leaders...</h4>
+  <div class='space_10'></div>
+<% end %>
+
+<div class="blockView" id="box_leaders_list" style="display: <%= hide_leaders_list ? 'none' : 'block' %>">
+  <div class='block'>
+    <div class="header">
+      Eat outer
+    </div>
+    <div class="column">
+      <% leaders[:eat_outers].each_with_index do |eat_outer, index| %>
+        <%= render :partial => 'checkins/parts/leader',
+                   :locals => {:label => 'Checkins',
+                               :list_name => LeaderBoardExcludeList::LIST_EAT_OUTERS,
+                               :leader => eat_outer,
+                               :index => index} %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="header">
+      Reviewer
+    </div>
+    <div class="column">
+      <% leaders[:reviewers].each_with_index do |reviewer, index| %>
+        <%= render :partial => 'checkins/parts/leader',
+                   :locals => {:label => 'Reviews',
+                               :list_name => LeaderBoardExcludeList::LIST_REVIEWERS,
+                               :leader => reviewer, :index => index} %>
+      <% end %>
+
+    </div>
+  </div>
+  <div class="block">
+    <div class="header">
+      Explorer
+    </div>
+    <div class="column">
+      <% leaders[:explorers].each_with_index do |explorer, index| %>
+        <%= render :partial => 'checkins/parts/leader',
+                   :locals => {:label => 'Explores',
+                               :list_name => LeaderBoardExcludeList::LIST_EXPLORERS,
+                               :leader => explorer, :index => index} %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if logged_in? && current_user.admin? %>
+    <a href="javascript:void(0)" onclick="$('#box_leaders_list .userAdminBox').toggle()">Show/Hide admin tools</a>
+  <% end %>
+</div>
+

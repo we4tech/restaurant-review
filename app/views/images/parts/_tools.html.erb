@@ -1,0 +1,37 @@
+<%
+   links = []
+   grouped = defined?(grouped) ? grouped : false
+
+   if logged_in? && image.author?(current_user)
+     links << link_to('Edit', edit_image_url(image))
+
+     if current_user.admin?
+       links << link_to('Delete', image_path(image), :confirm => 'Do you wanna delete this picture?')
+
+       if last_selected_tag
+         links << link_to('Set for section', set_for_section_image_path(image, :tag_id => last_selected_tag.id))
+       end
+
+       if image.sectioned?
+         links << link_to('Unsection', unsection_image_path(image))
+       end
+     end
+   end
+%>
+<% if grouped %>
+  <% if !links.empty? %>
+    <div class='tags'>
+      <div class='tagGroup'>
+        <strong>Admin:</strong>
+
+        <div>
+          <%= links.join(', ') %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  <% end %>
+<% else %>
+  <%= links.join(', ') %>
+<% end %>

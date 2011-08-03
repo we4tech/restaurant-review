@@ -1,9 +1,22 @@
 <% if !restaurants.empty? %>
-  <div class="site_simple_box">
-    <h4><%= tt("module.#{config['label']}") %></h4>
+  <% element_id = url_escape(config[:label]) %>
 
-    <div class="space_5"></div>
+  <% if config[:label] %>
+    <h4 class="subHeaderWithIcon clickable topCornerHeader" onclick="$('#<%= element_id %>').toggle(500, 'easeInOutBounce')">
+      <%= config[:label] %>
+      <% if config[:count] %>
+        <div class="archiveButton"><%= config[:count] %></div>
+      <% end %>
 
+      <% if config[:link_bar] %>
+        <%= link_to tt('nav.more_places'), more_link, :class => 'archiveButton' %>
+      <% end %>
+    </h4>
+  <% end %>
+
+  <div class="site_simple_box" id="<%= element_id %>"
+       style="display: <%= config[:label] && !config[:keep_open] ? 'none' : 'block' %>; <%= config[:z_index] ? "z-index: #{config[:z_index]}; position: relative;" : '' %>">
+    <div class="space_10"></div>
     <% restaurants.each_with_index do |restaurant, index| %>
       <%
          images = restaurant.related_images.by_group(nil).collect(&:image)
@@ -14,8 +27,10 @@
       <div class="item">
         <% if !images.empty? %>
           <%= link_to(image_tag(
-              images.rand.public_filename(:small), :alt => ''),
+                          images.rand.public_filename(:small), :alt => 'N/A'),
                       images.first.public_filename(:large), :class => 'image_small') %>
+        <% else %>
+          <%= link_to(image_tag('/images/fresh/no-dp.png'), '#', :class => 'image_small') %>
         <% end %>
         <div class="push_1">
           <h6>
@@ -23,7 +38,13 @@
                         restaurant_long_url(restaurant) %>
           </h6>
 
-          <div class="site_list_item_rating"><%= render_restaurant_review_stats(restaurant) %></div>
+          <div class="site_list_item_rating">
+            <% if config[:show_contribution] %>
+              <%= render_restaurant_review_stats_by_user(@user, restaurant, config[:show_contribution]) %>
+            <% else %>
+              <%= render_restaurant_review_stats(restaurant) %>
+            <% end %>
+          </div>
         </div>
       </div>
       <div class="space_5 clear"></div>
@@ -32,9 +53,12 @@
         <div class="space_5 clear"></div>
       <% end %>
     <% end %>
-    <div class="break"></div>
-    <div class="small">
-      <%= link_to tt('nav.more_places'), more_link %>
-    </div>
+
+    <% if config[:link_bar].nil? && more_link %>
+      <div class="break"></div>
+      <div class="small">
+        <%= link_to tt('nav.more_places'), more_link %>
+      </div>
+    <% end %>
   </div>
 <% end %>

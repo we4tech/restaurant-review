@@ -1,46 +1,47 @@
-<div id="site_center">
-  <div class="grid_16">
-    <h1><%= restaurant_link(@restaurant) %> &raquo; Manage email notification recipients</h1>
-    <div class='space_10'></div>
-    <div class='break'></div>
-    <div class='space_10'></div>
+<div class="grid_10">
+  <h1 class="breadcrumbs"><%= restaurant_link(@restaurant) %> &raquo; <div class="crumb">Manage email notification recipients</div> </h1>
 
-    <% form_for @restaurant do |f| %>
-      <input type='hidden' name='fb_share' value='false'/>
-      <input type='hidden' name='filters[check_empty_array_element]' value='extra_notification_recipients'/>
-      <input type='hidden' name='return_to' value='<%= add_recipient_restaurant_path(@restaurant) %>'/>
+  <div class='space_10'></div>
+  <div class='break'></div>
+  <div class='space_10'></div>
 
-      <% (@restaurant.extra_notification_recipients || []).each do |email| %>
-        <div class='newRecipient'>
-          <label>Email</label>
-          <input type='text' name='restaurant[extra_notification_recipients][]'
-                 value="<%= email %>"/>
-          <input type='button' value='X' class='delButton'/>
-          <div class='space_10'></div>
-        </div>
-      <% end %>
+  <% form_for @restaurant do |f| %>
+    <input type='hidden' name='fb_share' value='false'/>
+    <input type='hidden' name='filters[check_empty_array_element]' value='extra_notification_recipients'/>
+    <input type='hidden' name='return_to' value='<%= add_recipient_restaurant_path(@restaurant) %>'/>
 
+    <% (@restaurant.extra_notification_recipients || []).each do |email| %>
       <div class='newRecipient'>
         <label>Email</label>
-        <input type='text' name='restaurant[extra_notification_recipients][]'/>
-        <input type='button' value='X' class='delButton' style='display:none'/>
+        <input type='text' name='restaurant[extra_notification_recipients][]'
+               value="<%= email %>"/>
+        <input type='button' value='X' class='delButton'/>
+
         <div class='space_10'></div>
       </div>
-
-      <div class='space_10' id='buttonBreak'></div>
-      <div class='break'></div>
-      <div class='space_10'></div>
-      <input type='button' value='Add another email' class='addButton'/>
-      <input type='submit' value='Save' id='submitButton'/>
     <% end %>
-  </div>
+
+    <div class='newRecipient'>
+      <label>Email</label>
+      <input type='text' name='restaurant[extra_notification_recipients][]'/>
+      <input type='button' value='X' class='delButton' style='display:none'/>
+
+      <div class='space_10'></div>
+    </div>
+
+    <div class='space_10' id='buttonBreak'></div>
+    <div class='break'></div>
+    <div class='space_10'></div>
+    <input type='button' value='Add another email' class='addButton'/>
+    <input type='submit' value='Save' id='submitButton'/>
+  <% end %>
 </div>
 
 <script type="text/javascript">
   $('.addButton').click(function() {
     var newId = "rand" + (Math.random() + "").replace(/\./, '');
     $('#buttonBreak').before('<div style="display:none" class=\'newRecipient\' id=\'' + newId + '\'>' +
-                              $('.newRecipient:first').html() + '</div>');
+        $('.newRecipient:first').html() + '</div>');
     $('#' + newId).appear();
     $('.delButton').show().click(function() {
       $(this).parent().fadeOut(function() {

@@ -1,0 +1,22 @@
+<%
+   jsonable_response = []
+   jsonable_response << {
+     :elementId => "image_#{@image.id}_tools",
+     :id => @image.id,
+     :html => render(:partial => "images/parts/tools",
+                     :locals => {:grouped => true, :image => @image})}
+
+   @image.photo_comments.each do |comment|
+     jsonable_response << {
+       :elementId => "photo_comment_#{comment.id}",
+       :id => comment.id,
+       :html => link_to('Delete picture', photo_comment_url(:id => comment.id),
+                        :class => 'date',
+                        :method => :delete, :confirm => t('confirm.delete_comment'))}
+   end
+%>
+
+<% jsonable_response.each do |item| %>
+  $('#<%= item[:elementId] %>').html("<%= escape_javascript(item[:html]) %>").appear();
+<% end %>
+

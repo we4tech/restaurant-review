@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+
+  map.resources :exclude_lists
+  map.resources :leader_board_exclude_lists, :controller => :exclude_lists
+
   map.resources :checkins
 
   map.resources :site_policies
@@ -38,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.facebook_resources :tag_mappings
 
-  map.resources :tags, :collection => {:sync => :post, :import => :post}
+  map.resources :tags, :collection => {:sync => :post, :import => :post}, :member => {:flag_as_section => :get}
 
   map.resources :translations
 
@@ -61,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
                               :food_items, :reviews,
                               :products, :checkins]
 
-  map.resources :images, :member => {:show_or_hide => :get}
+  map.resources :images, :member => {:show_or_hide => :get, :set_for_section => :get, :unsection => :get}
 
   map.resources :reviews
 
@@ -96,6 +100,8 @@ ActionController::Routing::Routes.draw do |map|
                             :requirements => {:topic_name => /[\w\d\.\-]+/}
   map.most_loved_places '/at_most_loved_places', :controller => 'home', :action => 'most_loved_places'
   map.recently_reviewed_places '/at_recently_reviewed_places', :controller => 'home', :action => 'recently_reviewed_places'
+  map.most_checkedin_places '/at_most_checkedin_places', :controller => 'home', :action => 'most_checkedin_places'
+  map.recent_places '/recent/places', :controller => 'home', :action => 'recent_places'
   map.who_wanna_go_place '/at/:name/and_see_who_havent_been_there_before/:id', :controller => 'home', :action => 'who_havent_been_there_before'
   map.nearby_places '/nearby', :controller => 'home', :action => 'nearby'
 
@@ -150,7 +156,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.event_long_route '/events/:name/:id', :controller => 'topic_events',
                        :action => 'show',
-                       :requirements => {:name => /[\w\d\.\-]+/}
+                       :requirements => {:name => /[\w\d\.\-%]+/}
 
   map.create_checkin '/:topic_name/checkin/:id', :controller => 'checkins', :action => 'create'
   

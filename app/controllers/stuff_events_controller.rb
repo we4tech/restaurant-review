@@ -5,26 +5,14 @@ class StuffEventsController < ApplicationController
   after_filter  :log_last_visiting_time
 
   def show
-    @site_title = 'Activities from others'
-    @subscribed_restaurants = []
-    @user_log = nil
+    data = recent_activities
+    page_context :list_page
+    @cache = true
+    @title = 'Updates'
 
-    if current_user
-      @subscribed_restaurants = current_user.subscribed_restaurants.by_topic(@topic.id).
-          find(:all, :group => 'restaurants.id')
-      @user_log = current_user.user_logs.by_topic(@topic.id).first
-      conditions = [
-          'topic_id = ?   AND restaurant_id IN (?) AND user_id != ?',
-          @topic.id, @subscribed_restaurants.collect(&:id), current_user.id]
-    else
-      conditions = ['topic_id = ?', @topic.id]
-    end
 
-    @stuff_events = StuffEvent.paginate(
-        :include => [:restaurant, :review, :review_comment],
-        :conditions => conditions,
-        :order => 'created_at DESC',
-        :page => params[:page])
+    @stuff_events = data[:stuff_events]
+    @user_log = data[:user_log]
 
     respond_to do |format|
       format.html {
@@ -33,13 +21,15 @@ class StuffEventsController < ApplicationController
             :render_topic_box,
             :render_tagcloud,
             :render_most_lovable_places,
-            :render_recently_added_places]
-        @breadcrumbs = [['All', root_url]]
+            :render_recently_reviewed_places]
+        prepare_breadcrumbs
+        @site_title = @tag ? "#{@tag.name_with_group} updates" : 'Updates'
       }
 
       format.ajax { render :layout => false}
       format.mobile {
-        @breadcrumbs = [['All', root_url]] 
+        prepare_breadcrumbs
+        @site_title = @tag ? "#{@tag.name_with_group} updates" : 'Updates'
       }
     end
 

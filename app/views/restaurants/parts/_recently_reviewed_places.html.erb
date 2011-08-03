@@ -1,17 +1,30 @@
 <% if !reviews.empty? %>
-  <div class="site_simple_box">
-    <h4><%= tt("module.#{config['label']}") %></h4>
-    <div class="space_5"></div>
+  <% element_id = url_escape(config[:label]) %>
+
+  <% if config[:label].present? %>
+    <h4 class="subHeaderWithIcon clickable topCornerHeader" onclick="$('#<%= element_id %>').toggle(500, 'easeInOutElastic')">
+      <%= config[:label] %>
+      <% if config[:count] %>
+        <div class="archiveButton"><%= config[:count] %></div>
+      <% end %>
+
+      <% if config[:link_bar] %>
+        <%= link_to (config[:link_label] || 'more reviews'), more_link, :class => 'archiveButton' %>
+      <% end %>
+    </h4>
+  <% end %>
+
+  <div class="site_simple_box" id="<%= element_id %>" style="display: none">
+
+    <div class="space_10"></div>
 
     <% reviews.each_with_index do |review, index| %>
-      <div>
-        <%= link_to image_tag(review.user.display_picture,
-                              :width => '40px', :alt => 'n/a'),
-                    user_long_url(review.user),
-                    :class => 'image_small' %>
-      </div>
+      <%= link_to image_tag(review.user.display_picture,
+                            :width => '40px', :alt => 'n/a'),
+                  user_long_url(review.user),
+                  :class => 'image_small' %>
 
-      <div class="review grid_3">
+      <div class="review">
         <% if !review.comment.blank? %>
           <span class="content">"<%= truncate(review.comment, :length => 100) %>" - </span>
         <% end %>

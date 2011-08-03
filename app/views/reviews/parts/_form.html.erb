@@ -2,7 +2,7 @@
 
 <div class="review_form">
   <% form_for Review.new, :html => {:method => :post} do |f| %>
-    <h4><%= t('subheader.my_review') %></h4>
+    <h4>Write your review</h4>
     <%= render :partial => 'reviews/parts/fields', :locals => {:f => f} %>
 
     <% if defined?(restaurant) %>

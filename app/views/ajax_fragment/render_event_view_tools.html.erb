@@ -1,0 +1,34 @@
+<%
+  jsonable_response = []
+  jsonable_response << {
+      :elementId => "event_#{@event.id}_tools",
+      :id => @event.id,
+      :html => render(:partial => "topic_events/parts/tools",
+                      :locals => {:grouped => true, :topic_event => @event})}
+
+   @event.reviews.each do |review|
+     jsonable_response << {
+         :elementId => "review_#{review.id}_tools",
+         :id => review.id,
+         :html => render(:partial => "reviews/parts/tools",
+                         :locals => {:review => review})}
+   end
+%>
+
+$('#restaurantReviewEditor').html("<%= escape_javascript(render(:partial => 'reviews/parts/review_editor')) %>").appear();
+
+<% jsonable_response.each do |item| %>
+  $('#<%= item[:elementId] %>').html("<%= escape_javascript(item[:html])%>").appear();
+<% end %>
+
+// Enable add comment link
+$('.add_comment_link').each(function() {
+  var $self = $(this);
+  $self.bind('click', function() {
+    $('#review_comment_form_' + $self.attr('rel')).show();
+  });
+});
+
+$('.review_comment_form').each(function() {
+  $(this).hide();
+});

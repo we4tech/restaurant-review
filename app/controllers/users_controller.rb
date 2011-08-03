@@ -11,15 +11,16 @@ class UsersController < ApplicationController
   # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
   before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge]
 
-
   # render new.rhtml
   def new
+    page_context [:list_page, :login_page]
     store_location
     @user = User.new
     render_view('users/new')
   end
  
   def create
+    page_context [:list_page, :login_page]
     logout_keeping_session!
     @js_callback = params[:js_callback]
     @user = User.new(params[:user])
@@ -92,6 +93,8 @@ class UsersController < ApplicationController
   end
   
   def edit
+    page_context [:list_page]
+    @site_title = 'User settings'
     find_user
     owner?
   end
@@ -141,6 +144,7 @@ class UsersController < ApplicationController
   end
 
   def reset_password
+    page_context [:list_page, :login_page]
   end
 
   def process_reset_password
@@ -205,7 +209,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id].to_i)
+    page_context [:list_page, :profile_page]
     load_user_profile(@user)
+    render :action => 'show_v2'
   end
 
 protected

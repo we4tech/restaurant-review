@@ -98,8 +98,10 @@ module ApplicationHelper
       if !domain_name.blank? && !domain_name.match(/ajax|asset|www/) && (request.path || '').length < 2
         @user = User.by_domain_name(domain_name)
         if @user
+          determine_rotatable_background_image
+          page_context [:list_page, :profile_page]
           load_user_profile(@user)
-          render :template => 'users/show'
+          render :template => 'users/show_v2'
         else
           render :text => 'User doesn\'t exist'
         end
@@ -120,7 +122,7 @@ module ApplicationHelper
         :render_tagcloud,
         :render_search,
         :render_most_lovable_places,
-        :render_recently_added_places,
+        :render_recently_reviewed_places,
         :render_topic_box]
   end
 
@@ -180,4 +182,95 @@ module ApplicationHelper
   def embedded_view?
     'true' == params[:embed_view]
   end
+
+  # Avail current request view rendering context
+  def page_context(context = nil)
+    @context ||= []
+
+    if context
+      if context.is_a?(Array)
+        context.each{|c| @context << c}
+      else
+        @context << context
+      end
+    end
+
+    @context
+  end
+
+  def page_context_as_classes
+    if page_context.is_a?(String)
+      page_context (page_context || '').split(',')
+    end
+
+    page_context.collect{|pc| "context_#{pc}"}.join(' ')
+  end
+
+  # Add module renderer helper for the specified position
+  def page_module(position, module_renderer_helper, options = {})
+    @page_modules ||= {}
+    @page_modules[position] ||= []
+    @page_modules[position] << [module_renderer_helper, options]
+  end
+
+  # Render all modules which are associated with the specific position
+  def render_page_modules(position)
+    return if @page_modules.nil?
+
+    modules = @page_modules[position]
+    html = ''
+
+    if modules && !modules.empty?
+      modules.each do |module_pref|
+        html << __send__(module_pref.first.to_sym, module_pref.last)
+      end
+    end
+
+    html
+  end
+
+  def prepare_breadcrumbs
+    @breadcrumbs = [['All', root_url]]
+
+    if params[:filters]
+      add_breadcrumb_for(:tag)
+      add_breadcrumb_for(:user)
+    end
+
+    @breadcrumbs
+  end
+
+  def add_breadcrumb_for(key)
+    filter_key = "#{key.to_s}_id"
+    if !(_id = params[:filters][filter_key]).blank?
+      _ids = _id.split('|').compact
+
+      if !_ids.empty?
+        instance_variable_set :"@#{key}", key.to_s.classify.constantize.find(_ids.first)
+
+        if key == :tag
+          @breadcrumbs << [instance_variable_get(:"@#{key}").name_with_group, section_url(instance_variable_get(:"@#{key}"), true)]
+        else
+          @breadcrumbs << [instance_variable_get(:"@#{key}").login, user_long_url(instance_variable_get(:"@#{key}"))]
+        end
+      end
+    end
+  end
+
+  def render_breadcrumbs
+    if @breadcrumbs && !@breadcrumbs.empty?
+      content_tag('h1', :class => 'breadcrumbs') do
+        html = ''
+        @breadcrumbs.each_with_index do |link, index|
+          html << link_to(link.first, link.last,
+                          :class => 'crumb')
+          html << '&raquo; '
+        end
+        html << content_tag('div', @title, :class => 'crumb')
+
+        html
+      end
+    end
+  end
+
 end

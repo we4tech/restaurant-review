@@ -1,113 +1,20 @@
 <div class='bestForBox'>
-  <h4><%= tt('header.best_for')%></h4>
+  <h4><%= tt('header.best_for') %></h4>
+
   <div class='break'></div>
   <div class='space_10'></div>
-  <div class='bestForNav' id='bestForNav'>
-    <ul>
-      <% @best_for_tags.each_with_index do |tag, index| %>
-        <li value="<%= index %>" id='bestForNav<%= index %>'>
-          <%= tag.name %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <% @best_for_tags.each_with_index do |tag, index| %>
+    <div class="grid_3">
+      <%= render :partial => 'restaurants/parts/lovable_places', :locals => {
+          :more_link   => tag_details_path('-', url_escape(tag.name)),
+          :config      => {:label => "#{tag.name}"},
+          :restaurants => tag.most_loved_restaurants(5)}
+      %>
+    </div>
+  <% end %>
 
-  <div class='bestForContainer' id='bestForContainer'>
-    Loading...
-  </div>
-
-  <div id='bestForCollection'>
-    <% @display_tools = false %>
-    <% @best_for_tags.each_with_index do |tag, index| %>
-      <div id='best_for_<%= index %>' style='display:none'>
-        <% tag.most_loved_restaurants.each do |restaurant| %>
-          <% rand_image = restaurant.rand_image %>
-          <div class='bestForItem'>
-            <% if rand_image %>
-              <div class='grid_1'>
-                <%= image_tag(rand_image.public_filename(:small), :alt => '')%>
-              </div>
-            <% end %>
-            <div class='info'>
-              <strong><%= link_to truncate(restaurant.name, :length => 25),
-                                  restaurant_long_url(restaurant),
-                                  :title => restaurant.name %></strong><br/>
-              <div class='stat'>
-                <%= render_restaurant_review_stats(restaurant) %><br/>
-              </div>
-              <small><%= h restaurant.address %></small>
-            </div>
-            <div class='clear'></div>
-          </div>
-      <% end %>
-
-        <div class=''>
-          <%= link_to t('nav.more_places'),
-                      tag_details_url(:label => 'cuisines-tags',
-                                      :tag => url_escape(tag.name))%>
-        </div>
-      </div>
-    <% end %>
-  </div>
 
   <div class='clear'></div>
 </div>
 <div class='clear'></div>
 <div class='space_10'></div>
-
-<script type="text/javascript">
-  var BestForBox = {
-    mContainer : null,
-    mTabsCount : <%= @best_for_tags.length %>,
-    mInterval : null,
-    mActiveTabIndex : 0,
-
-    /**
-     * Set visible tab container
-     * @param index tab index
-     */
-    set: function(index) {
-      var $container = BestForBox.mContainer;
-      if ($container == null) {
-        $container = $('#bestForContainer');
-      }
-
-      $container.html($('#best_for_' + index).html());
-      $('#bestForNav .selected').removeClass('selected');
-      $('#bestForNav' + index).removeClass('selected').addClass('selected').hide().appear();
-      $container.hide().appear();
-      BestForBox.mActiveTabIndex = index;
-    },
-
-    /**
-     * Automatically rotate with in each "Best for tabs"
-     * @param interval duration during the tab rotation
-     */
-    autoRotateTabs: function(interval) {
-      BestForBox.mInterval = setInterval(function() {
-        var nextTabIndex = (BestForBox.mActiveTabIndex + 1);
-        if (nextTabIndex == BestForBox.mTabsCount) {
-          nextTabIndex = 0;
-        }
-
-        BestForBox.set(nextTabIndex);
-      }, interval);
-    },
-
-    turnOffAutoRotate: function() {
-      clearInterval(BestForBox.mInterval);
-    }
-  };
-
-
-  $('#bestForNav ul li').click(function() {
-    BestForBox.turnOffAutoRotate();
-    
-    var $self = $(this);
-    BestForBox.set($(this).attr('value'));
-  });
-
-  BestForBox.set(0);
-  BestForBox.autoRotateTabs(10000);
-
-</script>

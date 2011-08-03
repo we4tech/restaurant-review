@@ -1,164 +1,140 @@
-<div id="site_center">
-  <div class="grid_8 restaurant_details">
-    <div class="breadcrumbs">
-      <%= link_to t("topic.#{@topic.name.humanize.pluralize}"), root_url %> &raquo;
-      <span class="review_tools" id="restaurant_<%= @restaurant.id %>_tools">
-        <%= render :partial => 'restaurants/parts/tools', :locals => {:restaurant => @restaurant} %>
-      </span>
-    </div>
-    <div class="break space_5"></div>
-    <%= render :partial => 'pages/parts/links' %>
-    <div class='space_10'></div>
+<div class="restaurantContainer">
+  <div class='grid_8'>
 
-    <div class="restaurant_details">
-      <h1><%= @restaurant.name %></h1>
+    <!-- Details part 1 - (The information) -->
+    <div class="details rightCornerOff">
+      <div class="heading">
+        <h1><%= @restaurant.name %></h1>
 
-      <div class='space_10'></div>
-      <fb:like href="<%= request.url %>"></fb:like>
-
-      <%= render :partial => 'images/parts/image_gallery' %>
-      <div class='contentDetails'>
-        <%= sanitize @restaurant.description %>
-      </div>
-
-      <% if @restaurant.description.length > 400 %>
-        <div class='clear space_10'></div>
-        <div class='redBreak'></div>
-        <div class='contentDetailsTools'>
-          <a href='javascript:void(0)' class='readMoreLess'
-             onclick='$(".contentDetails").css("max-height", "inherit").css("overflow-y", "visible"); $(".contentDetailsTools .readMoreLess").toggle()'><%= t('nav.more') %></a>
-          <a href='javascript:void(0)' class='readMoreLess readLess'
-             style='display:none' onclick='$(".contentDetails").css("max-height", "200px").css("overflow-y", "hidden"); $(".contentDetailsTools .readMoreLess").toggle()'><%= t('nav.less') %></a>
-        </div>
-        <div class='clear space_10'></div>
-      <% end %>
-
-      <div class='properties'>
-        <% @form_fields.each do |field| %>
-          <%
-             field_label = field['label']
-             field_name = field['field']
-             field_type = field['type']
-             display = field['display']
-             field_value = field_name ? @restaurant.send(field_name) : nil
-          %>
-          <% if field_value && display %>
-            <div class="grid_2">
-              <strong><%= tt("fields.#{field_label}", :group => :view) %></strong>
-            </div>
-            <div class="grid_4">
-              <% if field_type == 'checkbox' %>
-                <%= field_value == true ? 'yes' : 'no' %>
-              <% elsif field_type == 'options' %>
-                <%= (field_value || []).collect{|t|
-                  link_to(t, tag_details_url(
-                      :label => url_escape((@topic.module_conf(field_name) || {})['label'] || 'location'), :tag => url_escape(t)))
-                }.join(', ')
-                %>
-              <% else %>
-                <%= safe_textilize(field_value) %>
-              <% end %>
-            </div>
+        <% if not @restaurant.tags.empty? %>
+          <div class="tags">
+            <%= render_tags_by_group @restaurant.tags %>
             <div class="clear"></div>
-          <% end %>
+          </div>
         <% end %>
+
+        <div id='restaurant_<%= @restaurant.id %>_tools'></div>
       </div>
       <div class="clear"></div>
       <div class="space_10"></div>
 
-      <div class="clear"></div>
-      <div class="bookmark_tools">
-        <%= distance_of_time_in_words(@restaurant.created_at, Time.now) %>
-        <%= t('label.ago') %> <%= t('label.added_by') %>
-        <%= link_to @restaurant.user.login, user_long_url(@restaurant.user) %>.
-
-        <a class="addthis_button"
-           href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech">
-          <img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif"
-               width="125" height="16" alt="Bookmark and Share"
-               style="border:0"/>
-        </a>
-        <script type="text/javascript"
-                src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech">
-        </script>
-      </div>
-      <div class="break"></div>
-      <div class="space_5"></div>
-      <%= render_related_restaurants(5) %>
-      <div class='clear'></div>
-    </div>
-    <div class="clear"></div>
-
-    <div id='imageUploader'>
-      <% if !@cached %>
-      	<%= render(:partial => 'contributed_images/parts/add') %>
-      <% end %>
-    </div>
-
-    <%= render :partial => 'contributed_images/parts/image_gallery' %>
-    <div class="clear space_10"></div>
-
-    <div class="break"></div>
-    <div class='space_10'></div>
-    <div id='restaurantReviewEditor'>
-      <%= render :partial => 'reviews/parts/review_editor' %>
-    </div>
-    <div class='break'></div>
-    <div class='clear'></div>
-    <div class='space_10'></div>
-    <%= render :partial => 'reviews/parts/restaurant_review',
-               :locals => {:restaurant => @restaurant} %>
-
-    <div class="space_10"></div>
-  </div>
-
-  <div class="grid_4" id="site_center_boxes">
-
-    <% if @topic.name == 'restaurant' %>
-      <div class="site_simple_box restaurant_address" align="center">
-        <a href='mailto:biz@welltreat.us?subject=[BIZ knock knock]'
-           title="<%= t('title.own_this') %>">
-          <%= image_tag('fresh/button_do_u_own_this.png') %>
-        </a>
-      </div>
-      <div class="clear"></div>
-      <div class="space_10"></div>
-    <% end %>
-
-    <% if !(@restaurant.address || '').blank? %>
-      <div class="site_simple_box restaurant_address">
-        <h4>
-          <%= t('fields.address') %>
-        </h4>
-        <% if @restaurant.lat.to_i > 0 && @restaurant.lng.to_i > 0 %>
-          <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
-              "#{@restaurant.lat},#{@restaurant.lng}&zoom=14&" +
-              "sensor=false&markers=color:green|label:R|" +
-              "#{@restaurant.lat},#{@restaurant.lng}&key=#{@topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key}&size="
-             details_link = "http://maps.google.com/maps?f=q&" +
-                 "q=#{CGI.escape(@restaurant.address)}&hl=en&" +
-                 "geocode=&sll=#{@restaurant.lat},#{@restaurant.lng}"
-          %>
-
+      <div class='grid_5 restaurantContent'>
+        <% if @restaurant.image_attached? %>
+          <%= image_tag(@restaurant.rand_image.public_filename(:very_large), :class => 'frontImage') %>
+          <div class="clear"></div>
           <div class="space_5"></div>
-          <%= link_to image_tag(map_url + "300x300"), full_map_url(:rid => @restaurant.id),
-                      :class => 'xopenUpinLightBox',
-                      :title => link_to(t('fields.map'), details_link) %>
         <% end %>
-        <address>
-        	<%= @restaurant.address %>
-        	<% if @restaurant.located_in_map? %>
-        		<%= link_to '[Large map]', full_map_url(:rid => @restaurant.id) %>
-        	<% end %>
-        </address>
+
+        <%= render_properties(@restaurant) %>
+        <%= render_address_in_map(@restaurant) %>
+        <div class="clear"></div>
+        <div class="space_10"></div>
+
+        <div class='fullContentArea'>
+          <%= sanitize(@restaurant.description) %>
+        </div>
+        <div class="clear"></div>
+        <div class="space_10"></div>
+      </div>
+
+      <div class="grid_3 restaurantContentMiddle">
+        <%= render_restaurant_status(@restaurant) %>
+        <div class="clear"></div>
+        <div class="space_10"></div>
+
+        <h4 class="subHeaderWithIcon">User activity</h4>
+
+        <div class="site_simple_box">
+          <%= render_restaurant_status_in_graph(@restaurant) %>
+        </div>
+        <div class="clear"></div>
+        <div class="space_10"></div>
+
+        <h4 class="subHeaderWithIcon topBothCornerHeader clickable yellowish">
+          Explored by<br/>
+          <%= user_link(@restaurant.user) %>
+        </h4>
+
+        <h4 class="subHeaderWithIcon clickable yellowish">
+          <%= link_to 'Write your review', '#restaurantReviewEditor', :onclick => "$('#review_comment').focus();" %>
+        </h4>
+
+        <h4 class="subHeaderWithIcon clickable yellowish">
+          <%= link_to 'Pictures', '#imageSlider' %>
+        </h4>
+
+        <h4 class="subHeaderWithIcon clickable yellowish bottomBothCornerHeader">
+          <%= link_to 'Add picture', '#imageSlider', :onclick => "$('#imageUploader').appear();" %>
+        </h4>
+
+        <div class="clear"></div>
+        <div class="space_10"></div>
+
+        <%= render_related_restaurants(5, :label => "Similar #{@topic.name.pluralize}", :z_index => 1002) %>
+        <div class="clear"></div>
+        <div class="space_10"></div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="clear space_10"></div>
+    <!-- The information part ends here -->
+
+    <!-- Details part 2 (The image slider) -->
+    <div class="details restaurantSlide" id='imageSlider'>
+      <% @restaurant.all_images.each do |image| %>
+        <div class="image">
+          <%= link_to image_tag(image.small_public_filename,
+                                :alt => image.caption,
+                                :title => image.caption), image_path(image) %>
+        </div>
+      <% end %>
+      <button type="button" class="image addPictureButton" onclick="$('#imageUploader').appear();window.location = '#imageUploader';">
+        Add Picture
+      </button>
+
+      <div class="clear"></div>
+      <div id='imageUploader' style="display: none">
+        <% if !@cached %>
+          <%= render(:partial => 'contributed_images/parts/add') %>
+        <% else %>
+          <div class="loadingIndicator">
+            <%= image_tag 'loader.gif' %>
+            <br/>
+            Loading image uploader...
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="clear space_10"></div>
+    <!-- The image slider part ends here -->
+
+    <!-- Details part 3 (The review) -->
+    <div class='details restaurantReviews'>
+      <div id='restaurantReviewEditor'>
+        <%= render :partial => 'reviews/parts/review_editor' %>
+      </div>
+      <div class='break'></div>
+      <div class='clear space_10'></div>
+      <%= render :partial => 'reviews/parts/restaurant_review',
+                 :locals => {:restaurant => @restaurant} %>
+    </div>
+    <!-- The review part ends here -->
+  </div>
+
+  <div class="grid_4 restaurantRightSide" id="site_center_boxes">
+    <% if not @cached %>
+      <%= render :partial => 'layouts/fresh_parts/modules' %>
+    <% else %>
+      <div id='right_side_boxes' class='loadingIndicator'>
+        <%= image_tag 'loader.gif' %>
+        <br/>
+        Loading boxes …
       </div>
     <% end %>
     <div class="clear"></div>
-
-    <%= render_who_wanna_go_there(@restaurant) %>
-
-    <%= render :partial => 'layouts/fresh_parts/modules' %>
   </div>
+
 </div>
 
 <div class="hreview-aggregate">
@@ -188,31 +164,32 @@
          <span class="value-title" title="<%= @restaurant.lng %>"></span>
       </span>
    </span>
-   <div class='clear'></div>
+
+  <div class='clear'></div>
 </div>
 
 
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $(".openUpinLightBox").prettyPhoto();    
+    $(".openUpinLightBox").prettyPhoto();
   });
 
   $('.edit_review textarea, .new_review textarea').each(function() {
     $(this).bind('keypress', function() {
-	  var text = $(this).val();
-	  var lines_count = text.split('\n').length + 1;
-	  var $this = $(this);
-	
-	  if (lines_count > 4) {
-		$this.css('height', 'auto');	
-	  }
+      var text = $(this).val();
+      var lines_count = text.split('\n').length + 1;
+      var $this = $(this);
+
+      if (lines_count > 4) {
+        $this.css('height', 'auto');
+      }
     });
   });
   $('.review_comment_form').hide();
 </script>
 <% if @cached %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'module_render_recently_added_places', :restaurant_id => @restaurant.id) %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_view_tools', :restaurant_id => @restaurant.id) %>
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'page_side_modules'), :defer => 'defer' %>
 <% end %>

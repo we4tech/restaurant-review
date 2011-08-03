@@ -5,6 +5,8 @@ class TagsController < ApplicationController
   before_filter :log_new_feature_visiting_status
 
   def index
+    page_context :list_page
+
     if params[:tag_group_id]
       load_tag_group_tags
     else
@@ -77,6 +79,14 @@ class TagsController < ApplicationController
       flash[:notice] = 'No new tag found!'
     end
 
+    redirect_to tags_path
+  end
+
+  def flag_as_section
+    @tag = Tag.find(params[:id])
+    @tag.update_attribute :as_section, !@tag.as_section?
+
+    flash[:success] = 'Set as section'
     redirect_to tags_path
   end
 

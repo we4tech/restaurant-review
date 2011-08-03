@@ -1,20 +1,46 @@
 <div class="clear"></div>
 <div class="space_10"></div>
 <div class="contributed_image_form">
-  <h6><%= t('subheader.user_contributed_pictures') %></h6>
+  <h6>
+    Add pictures here
+    <% if defined?(container_id) %>
+      <a href="javascript:void(0)" class="archiveButton" onclick="$('#<%= container_id %>').fadeOut();">Close</a>
+    <% end %>
+  </h6>
   <% form_for MultiImage.new, :url => images_path, :html => {:multipart => true, :method => :post} do |f| %>
     <input type="hidden" name="restaurant_id" value="<%= @restaurant.id %>"/>
     <input type="hidden" name="return_to" value="<%= restaurant_url(@restaurant) %>">
 
     <div id='duplicable'>
-      <div style="margin-bottom: 10px;">
-        <%= f.file_field :uploaded_datum, :index => '' %>
-        <% caption_default_text = t('label.image_caption') %>
-        <%= f.text_field :captions,
-                         :index => '',
-                         :onclick => "$(this).val() == '#{caption_default_text}' ? $(this).val('') : ''",
-                         :onblur => "$(this).val().length == 0 ? $(this).val('#{caption_default_text}') : ''" %>
-      </div>
+      <table cellpadding="5px"
+             style="background: #e0e0e0; padding: 5px; border-collapse: separate; text-align: left; margin-bottom: 10px; width: 100%; border: 1px solid #ccc;">
+        <tr>
+          <th>Choose image file</th>
+        </tr>
+        <tr>
+          <%= f.file_field :uploaded_datum, :index => '', :style => 'width: 98%' %>
+        </tr>
+
+        <tr>
+          <th><%= f.label :captions, 'Caption (ie. Cup cake with oreo)' %></th>
+        </tr>
+        <tr>
+          <% caption_default_text = t('label.image_caption') %>
+          <%= f.text_field :captions,
+                           :index => '', :style => 'width: 98%',
+                           :onclick => "$(this).val() == '#{caption_default_text}' ? $(this).val('') : ''",
+                           :onblur => "$(this).val().length == 0 ? $(this).val('#{caption_default_text}') : ''" %>
+        </tr>
+
+        <tr>
+          <th><%= f.label :descriptions, 'Image details (Write full description)' %></th>
+        </tr>
+        <tr>
+          <td><%= f.text_area :descriptions, :index => '', :style => 'width: 98%; height: 50px',
+                              :onfocus => '$(this).css("height", "200px");',
+                              :onblur => '$(this).css("height", "50px");' %></td>
+        </tr>
+      </table>
     </div>
 
     <div id='duplicatedItemsContainer'></div>

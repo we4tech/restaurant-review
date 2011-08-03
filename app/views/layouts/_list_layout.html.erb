@@ -1,0 +1,36 @@
+<div class="grid_8" id="site_center_list">
+  <%= render_breadcrumbs %>
+  <div class='clear'></div>
+  <div class="break space_10"></div>
+  <%= render_page_modules :body %>
+  <div class="break space_10"></div>
+  <%= defined?(__content) ? __content : 'No __content variable was set.' %>
+  <div class='clear'></div>
+</div>
+
+<div class="grid_4" id="site_center_boxes">
+  <% if @right_button.present? %>
+	<%= link_to @right_button.first, @right_button.last, :class => "headerWithIcon topBothCornerHeader bottomBothCornerHeader rightActionButtion clickable #{@right_button_icon}" %>
+	<div class='space_10'></div>
+  <% end %>
+  <% if not @cached %>
+  	<%= render :partial => 'layouts/fresh_parts/modules' %>
+  <% else %>
+    <div id='right_side_boxes' class='loadingIndicator'>
+    	<%= image_tag 'loader.gif' %><br/>
+    	Loading boxes …
+    </div>
+  <% end %>
+</div>
+
+<% if @cached %>
+  <% if @restaurants.present? %>
+    <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)), :defer => 'defer' %>
+  <% end %>
+
+  <% if @topic_events.present? %>
+    <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'event_tools', :event_ids => @topic_events.collect(&:id)), :defer => 'defer' %>
+  <% end %>
+
+  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'page_side_modules'), :defer => 'defer' %>
+<% end %>

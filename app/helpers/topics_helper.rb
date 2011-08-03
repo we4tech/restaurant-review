@@ -12,12 +12,30 @@ module TopicsHelper
   end
 
   def render_topics_selection_box(options = {})
-    html = '<select onchange="window.location = this.value" class="topicSelectionBox">'
-    Topic.enabled.each do |topic|
-      html << "<option value='#{topic_public_host(topic)}' #{topic.id == @topic.id ? 'selected="selected"' : ''}>#{topic.label}</option>"
+    render_pull_down_menu('Topics') do
+      Topic.enabled.collect do |topic|
+        content_tag('li', content_tag('a', topic.label, :href => topic_public_host(topic)))
+      end.join('')
     end
-    html << '</select>'
-    html
+  end
+
+  def render_pull_down_menu(name, options = {}, &block)
+    menu_id = options[:link_id] || "nav_pm_#{rand}".gsub(/\./, '')
+    sub_menu_id = options[:menu_id] || menu_id + '_sub_menu'
+
+    html = content_tag('a', name, :class => 'navPullDownMenu', :id => menu_id)
+
+    html << content_tag('ul', :class => 'navPullDownSubMenu',
+                        :id => sub_menu_id,
+                        :style => 'display:none') do
+      block.call()
+    end
+
+    html << %{
+      <script type='text/javascript'>
+        $('##{menu_id}').wtsPullDown($('##{sub_menu_id}'));
+      </script>
+    }
   end
 
 end

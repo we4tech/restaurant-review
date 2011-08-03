@@ -2,8 +2,11 @@ class AjaxFragmentController < ApplicationController
 
   ALLOWED_FRAGMENTS = [:top_menu, :notice, :restaurant_tools,
                        :restaurant_view_tools,
-                       :module_render_recently_added_places,
-                       :authenticity_token, :test, :best_for_box, :featured_box]
+                       :module_render_recently_reviewed_places,
+                       :authenticity_token, :test, :best_for_box,
+                       :featured_box, :page_side_modules,
+                       :leader_board, :event_tools, :news_feed,
+                       :event_view_tools, :image_view_tools, :image_tools]
   include RestaurantsHelper
   after_filter :no_cache
 
@@ -32,8 +35,8 @@ class AjaxFragmentController < ApplicationController
     end
 
     def render_top_menu
-      @content_file = 'layouts/fresh_parts/top_navigation_v2'
-      @effect = 'slideDown()'
+      @content_file = 'layouts/fresh_parts/top_navigation_v3'
+      @effect = "slideDown({easing: \"jswing\"}).removeClass('menuLoadingIndicator')"
       @element = '#topNavigationBar'
       render :action => 'render_fragment', :layout => false
     end
@@ -66,7 +69,23 @@ class AjaxFragmentController < ApplicationController
       render :action => 'render_restaurant_view_tools', :layout => false
     end
 
-    def render_module_render_recently_added_places
+    def render_event_view_tools
+      @event = TopicEvent.find(params[:event_id])
+      @allow_image_upload = @topic.form_attribute.allow_image_upload
+      @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+
+      params[:format] = :html
+      render :action => 'render_event_view_tools', :layout => false
+    end
+
+    def render_image_view_tools
+      @image = Image.find(params[:image_id])
+
+      params[:format] = :html
+      render :action => 'render_image_view_tools', :layout => false
+    end
+
+    def render_module_render_recently_reviewed_places
       @restaurant = Restaurant.find(params[:restaurant_id])
       params[:format] = :html
       load_module_preferences
@@ -89,7 +108,7 @@ class AjaxFragmentController < ApplicationController
     def render_best_for_box
       cache_fragment("best_for_box_#{@topic.name}") do
         @content_file = 'restaurants/parts/best_for'
-        @effect = 'appear()'
+        @effect = "appear().removeClass('loadingIndicator')"
         @element = '#categoryHitRestaurantBox'
         @best_for_tags = Tag.featurable(@topic.id)
         if @best_for_tags.present?
@@ -114,6 +133,39 @@ class AjaxFragmentController < ApplicationController
       render :text => "alert('hola')"  
     end
 
+    def render_page_side_modules
+      @content_file = 'layouts/fresh_parts/modules'
+      @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
+      @element = '#right_side_boxes'
+      render :action => 'render_fragment', :layout => false
+    end
 
+    def render_leader_board
+      @content_file = 'layouts/fresh_parts/leader_board'
+      @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
+      @element = '#leader_board_box'
+      render :action => 'render_fragment', :layout => false
+    end
+
+    def render_event_tools
+      event_ids = params[:event_ids]
+      @events = TopicEvent.find(event_ids)
+      params[:format] = :html
+      render :action => 'render_event_tools', :layout => false
+    end
+
+    def render_image_tools
+      image_ids = params[:image_ids]
+      @images = Image.find(image_ids)
+      params[:format] = :html
+      render :action => 'render_image_tools', :layout => false
+    end
+
+    def render_news_feed
+      @content_file = 'layouts/fresh_parts/news_feed'
+      @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
+      @element = '#news_feed_box'
+      render :action => 'render_fragment', :layout => false
+    end
     
 end

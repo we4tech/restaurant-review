@@ -1,0 +1,16 @@
+<%
+   jsonable_response = []
+   @images.each do |image|
+     if image.author?(current_user)
+       jsonable_response << {
+           :id => image.id,
+           :html => " . #{link_to('Edit', edit_image_path(image))}"}
+     end
+   end
+%>
+(function() {
+  var el = null;
+  <% jsonable_response.each do |item| %>
+    el = $('<%= "#image_#{item[:id]}_tools" %>');el.html("<%= escape_javascript(item[:html]) %>");
+  <% end %>
+})();

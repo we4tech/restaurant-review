@@ -1,0 +1,26 @@
+<%
+   links = []
+   grouped = defined?(grouped) ? grouped : false
+   if logged_in? && topic_event.author?(current_user)
+     links << link_to(t('nav.edit'), edit_event_path(topic_event))
+     links << link_to(t('nav.delete'), event_path(topic_event),
+                      :method => :delete, :confirm => t('confirm.delete_entry'))
+   end
+%>
+<% if grouped %>
+  <% if !links.empty? %>
+    <div class='tags'>
+      <div class='tagGroup'>
+        <strong>Admin:</strong>
+
+        <div>
+          <%= links.join(', ') %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  <% end %>
+<% else %>
+  <%= links.join(', ')%>
+<% end %>

@@ -11,6 +11,7 @@ class ReviewCommentObserver < ActiveRecord::Observer
     StuffEvent.create({
         :topic_id => review_comment.topic_id,
         :user_id => review_comment.user_id,
+        :restaurant_id => review_comment.restaurant_id,
         :review_id => review_comment.review.id,
         :review_comment_id => review_comment.id,
         :event_type => StuffEvent::TYPE_REVIEW_COMMENT

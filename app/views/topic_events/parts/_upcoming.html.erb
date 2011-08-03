@@ -1,0 +1,38 @@
+<%
+   options = defined?(options) ? options : {}
+%>
+<% if !events.empty? %>
+    <div class='site_simple_box'>
+        <% upcoming = events[:upcoming] || [] %>
+        <% if not upcoming.empty? %>
+            <h5 class='subHeaderWithIcon'>Upcoming</h5>
+
+            <% upcoming.each do |topic_event| %>
+                <%= render :partial => 'topic_events/parts/event',
+                           :locals => {:topic_event => topic_event}.merge(options) %>
+            <% end %>
+        <% end %>
+
+        <% ongoing = events[:ongoing] || [] %>
+        <% if not ongoing.empty? %>
+            <h5 class='subHeaderWithIcon'>On going</h5>
+            <% ongoing.each do |topic_event| %>
+                <%= render :partial => 'topic_events/parts/event',
+                           :locals => {:topic_event => topic_event}.merge(options) %>
+            <% end %>
+        <% end %>
+
+        <% recent = events[:recent] || [] %>
+        <% if not recent.empty? %>
+            <h5 class='subHeaderWithIcon'>Recent</h5>
+            <% recent.each do |topic_event| %>
+                <%= render :partial => 'topic_events/parts/event',
+                           :locals => {:topic_event => topic_event}.merge(options) %>
+            <% end %>
+        <% end %>
+
+        <div class='clear'></div>
+    </div>
+<% else %>
+    There is no upcoming events.
+<% end %>

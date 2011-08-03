@@ -1,5 +1,6 @@
 <%
    links = []
+   grouped = defined?(grouped) ? grouped : false
 
    if current_user && !restaurant.reviewed?(current_user)
      links << (link_to t('nav.review_now'),
@@ -9,7 +10,6 @@
 
    if logged_in? && restaurant.author?(current_user)
      links << link_to(t('nav.edit'), edit_restaurant_url(:id => restaurant.id))
-     links << link_to(t('nav.edit_tags'), edit_tags_restaurant_url(restaurant))
 
      if current_user.admin?
        links << link_to('Premium', restaurant_premium_templates_path(restaurant))
@@ -22,9 +22,24 @@
        extra_rcpts = (restaurant.extra_notification_recipients || []).join(', ')
        links << link_to("Manage extra recipients#{!extra_rcpts.blank? ? "(#{extra_rcpts})" : ''}",
                         add_recipient_restaurant_path(restaurant.id))
+
      end
    end
 %>
-<% if !links.empty? %>
-  (<%= links.join(', ') %>)
+<% if grouped %>
+  <% if !links.empty? %>
+    <div class='tags'>
+      <div class='tagGroup'>
+        <strong>Admin:</strong>
+
+        <div>
+          <%= links.join(', ') %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  <% end %>
+<% else %>
+  <%= links.join(', ') %>
 <% end %>

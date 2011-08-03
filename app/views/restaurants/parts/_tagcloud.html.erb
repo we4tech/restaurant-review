@@ -1,52 +1,52 @@
 <%
    label = config['label']
 %>
-<div class="site_simple_box categories_view">
+<div class="categories_view contentBox">
+  <h4 class='subHeaderWithIcon'><%= tt("module.#{label}") %></h4>
 
-  <h4><%= tt("module.#{label}") %></h4>
-  <div class="space_5"></div>
+  <div class="site_simple_box">
+    <% if !tags.empty? %>
+      <%
+         max_font_size = 10
 
-  <% if !tags.empty? %>
-    <%
-       max_font_size = 10;
+         max_hit_count = tags.max{|a, b|
+           a.tag_mappings_count.to_i <=> b.tag_mappings_count.to_i
+         }.tag_mappings_count.to_i
 
-       max_hit_count = tags.max{|a, b|
-         a.tag_mappings_count.to_i <=> b.tag_mappings_count.to_i
-       }.tag_mappings_count.to_i
+         min_hit_count = tags.min{|a, b|
+           a.tag_mappings_count.to_i <=> b.tag_mappings_count.to_i
+         }.tag_mappings_count.to_i
 
-       min_hit_count = tags.min{|a, b|
-         a.tag_mappings_count.to_i <=> b.tag_mappings_count.to_i
-       }.tag_mappings_count.to_i
+         tags.sort!{|a, b| a.name <=> b.name}
+      %>
+      <div class='tagcloud' id='siteTagCloud'>
+        <% tags.each do |tag| %>
+          <%
+             # Take from WIKI
+             hit_count = tag.tag_mappings_count
+             font_size = 1
+             if hit_count > min_hit_count
+               font_size = tag.cloud_size(max_font_size, max_hit_count, min_hit_count)
+             end
+          %>
+          <div class='tag'>
+            <%= link_to "#{tag.name}",
+                        tag_details_url(:label => label.parameterize.to_s,
+                                        :tag => url_escape(tag.name)),
+                        :title => "Total hit - #{hit_count}",
+                        :class => "tag_size_#{font_size}" %>
+          </div>
+        <% end %>
+      </div>
 
-       tags.sort!{|a, b| a.name <=> b.name}
-    %>
-    <div class='tagcloud' id='siteTagCloud'>
-      <% tags.each do |tag| %>
-        <%
-           # Take from WIKI
-           hit_count = tag.tag_mappings_count
-           font_size = 1
-           if hit_count > min_hit_count
-             font_size = tag.cloud_size(max_font_size, max_hit_count, min_hit_count)
-           end
-        %>
-        <div class='tag'>
-          <%= link_to "#{tag.name}",
-                      tag_details_url(:label => label.parameterize.to_s,
-                                      :tag => url_escape(tag.name)),
-                      :title => "Total hit - #{hit_count}",
-                      :class => "tag_size_#{font_size}" %>
-        </div>
-      <% end %>
-    </div>
+      <div class='break'></div>
+      <div class='small'>
+        <a href='javascript:void(0)'
+           onclick="$('#siteTagCloud').css('max-height', 'inherit').css('overflow-y', 'visible'); $(this).hide()"><%= t('nav.more_tags') %></a>
+      </div>
 
-    <div class='break'></div>
-    <div class='small'>
-      <a href='javascript:void(0)'
-         onclick="$('#siteTagCloud').css('max-height', 'inherit').css('overflow-y', 'visible'); $(this).hide()"><%= t('nav.more_tags') %></a>
-    </div>
+      <div class="clear"></div>
 
-    <div class="clear"></div>
-    
-  <% end %>
+    <% end %>
+  </div>
 </div>

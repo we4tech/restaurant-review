@@ -35,7 +35,7 @@
                         :title => image.caption %>
           <% end %>
 
-          <% if restaurant.lat > 0 && restaurant.lng > 0 %>
+          <% if restaurant.lat.to_i > 0 && restaurant.lng.to_i > 0 %>
             <% map_url = "http://maps.google.com/maps/api/staticmap?center=" +
                          "#{restaurant.lat},#{restaurant.lng}&zoom=14&" +
                          "sensor=false&markers=color:green|label:R|" +

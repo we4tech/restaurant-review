@@ -29,6 +29,33 @@ module StringHelper
     end
   end
 
+  def friendly_truncate(text, options = {})
+    words = options[:words] || 100
+    characters = options[:characters] || 500 # 5 chars for each word * 100
+
+    # No word based truncate truncate text only by characters
+    if words == -1
+      truncate(text, :length => characters)
+
+    # Convert text into array of words and take preferred words
+    # If total words + space length grows larger than the max sentence limit
+    # Apply sentence limit if text limit wasn't set as -1
+    else
+      word_list = text.split(/\s/)
+      words_for_new_text = word_list[0..words.to_i]
+      new_text = words_for_new_text.join(' ')
+
+      if characters != -1
+        if new_text.length > characters
+          truncate(new_text, :length => characters)
+        else
+          new_text
+        end
+      else
+        new_text
+      end
+    end
+  end
 
   private
   def array_of_values_or_value(value)

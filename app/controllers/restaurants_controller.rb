@@ -10,6 +10,9 @@ class RestaurantsController < ApplicationController
   },            :if                => Proc.new { |c| !c.send(:mobile?) }
 
   def new
+    page_context [:list_page, :form_page]
+    @site_title = "Create new #{@topic.name.humanize}"
+
     if topic_imposed_limit_allows?
       @restaurant                     = Restaurant.new
       @form_fields                    = @topic.form_attribute.fields
@@ -23,6 +26,9 @@ class RestaurantsController < ApplicationController
   end
 
   def create
+    page_context [:list_page, :form_page]
+    @site_title = "Create new #{@topic.name.humanize}"
+
     @allow_image_upload             = @topic.form_attribute.allow_image_upload
     @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
     @restaurant                     = Restaurant.new(params[:restaurant])
@@ -56,6 +62,7 @@ class RestaurantsController < ApplicationController
     @form_fields                    = @topic.form_attribute.fields
     @allow_image_upload             = @topic.form_attribute.allow_image_upload
     @allow_contributed_image_upload = @topic.form_attribute.allow_contributed_image_upload
+    page_context :details_page
 
     if @restaurant.reviews.count > 0
       user_given_rating = @restaurant.rating_out_of(Restaurant::RATING_LIMIT)
@@ -77,7 +84,7 @@ class RestaurantsController < ApplicationController
         :render_tagcloud,
         :render_search,
         :render_most_lovable_places,
-        :render_recently_added_places,
+        :render_recently_reviewed_places,
         :render_topic_box]
 
     respond_to do |format|
@@ -174,6 +181,7 @@ class RestaurantsController < ApplicationController
   end
 
   def edit
+    page_context [:list_page, :form_page]
     restaurant = Restaurant.find(params[:id].to_i)
 
     if restaurant.author?(current_user)
@@ -307,6 +315,7 @@ class RestaurantsController < ApplicationController
   end
 
   def add_recipient
+    page_context [:list_page, :form_page]
     @restaurant = Restaurant.find(params[:id].to_i)
   end
 

@@ -1,23 +1,74 @@
 class Tag < ActiveRecord::Base
 
+  serialize :section_data
+
   belongs_to :topic
+
   has_many :tag_mappings, :dependent => :destroy
   has_many :restaurants, :through => :tag_mappings
 
   has_many :tag_group_mappings, :dependent => :destroy
   has_many :tag_groups, :through => :tag_group_mappings
 
+  # Name are unique based on *topic* scope,
+  # because each topic can have the same name for tag.
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :topic_id
 
+  # Update tag group related caches
   after_save { TagGroup::update_caches! }
   after_destroy { TagGroup::update_caches! }
 
+  # All results will be by default sorted by *name* and in ascending order.
   default_scope :order => 'name ASC'
-  named_scope :featurable, lambda { |topic_id| {
-      :conditions => {:feature_enlist => true,
-                      :topic_id => topic_id}} }
 
+  # Return a list of restaurants which has *feature_enlist* as true
+  named_scope :featurable, lambda { |topic_id| {
+      :conditions => {
+          :feature_enlist => true,
+          :topic_id => topic_id
+      }
+  }}
+
+  # Return a list of tags which has *as_section* as true,
+  # it means these tags are used as a section
+  named_scope :sections, :conditions => {:as_section => true}
+
+  # Return the list of editor selected restaurants from the specific
+  # tag with the defined *limit*
+  def editor_selected(limit = 1)
+    ids = nil
+
+    if section_data
+      case section_data
+        when Array
+          ids = section_data[0..(limit - 1)]
+        when String
+          ids = section_data.split('|')[0..(limit - 1)]
+      end
+    end
+
+    if ids && !ids.empty?
+      Restaurant.find(ids)
+    else
+      []
+    end
+  end
+
+  # Return the list of editor selected restaurants if found otherwise
+  # Return the list sorted by the top ratings.
+  def editor_selected_or_top_rated(limit = 1)
+    items = editor_selected(limit)
+    if items && !items.empty?
+      items
+    else
+      most_loved_restaurants(limit)
+    end
+  end
+
+  #
+  # Determine the tag cloud size based on the *factor*, *max_hit_count* and *min_hit_count*
+  # Otherwise return 1
   def cloud_size(factor, max_hit_count, min_hit_count)
     if tag_mappings_count > min_hit_count
       (factor * (tag_mappings_count - min_hit_count)) / (max_hit_count - min_hit_count)
@@ -26,6 +77,9 @@ class Tag < ActiveRecord::Base
     end
   end
 
+  #
+  # Determine restaurants which has top LOVES count
+  # Sort them in Descending order.
   def most_loved_restaurants(limit = 10)
     TagMapping.all(
         :joins => ['LEFT JOIN reviews ON reviews.restaurant_id = tag_mappings.restaurant_id',
@@ -40,6 +94,8 @@ class Tag < ActiveRecord::Base
           'reviews.loved' => Review::LOVED}).collect(&:restaurant)
   end
 
+  #
+  # Return the list of restaurants which was reviewed by the specified *reviewer*
   def restaurants_not_reviewed_by(reviewer, limit = 5)
     TagMapping.all(
         :joins => ['LEFT JOIN reviews ON reviews.restaurant_id = tag_mappings.restaurant_id',
@@ -50,6 +106,24 @@ class Tag < ActiveRecord::Base
         :group => 'reviews.restaurant_id',
         :conditions => ['tag_id = ? AND reviews.user_id <> ? AND restaurants.user_id <> ?',
                         self.id, reviewer.id, reviewer.id]).collect(&:restaurant)
+  end
+
+  # Return tag name with tag group name if exists
+  def name_with_group
+    group = self.tag_groups.first
+    if group
+      "#{group.name}: #{self.name}"
+    else
+      self.name
+    end
+  end
+
+  def ==(another_tag)
+    if another_tag.is_a?(Tag)
+      self.id == another_tag.id || name.to_s.downcase == another_tag.name.to_s.downcase
+    else
+      false
+    end
   end
 
   #

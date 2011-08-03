@@ -1,0 +1,11 @@
+<div class='properties'>
+  <div class="grid_1 key address">Address</div>
+  <div class="grid_3 value"><%= restaurant.address %></div>
+  <div class="clear"></div>
+  <div class="space_10"></div>
+  <div class="grid_5 valueMap">
+    <%= link_to image_tag(map_url + "350x150"), full_map_url(:rid => restaurant.id),
+                :class => 'xopenUpinLightBox',
+                :title => link_to(t('fields.map'), details_link) %>
+  </div>
+</div>

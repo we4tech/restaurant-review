@@ -2,7 +2,7 @@ params[:format] = :html
 page << %{
   $('#site_center_list').fadeOut(function() {
     $(this).hide();
-    #{page.replace('#site_center_list', (render(:file => 'home/recommend.html.erb', :locals => {:right_off => true})))}
+    $('#site_content_area').html("#{escape_javascript(render(:partial => 'home/parts/search_content.html.erb', :locals => {:right_off => true}))}");
     $(this).appear();
     $('.buttonActionSubmitForm').each(function() {
       var $next = $(this).next();
@@ -22,4 +22,53 @@ page << %{
       });
     });
   });
+
+  setTimeout(function() {
+    var timer = null;
+
+    function showOrHide($el, show) {
+      var $hiddenStuffs = $('#' + $el.attr('id') + '_hidden_stuffs');
+      if (show) {
+        $el.removeClass('rowHover').addClass('rowHover');
+        $hiddenStuffs.show();
+
+        if (timer) {
+          clearTimeout(timer);
+        }
+        timer = setTimeout(function() {
+          $el.removeClass('rowHover');
+          $hiddenStuffs.fadeOut();
+        }, 6000);
+      } else {
+        if (timer) {
+          clearTimeout(timer);
+        }
+
+        timer = setTimeout(function() {
+          $el.removeClass('rowHover');
+          $hiddenStuffs.fadeOut();
+        }, 1000);
+      }
+    }
+
+    $('#site_content_area .site_list_item').each(function() {
+      var $item = $(this);
+      $item.bind('mouseover', function(e) {
+        showOrHide($(this), true);
+      });
+
+      $item.bind('mouseout', function(e) {
+        showOrHide($(this), false);
+      });
+    });
+  }, 1000);
+
+  window.location = '#site_center_list';
+  $('#siteNoticeBar').html("Loaded search results with filters - #{escape_javascript((@tags || []).uniq.join(', '))}").appear();
 }
+
+page << "
+  setTimeout(function() {
+    $('#siteNoticeBar').hide();
+  }, 4000);
+"

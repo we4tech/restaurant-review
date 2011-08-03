@@ -1,0 +1,18 @@
+<%= render_breadcrumbs %>
+<div class="clear space_5"></div>
+<div class='info'><%= page_entries_info @restaurants %></div>
+<div class="space_5"></div>
+<div class="break space_5"></div>
+<% if !@restaurants.empty? %>
+  <% @restaurants.each_with_index do |restaurant, index| %>
+    <%= render :partial => 'restaurants/parts/restaurant',
+               :locals => {:restaurant => restaurant, :index => index, :grid_class => 'grid_4_compressed'} %>
+  <% end %>
+
+  <div class='pagination'>
+    <%= will_paginate @restaurants %>
+  </div>
+<% else %>
+  <h4><%= t('subheader.no_recommendation_found') %></h4>
+<% end %>
+<div class="clear"></div>

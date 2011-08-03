@@ -1,0 +1,109 @@
+<div id='searchResultsFilterBox'>
+  <h4 class="subHeaderWithIcon">
+    Filter search results
+  </h4>
+
+  <div class='filter_box'>
+    <form action="<%= search_url %>" id='recommend_form'>
+      <input type='hidden' name='_models' value='Restaurant'/>
+
+      <div class="tags">
+        <div class="space_10"></div>
+        <input type="text" name="name|short_array|long_array|description[]"
+               style="width: 100%" value="<%= params['name|short_array|long_array|description'] %>"/>
+
+        <div class="space_10"></div>
+        <h4 class="subHeaderWithIcon topCornerHeader clickable"
+            onclick="$('#filter_by_latlng').toggle();">
+          Filter by location
+          <a href="javascript:void(0)" class="archiveButton" onclick="$('#smallMapLat, #smallMapLng').val('')">Clear</a>
+        </h4>
+
+        <div class="highlight site_simple_box" id='filter_by_latlng'>
+          <div class="space_5"></div>
+          <input type='hidden' name='lat' id='smallMapLat' class="grid_1"
+                 value="<%= @location ? @location[:lat].to_f : 0 %>"/>
+          <input type='hidden' name='lng' id='smallMapLng' class="grid_1"
+                 value="<%= @location ? @location[:long].to_f : 0 %>"/>
+
+          <% selected_meter = @location ? @location[:meter].to_i : 100 %>
+          <label class="grid_2">
+            Search in
+            <select name='meter'>
+              <% (1..5).each do |meter| %>
+                <option value="<%= meter * 1000 %>" <%= selected_meter == (meter * 1000) ? 'selected="selected"' : '' %>>
+                  <%= meter %> km
+                </option>
+              <% end %>
+            </select>
+          </label>
+
+          <div class="clear space_5"></div>
+
+          <div class="break"></div>
+          <div class="space_10"></div>
+          <div id="smallMap"
+               title="<%= @location && @location[:lat].to_f > 0 && @location[:long].to_f > 0 ? "#{@location[:lat]},#{@location[:long]}" : '23.79,90.42' %>"
+               markerMessage="<h4>Where are you NOW?</h4><br/>show us your current location<br/>so that we can <b>suggest</b><br/>you the <b>NEARBY</b> restaurants."
+               infoWindowMessagePrefix="You are NOW @"
+               mapWidth="195px"></div>
+          <div class='clear'></div>
+        </div>
+        <div class="clear space_10"></div>
+
+        <input type='submit' class='buttonSubmit' value='<%= t('button.search_again') %>'/>
+
+        <div class="clear"></div>
+      </div>
+      <div class="clear"></div>
+      <div class="space_10"></div>
+
+      <% content_for :after_map_init do %>
+        <script type="text/javascript">
+
+          var gmailCheckInterval = setTimeout(function() {
+            if (google != null && google.maps != null) {
+              App.MapWidget.createMap($('#smallMap'), function(pPlacemark) {
+                $('#geoLat, #smallMapLat').val(pPlacemark.lat());
+                $('#geoLng, #smallMapLng').val(pPlacemark.lng());
+              });
+              //clearInterval(gmailCheckInterval);
+            }
+          }, 5000);
+        </script>
+      <% end %>
+
+      <div class='space_10'></div>
+      <div class='tags'>
+        <% @topic.tag_groups.each do |tag_group| %>
+          <% div_id = "filter_by_#{tag_group.id}" %>
+          <h4 class="subHeaderWithIcon topCornerHeader clickable"
+              onclick="$('#<%= div_id %>').toggle();">Filter by <%= tag_group.name %></h4>
+
+          <div class="filterItems site_simple_box" style="padding: 0;display:block" id='<%= div_id %>'>
+            <div class='clear space_5'></div>
+            <% tag_group.tags.each do |tag| %>
+              <div class='tag inlineTag'>
+                <input id='<%= element_id = "tag_#{tag.id}" %>'
+                       type='checkbox' name='short_array|long_array[]'
+                       <%= @tags.include?(tag.name.downcase) ? 'checked="checked"' : '' %>
+                       value='<%= tag.name %>'
+                       class='buttonActionSubmitForm'
+                       onclick="document.getElementById('recommend_form').submit()"/>
+                <label for='<%= element_id %>'><%= tag.name %></label>
+              </div>
+            <% end %>
+            <div class="clear"></div>
+          </div>
+          <div class='clear'></div>
+          <div class='space_10'></div>
+        <% end %>
+      </div>
+      <input type='submit' class='buttonSubmit' value='<%= t('button.search_again') %>'/>
+    </form>
+    <div class='space_10'></div>
+    <div class='clear'></div>
+  </div>
+  <div class="clear"></div>
+  <div class='space_10'></div>
+</div>

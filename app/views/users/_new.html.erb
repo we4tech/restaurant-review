@@ -1,23 +1,25 @@
-<div class="grid_12 centerContent">
-  <h1><%= t('subheader.signup_new_user') %></h1>
-  <% @user.password = @user.password_confirmation = nil %>
+<div class="grid_12 centerContent ">
+  <div class="login_form">
+    <h1><%= t('subheader.signup_new_user') %></h1>
+    <% @user.password = @user.password_confirmation = nil %>
 
-  <%= error_messages_for :user %>
-  <% form_for :user, :url => users_path do |f| -%>
+    <%= error_messages_for :user %>
+    <% form_for :user, :url => users_path do |f| -%>
 
-    <% if defined?(@js_callback) %>
-      <input type="hidden" name="js_callback" value="<%= @js_callback %>"/>
-    <% end %>
+      <% if defined?(@js_callback) %>
+        <input type="hidden" name="js_callback" value="<%= @js_callback %>"/>
+      <% end %>
 
-    <p><%= label_tag 'login', t('label.login') %><br/>
-    <%= f.text_field :login %></p>
+      <p><%= label_tag 'login', t('label.login') %>
+        <%= f.text_field :login %></p>
 
-    <p><%= label_tag 'email', t('label.email') %><br/>
-    <%= f.text_field :email %></p>
+      <p><%= label_tag 'email', t('label.email') %>
+        <%= f.text_field :email %></p>
 
-    <%= render :partial => 'users/parts/fields.html.erb', :locals => {:f => f} %>
+      <%= render :partial => 'users/parts/fields.html.erb', :locals => {:f => f} %>
 
-  <p><%= submit_tag t('button.signup'), :class => 'buttonSubmit' %></p>
-  <% end -%>
+      <p><%= submit_tag t('button.signup'), :class => 'buttonSubmit' %></p>
+    <% end -%>
+  </div>
 
 </div>

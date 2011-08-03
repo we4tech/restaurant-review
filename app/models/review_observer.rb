@@ -10,6 +10,7 @@ class ReviewObserver < ActiveRecord::Observer
     
     StuffEvent.create({
         :topic_id => review.topic_id,
+        :restaurant_id => review.restaurant_id,
         :review_id => review.id,
         :user_id => review.user_id,
         :event_type => StuffEvent::TYPE_REVIEW
@@ -19,6 +20,7 @@ class ReviewObserver < ActiveRecord::Observer
   def after_update(review)
     StuffEvent.create({
         :topic_id => review.topic_id,
+        :restaurant_id => review.restaurant_id,
         :review_id => review.id,
         :user_id => review.user_id,
         :event_type => StuffEvent::TYPE_REVIEW_UPDATE

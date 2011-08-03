@@ -9,8 +9,10 @@
              :locals => {model_name => model_instance,
                          :attached_options => attached_options} %>
 <% else %>
-  <%= t('label.login_required_to_review',
-        :link => link_to(t('nav.login'), login_url, :class => 'login_button')) %>
+  <div class='highlight'>
+    <%= t('label.login_required_to_review',
+          :link => link_to(t('nav.login'), login_url, :class => 'login_button')) %>
+  </div>
   <%= render :partial => 'reviews/parts/form',
              :locals => {model_name => model_instance,
                          :attached_options => attached_options} %>

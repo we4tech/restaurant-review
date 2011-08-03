@@ -1,53 +1,84 @@
-<div style='background: #fff'>
-  <div class='grid_12' id='recommendBox'>	
-    <%= render :partial => 'restaurants/parts/recommend' %>
-    <div class='clear'></div>
-    <div class='space_10'></div>
-  </div>
-  <div class='clear'></div>
-  <div class='space_10'></div>
+<div class='frontpage'>
 
   <% if params[:page].to_i < 2 %>
     <div class='grid_12' id='featureBox'>
-      <%= render :partial => 'restaurants/parts/top_rated_slider' %>
+      <%
+          #render :partial => 'restaurants/parts/top_rated_slider'
+      %>
+      <%= render_section_heads_with_selected_item(:frontpage) %>
     </div>
-    <div class='clear'></div>
-    <div class='grid_12' id='categoryHitRestaurantBox'>
-      <% if !@cached %>
-        <% if !@best_for_tags.empty? %>
-          <%= render :partial => 'restaurants/parts/best_for' %>
-        <% end %>
-      <% end %>
-    </div>
-
+    <div class='clear'></div>    
   <% end %>
   <div class='clear'></div>
 </div>
-
-
 <div class="clear"></div>
-<div class="grid_8" id="site_center_list">
-  <h1>
-    <% @breadcrumbs.each do |link| %>
-      <%= link_to link.first, link.last %> &raquo;
-    <% end %><%= @title %>
-  </h1>
-  <div class="break space_5"></div>
-  <% @restaurants.each_with_index do |restaurant, index| %>
-    <%= render :partial => 'restaurants/parts/restaurant', 
-               :locals => {:restaurant => restaurant, :index => index} %>
-  <% end %>
 
-  <div class='pagination'>
-    <%= will_paginate @restaurants %>
-  </div>
+<!-- Middle part starts -->
+<div class='middleContentArea'>
+	<div class="grid_4 roundedBox newsFeed" id="site_center_list">
+		<% if @cached %>
+			<div class='loadingIndicator' id='news_feed_box'>
+				<%= image_tag 'loader.gif' %><br/>
+				Loading commuity news feed...
+			</div>
+		<% else %>
+			<%= render_news_feed(:label => 'News Feed') %>
+		<% end %>
+	</div>                            
+	<div class='grid_4 topChart'>
+		<h4 class='headerWithIcon newsFeedHeader'>
+			Top of the list
+		</h4>
+		<div class="break space_5"></div>		
+		<% week_top_chart = render_week_top_chart %>
+		<% if !week_top_chart.blank? %>
+			<%= week_top_chart %>
+			<div class='clear space_10'></div>
+		<% end %>
+		<%= render_most_lovable_places({:label => 'Most Eaters Love'}) %>
+		<div class='clear space_10'></div>
+		<%= render_most_checkined_places({:label => 'Most Eaters Go'}) %>
+		<div class='clear space_10'></div>
+		<%= render_recently_reviewed_places({:label => 'Recent Reviews'}, 5) %>
+		<div class='clear space_10'></div>
+		<%= render_recently_added_places({:label => "New #{@topic.name.pluralize.capitalize}"}, 5) %>	
+		<div class='clear space_10'></div>
+		<% upcoming_events = render_upcoming_events(:grid_class => 'grid_3') %>	
+		<% if !upcoming_events.blank? %>
+			<div class='upcomingEventsBox'>
+				<h4 class='subHeaderWithIcon'>
+					Upcoming Events
+					<%= link_to 'Archive', events_path, :class => 'archiveButton' %>
+				</h4>
+				<%= upcoming_events %>
+				<div class='clear'></div>
+			</div>
+		<% end %>
+	</div>                           
+	
+	<div class="grid_4 leaderBoardBox lastColumn" id="site_center_list">
+	  <% if @cached %>	
+		  <div id='leader_board_box' class='loadingIndicator'>
+		  	<%= image_tag 'loader.gif' %><br/>
+		  	Loading leader board...
+		  </div>
+	  <% else %>
+	  	  <div class='leaderBoard'>
+			<h4 class="headerWithIcon newsFeedHeader">Leader board</h4>
+			<div class="break space_5"></div> 	
+		  	<%= render_leader_board %>
+		  	<div class='clear'></div>
+		  </div>
+	  <% end %>
+	  
+	  <div class='clear space_10'></div>
+	  
+	</div> 
+	<div class='clear'></div>
 </div>
-
-<div class="grid_4" id="site_center_boxes">
-  <%= render :partial => 'layouts/fresh_parts/modules' %>
-</div>
+<!-- Ends middle content area -->
 
 <% if @cached %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)), :defer => 'defer' %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'best_for_box'), :defer => 'defer' %>
+	<%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'news_feed') %>
+	<%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'leader_board') %>
 <% end %>

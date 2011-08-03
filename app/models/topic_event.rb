@@ -1,18 +1,19 @@
 class TopicEvent < ActiveRecord::Base
 
   EVENT_TYPES_MAP = {
-      'Food festival' => 1,
-      'Fair' => 2,
-      'Inauguration party' => 3,
+      'Food festival'           => 1,
+      'Fair'                    => 2,
+      'Inauguration party'      => 3,
       'Special day celebration' => 4,
-      'Musical event' => 5,
-      'Magic show' => 6,
-      'Comedy show' => 7
+      'Musical event'           => 5,
+      'Magic show'              => 6,
+      'Comedy show'             => 7,
+      'Deal'                    => 8,
   }
 
-  IMAGE_GROUPS = {
+  IMAGE_GROUPS    = {
       :default => nil,
-      :banner => 'banner'
+      :banner  => 'banner'
   }
 
   serialize :description_fields
@@ -23,25 +24,37 @@ class TopicEvent < ActiveRecord::Base
   belongs_to :user
   belongs_to :topic
   belongs_to :parent_event, :foreign_key => 'parent_event_id',
-             :class_name => 'TopicEvent'
+             :class_name                 => 'TopicEvent'
   has_many :dependent_events, :foreign_key => 'parent_event_id',
-           :class_name => 'TopicEvent'
+           :class_name                     => 'TopicEvent'
   has_many :related_images
   has_many :images, :through => :related_images
   has_many :reviews
   has_many :review_comments
   has_many :checkins
 
+  named_scope :by_topic, lambda { |topic_id| {:conditions => {:topic_id => topic_id}} }
   named_scope :open_events, :conditions => {
       :suspended => false, :completed => false}
+
+  named_scope :upcoming, :conditions => ['start_at < ? AND start_at > ? AND end_at > ?',
+                                         (Time.now + 7.days).utc, Time.now.utc, Time.now.utc],
+              :order                 => 'start_at DESC'
+  named_scope :ongoing, :conditions => ['start_at < ? AND end_at > ?', Time.now.utc, Time.now.utc],
+              :order                => 'start_at DESC'
+  named_scope :recent, :conditions => ['end_at < ?', Time.now.utc],
+              :order               => 'end_at DESC'
 
   @@per_page = 20
   cattr_reader :per_page
 
-  
   include CommonModel::Common
   include CommonModel::ReviewModel
   include CommonModel::LocationModel
+
+  def tags
+    []
+  end
 
   def other_images
     self.images
@@ -53,6 +66,10 @@ class TopicEvent < ActiveRecord::Base
 
   def rand_image
     (all_images || []).rand
+  end
+
+  def image_attached?
+    not all_images.empty?
   end
 
   def extra_notification_recipients
@@ -71,6 +88,39 @@ class TopicEvent < ActiveRecord::Base
       end
     else
       nil
+    end
+  end
+
+  class << self
+    # Retrieve upcoming events (which are with in a week),
+    # also retrieve on going events. Return total 5 events
+    def exciting_events(topic, options = {})
+      events            = {}
+
+      limit             = options[:limit] || 10
+      upcoming          = self.upcoming.by_topic(topic.id).all(:limit => 5)
+      ongoing           = self.ongoing.by_topic(topic.id).all(:limit => 5)
+      preferred         = options[:preferred] || :none
+
+      events[:upcoming] = upcoming
+      return events if :upcoming == preferred && !upcoming.empty?
+
+      events[:ongoing]  = ongoing
+      return events if [:upcoming, :ongoing].include?(preferred) && !ongoing.empty?
+
+      both_events       = upcoming + ongoing
+
+      if both_events.length < limit
+        recent          = self.recent.by_topic(topic.id).all(:limit => limit - both_events.length)
+        events[:recent] = recent
+        return events if [:upcoming, :ongoing, :recent].include?(preferred) && !recent.empty?
+
+        both_events + recent
+      else
+        both_events
+      end
+
+      events
     end
   end
 
