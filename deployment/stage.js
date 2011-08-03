@@ -11,11 +11,8 @@ var ProjectConfig = {
 };
 
 function buildServerCommand(start) {
-  return '/usr/bin/ruby1.8 /usr/local/bin/mongrel_rails ' + (start ? 'start -d' : 'stop') + ' -e ' +
-      ProjectConfig.rootDir + ' -c ~/' + ProjectConfig.rootDir + ' -p ' +
-      ProjectConfig.serverPort + ' -P ~/' +
-      ProjectConfig.rootDir + '/tmp/pids/mongrel.' + ProjectConfig.serverPort +
-      '.pid -l ~/' + ProjectConfig.rootDir + '/log/mongrel.' + ProjectConfig.serverPort + '.log';
+  return 'cd ~/' + ProjectConfig.rootDir + ' && /usr/bin/ruby1.8 /usr/local/bin/mongrel_rails cluster::' + (start ? 'start' : 'stop') +
+         ' -C config/staging_mongrel.conf';
 }
 
 task('staging', 'Config staging server', function() {
@@ -27,10 +24,6 @@ task('staging', 'Config staging server', function() {
   };
 
   return control.controllers(config)
-});
-
-task('stop_server', 'Stop already running server processes', function(c) {
-  c.ssh(buildServerCommand(false));
 });
 
 task('setup_dir', 'Setup project directory', function(c) {
@@ -62,16 +55,15 @@ task('start_server', 'Start server', function(c) {
   c.ssh(buildServerCommand(true));
 });
 
+task('stop_server', 'Stop already running server processes', function(c) {
+  c.ssh(buildServerCommand(false));
+});
+
 task('update', 'Deploy code in staging server', function(controller) {
   console.log('Updating...');
 
-  // Stop servers
-  //perform('stop_server', controller);
-
   // Update code
   perform('update_code', controller);
-
-  // Start servers
 });
 
 control.begin();
