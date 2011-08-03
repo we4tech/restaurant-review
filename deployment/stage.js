@@ -55,7 +55,7 @@ task('start_server', 'Start server', function(c) {
       ProjectConfig.rootDir + ' -c ~/' + ProjectConfig.rootDir + ' -p ' +
       ProjectConfig.serverPort + ' -P ~/' +
       ProjectConfig.rootDir + '/tmp/pids/mongrel.' + ProjectConfig.serverPort +
-      '.pid -l ~/'  + ProjectConfig.rootDir + '/log/mongrel.' + ProjectConfig.serverPort + '.log'
+      '.pid -l ~/'  + ProjectConfig.rootDir + '/log/mongrel.' + ProjectConfig.serverPort + '.log';
   c.ssh(cmd);
 });
 
