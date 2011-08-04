@@ -8,9 +8,9 @@
       'og:url' => event_or_restaurant_url(@restaurant)}) %>
 
   <%- if first_image = @restaurant.rand_image -%>
-    <%= render_meta_tags({'og:image' => "http://#{request.host}#{first_image.public_filename(:large)}"})%>
+    <%= render_meta_tags({'og:image' => "http://#{request.host}#{request.port != 80 ? ":#{request.port}" : ''}#{first_image.public_filename(:large)}"})%>
   <%- else -%>
-    <%= render_meta_tags({'og:image' => "http://#{request.host}#{@topic.banner_image_path}"})%>
+    <%= render_meta_tags({'og:image' => "http://#{request.host}#{request.port != 80 ? ":#{request.port}" : ''}#{@topic.banner_image_path}"})%>
   <%- end -%>
 
   <%- if @restaurant.located_in_map? -%>
@@ -28,7 +28,7 @@
       'og:title' => "#{@topic ? (@site_title ? "#{@site_title} - " : '') : ''}#{@topic.site_title}",
       'og:description' => @meta_description || 'Bangladeshi and Dhaka Restaurant, cafe & eat out place review site',
       'og:url' => request.url,
-      'og:image' => "http://#{request.host}#{@topic.banner_image_path}"})%>
+      'og:image' => "http://#{request.host}#{request.port != 80 ? ":#{request.port}" : ''}#{@topic.banner_image_path}"})%>
 <%- end -%>
 
 <%= render_meta_tags({'fb:app_id' => @topic.fb_id, 'fb:admins' => @topic.fb_admins}) %>
