@@ -66,7 +66,7 @@ task('restart_server', 'Restart server process', function(c) {
   c.ssh(buildServerCommand(false) + ' && ' + buildServerCommand(true));
 });
 
-task('rake', 'Execute rake at server end', function(c, command) {
+task('rake', 'Execute rake at server end', function(c) {
   var argv = (process.argv || []);
   var needle = argv.indexOf('rake');
   var cmd = "cd " + ProjectConfig.rootDir + " && " + argv.splice(needle, argv.length).join(' ');
@@ -74,6 +74,14 @@ task('rake', 'Execute rake at server end', function(c, command) {
   if (cmd.indexOf('RAILS_ENV') == -1) {
     cmd += ' RAILS_ENV=' + ProjectConfig.rootDir;
   }
+
+  c.ssh(cmd);
+});
+
+task('exec', 'Execute command in server end', function(c) {
+  var argv = (process.argv || []);
+  var needle = argv.indexOf('exec');
+  var cmd = "cd " + ProjectConfig.rootDir + " && " + argv.splice(needle + 1, argv.length).join(' ');
 
   c.ssh(cmd);
 });
