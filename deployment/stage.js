@@ -39,10 +39,7 @@ task('setup_code', 'Update code base', function(c) {
 });
 
 task('setup', 'Setup whole project', function(c) {
-  // Make project dir
   perform('setup_dir', c);
-
-  // Deploy code
   perform('setup_code', c);
 });
 
@@ -87,9 +84,6 @@ task('exec', 'Execute command in server end', function(c) {
 });
 
 task('update', 'Deploy code in staging server', function(controller) {
-  console.log('Updating...');
-
-  // Update code
   perform('update_code', controller);
 });
 
