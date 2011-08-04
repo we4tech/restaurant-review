@@ -26,7 +26,7 @@
 <%- else -%>
   <%= render_meta_tags({
       'og:title' => "#{@topic ? (@site_title ? "#{@site_title} - " : '') : ''}#{@topic.site_title}",
-      'og:description' => @meta_description || 'Bangladeshi and Dhaka Restaurant, cafe & eat out place review site',
+      'og:description' => @meta_description || 'Bangladeshi Restaurant, cafe & eat out place review site',
       'og:url' => request.url,
       'og:image' => "http://#{request.host}#{request.port != 80 ? ":#{request.port}" : ''}#{@topic.banner_image_path}"})%>
 <%- end -%>
