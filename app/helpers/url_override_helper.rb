@@ -231,7 +231,7 @@ module UrlOverrideHelper
       @@current_ajaxified_url_index += 1
       @@current_ajaxified_url_index = 0 if @@current_ajaxified_url_index > max_hosts
       host_parts = host.split('.')
-      "#{ajax_host}.#{host_parts[host_parts.length - 2, host_parts.length].join('.')}"
+      "#{ajax_host}.#{host_parts[host_parts.length - 2, host_parts.length].join('.')}#{request.port != 80 ? ":#{request.port}" : ''}"
     end
 
 end
