@@ -35,7 +35,6 @@ task('setup_code', 'Update code base', function(c) {
   cmd += ' && mkdir ~/' + ProjectConfig.rootDir + '/log ';
   cmd += ' && mkdir ~/' + ProjectConfig.rootDir + '/tmp ';
   cmd += ' && mkdir ~/' + ProjectConfig.rootDir + '/tmp/pids ';
-  console.log('Executing command - ' + cmd);
   c.ssh(cmd);
 });
 
@@ -45,6 +44,10 @@ task('setup', 'Setup whole project', function(c) {
 
   // Deploy code
   perform('setup_code', c);
+});
+
+task('destroy', 'Destroy existing code base', function(c) {
+  c.ssh('rm -rf ' + ProjectConfig.rootDir);
 });
 
 task('update_code', 'Update code base', function(c) {
@@ -61,6 +64,18 @@ task('stop_server', 'Stop already running server processes', function(c) {
 
 task('restart_server', 'Restart server process', function(c) {
   c.ssh(buildServerCommand(false) + ' && ' + buildServerCommand(true));
+});
+
+task('rake', 'Execute rake at server end', function(c, command) {
+  var argv = (process.argv || []);
+  var needle = argv.indexOf('rake');
+  var cmd = "cd " + ProjectConfig.rootDir + " && " + argv.splice(needle, argv.length).join(' ');
+
+  if (cmd.indexOf('RAILS_ENV') == -1) {
+    cmd += ' RAILS_ENV=' + ProjectConfig.rootDir;
+  }
+
+  c.ssh(cmd);
 });
 
 task('update', 'Deploy code in staging server', function(controller) {
