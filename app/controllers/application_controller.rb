@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   include ExceptionNotification::ExceptionNotifiable
 
-  if Rails.env != 'test' && Rails.env != 'development'
+  if !['test', 'staging', 'development'].include?(Rails.env)
     alias :rescue_action_locally :rescue_action_in_public
   end
 

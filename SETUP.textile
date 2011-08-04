@@ -1,0 +1,11 @@
+h2. WellTreat.US initial setup guide
+
+* change config/database.yml
+* change config/initialize/subdomain.rb
+* change config/ultrasphinx/*.base
+* change config/mongrel_rails.conf
+* change config/facebooker.yml
+* Execute rake db:migrate
+* Execute rake ultrasphinx:index
+* Execute rake ultrasphinx:daemon:start
+* Launch server

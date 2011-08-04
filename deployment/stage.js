@@ -59,6 +59,10 @@ task('stop_server', 'Stop already running server processes', function(c) {
   c.ssh(buildServerCommand(false));
 });
 
+task('restart_server', 'Restart server process', function(c) {
+  c.ssh(buildServerCommand(false) + ' && ' + buildServerCommand(true));
+});
+
 task('update', 'Deploy code in staging server', function(controller) {
   console.log('Updating...');
 
