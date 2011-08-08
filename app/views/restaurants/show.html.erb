@@ -42,9 +42,20 @@
         <div class="clear"></div>
         <div class="space_10"></div>
 
-        <h4 class="subHeaderWithIcon">User activity</h4>
+        <% if @cached %>
+          <div class='loadingIndicator' id="restaruantInfo">
+            Loading info...
+          </div>
+        <% else %>
+          <%= render :partial => 'restaurants/parts/info' %>
+        <% end %>
+        <div class="clear"></div>
+        <div class="space_10"></div>
 
-        <div class="site_simple_box">
+        <h4 class="subHeaderWithIcon clickable topCornerHeader"
+            onclick="$('#restaurant_user_activity_graph').toggle('slide');">User activity chart</h4>
+
+        <div class="site_simple_box" id='restaurant_user_activity_graph' style="display:none">
           <%= render_restaurant_status_in_graph(@restaurant) %>
         </div>
         <div class="clear"></div>
@@ -66,7 +77,6 @@
         <h4 class="subHeaderWithIcon clickable yellowish bottomBothCornerHeader">
           <%= link_to 'Add picture', '#imageSlider', :onclick => "$('#imageUploader').appear();" %>
         </h4>
-
         <div class="clear"></div>
         <div class="space_10"></div>
 

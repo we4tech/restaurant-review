@@ -19,6 +19,12 @@ class Checkin < ActiveRecord::Base
     }
   }
 
+  named_scope :with_in, lambda {|hours|
+    {
+        :conditions => ['created_at BETWEEN ? AND ?', (Time.now - hours).utc, Time.now.utc]
+    }
+  }
+
   class << self
 
     # Find all check in leaders based on the most participation.

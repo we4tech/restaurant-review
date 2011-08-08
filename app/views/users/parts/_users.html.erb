@@ -1,0 +1,23 @@
+<% element_id = "el_#{rand.to_s.gsub(/\./, '')}" %>
+
+<h4 class="subHeaderWithIcon clickable topCornerHeader" onclick="$('#<%= element_id %>').toggle('slide');">
+  <%= label %>
+</h4>
+
+<div id='<%= element_id %>' class='site_simple_box' style='display: <%= defined?(keep_open) && keep_open ? 'block' : 'none' %>'>
+  <% if defined?(quote) %>
+    <blockquote><%= quote %></blockquote>
+  <% end %>
+  <div class='space_5'></div>
+  <div class="userPictures">
+    <% users.each_with_index do |u, index| %>
+      <div class='userPicture'>
+        <%= link_to image_tag(u.display_picture), user_long_url(u) %>
+        <div>
+          <%= link_to u.login, user_long_url(u) %>
+        </div>
+      </div>
+    <% end %>
+    <div class='clear'></div>
+  </div>
+</div>

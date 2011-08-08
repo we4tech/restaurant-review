@@ -3,6 +3,7 @@ class Image < ActiveRecord::Base
   GROUP_MENU = 'food_menu'
   THUMBNAILS = {
     :very_small => 'x40',
+    :c_very_small => 'c40x40',
     :small => '60x60',
     :c_small => 'c100x100',
     :large => 'x200',

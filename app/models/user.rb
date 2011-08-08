@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
   # Determine user display picture either from his uploaded one or from his facebook profile
   # (if he has registered through facebook account)
   # Otherwise return our default display picture
-  def display_picture(image_size = :very_small)
+  def display_picture(image_size = :c_very_small)
     if self.image
       self.image.public_filename(image_size)
     elsif facebook_uid.to_i > 0

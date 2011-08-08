@@ -1,0 +1,15 @@
+<h4 class='headerWithIcon topBothCornerHeader bottomBothCornerHeader rightActionButtion clickable icon_review_big'
+    onclick='window.location="#restaurantReviewEditor"; $('#review_comment').focus();'>
+<%= link_to 'Write Review', '#restaurantReviewEditor', :onclick => "$('#review_comment').focus();" %>
+</h4>
+<div class='space_10'></div>
+
+<h4 class='headerWithIcon topBothCornerHeader bottomBothCornerHeader rightActionButtion clickable icon_checkin_big'
+    onclick='window.location="<%= create_checkin_path(url_escape(@topic.name), @restaurant.id) %>"'>
+  <%= link_to 'Check in here', create_checkin_path(url_escape(@topic.name), @restaurant.id) %>
+</h4>
+<div class='space_10'></div>
+<%= render_online_users(@restaurant, 5, :label => 'Right now here') %>
+<div class="clear"></div>
+<div class="space_10"></div>
+<%= render_wanna_go(@restaurant, 5) %>

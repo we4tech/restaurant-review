@@ -436,4 +436,33 @@ module RestaurantsHelper
 
     image_tag(link)
   end
+  
+  #
+  # Look for users which has just checked in (or about 30 mins to 1 hour ago)
+  def render_online_users(restaurant, limit, options = {})
+    checkins = restaurant.checkins.with_in(2.hours)
+
+    if checkins.present?
+      users = checkins.collect(&:user)
+      render :partial => 'users/parts/users', :locals => { 
+        :quote => "#{users.count} people have checked in this place with in last 2 hours.",
+        :users => users, 
+        :label => "#{users.count} #{users.count == 1 ? 'person' : 'people'} just checked in"
+      }
+    end
+  end
+  
+  #
+  # Render list of users who wanna go there.
+  def render_wanna_go(restaurant, limit, options = {})
+    count = restaurant.reviews.wanna_go.count
+    
+    if count > 0
+      render :partial => 'users/parts/users', :locals => {
+        :users => restaurant.reviews.wanna_go.collect(&:user),
+        :label => "#{count} #{count == 1 ? 'person' : 'people'} wanna visit here"
+      }
+    end
+  end
+    
 end

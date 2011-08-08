@@ -58,19 +58,21 @@
 <div id="map_marker_content"></div>
 
 <!--script type="text/javascript" src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<%= @topic.gmap_key.blank? ? MAP_API_KEY : @topic.gmap_key %>&hl=en"></script-->
-<script type="text/javascript">
-  $.executeLater(function() {
-    App.MapWidget.createMap($('#google_map_canvas'));
+<% content_for :after_map_init do %>
+  <script type="text/javascript">
+    $.executeLater(function() {
+      App.MapWidget.createMap($('#google_map_canvas'));
 
-    // Load markers
-    $('#google_map_canvas').loadNearbyRestaurants(
-      "<%= search_url(:lat => @model_instance.lat, :lng => @model_instance.lng, :meter => 1000, :format => 'json') %>",
-      $('#map_marker_content'));
-
-    $('#distance_select').change(function() {
+      // Load markers
       $('#google_map_canvas').loadNearbyRestaurants(
-        "<%= search_url(:lat => @model_instance.lat, :lng => @model_instance.lng, :format => 'json') %>&amp;meter=" + this.value,
-        $('#map_marker_content'), true);
+        "<%= search_url(:lat => @model_instance.lat, :lng => @model_instance.lng, :meter => 1000, :format => 'json') %>",
+        $('#map_marker_content'));
+
+      $('#distance_select').change(function() {
+        $('#google_map_canvas').loadNearbyRestaurants(
+          "<%= search_url(:lat => @model_instance.lat, :lng => @model_instance.lng, :format => 'json') %>&amp;meter=" + this.value,
+          $('#map_marker_content'), true);
+      });
     });
-  });
-</script>
+  </script>
+<% end %>

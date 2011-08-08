@@ -5,6 +5,11 @@
       :id => @restaurant.id,
       :html => render(:partial => "restaurants/parts/tools",
                       :locals => {:grouped => true, :restaurant => @restaurant})}
+   jsonable_response << {
+       :elementId => 'restaruantInfo',
+       :id => @restaurant.id,
+       :html => render(:partial => 'restaurants/parts/info')
+   }
 
    @restaurant.reviews.each do |review|
      jsonable_response << {
@@ -18,7 +23,7 @@
 $('#restaurantReviewEditor').html("<%= escape_javascript(render(:partial => 'reviews/parts/review_editor')) %>").appear();
 
 <% jsonable_response.each do |item| %>
-  $('#<%= item[:elementId] %>').html("<%= escape_javascript(item[:html])%>").appear();
+  $('#<%= item[:elementId] %>').removeClass('loadingIndicator').html("<%= escape_javascript(item[:html])%>").appear();
 <% end %>
 
 // Enable add comment link

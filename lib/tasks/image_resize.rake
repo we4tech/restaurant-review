@@ -3,8 +3,21 @@ namespace :welltreat do
 
     desc 'Reimage all existing images'
     task :reimage => :environment do
+      images = nil
+
+      # If model is defined retrieve image from model
+      if ENV['MODEL']
+        case ENV['MODEL']
+          when 'User'
+            images = User.all.collect(&:image).compact
+        end
+
       # Retrieve all existing parent images
-      Image.all(:conditions => ['parent_id IS NULL'], :order => 'id DESC').each do |image|
+      else
+        images = Image.all(:conditions => ['parent_id IS NULL'], :order => 'id DESC')
+      end
+
+      images.each do |image|
         orig_file_path = File.join(RAILS_ROOT, 'public', image.public_filename)
         if File.exist?(orig_file_path)
           temp_file_path = File.join(RAILS_ROOT, 'public', "#{image.public_filename}.tmp")
