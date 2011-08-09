@@ -8,7 +8,8 @@
    jsonable_response << {
        :elementId => 'restaruantInfo',
        :id => @restaurant.id,
-       :html => render(:partial => 'restaurants/parts/info')
+       :html => render(:partial => 'restaurants/parts/info',
+                       :object => @restaurant, :locals => {:topic_name => 'restaurant'})
    }
 
    @restaurant.reviews.each do |review|

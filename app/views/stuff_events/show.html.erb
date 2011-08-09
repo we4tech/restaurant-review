@@ -33,6 +33,7 @@
     </div>
   <% end %>
 </div>
+<div class='clear'></div>
 
 <% if @cached %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)), :defer => 'defer' %>
@@ -78,5 +79,9 @@
 				showOrHide($(this), false);
 			});
 		});
+
+    <% if @full_view %>
+      $('.storyDetails').show();
+    <% end %>
 	})();
 </script>

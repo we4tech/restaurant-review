@@ -125,8 +125,6 @@
 <div class="clear"></div>
 
 <% if @cached %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>
-
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'image_tools',
                                                 :image_ids => @stuff_events.collect(&:image).compact.collect(&:id)),
                              :defer => 'defer' %>

@@ -119,9 +119,9 @@ module UsersHelper
     # Render user status based on his participation
   def render_user_status(user = nil, options = {})
     user = user || current_user
-    checkins_count = user.checkins.count
-    reviews_count = user.reviews.count
-    explores_count = user.restaurants.count
+    checkins_count = user.checkins.by_topic(@topic.id).count
+    reviews_count = user.reviews.by_topic(@topic.id).count
+    explores_count = user.restaurants.by_topic(@topic.id).count
 
     content_tag('div', :class => 'userStatusBox') do
       html = ''
@@ -255,7 +255,7 @@ module UsersHelper
     images = user.images.recent.all(:limit => 5)
 
     if not images.empty?
-      content_tag('div', :class => 'userImagesContainer') do
+      container = content_tag('div', :class => 'userImagesContainer') do
         html = ''
 
         images.each do |image|
@@ -269,6 +269,8 @@ module UsersHelper
         html << '<div class="clear"></div>'
         html
       end
+
+      "<div class='userUploadedPictures'>#{container}</div><div class='clear space_10'></div>"
     end
   end
 

@@ -16,6 +16,7 @@ class StuffEvent < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :restaurant
+  belongs_to :topic_event
   belongs_to :review
   belongs_to :review_comment
   belongs_to :image
@@ -50,5 +51,8 @@ class StuffEvent < ActiveRecord::Base
       { :conditions => ['stuff_events.user_id NOT IN (?)', ids]}
     end
   }
+
+  include CommonModel::Common
+  include CommonModel::CommonTopModel
 
 end

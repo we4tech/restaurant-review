@@ -136,23 +136,22 @@
   App.Tasks.executeTasks();
 
   <% if !logged_in? %>
-  $('.login_button').click(function() {
-    $('#login_form').dialog({
-      modal: true, title: "<%= t('title.login')%>", width: 550, height: 410});
-    return false;
-  });
-
-  $('.register_button').click(function() {
-    $.getScript("<%= ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>");
-    $('#registration_form').dialog({
-      modal: true, title: "<%= t('layout.links.register') %>",
-      width: 550
+    $('.login_button').click(function() {
+      $('#login_form').dialog({
+        modal: true, title: "<%= t('title.login')%>", width: 550, height: 410});
+      return false;
     });
-    return false;
-  });
-  <% end %>
 
-  $('#login_form, #registration_form').ajaxify({urlRef: false});
+    $('.register_button').click(function() {
+      $.getScript("<%= ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>");
+      $('#registration_form').dialog({
+        modal: true, title: "<%= t('layout.links.register') %>",
+        width: 550
+      });
+      return false;
+    });
+    $('#login_form, #registration_form').ajaxify({urlRef: false});
+  <% end %>
 
   $('form input').each(function() {
     var $field = $(this);

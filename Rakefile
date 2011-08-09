@@ -8,3 +8,11 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+
+# Rakefile
+begin
+  require File.join(RAILS_ROOT, 'vendor', 'plugins', 'query_reviewer/lib/query_reviewer/tasks')
+rescue LoadError
+  STDERR.puts "The query_reviewer gem could not be found!"
+end
+

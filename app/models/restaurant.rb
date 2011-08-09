@@ -112,7 +112,7 @@ class Restaurant < ActiveRecord::Base
           :offset  => p_offset,
           :conditions => ['reviews.user_id IN (?)', users.collect(&:id)],
           :limit   => limit})
-      reviews.collect(&:restaurant)
+      reviews.collect(&:restaurant).compact
     end
 
     # Retrieve most checkined places
@@ -120,7 +120,7 @@ class Restaurant < ActiveRecord::Base
       limit    = self.determine_row_limit_option(limit)
 
       checkins = Checkin.by_topic(topic.id).all(
-          :include => [:restaurant],
+          :include => {:restaurant => [:related_images]},
           :group   => 'restaurant_id',
           :order   => 'count(restaurant_id) DESC',
           :offset  => offset,

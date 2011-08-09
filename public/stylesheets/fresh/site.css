@@ -2712,3 +2712,12 @@ box-shadow: 1px 1px 1px 0 #000000;
   width: 40px;
   height: 40px;
 }
+
+.readyToClick {
+  background: lightGreen;
+  font-weight: bold;
+}
+
+.no_bottom_border {
+  border-bottom: 0!important;
+}

@@ -8,7 +8,7 @@
     <%= f.error_messages.gsub(/(restaurant)/, @topic.name.humanize) %>
     <%= f.hidden_field :id, :value => @restaurant.id %>
     <%= render :partial => 'restaurants/parts/form_attributes_based', :locals => {:f => f} %>
-    <%= f.submit t('button.update'), :class => 'submit' %> |
+    <%= f.submit 'Wait...', :label => t('button.update'), :class => 'submit' %> |
     <%= link_to t('nav.show'), restaurant_long_url(@restaurant) %>
     <% if @restaurant.author?(current_user) %>
       | <%= link_to t('nav.delete'), restaurant_url(@restaurant),

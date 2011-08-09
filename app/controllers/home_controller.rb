@@ -230,7 +230,7 @@ class HomeController < ApplicationController
     end
 =end
     if tag
-      @restaurants = tag.restaurants.paginate :page => params[:page]
+      @restaurants = tag.restaurants.paginate :include => {:tags => [:tag_groups], :related_images => [:image]}, :page => params[:page]
       load_module_preferences
 
       @title = tag.name_with_group
@@ -372,7 +372,7 @@ class HomeController < ApplicationController
                             StuffEvent::TYPE_CONTRIBUTED_IMAGE],
             },
         :order => 'created_at DESC',
-        :include => [:image, :restaurant],
+        :include => {:image => [:photo_comments], :restaurant => []},
         :page => params[:page])
 
     load_module_preferences

@@ -17,7 +17,7 @@ class CheckinsController < ApplicationController
         o = Restaurant.find(params[:id])
         saved = create_check_in({:restaurant_id => o.id})
 
-      when 'topic_event'
+      when 'topic-event'
         o = TopicEvent.find(params[:id])
         saved = create_check_in({:topic_event_id => o.id})
     end

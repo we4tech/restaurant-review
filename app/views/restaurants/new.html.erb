@@ -10,7 +10,7 @@
     <%= f.error_messages.gsub(/(restaurant)/, @topic.name.humanize) %>
     <%= render :partial => 'restaurants/parts/form_attributes_based',
                :locals => {:f => f} %>
-    <%= f.submit t('button.create'), :class => 'submit' %>
+    <%= f.submit 'Wait...', :label => t('button.create'), :class => 'submit' %>
   <% end %>
 </div>
 

@@ -10,6 +10,8 @@ namespace :welltreat do
         case ENV['MODEL']
           when 'User'
             images = User.all.collect(&:image).compact
+          when 'TopicEvent'
+            images = TopicEvent.all.collect(&:all_images).compact.flatten.compact
         end
 
       # Retrieve all existing parent images

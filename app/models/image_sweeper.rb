@@ -17,11 +17,17 @@ class ImageSweeper < ActiveRecord::Observer
   end
 
   private
-    def expire_cache_for(image)
-      if image.restaurant_id
-        CacheHelper::Util.expire_caches("home", "frontpage")
-        CacheHelper::Util.expire_caches("restaurants", "show.+_#{image.restaurant_id}")
-        CacheHelper::Util.expire_caches(".", "best_for_box")
-      end
+  def expire_cache_for(image)
+    CacheHelper::Util.expire_caches("home", "frontpage")
+    if image.restaurant_id.present?
+      CacheHelper::Util.expire_caches("restaurants", "show.+_#{image.restaurant_id}")
+    elsif image.topic_event_id.present?
+      CacheHelper::Util.expire_caches("topic_events", "show.+_#{image.topic_event_id}")
     end
+    CacheHelper::Util.expire_caches(".", "best_for_box")
+    CacheHelper::Util.expire_caches(".", "leader_board")
+    CacheHelper::Util.expire_caches(".", "render_news_feed")
+    CacheHelper::Util.expire_caches(".", "render_top_menu_restaurant")
+    CacheHelper::Util.expire_caches(".", "render_page_side_modules")
+  end
 end

@@ -29,7 +29,7 @@ module StuffEventsHelper
 
     if current_user
       subscribed_restaurants = current_user.subscribed_restaurants.
-          by_topic(@topic.id).find(:all, :group => 'restaurants.id')
+          by_topic(@topic.id).all(:group => 'restaurants.id')
       user_log = current_user.user_logs.by_topic(@topic.id).first
       subscribed_restaurants.each{|r| restaurant_ids << r.id}
 
@@ -212,7 +212,7 @@ module StuffEventsHelper
         # If not been away
         # Check whether any other place already been checked in by this user
         last_checkin = event.user.checkins.last
-        if last_checkin.restaurant_id == event.restaurant_id
+        if last_checkin.ref_id == event.ref_id
           message << 'still at'
 
         # If been away
@@ -225,7 +225,14 @@ module StuffEventsHelper
         message << 'was at'
       end
 
-      message << " #{restaurant_link(event.restaurant)} at #{link_to event.restaurant.address, full_map_path(:rid => event.restaurant.id)}</div>"
+      map_link = nil
+      if event.restaurant
+        full_map_path(:rid => event.any.id)
+      elsif event.topic_event
+        full_map_path(:eid => event.any.id)
+      end
+
+      message << " #{event_or_restaurant_link(event.any)} at #{link_to event.any.address, map_link}</div>"
     end
 
     def prepare_story_for_review_comment(event, message)

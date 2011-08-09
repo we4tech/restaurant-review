@@ -13,6 +13,7 @@ class StuffEventsController < ApplicationController
 
     @stuff_events = data[:stuff_events]
     @user_log = data[:user_log]
+    @full_view = true
 
     respond_to do |format|
       format.html {

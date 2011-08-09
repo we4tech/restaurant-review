@@ -10,6 +10,7 @@ class Image < ActiveRecord::Base
     :c_large => 'c300x200',
     :very_large => 'x400',
     :c_very_large => 'c822x515',
+    :c_gallery => 'c85x85',
     :slider => 'c618x246'
   }
 

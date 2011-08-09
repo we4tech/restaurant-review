@@ -47,7 +47,8 @@
             Loading info...
           </div>
         <% else %>
-          <%= render :partial => 'restaurants/parts/info' %>
+          <%= render :partial => 'restaurants/parts/info', :object => @restaurant,
+                     :locals => {:topic_name => 'restaurant'} %>
         <% end %>
         <div class="clear"></div>
         <div class="space_10"></div>
@@ -61,20 +62,20 @@
         <div class="clear"></div>
         <div class="space_10"></div>
 
-        <h4 class="subHeaderWithIcon topBothCornerHeader clickable yellowish">
+        <h4 class="subHeaderWithIcon topBothCornerHeader clickable no_bottom_border">
           Explored by<br/>
           <%= user_link(@restaurant.user) %>
         </h4>
 
-        <h4 class="subHeaderWithIcon clickable yellowish">
+        <h4 class="subHeaderWithIcon clickable no_bottom_border">
           <%= link_to 'Write your review', '#restaurantReviewEditor', :onclick => "$('#review_comment').focus();" %>
         </h4>
 
-        <h4 class="subHeaderWithIcon clickable yellowish">
+        <h4 class="subHeaderWithIcon clickable no_bottom_border">
           <%= link_to 'Pictures', '#imageSlider' %>
         </h4>
 
-        <h4 class="subHeaderWithIcon clickable yellowish bottomBothCornerHeader">
+        <h4 class="subHeaderWithIcon clickable bottomBothCornerHeader">
           <%= link_to 'Add picture', '#imageSlider', :onclick => "$('#imageUploader').appear();" %>
         </h4>
         <div class="clear"></div>
@@ -199,7 +200,6 @@
   $('.review_comment_form').hide();
 </script>
 <% if @cached %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_view_tools', :restaurant_id => @restaurant.id) %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'page_side_modules'), :defer => 'defer' %>
 <% end %>

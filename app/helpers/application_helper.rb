@@ -99,9 +99,11 @@ module ApplicationHelper
         @user = User.by_domain_name(domain_name)
         if @user
           determine_rotatable_background_image
-          page_context [:list_page, :profile_page]
-          load_user_profile(@user)
-          render :template => 'users/show_v2'
+          cache_fragment(cache_path(self)) do
+            page_context [:list_page, :profile_page]
+            load_user_profile(@user)
+            render :template => 'users/show_v2'
+          end
         else
           render :text => 'User doesn\'t exist'
         end

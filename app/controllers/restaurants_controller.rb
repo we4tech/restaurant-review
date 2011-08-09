@@ -51,7 +51,7 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id].to_i)
+    @restaurant = Restaurant.find(params[:id].to_i, :include => [:tags])
 
     if redirected_to_long_url? or redirected_to_original_topic_based_url?
       return true

@@ -51,10 +51,7 @@
 
     <div class='clear'></div>
     <div class='space_10'></div>
-    <div class="userUploadedPictures">
-      <%= render_user_uploaded_pictures(@user) %>
-    </div>
-    <div class='clear space_10'></div>
+    <%= render_user_uploaded_pictures(@user) %>
 
     <div class="userActivities">
       <%= render_news_feed(:label => 'Recent activities', :filters => {:user_id => @user.id}, :grid_class => 'grid_5') %>
@@ -91,3 +88,4 @@
     <div class="clear"></div>
   </div>
 </div>
+<div class='clear'></div>

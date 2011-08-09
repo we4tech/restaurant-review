@@ -34,8 +34,11 @@ class TopicEvent < ActiveRecord::Base
   has_many :checkins
 
   named_scope :by_topic, lambda { |topic_id| {:conditions => {:topic_id => topic_id}} }
-  named_scope :open_events, :conditions => {
-      :suspended => false, :completed => false}
+  named_scope :open_events, lambda {
+    {
+        :conditions => ['suspended = ? AND completed = ? AND end_at > ?', false, false, Time.now.utc]
+    }
+  }
 
   named_scope :upcoming, :conditions => ['start_at < ? AND start_at > ? AND end_at > ?',
                                          (Time.now + 7.days).utc, Time.now.utc, Time.now.utc],

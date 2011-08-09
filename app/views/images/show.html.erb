@@ -133,7 +133,7 @@
               <% end %>
 
               <div class='space_10'></div>
-              <%= f.submit t('button.add_comment') %>
+              <%= f.submit 'Wait...', :label => t('button.add_comment') %>
             <% end %>
           </div>
         <% else %>
@@ -213,7 +213,6 @@
   $('.review_comment_form').hide();
 </script>
 <% if @cached %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'image_view_tools', :image_id => @image.id) %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'page_side_modules'), :defer => 'defer' %>
 <% end %>

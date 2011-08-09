@@ -25,6 +25,9 @@ class Checkin < ActiveRecord::Base
     }
   }
 
+  include CommonModel::Common
+  include CommonModel::CommonTopModel
+
   class << self
 
     # Find all check in leaders based on the most participation.

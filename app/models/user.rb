@@ -287,7 +287,7 @@ class User < ActiveRecord::Base
   #   mostly active in review and loves
   def most_explored_tags(topic, tag_groups = [], limit = 5)
     # Take 5 mostly visited places
-    most_visited = self.checkins.by_topic(topic.id).most.all(:limit => 5)    
+    most_visited = self.checkins.by_topic(topic.id).most.all(:limit => 5)
     most_visited_tags = sort_tags(tag_groups, most_visited.collect(&:restaurant))    
 
     # Take 5 mostly reviewed and loved places
@@ -308,7 +308,7 @@ class User < ActiveRecord::Base
     all_tags = tag_groups.collect(&:tags).flatten
 
     # Gather all tags and calculate frequency
-    tags = restaurants.collect(&:tags).flatten
+    tags = restaurants.compact.collect(&:tags).flatten
     
     # Filter tags by tag group
     filtered_tags = tags.collect{|tag| tag if all_tags.include?(tag)}.compact

@@ -82,20 +82,31 @@
         <div class="clear"></div>
         <div class="space_10"></div>
 
-        <h4 class="subHeaderWithIcon">User activity</h4>
+        <% if @cached %>
+          <div class='loadingIndicator' id="restaruantInfo">
+            Loading info...
+          </div>
+        <% else %>
+          <%= render :partial => 'restaurants/parts/info', :object => @event %>
+        <% end %>
+        <div class="clear"></div>
+        <div class="space_10"></div>
 
-        <div class="site_simple_box">
+        <h4 class="subHeaderWithIcon clickable topCornerHeader"
+            onclick="$('#restaurant_user_activity_graph').toggle('slide');">User activity chart</h4>
+
+        <div class="site_simple_box" id='restaurant_user_activity_graph' style="display:none">
           <%= render_restaurant_status_in_graph(@event) %>
         </div>
         <div class="clear"></div>
         <div class="space_10"></div>
 
-        <h4 class="subHeaderWithIcon topBothCornerHeader clickable yellowish">
+        <h4 class="subHeaderWithIcon topBothCornerHeader clickable no_bottom_border">
           Explored by<br/>
           <%= user_link(@event.user) %>
         </h4>
 
-        <h4 class="subHeaderWithIcon clickable yellowish">
+        <h4 class="subHeaderWithIcon clickable">
           <%= link_to 'Write your review', '#restaurantReviewEditor', :onclick => "$('#review_comment').focus();" %>
         </h4>
 
@@ -109,18 +120,21 @@
     <!-- The information part ends here -->
 
     <!-- Details part 2 (The image slider) -->
-    <div class="details restaurantSlide" id='imageSlider'>
-      <% @event.all_images.each do |image| %>
-        <div class="image">
-          <%= link_to image_tag(image.small_public_filename,
-                                :alt => image.caption,
-                                :title => image.caption), image_path(image) %>
-        </div>
-      <% end %>
+    <% if @event.all_images.present? %>
+      <div class="details restaurantSlide" id='imageSlider'>
+        <% @event.all_images.each do |image| %>
+          <div class="image">
+            <%= link_to image_tag(image.small_public_filename,
+                                  :alt => image.caption,
+                                  :title => image.caption), image_path(image) %>
+          </div>
+        <% end %>
 
-      <div class="clear"></div>
-    </div>
-    <div class="clear space_10"></div>
+        <div class="clear"></div>
+      </div>
+      <div class="clear space_10"></div>
+    <% end %>
+
     <!-- The image slider part ends here -->
 
     <!-- Details part 3 (The review) -->
@@ -203,7 +217,6 @@
   $('.review_comment_form').hide();
 </script>
 <% if @cached %>
-  <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'event_view_tools', :event_id => @event.id) %>
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'page_side_modules'), :defer => 'defer' %>
 <% end %>
