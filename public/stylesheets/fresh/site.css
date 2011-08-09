@@ -2415,7 +2415,8 @@ box-shadow: 1px 1px 1px 0 #000000;
   height: 20px;
   margin-bottom: 3px;
   padding: 2px;
-  width: 97%;
+  width: 88%;
+  margin-right: 5px;
 }
 
 .container_12 .grid_4_compressed {

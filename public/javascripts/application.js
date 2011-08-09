@@ -680,6 +680,16 @@ App.MapWidget = {
         });
       }
 
+      function addReDetectField() {
+        var searchFieldId = $pMapWidgetElement.attr('id') + '_search_field';
+        var $detectButton = $('<input type="button" class="icon_current_location" value="DL" title="Detect current location"/>');
+        $('#' + searchFieldId).after($detectButton);
+
+        $detectButton.click(function(e) {
+          detectCurrentPosition();
+        });
+      }
+
       function addFullView() {
 //        var $fullViewButton = $('<input type="button" value="Full screen"/>');
 //        $pMapWidgetElement.before($fullViewButton);
@@ -702,6 +712,7 @@ App.MapWidget = {
         retrieveCurrentGeoLocation();
         appearMap();
         addSearchField();
+        addReDetectField();
         addFullView();
       }
 
