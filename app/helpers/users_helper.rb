@@ -277,12 +277,12 @@ module UsersHelper
   def render_last_activity(user)
     last_checkin = user.checkins.last
     if last_checkin
-      message = content_tag('span', "#{content_tag('strong', 'Last been')} - #{restaurant_link(last_checkin.restaurant)}")
+      message = content_tag('span', "#{content_tag('strong', 'Last been')} - #{event_or_restaurant_link(last_checkin.any)}")
       
     else
       last_reviewed = user.reviews.last
       if last_reviewed
-        message = content_tag('span', "#{content_tag('strong', 'Last reviewed')} - #{restaurant_link(last_reviewed.restaurant)}")
+        message = content_tag('span', "#{content_tag('strong', 'Last reviewed')} - #{event_or_restaurant_link(last_reviewed.any)}")
         
       else
         last_explored = user.restaurants.last

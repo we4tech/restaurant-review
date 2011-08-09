@@ -1,5 +1,64 @@
 h2. WellTreat.US release change logs.
 
+h4. Release - 0.22 - New look and ad.
+
+* 350. FIX sudden tag lost bug (it is due to add new recipient feature)
+* 352. Fix HTTP forwarded for header for getting the real user
+* 353. On mobile version restaurant details page "add review" should have "Show reviews" and "add review"
+* 347. Filter nearby restaurants by mobile location if browsed from mobile
+* 354. Optimized image
+* 355. Set small top banner for mobile version
+* 354. FIX if image uploaded from mobile show html format
+* [ND] 355. Fix issue with Map and current location in slow net
+* 356. Facebook check in sharing
+* 357. Fix url escaping issue with event
+* 358. Added search field for mobile version
+* 359. Fixed duplicate check in issue added 2 hours time limit
+* 364. Mobile version: Add new tag
+* 360. Make map marker searchable
+* 361. Fix Floating domain error for check in
+* 365. Tag auto assign to tag group
+
+h4. New UI Integration.
+
+* 1. Event
+* 2. Ad space
+* 3. Categorization
+* 4. Recent activity
+* 5. Upcoming events
+* 6. Week top chart
+* 7. Day wise grouping
+* 8. Fix broken links
+* 9. Design details page
+* 22. Optimize Checkin, love and review icons
+* 28. Exclude us from the leader board
+* 24. Ajax load activities log on front page
+* 14. Build section details page
+* 20. Image details page
+* 15. Redesign logo
+* 46. Fix right boxes design
+* [CANCELLED] 34. Upgrade sphinx
+* 45. On user profile page list of restaurants should display how much contribution he had. ie- efes 12 checkins
+* 49. Fix event page with status
+* 48. Show photo comments in activity stream
+* 55. Change login/registration page
+* 56. Change add/edit restaurant page
+* 54. Show photo view as facebook photo with comments view
+* [CANCELED/Instead Image] 29. Food menu
+* 23. Fix similar restaurants module
+* [CANCELED/Better UI idea taken] 11. Change event date box with star shape
+* 47. Filter pages by filters
+* 16. Check search page
+* 59. Show currently HERE box
+* 57. Who wanna go box
+* 368. Fix full map view
+* 53. Index database tables
+* 54. Add restaurant view page buttons on event page
+* 25. Cache activity fragment
+* 26. Cache leader board
+* 26. Cache user profile
+* 51. Fix bugs on posting review (authenticity related)
+
 h4. Release - 0.21 - Bug fixes.
 
 * 323. Fix problem with Mobile version restaurant details page (shows not supported)

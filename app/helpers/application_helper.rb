@@ -100,6 +100,7 @@ module ApplicationHelper
         if @user
           determine_rotatable_background_image
           cache_fragment(cache_path(self)) do
+            @cache = true
             page_context [:list_page, :profile_page]
             load_user_profile(@user)
             render :template => 'users/show_v2'
