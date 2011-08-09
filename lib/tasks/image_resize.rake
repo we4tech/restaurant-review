@@ -21,9 +21,14 @@ namespace :welltreat do
 
       images.each do |image|
         orig_file_path = File.join(RAILS_ROOT, 'public', image.public_filename)
-        if File.exist?(orig_file_path)
-          temp_file_path = File.join(RAILS_ROOT, 'public', "#{image.public_filename}.tmp")
+        temp_file_path = File.join(RAILS_ROOT, 'public', "#{image.public_filename}.tmp")
 
+        # Fix previously broken image
+        if !File.exist?(orig_file_path) && File.exists?(temp_file_path)
+          FileUtils.mv(temp_file_path, orig_file_path)
+        end
+
+        if File.exist?(orig_file_path)
           FileUtils.mv(orig_file_path, temp_file_path)
 
             # Update image object and reset temp file path
