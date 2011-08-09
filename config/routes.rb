@@ -72,6 +72,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contributed_images
 
   map.resources :topics, :member => {
+      :invalidate_cache => :get,
       :export => :get, :import => :get,
       :import_uploaded_file => :post, :skeleton => :get}
 

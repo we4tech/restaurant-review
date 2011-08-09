@@ -196,6 +196,12 @@ class TopicsController < ApplicationController
     send_data skeleton_text, :filename => @topic_object.name.pluralize.downcase, :disposition => "attachment; filename=\"#{@topic_object.name.pluralize.downcase}_import.yml\""
   end
 
+  def invalidate_cache
+    FileUtils.rm_rf(File.join(RAILS_ROOT, 'tmp', 'cache'))
+    flash[:notice] = 'All cached pages are gone :)'
+    redirect_to :back
+  end
+
   private
     def process_uploaded_file(topic, file)
       extension = file.original_filename.split('.').last.downcase
