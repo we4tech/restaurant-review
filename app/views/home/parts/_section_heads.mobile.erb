@@ -1,0 +1,12 @@
+<div class='box noBorder'>
+  <h4>Browse by sections</h4>
+
+  <div class='content'>
+    <% (sections || []).each do |section| %>
+      <div>
+        <h5><%= link_to section.name, section_url(section) %></h5>
+        <div class='space'></div>
+      </div>
+    <% end %>
+  </div>
+</div>

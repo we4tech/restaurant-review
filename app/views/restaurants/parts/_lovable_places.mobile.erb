@@ -1,45 +1,62 @@
 <% if !restaurants.empty? %>
-  <div class="site_simple_box">
-    <<%= config['heading'] || 'h4' %>><%= tt("module.#{config['label']}") %></<%= config['heading'] || 'h4' %>>
+  <% element_id = url_escape(config[:label]) %>
+  <div class='box'>
+    <% if config[:label] %>
+      <h4 class="subHeaderWithIcon clickable topCornerHeader" onclick="$('#<%= element_id %>').toggle(500, 'easeInOutBounce')"> <%= config[:label] %>
+        <% if config[:count] %>
+          <div class="archiveButton">
+            <%= config[:count] %>
+          </div>
+        <% end %>
 
-  <div class="space_5"></div>
-
-  <table class="lovable_places">
-    <% restaurants.each_with_index do |restaurant, index| %>
-      <%
-         images = restaurant.related_images.by_group(nil).collect(&:image)
-         if images && images.empty?
-           images = restaurant.other_images
-         end
-      %>
-      <tr>
-        <td>
-          <% if !images.empty? %>
-            <%= link_to(image_tag(
-                            images.rand.public_filename(:very_small), :alt => ''),
-                        images.first.public_filename(:large), :class => 'image_small') %>
-          <% end %>
-        </td>
-        <td>
-          <h6>
-            <%= link_to restaurant.name,
-                        restaurant_long_url(restaurant) %>
-          </h6>
-
-          <div class="site_list_item_rating"><%= render_restaurant_review_stats(restaurant) %></div>
-        </td>
-      </tr>
-
-      <div class="space_5 clear"></div>
-      <% if index + 1 != restaurants.length %>
-        <div class="break"></div>
-        <div class="space_5 clear"></div>
-      <% end %>
+        <% if config[:link_bar] %>
+          <%= link_to tt('nav.more_places'), more_link, :class => 'archiveButton' %>
+        <% end %> </h4>
     <% end %>
-  </table>
-  <div class="break"></div>
-  <div class="small">
-    <%= link_to tt('nav.more_places'), more_link %>
-  </div>
+    <div id="<%= element_id %>" class='content'
+         style="display: <%= config[:label] && !config[:keep_open] ? 'none' : 'block' %>; <%= config[:z_index] ? "z-index: #{config[:z_index]}; position: relative;" : '' %>">
+      <div class="space_10"></div>
+      <% restaurants.each_with_index do |restaurant, index| %>
+        <%
+           images = restaurant.related_images.by_group(nil).collect(&:image)
+           if images && images.empty?
+             images = restaurant.other_images
+           end
+        %>
+        <table>
+          <tr>
+            <td>
+              <% if !images.empty? %>
+                <%= link_to(image_tag(
+                                images.rand.public_filename(:c_very_small), :alt => 'N/A'),
+                            images.first.public_filename(:large), :class => 'image_small') %>
+              <% else %>
+                <%= link_to(image_tag('/images/fresh/no-dp.png'), '#', :class => 'image_small') %>
+              <% end %>
+            </td>
+            <td valign="top">
+              <%= link_to truncate(restaurant.name, :length => 20),
+                          restaurant_long_url(restaurant), :title => restaurant.name %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <% if config[:show_contribution] %>
+                <%= render_restaurant_review_stats_by_user(@user, restaurant, config[:show_contribution]) %>
+              <% else %>
+                <%= render_restaurant_review_stats(restaurant) %>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      <% end %>
+
+      <% if config[:link_bar].nil? && more_link %>
+        <div class="clear"></div>
+        <div class="small">
+          <%= link_to tt('nav.more_places'), more_link %>
+        </div>
+      <% end %>
+      </div>
   </div>
 <% end %>

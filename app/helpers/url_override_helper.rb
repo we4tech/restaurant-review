@@ -23,6 +23,7 @@ module UrlOverrideHelper
 
   def user_link(user, options = {})
     same_user_check = options[:same_user_check]
+    length = options[:length] || -1
 
     user_name = user.login.humanize
 
@@ -32,7 +33,15 @@ module UrlOverrideHelper
       end
     end
 
+    if length.to_i > 0
+      user_name = user_name[0..(length - 1)]
+    end
+
     link_to user_name, user_long_url(user)
+  end
+
+  def user_display_picture(user, options = {})
+    link_to image_tag(user.display_picture), user_long_url(user)
   end
 
   def restaurant_long_url(p_options, options2 = {})

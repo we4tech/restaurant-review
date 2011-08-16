@@ -27,6 +27,7 @@ class Topic < ActiveRecord::Base
   has_many :topic_events
   has_many :resource_importers
   has_many :site_policies
+  has_many :checkins
 
   has_one  :form_attribute
 

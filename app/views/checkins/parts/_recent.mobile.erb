@@ -1,0 +1,50 @@
+<% if !checkins.empty? %>
+  <% element_id = url_escape(config[:label]) %>
+  <div class='box noBorder'>
+    <% if config[:label] %>
+      <h4 class="subHeaderWithIcon clickable topCornerHeader" onclick="$('#<%= element_id %>').toggle(500, 'easeInOutBounce')"> <%= config[:label] %>
+        <% if config[:count] %>
+          <div class="archiveButton">
+            <%= config[:count] %>
+          </div>
+        <% end %>
+
+        <% if config[:link_bar] %>
+          <%= link_to tt('nav.more_places'), more_link, :class => 'archiveButton' %>
+        <% end %> </h4>
+    <% end %>
+    <div id="<%= element_id %>" class='content'
+         style="display: <%= config[:label] && !config[:keep_open] ? 'none' : 'block' %>; <%= config[:z_index] ? "z-index: #{config[:z_index]}; position: relative;" : '' %>">
+
+      <% checkins.each_with_index do |checkin, index| %>
+        <table>
+          <tr>
+            <td>
+              <%= user_display_picture(checkin.user) %>
+            </td>
+            <td valign="top">
+              At
+              <%= link_to truncate(checkin.any.name, :length => 20),
+                          event_or_restaurant_url(checkin.any), :title => checkin.any.name %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="highlight">
+              <%= user_link(checkin.user, :length => 5, :same_user_check => true) %> checked in
+              <strong><%= distance_of_time_in_words(Time.now, checkin.created_at) %></strong> ago
+            </td>
+          </tr>
+        </table>
+      <% end %>
+
+      <% if config[:link_bar].nil? && defined?(more_link) %>
+        <div class="clear"></div>
+        <div class="small">
+          <%= link_to t('nav.more'), more_link %>
+        </div>
+      <% end %>
+    </div>
+    <div class='clear'></div>
+    <div class='space'></div>
+  </div>
+<% end %>

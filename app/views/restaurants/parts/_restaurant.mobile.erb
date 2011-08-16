@@ -19,7 +19,7 @@
     <td>
       <div class="<%= grid_class %>">
         <h4>
-          <%= link_to restaurant.name, restaurant_long_url(restaurant) %>
+          <%= link_to truncate(restaurant.name, :length => 10), restaurant_long_url(restaurant), :title => restaurant.name %>
         </h4>
 
         <div class="site_list_item_rating">

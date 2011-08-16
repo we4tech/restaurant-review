@@ -1,0 +1,52 @@
+<div class="newsFeedBox box">
+  <% if not config[:label].blank? %>
+    <h4 class='headerWithIcon newsFeedHeader'>
+      <%= config[:label] %>
+    </h4>
+
+    <div class="break space_5"></div>
+  <% end %>
+
+  <div class="newsFeedItems content">
+    <div class='message'>
+      Tap on each item to view the details
+    </div>
+    <div class='space'></div>
+
+    <% if !stuff_events.empty? %>
+      <% group_by_date(stuff_events).each do |date_label, events| %>
+        <% if date_label == :today %>
+          <h5 class='subHeaderWithIcon'>Today</h5>
+
+          <div class='space_5 break'></div>
+        <% elsif date_label == :yesterday %>
+          <h5 class='subHeaderWithIcon'>Yesterday</h5>
+
+          <div class='space_5 break'></div>
+        <% else %>
+          <h5 class='subHeaderWithIcon'><%= date_label %></h5>
+
+          <div class='space_5 break'></div>
+        <% end %>
+
+        <% events.each do |stuff_event| %>
+          <%= render :partial => 'stuff_events/parts/stuff_event',
+                     :locals => {:stuff_event => stuff_event, :config => config} %>
+        <% end %>
+      <% end %>
+      <div class='clear'></div>
+      <div class="navigation">
+        <% if [:html, :mobile].include?(params[:format]) %>
+          <%= will_paginate stuff_events %>
+        <% else %>
+          <%= link_to 'More activities...', more_link %>
+        <% end %>
+      </div>
+    <% else %>
+      <%= t('label.no_review', :name => @topic.name.humanize) %>
+    <% end %>
+    <div class='clear'></div>
+  </div>
+  <div class='clear space'></div>
+
+</div>

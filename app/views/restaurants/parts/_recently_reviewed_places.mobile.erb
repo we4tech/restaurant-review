@@ -1,0 +1,70 @@
+<% if !reviews.empty? %>
+  <% element_id = url_escape(config[:label]) %>
+
+  <div class='box'>
+    <% if config[:label].present? %>
+      <h4 class="subHeaderWithIcon clickable topCornerHeader" onclick="$('#<%= element_id %>').toggle(500, 'easeInOutElastic')">
+        <%= config[:label] %>
+        <% if config[:count] %>
+          <div class="archiveButton"><%= config[:count] %></div>
+        <% end %>
+
+        <% if config[:link_bar] %>
+          <%= link_to (config[:link_label] || 'more reviews'), more_link, :class => 'archiveButton' %>
+        <% end %>
+      </h4>
+    <% end %>
+
+    <div class="content" id="<%= element_id %>" style="display: none">
+
+      <div class="space_10"></div>
+
+      <% reviews.each_with_index do |review, index| %>
+
+        <table>
+          <tr>
+            <td>
+              <%= link_to image_tag(review.user.display_picture,
+                                    :width => '40px', :alt => 'n/a'),
+                          user_long_url(review.user),
+                          :class => 'image_small' %>
+            </td>
+            <td valign="top">
+              <%= event_or_restaurant_link(review.any) %>
+
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="highlight"
+                title="Tap here to see detail review"
+                style="cursor:pointer"
+                onclick="window.location='<%= "#{event_or_restaurant_url(review.any)}#review-#{review.id}" %>'">
+              <%= link_to review.user.login,
+                          user_long_url(review.user) %>
+              <div class='icon_<%= review.loved? ? 'loved' : '' %>' style='display:inline;'>
+                <% if review.loved? %>
+                  <%= tt('label.loved') %>
+                <% elsif review.hated? %>
+                  <%= tt('label.disliked') %>
+                <% elsif review.wanna_go? %>
+                  <%= tt('label.wannago') %>
+                <% end %>
+              </div>
+              <% if !review.comment.blank? %>
+                and wrote
+                <cite>"<%= truncate(review.comment, :length => 30) %>"</cite>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+
+      <% end %>
+
+      <div class='clear'></div>
+      <div class='navigation'>
+        <%= link_to tt('nav.more_places'), more_link %>
+      </div>
+    </div>
+    <div class='clear'></div>
+  </div>
+<% end %>

@@ -197,6 +197,7 @@ class TopicsController < ApplicationController
   end
 
   def invalidate_cache
+    Topic::CACHES.clear
     FileUtils.rm_rf(File.join(RAILS_ROOT, 'tmp', 'cache'))
     flash[:notice] = 'All cached pages are gone :)'
     redirect_to :back

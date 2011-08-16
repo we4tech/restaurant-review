@@ -25,6 +25,8 @@ class Checkin < ActiveRecord::Base
     }
   }
 
+  named_scope :recent, {:order => 'checkins.created_at DESC'}
+
   include CommonModel::Common
   include CommonModel::CommonTopModel
 

@@ -104,12 +104,25 @@ class TopicEvent < ActiveRecord::Base
       upcoming          = self.upcoming.by_topic(topic.id).all(:limit => 5)
       ongoing           = self.ongoing.by_topic(topic.id).all(:limit => 5)
       preferred         = options[:preferred] || :none
+      only              = options[:only] || []
 
       events[:upcoming] = upcoming
       return events if :upcoming == preferred && !upcoming.empty?
 
       events[:ongoing]  = ongoing
       return events if [:upcoming, :ongoing].include?(preferred) && !ongoing.empty?
+
+      if only.present?
+        if only.include?(:upcoming) && only.include?(:ongoing)
+          return upcoming + ongoing
+
+        elsif only.include?(:upcoming)
+          return upcoming
+
+        elsif only.include?(:ongoing)
+          return ongoing
+        end
+      end
 
       both_events       = upcoming + ongoing
 

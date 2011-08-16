@@ -1,30 +1,37 @@
-<% if @topic.name == 'restaurant' %>
-  <div class='grid_12' id='recommendBox'>
-    <%= render :partial => 'restaurants/parts/recommend' %>
+<div class="clear"></div>
+<div class='space'></div>
+<%= render_recent_checkins({:label => 'Recently checked in', :keep_open => true}) %>
+<div class='clear space'></div>
+<% week_top_chart = render_week_top_chart %>
+<% if !week_top_chart.blank? %>
+  <div class='box weeklyHot'>
+    <%= week_top_chart %>
+  </div>
+  <div class='clear space_10'></div>
+<% end %>
+<% upcoming_events = render_upcoming_events(:grid_class => 'grid_3', :only => [:upcoming, :ongoing]) %>
+<% if !upcoming_events.blank? %>
+  <div class='upcomingEventsBox box'>
+    <h4 class='subHeaderWithIcon'>
+      Upcoming Events
+      <%= link_to 'Archive', events_path, :class => 'archiveButton' %>
+    </h4>
+    <div class='content'>
+      <%= upcoming_events %>
+    </div>
+    <div class='clear'></div>
   </div>
 <% end %>
-
-<div class="clear"></div>
-<div class="grid_8" id="site_center_list">
-  <h1>
-    <% @breadcrumbs.each do |link| %>
-      <%= link_to link.first, link.last %> &raquo;
-      <% end %><%= @title %>
-  </h1>
-
-  <div class="break space_5"></div>
-  <% @restaurants.each_with_index do |restaurant, index| %>
-    <%= render :partial => 'restaurants/parts/restaurant', :locals => {:restaurant => restaurant, :index => index} %>
-  <% end %>
-
-  <div class='pagination'>
-    <%= will_paginate @restaurants %>
-  </div>
-
-  <div class='space_10'></div>
-  <%= render_most_lovable_places({'label' => 'Most loved places!', 'heading' => 'h1'}) %>
-  <div class='space_10'></div>
-</div>
+<%= render_news_feed(:label => 'Recent News') %>
+<div class='clear space'></div>
+<%= render_most_lovable_places({:label => 'Most Eaters Love'}) %>
+<div class='clear space'></div>
+<%= render_most_checkined_places({:label => 'Most Eaters Go'}) %>
+<div class='clear space'></div>
+<%= render_recently_reviewed_places({:label => 'Recent Reviews'}, 5) %>
+<div class='clear space'></div>
+<%= render_section_heads_with_selected_item(:frontpage) %>
+<div class='clear space'></div>
 
 <% content_for :bottom do %>
   <script type="text/javascript">
