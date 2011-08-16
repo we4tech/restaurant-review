@@ -294,13 +294,16 @@ module StuffEventsHelper
       c_small_image = event.image.thumbnails.of_thumbnail('c_small').first
 
       message << "added new image to the '#{link_to event.restaurant.name, restaurant_long_url(event.restaurant)}'</div>"
-      message << "<div class='storyDetails' style='display:none'>"
-      message << "<div class='storyImage' onclick='window.location=\"#{image_path(event.image)}\";' style='width:#{c_small_image.width}px'><div class='storyCommentsCount'>#{event.image.photo_comments.count}</div>#{link_to image_tag(event.image.c_small_public_filename), image_path(event.image.id)}"
 
-      if !event.image.caption.blank?
-        message << "<div class='storyCaption'>#{event.image.caption}</div>"
+      if c_small_image
+        message << "<div class='storyDetails' style='display:none'>"
+        message << "<div class='storyImage' onclick='window.location=\"#{image_path(event.image)}\";' style='width:#{c_small_image.width}px'><div class='storyCommentsCount'>#{event.image.photo_comments.count}</div>#{link_to image_tag(event.image.c_small_public_filename), image_path(event.image.id)}"
+
+        if !event.image.caption.blank?
+          message << "<div class='storyCaption'>#{event.image.caption}</div>"
+        end
+
+        message << "</div></div>"
       end
-
-      message << "</div></div>"
     end
 end
