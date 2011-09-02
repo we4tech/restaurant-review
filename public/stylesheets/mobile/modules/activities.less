@@ -1,0 +1,79 @@
+.list_of_activities() {
+  .updates_item {
+    background: none repeat scroll 0 0 #fff;
+    border-bottom: 1px solid #E9E9E9;
+    font-size: 80%;
+    padding: 5px 5px 0;
+    cursor: pointer;
+
+    .small {
+      float: left;
+      margin-right: 5px;
+
+      img {
+        width: 20px;
+      }
+    }
+
+    .grid_3 {
+      float: left;
+      width: 90%;
+
+      .date {
+        font-size: 70%;
+      }
+
+      .eventContent {
+        color: #888;
+      }
+
+      .storyTitle {
+      }
+
+      .storyImage {
+        padding: 5px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+      }
+
+      .storyCaption {
+        background: none repeat scroll 0 0 #CCCCCC;
+        color: #000;
+        font-size: 80%;
+        margin: -27px 0 0;
+        opacity: 0.6;
+        padding: 2px 5px;
+        position: relative;
+        text-shadow: 1px 1px 3px #000000;
+      }
+
+      .storyCommentsCount {
+        background: none repeat scroll 0 0 yellow;
+        float: right;
+        font-weight: bold;
+        margin-bottom: -30px;
+        position: relative;
+        right: 5px;
+        text-align: center;
+        top: 5px;
+        width: 30px;
+        cursor: pointer;
+
+        .add_round_corner(12px, 12px, 12px, 12px);
+      }
+
+      .storyReview {
+        background: url("/images/icons/dryicons/comments.png") no-repeat scroll 5px center lightYellow;
+        border: 1px solid #CCCCCC;
+        font-size: 80%;
+        font-style: italic;
+        margin-top: 5px;
+        padding: 5px 5px 5px 50px;
+        min-height: 30px;
+
+        .add_round_corner(10px, 0, 0 12px);
+      }
+    }
+  }
+}
+

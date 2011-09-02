@@ -1,7 +1,8 @@
 <form action="<%= search_url %>" id='recommend_form'>
 	<div class="space_10"></div>
+	<input type='hidden' name='format' value='<%= params[:format] %>'/>
 	<input type='hidden' name='_models' value='Restaurant'/>
-	<input id="search_field" placeholder="Wanna eat different? (ie. brownie, gulshan, car parking fuska)" 
+	<input id="search_field" placeholder="Wanna eat different? (ie. brownie, gulshan, car parking fuska)"
 		type="search" class="top_radius" 
 		name="name|short_array|long_array|description[]" class="textField greyText"/>
 </form>

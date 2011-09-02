@@ -27,6 +27,13 @@ Rails::Initializer.run do |config|
   config.gem "i18n"
   config.gem "RedCloth"
   config.gem 'rest-client'
+  config.gem 'haml'
+  config.gem 'sass'
+  config.gem 'coffee-script'
+  config.gem 'uglifier'
+  config.gem 'yui-compressor', :lib => 'yui/compressor'
+  config.gem 'jammit'
+
 
   #config.gem 'jammit', :version => '0.5.1'
 

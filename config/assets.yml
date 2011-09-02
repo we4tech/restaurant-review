@@ -1,0 +1,38 @@
+embed_assets: on
+package_assets: always
+
+javascripts:
+  common:
+    - public/javascripts/jquery.min.js
+    - public/javascripts/jquery-ui.js
+    - public/javascripts/jquery.easing.js
+    - public/javascripts/modernizr.js
+    - public/javascripts/fuzzy-string.js
+    - public/javascripts/jquery.timers.js
+    - public/javascripts/jquery.scrollTo-1.4.2-min.js
+    - public/javascripts/jquery.tagsearcher.js
+    - public/javascripts/jquery.ajaxify.js
+    - public/javascripts/application.js
+
+  web:
+    - public/javascripts/jquery.welltreat.us.pulldown.js
+    - public/javascripts/jrails.js
+    - public/javascripts/application.js
+    - public/javascripts/jquery.lazyload.mini.js
+    - public/javascripts/jquery.prettyPhoto.js
+    - public/javascripts/jquery.bt.min.js
+
+  mobile:
+    - app/assets/javascripts/common.js.coffee
+
+stylesheets:
+  web:
+    - public/stylesheets/fresh/reset.css
+    - public/stylesheets/fresh/960.css
+    - public/stylesheets/fresh/text.css
+    - public/stylesheets/ext/prettyPhoto.css
+    - public/stylesheets/ext/jquery.bt.css
+    - public/stylesheets/jquery-ui-fresh/jquery.css
+    - public/stylesheets/fresh/site.css
+  mobile:
+    - public/stylesheets/mobile/site.css

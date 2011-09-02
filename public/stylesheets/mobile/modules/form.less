@@ -1,0 +1,58 @@
+.format-submit-field(@width: 100%, @padding: 6px, @height: 30px) {
+  padding: @padding;
+  width: @width;
+  height: @height;
+}
+
+.format_form() {
+  form {
+    padding: 10px;
+
+    input[type="submit"] {
+      .format-submit-field();
+    }
+
+    input[type="search"] {
+      width: 90%;
+    }
+
+    table {
+      width: 100%;
+
+      label {
+        font-size: 70%;
+        font-weight: bold;
+      }
+
+      input[type="text"], input[type="password"], input[type="email"], input[type="web"] {
+        width: 96%;
+        padding: 6px;
+      }
+
+      input[type="submit"] {
+        .format-submit-field();
+      }
+
+      input.fullLength {
+        width: 100%;
+      }
+    }
+
+    .tags {
+      border-bottom: 1px solid #CCCCCC;
+      float: left;
+      font-size: 70%;
+      height: 136px;
+      margin-bottom: 5px;
+      overflow-y: scroll;
+      overflow-x: none;
+      padding: 5px;
+      width: 46%;
+
+      .inlineTag {
+
+      }
+    }
+
+  }
+}

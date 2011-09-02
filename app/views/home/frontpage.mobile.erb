@@ -58,7 +58,8 @@
                 success: function(result) {
                   if (result && result.length > 0) {
                     $('.siteMessage').each(function() {
-                      var html = "Are you nearby '" + result[0].address + "' ? more nearby <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>. <button type='button' onclick='$(this).parent().hide();'>Close</button>";
+                      var html = "Are you nearby '" + result[0].address +"' ?" +
+                          "<div class='quote'>Find your nearby <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>.</div> <button type='button' onclick='$(this).parent().hide();'>Close</button>";
                       var $this = $(this);
                       $this.html(html);
                       $this.show();

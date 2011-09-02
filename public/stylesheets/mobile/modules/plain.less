@@ -1,0 +1,50 @@
+.add_plain_format() {
+  div.plain {
+    padding: 10px;
+    font-size: 80%;
+
+    h1 {
+      color: orange;
+      .add_text_shadow();
+    }
+
+    .checkinBox {
+      button {
+        width: 95%;
+        padding: 5px;
+        font-size: 120%;
+        font-weight: bold;
+      }
+    }
+
+    .restaurantStatus {
+      background: none repeat scroll 0 0 #F0F0F0;
+      display: block;
+      border: 1px solid #CCCCCC;
+      padding: 5px;
+      width: 95%;
+      .add_round_corner();
+
+      .block {
+         float: left;
+         width: 32%;
+         text-align: center;
+
+         .label {
+           font-size: 80%;
+         }
+
+         .value {
+          font-size: 140%;
+          font-weight: bold;
+          font-family: "comic Sans MS";
+         }
+      }
+
+      .blockBorder {
+        border-right: 1px dotted #888;
+        padding-right: 5px;
+      }
+    }
+  }
+}

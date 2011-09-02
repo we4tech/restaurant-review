@@ -1,0 +1,15 @@
+.space
+.plain
+  %h1= @restaurant.name
+  = render_restaurant_status(@restaurant)
+  .space
+  %center
+    = render_checkin_box
+  .clear
+
+.box
+  = render_properties(@restaurant)
+  = render_address_in_map(@restaurant)
+
+
+

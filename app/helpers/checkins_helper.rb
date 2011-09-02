@@ -8,4 +8,22 @@ module CheckinsHelper
         :config => options
     }
   end
+
+  def render_checkin_box
+    link = create_checkin_path(url_escape(@topic.name), @restaurant.id)
+    html = content_tag 'div', :class => 'checkinBox' do
+      content = ''
+      content << content_tag('button', 'Check in here',
+                          :onclick => "window.location=#{link}")
+      content
+    end
+
+    html
+  end
+
+  def render_recently_checkedin_users
+    render(:partial => 'checkins/parts/who_else_here',
+           :locals => {:checkins => @topic.checkins.by_restaurant(@restaurant.id).recent})
+  end
+
 end

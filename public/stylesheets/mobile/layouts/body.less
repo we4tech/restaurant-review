@@ -1,0 +1,42 @@
+#body {
+  // Site notification rules
+  .siteMessage {
+  	background: lightYellow;
+  	padding: 5px;
+  	margin: auto 0 30% 5%;
+  	border: 1px solid #000;
+    position: fixed;
+    width: 89%;
+    bottom: 0;
+    cursor: pointer;
+
+    .add_box_shadow(10px, #000);
+    .add_round_corner(10px, 10px, 10px, 10px);
+
+  	.quote {
+      font-weight: bold;
+  	}
+  }
+
+  .weeklyHot, .upcomingEventsBox {
+    .content {
+      font-size: 70%;
+      color: #888;
+    }
+  }
+
+  .add_box_format();
+  .add_plain_format();
+
+  div.noBorder {
+    border: 0;
+    background: none;
+
+    .add_round_corner(0, 0, 0, 0);
+    .no_box_shadow();
+
+    h4 {
+      background: none;
+    }
+  }
+}

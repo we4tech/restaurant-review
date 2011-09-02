@@ -1,41 +1,28 @@
-<div id="site_top">
-
-  <div id="site_top_navigation">
-    <% if I18n.locale.to_s == 'en' %>
-      <a href='/?l=bn'>বাংলা</a> .
-    <% else %>
-      <a href='/?l=en'>English</a> .
-    <% end %>
+<div class='wrapper' style='display:none' id='wrapperSubNav'>
+  <ul id='superParentNav'>
 
     <% if not logged_in? %>
-      <div class="popup_button">
-        <a href="#">Menu</a>
-        <ul style="display: none">
-          <li><%= link_to tt('layout.links.login'), login_url %></li>
-          <li>
-            <fb:login-button perms="<%= FB_CONNECT_PERM %>"></fb:login-button>
-          </li>
-          <li><%= link_to tt('layout.links.register'), signup_url %></li>
-          <li><%= link_to tt('layout.links.photos'), photos_url %></li>
-          <li><%= link_to tt('layout.links.events'), events_url %></li>
-        </ul>
-      </div>
+      <li><%= link_to tt('layout.links.login'), login_url %></li>
+      <li>
+        <fb:login-button perms="<%= FB_CONNECT_PERM %>"></fb:login-button>
+      </li>
+      <li><%= link_to tt('layout.links.register'), signup_url %></li>
+      <li><%= link_to tt('layout.links.photos'), photos_url %></li>
+      <li><%= link_to tt('layout.links.events'), events_url %></li>
 
     <% else %>
-      <div class="popup_button">
-        <a href="javascript:void(0)">Menu</a>
-        <ul style="display:none">
-          <% if !@record_already_added %>
-            <li><%= link_to tt('layout.links.add'), new_restaurant_url %></li>
-          <% else %>
-            <li><%= link_to tt('layout.links.update_record'), update_your_record_url %></li>
-          <% end %>
-          <li><%= render_activities_link %></li>
-          <li><%= link_to tt('layout.links.my_page'), user_long_url(current_user) %></li>
-          <li><%= link_to tt('layout.links.photos'), photos_url %></li>
-          <li><%= link_to tt('layout.links.events'), events_url %></li>
-          <% if current_user.facebook_session_exists? %>
-            <li>
+
+      <% if !@record_already_added %>
+        <li><%= link_to tt('layout.links.add'), new_restaurant_url %></li>
+      <% else %>
+        <li><%= link_to tt('layout.links.update_record'), update_your_record_url %></li>
+      <% end %>
+      <li><%= render_activities_link %></li>
+      <li><%= link_to tt('layout.links.my_page'), user_long_url(current_user) %></li>
+      <li><%= link_to tt('layout.links.photos'), photos_url %></li>
+      <li><%= link_to tt('layout.links.events'), events_url %></li>
+      <% if current_user.facebook_session_exists? %>
+        <li>
               <span class='facebook_connect_control'>
                 <% form_tag facebook_account_status_update_url, :id => 'facebook_connect_control_form' do %>
                   <% if current_user.facebook_connect_enabled? %>
@@ -51,107 +38,88 @@
                            onclick="$('#facebook_connect_control_form').submit()"/>
                   <% end %>
                   <label for="facebook_share_checkbox">
-                    <%= t('layout.links.share_on_facebook') %>
+                    Share on <acronym title="Facebook">FB</acronym>
                   </label>
                 <% end %>
               </span>
-            </li>
-          <% else %>
-            <li>
-              <fb:login-button perms="<%= FB_CONNECT_PERM %>"
-                               onlogin='window.location.reload()'>
-                <%= t('layout.links.auto_share_on_facebook') %>
-              </fb:login-button>
-            </li>
-          <% end %>
+        </li>
+      <% else %>
+        <li>
+          <fb:login-button perms="<%= FB_CONNECT_PERM %>" size='small'
+                           onlogin='window.location.reload()'>
+          </fb:login-button>
+        </li>
+      <% end %>
 
-          <% if current_user.admin? %>
-            <li><%= link_to t('layout.links.admin'), admin_url %></li>
-          <% end %>
+      <% if current_user.admin? %>
+        <li><%= link_to t('layout.links.admin'), admin_url %></li>
+      <% end %>
 
-          <li><%= link_to t('layout.links.edit_user'), edit_user_url(current_user) %></li>
-          <% if current_user.facebook_session_exists? %>
-            <li><%= link_to t('layout.links.logout'), fb_logout_url %></li>
-          <% else %>
-            <li><%= link_to t('layout.links.logout'), logout_url %></li>
-          <% end %>
-        </ul>
-      </div>
-
+      <li><%= link_to t('layout.links.edit_user'), edit_user_url(current_user) %></li>
+      <% if current_user.facebook_session_exists? %>
+        <li><%= link_to t('layout.links.logout'), fb_logout_url %></li>
+      <% else %>
+        <li><%= link_to t('layout.links.logout'), logout_url %></li>
+      <% end %>
     <% end %>
-  </div>
+
+    <li>
+      <% if I18n.locale.to_s == 'en' %>
+        <a href='/?l=bn'>বাংলা</a>
+      <% else %>
+        <a href='/?l=en'>English</a>
+      <% end %>
+    </li>
+  </ul>
+  <div class='clear'></div>
 </div>
+<div class='clear'></div>
+
+<% if @topic.banner_image_path %>
+  <%= link_to image_tag(@topic.banner_image_path), root_url, :class => 'logo' %>
+<% else %>
+  No banner SET!
+<% end %>
+
+<ul id='parentMenu'>
+  <% if not logged_in? %>
+    <li><%= link_to 'Login', login_path %></li>
+    <li><%= link_to 'Signup', register_path %></li>
+  <% else %>
+    <% if current_user.facebook_session_exists? %>
+        <li><%= link_to t('layout.links.logout'), fb_logout_url %></li>
+      <% else %>
+        <li><%= link_to t('layout.links.logout'), logout_url %></li>
+      <% end %>
+  <% end %>
+  <li id='menuLink'>
+    <a href='javascript:void(0)'
+       onclick="$('#wrapperSubNav').toggle('slide');window.location='#wrapperSubNav';$('#menuLink').removeClass('on').addClass('on');">Menu</a>
+  </li>
+</ul>
+<div class='clear'></div>
 
 <div id="fb-root"></div>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script>
   $(function() {
     FB.init({appId: '<%= @topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key  %>', status: true, cookie: true, xfbml: true});
-    <% if !logged_in? %>
+  <% if !logged_in? %>
     FB.Event.subscribe('auth.sessionChange', function(response) {
       if (response.session) {
         var path = location.href;
         window.location = path + (path.match(/\?/) ? '&' : '?') + "fskey=" +
-            response.session.session_key + "&fuid=" +
-            response.session.uid + '&fexpires=' +
-            response.session.expires + '&fsecret=' +
-            response.session.secret + '&fat=' +
-            response.session.access_token
+                          response.session.session_key + "&fuid=" +
+                          response.session.uid + '&fexpires=' +
+                          response.session.expires + '&fsecret=' +
+                          response.session.secret + '&fat=' +
+                          response.session.access_token
       }
     });
-    <% end %>
+  <% end %>
   });
 </script>
 <% if logged_in? %>
   <%= render :partial => 'users/parts/facebook_app_script' %>
-<% end %>
-
-<% content_for :bottom do %>
-  <script type="text/javascript">
-    var popupInterval = null;
-
-    function hidePopupButton($link, $menu) {
-      if (popupInterval) {
-        clearTimeout(popupInterval);
-      }
-
-      popupInterval = setTimeout(function() {
-        $link.removeClass('selected');
-        $menu.hide();
-      }, 5000);
-    }
-
-    function showPopupButton($link, $menu) {
-      $menu.show();
-      $link.removeClass('selected').addClass('selected');
-      clearTimeout(popupInterval);
-    }
-
-    function directHidePopupButton($link, $menu) {
-      $link.removeClass('selected');
-      $menu.hide();
-    }
-
-    (function() {
-      $('div.popup_button').each(function() {
-        var $this = $(this);
-        var $link = $this.find('a:first');
-        var $menu = $this.find('ul:first');
-
-        $this.find('a:first').click(function() {
-          var $thisLink = $(this);
-
-          if ($menu.css('display') == 'inline' || $menu.css('display') == 'block') {
-            directHidePopupButton($thisLink, $menu);
-          } else {
-            showPopupButton($thisLink, $menu);
-            $menu.mouseout(function() {
-              hidePopupButton($thisLink, $menu);
-            });
-          }
-        });
-      });
-    })();
-  </script>
 <% end %>
 

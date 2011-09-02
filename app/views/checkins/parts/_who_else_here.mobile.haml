@@ -1,0 +1,6 @@
+- if checkins.present?
+  %h5 Who else been here?
+  - checkins.each do |checkin|
+    %b= checkin.user.login
+- else
+  .highlight No one here right now!

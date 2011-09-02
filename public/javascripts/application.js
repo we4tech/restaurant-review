@@ -372,6 +372,15 @@ App.MapWidget = {
     };
 
     this.address = this.getAddress;
+    this.area = function() {
+      if (this.mAddress) {
+        var parts = this.mAddress.split(',');
+        if (parts.length > 0) {
+          return parts[0].trim();
+        }
+      }
+      return null;
+    };
 
     this.lat = function() {
       return this.mLatLng.lat()
@@ -779,49 +788,51 @@ $(function() {
   var adminPortionVisible = false;
   var dialog = null;
 
-  if (currentLocation.indexOf('#') != -1 &&
-      currentLocation.indexOf('#!') == -1) {
+  if (typeof $(document).dialog != 'undefined') {
+    if (currentLocation.indexOf('#') != -1 &&
+        currentLocation.indexOf('#!') == -1) {
 
-    var parts = currentLocation.split('#');
-    if (parts.length > 1 && parts[1].length > 0) {
-      //$('.' + parts[1]).show();
-      dialog = $('.' + parts[1]).dialog({
-        'title': $('.' + parts[1] + 'ActivationLink').attr('title'),
-        'modal': true,
-        'closeOnEscape': true,
-        'width': 'auto',
-        'close': function() {
-          $('.' + parts[1] + 'ActivationLink').toggle();
-          window.location = window.location.href.split('#')[0] + '#';
-        }
-      });
+      var parts = currentLocation.split('#');
+      if (parts.length > 1 && parts[1].length > 0) {
+        //$('.' + parts[1]).show();
+        dialog = $('.' + parts[1]).dialog({
+          'title': $('.' + parts[1] + 'ActivationLink').attr('title'),
+          'modal': true,
+          'closeOnEscape': true,
+          'width': 'auto',
+          'close': function() {
+            $('.' + parts[1] + 'ActivationLink').toggle();
+            window.location = window.location.href.split('#')[0] + '#';
+          }
+        });
 
-      adminPortionVisible = true;
-      $('.' + parts[1] + 'ActivationLink').toggle();
+        adminPortionVisible = true;
+        $('.' + parts[1] + 'ActivationLink').toggle();
+      }
+    } else if (currentLocation.indexOf('#!') != -1) {
+      var parts = currentLocation.split('#!');
+      window.location.href = "http://" + window.location.host + parts[1];
     }
-  } else if (currentLocation.indexOf('#!') != -1) {
-    var parts = currentLocation.split('#!');
-    window.location.href = "http://" + window.location.host + parts[1];
+
+    $('.adminPortionActivationLink').click(function() {
+      $('.' + $(this).attr('class')).toggle();
+
+      if (dialog == null) {
+        dialog = $('.adminPortion').dialog({
+          'title': $(this).attr('title'),
+          'modal': true,
+          'closeOnEscape': true,
+          'width': 'auto',
+          'close': function() {
+            $('.' + $(this).attr('class')).toggle();
+            window.location = window.location.href.split('#')[0] + '#';
+          }
+        });
+      } else {
+        $('.adminPortion').dialog('open');
+      }
+    });
   }
-
-  $('.adminPortionActivationLink').click(function() {
-    $('.' + $(this).attr('class')).toggle();
-
-    if (dialog == null) {
-      dialog = $('.adminPortion').dialog({
-        'title': $(this).attr('title'),
-        'modal': true,
-        'closeOnEscape': true,
-        'width': 'auto',
-        'close': function() {
-          $('.' + $(this).attr('class')).toggle();
-          window.location = window.location.href.split('#')[0] + '#';
-        }
-      });
-    } else {
-      $('.adminPortion').dialog('open');
-    }
-  });
 
 });
 
@@ -890,6 +901,10 @@ $(function() {
       $menuPanel.css('left', x - 7).css('top', y + $self.css('height') + 10).show();
       $self.removeClass('menuSel').addClass('menuSel');
     }
+  });
+
+  $('.siteMessage').click(function(e) {
+    $(this).hide();
   });
 });
 

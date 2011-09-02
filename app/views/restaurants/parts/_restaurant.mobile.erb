@@ -1,87 +1,33 @@
 <%
+   box_config = defined?(config) ? config : {}
    images = restaurant.related_images.by_group(nil).collect(&:image)
-   if images.empty?
+   if images && images.empty?
      images = restaurant.other_images
    end
-   index = index || 0
-   grid_class = grid_class || 'grid_6'
 %>
-<table class='restaurant'>
-  <tbody>
+<table>
   <tr>
-    <td valign="top">
+    <td>
       <% if !images.empty? %>
-        <div class="grid_1">
-          <%= image_tag(images.rand.public_filename(:small), :alt => '') %>
-        </div>
+        <%= link_to(image_tag(
+                        images.rand.public_filename(:c_very_small), :alt => 'N/A'),
+                    images.first.public_filename(:large), :class => 'image_small') %>
+      <% else %>
+        <%= link_to(image_tag('/images/fresh/no-dp.png'), '#', :class => 'image_small') %>
       <% end %>
     </td>
-    <td>
-      <div class="<%= grid_class %>">
-        <h4>
-          <%= link_to truncate(restaurant.name, :length => 10), restaurant_long_url(restaurant), :title => restaurant.name %>
-        </h4>
-
-        <div class="site_list_item_rating">
-          <%= render_restaurant_review_stats(restaurant) %>
-          <% if current_user && !restaurant.reviewed?(current_user) %>
-            <%= link_to t('nav.review_now'),
-                        "#{restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id)}#new_review",
-                        :class => 'link_emp' %>
-          <% end %>
-          <% if restaurant.author?(current_user) %>
-            . <%= link_to t('nav.edit'), edit_restaurant_url(restaurant) %>
-            . <%= link_to t('nav.edit_tags'), edit_tags_restaurant_url(restaurant) %>
-          <% end %>
-          <% if logged_in? && current_user.admin? %>
-            <% if restaurant.featured? %>
-              . <%= link_to t('label.remove_from_featured'), featured_restaurant_path(restaurant.id) %>
-            <% else %>
-              . <%= link_to t('label.make_as_featured'), featured_restaurant_path(restaurant.id) %>
-            <% end %>
-          <% end %>
-        </div>
-
-        <div class="summary">
-          <% words = (restaurant.description || '').gsub(/<\/?[^>]*>/, "").split(/\s/) %>
-          <%= sanitize strip_tags(words[0..20].join(' ')) %>
-          <% if words.length > 20 %>...
-          <% end %>
-          <%= link_to t('nav.more'), restaurant_long_url(restaurant) %>
-          <% if !(restaurant.address || '').blank? %>
-            <br/>
-            <b><%= tt('fields.address') %>:</b>
-            <%= sanitize strip_tags(restaurant.address) %> <%= link_to 'Map', full_map_path(:rid => restaurant.id) %>
-          <% end %>
-        </div>
-
-        <% if !restaurant.tags.empty? %>
-          <div class="associated_tags">
-            <b><%= tt('fields.features') %>:</b>
-            <%= restaurant.tags.shuffle[0..10].collect { |tag|
-              link_to(tag.name, tag_details_url(
-                  :label => 'cuisines-tags', :tag => url_escape(tag.name)),
-                      :class => "#{@tags && @tags.include?(tag.name.downcase) ? 'selectedTag' : ''}")
-            }.join(', ') %>
-          </div>
-        <% end %>
-
-        <% if @display_last_review %>
-          <% last_review = restaurant.last_review %>
-          <% if last_review %>
-            <div class='review_quote'>
-              <%= render :partial => 'reviews/parts/review',
-                         :locals  => {:review => last_review, :tag_name => 'span', :grid_class => ''} %>
-              <div class="clear"></div>
-              <div class="space_5"></div>
-              <div class="break"></div>
-              <div class="space_5"></div>
-              <%= link_to tt('nav.read_more_reviews'), restaurant_long_url(:name => restaurant.name.parameterize.to_s, :id => restaurant.id) %>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+    <td valign="top">
+      <%= link_to truncate(restaurant.name, :length => 20),
+                  restaurant_long_url(restaurant), :title => restaurant.name %>
     </td>
   </tr>
-  </tbody>
+  <tr>
+    <td colspan="2">
+      <% if box_config[:show_contribution] %>
+        <%= render_restaurant_review_stats_by_user(@user, restaurant, box_config[:show_contribution]) %>
+      <% else %>
+        <%= render_restaurant_review_stats(restaurant) %>
+      <% end %>
+    </td>
+  </tr>
 </table>

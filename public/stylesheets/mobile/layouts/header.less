@@ -1,0 +1,102 @@
+#header {
+  #topNav {
+    .generate_yellowish_background();
+    padding: @c_pad;
+
+    a.logo {
+      float: left;
+
+      img {
+        width: 80px;
+      }
+    }
+
+    #superParentNav {
+      margin: 0;
+      padding: @c_pad;
+      list-style-type: none;
+      margin-bottom: 5px;
+      text-align: center;
+
+      li {
+        background: #f0f0f0;
+        border: 1px solid #ccc;
+        display: inline;
+        font-size: 70%;
+        height: 30px;
+        width: 25%;
+        margin: 5px;
+        padding: 5px;
+        text-align: center;
+        font-weight: bold;
+
+        .add_round_corner();
+
+        form {
+          float: left;
+          margin-right: 5px;
+
+          div {
+            display: inline;
+            padding: @c_pad;
+          }
+
+          padding: @c_pad;
+        }
+
+        a {
+          padding: @c_pad;
+          line-height: 30px;
+          color: #000;
+          text-transform: capitalize;
+
+        }
+
+        .fb_button {
+          padding: 0;
+          line-height: normal;
+          margin-top: 4px;
+        }
+      }
+
+    }
+
+    #parentMenu {
+      margin: 0;
+      float: right;
+
+      li.on {
+        a {
+          color: yellow;
+        }
+      }
+
+      li {
+        float: left;
+        margin-top: 5px;
+        list-style-type: none;
+
+        a {
+          margin-left: 5px;
+          padding: 5px;
+          .format_link(#FFF);
+        }
+
+        ul {
+
+        }
+      }
+    }
+  }
+
+  #searchNav {
+    background: @c_light_color;
+    padding: @c_pad;
+    text-align: center;
+
+    input {
+      width: 91%;
+      height: @c_tf_height;
+    }
+  }
+}

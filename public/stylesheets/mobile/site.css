@@ -3,6 +3,13 @@ body {
   margin: 0;
   font-family: 'verdana';
 }
+body a {
+  color: #3b5998;
+  text-decoration: none;
+}
+body a:hover {
+  color: #0066cc;
+}
 img {
   image-rendering: optimizequality;
 }
@@ -16,9 +23,6 @@ a img {
   clear: both;
   margin-top: 10px;
 }
-.stat_item acronym {
-  text-decoration: none;
-}
 acronym {
   text-decoration: none;
   border: 0;
@@ -31,6 +35,56 @@ h5,
 h6 {
   margin: 0;
   padding: 0;
+}
+.stat_item acronym {
+  text-decoration: none;
+}
+.highlight {
+  background: lightYellow;
+  padding: 2px;
+  border-top: 1px solid #ccc;
+}
+.message {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 3px;
+  color: #888;
+  font-size: 70%;
+}
+.wrapper {
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  background: #fff;
+  -webkit-box-shadow: 1px 1px 10px 1px #000000;
+  -moz-box-shadow: 1px 1px 10px 1px #000000;
+  box-shadow: 1px 1px 10px 1px #000000;
+}
+.errorExplanation {
+  background: lightYellow;
+  border: 1px solid orange;
+  margin: 5px;
+  padding: 5px;
+  font-size: 80%;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.errorExplanation ul li {
+  color: red;
+}
+.margin {
+  margin: 5px;
 }
 .icon_review {
   background: url(/images/icons/dryicons/reviews-min.png) no-repeat 0;
@@ -48,21 +102,14 @@ h6 {
   background: url(/images/icons/dryicons/checkins-min.png) no-repeat 0;
   padding-left: 9px;
 }
-.highlight {
-  background: lightYellow;
-  padding: 2px;
-  border-top: 1px solid #ccc;
-}
-.message {
-  background: #f0f0f0;
-  border: 1px solid #ccc;
-  padding: 3px;
-  color: #888;
-  font-size: 70%;
+.icon_settings {
+  background: url(/images/icons/dryicons/settings.png) no-repeat 0 !important;
+  padding-left: 35px!important;
 }
 input.html5_search_field {
-  border: 1px inset;
-  padding: 2px;
+  border: 1px solid #ccc;
+  padding: 2px 2px 2px 25px;
+  background: url("/images/fresh/search_icon.png") no-repeat scroll 2px 2px #ffffff;
   -webkit-border-top-left-radius: 5px;
   -webkit-border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
@@ -76,12 +123,8 @@ input.html5_search_field {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
-body a {
-  color: #3b5998;
-  text-decoration: none;
-}
-body a:hover {
-  color: #0066cc;
+input.html5_search_field:hover {
+  border: 1px inset;
 }
 #header #topNav {
   background: #ffb76b;
@@ -110,30 +153,83 @@ body a:hover {
 
   padding: 5px;
 }
-#header #topNav a {
+#header #topNav a.logo {
   float: left;
 }
-#header #topNav a img {
-  width: 100px;
+#header #topNav a.logo img {
+  width: 80px;
 }
-#header #topNav ul {
+#header #topNav #superParentNav {
+  margin: 0;
+  padding: 5px;
+  list-style-type: none;
+  margin-bottom: 5px;
+  text-align: center;
+}
+#header #topNav #superParentNav li {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  display: inline;
+  font-size: 70%;
+  height: 30px;
+  width: 25%;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#header #topNav #superParentNav li form {
+  float: left;
+  margin-right: 5px;
+  padding: 5px;
+}
+#header #topNav #superParentNav li form div {
+  display: inline;
+  padding: 5px;
+}
+#header #topNav #superParentNav li a {
+  padding: 5px;
+  line-height: 30px;
+  color: #000;
+  text-transform: capitalize;
+}
+#header #topNav #superParentNav li .fb_button {
+  padding: 0;
+  line-height: normal;
+  margin-top: 4px;
+}
+#header #topNav #parentMenu {
   margin: 0;
   float: right;
 }
-#header #topNav ul li {
-  display: inline;
+#header #topNav #parentMenu li.on a {
+  color: yellow;
 }
-#header #topNav ul li a {
+#header #topNav #parentMenu li {
+  float: left;
+  margin-top: 5px;
+  list-style-type: none;
+}
+#header #topNav #parentMenu li a {
   margin-left: 5px;
   padding: 5px;
   color: #ffffff;
   text-decoration: none;
 }
-#header #topNav ul li a:hover {
+#header #topNav #parentMenu li a:hover {
   color: #0066cc;
-}
-#header #topNav ul li ul {
-  display: none;
 }
 #header #searchNav {
   background: #f0f0f0;
@@ -141,26 +237,21 @@ body a:hover {
   text-align: center;
 }
 #header #searchNav input {
-  width: 98%;
+  width: 91%;
   height: 23px;
 }
 #body .siteMessage {
   background: lightYellow;
   padding: 5px;
-  margin: 5px;
-  border: 1px solid orange;
-}
-#body .weeklyHot .content, #body .upcomingEventsBox .content {
-  font-size: 70%;
-  color: #888;
-}
-#body div.box {
-  clear: both;
-  background: #fff;
-  margin: 0 10px 10px 10px;
-  -webkit-box-shadow: 1px 1px 5px -2px #000000;
-  -moz-box-shadow: 1px 1px 5px -2px #000000;
-  box-shadow: 1px 1px 5px -2px #000000;
+  margin: auto 0 30% 5%;
+  border: 1px solid #000;
+  position: fixed;
+  width: 89%;
+  bottom: 0;
+  cursor: pointer;
+  -webkit-box-shadow: 1px 1px 10px 1px #000000;
+  -moz-box-shadow: 1px 1px 10px 1px #000000;
+  box-shadow: 1px 1px 10px 1px #000000;
   -webkit-border-top-left-radius: 10px;
   -webkit-border-top-right-radius: 10px;
   -webkit-border-bottom-right-radius: 10px;
@@ -174,7 +265,78 @@ body a:hover {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-#body div.box h4 {
+#body .siteMessage .quote {
+  font-weight: bold;
+}
+#body .weeklyHot .content, #body .upcomingEventsBox .content {
+  font-size: 70%;
+  color: #888;
+}
+#body div.box {
+  clear: both;
+  background: #fff;
+  margin: 0 10px 10px 10px;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+#body div.box form {
+  padding: 10px;
+}
+#body div.box form input[type="submit"] {
+  padding: 6px;
+  width: 100%;
+  height: 30px;
+}
+#body div.box form input[type="search"] {
+  width: 90%;
+}
+#body div.box form table {
+  width: 100%;
+}
+#body div.box form table label {
+  font-size: 70%;
+  font-weight: bold;
+}
+#body div.box form table input[type="text"],
+#body div.box form table input[type="password"],
+#body div.box form table input[type="email"],
+#body div.box form table input[type="web"] {
+  width: 96%;
+  padding: 6px;
+}
+#body div.box form table input[type="submit"] {
+  padding: 6px;
+  width: 100%;
+  height: 30px;
+}
+#body div.box form table input.fullLength {
+  width: 100%;
+}
+#body div.box form .tags {
+  border-bottom: 1px solid #CCCCCC;
+  float: left;
+  font-size: 70%;
+  height: 136px;
+  margin-bottom: 5px;
+  overflow-y: scroll;
+  overflow-x: none;
+  padding: 5px;
+  width: 46%;
+}
+#body div.box h4, #body div.box h1 {
   padding: 5px;
   margin: 0;
   font-weight: normal;
@@ -215,27 +377,17 @@ body a:hover {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
+#body div.box h1 {
+  font-size: 120%;
+}
+#body div.box .iconHead {
+  padding-right: 30px;
+}
 #body div.box .archiveButton {
   font-size: 70%;
-  background: #0066cc;
   padding: 5px;
-  border: 1px solid #ccc;
-  color: #fff;
-  -webkit-border-top-left-radius: 10px;
-  -webkit-border-top-right-radius: 10px;
-  -webkit-border-bottom-right-radius: 10px;
-  -webkit-border-bottom-left-radius: 10px;
-  -moz-border-radius-topleft: 10px;
-  -moz-border-radius-topright: 10px;
-  -moz-border-radius-bottomright: 10px;
-  -moz-border-radius-bottomleft: 10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  -webkit-box-shadow: 1px 1px 5px -2px #000000;
-  -moz-box-shadow: 1px 1px 5px -2px #000000;
-  box-shadow: 1px 1px 5px -2px #000000;
+  color: lightBlue;
+  font-weight: bold;
 }
 #body div.box .content {
   padding: 5px;
@@ -354,9 +506,9 @@ body a:hover {
 }
 #body div.box .content .infoBox .inner a img {
   width: 40px;
-  -webkit-box-shadow: 1px 1px 5px -2px #000000;
-  -moz-box-shadow: 1px 1px 5px -2px #000000;
-  box-shadow: 1px 1px 5px -2px #000000;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
 }
 #body div.box .content .infoBox .inner .side {
   margin: 0;
@@ -376,15 +528,16 @@ body a:hover {
   font-size: 60%;
 }
 #body div.box .content table {
-  width: 100px;
+  width: 46%;
   font-size: 60%;
   float: left;
   border: 1px solid #ccc;
   margin-right: 5px;
   margin-bottom: 5px;
-  -webkit-box-shadow: 1px 1px 5px -2px #000000;
-  -moz-box-shadow: 1px 1px 5px -2px #000000;
-  box-shadow: 1px 1px 5px -2px #000000;
+  display: block;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
   -webkit-border-top-left-radius: 5px;
   -webkit-border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
@@ -398,13 +551,85 @@ body a:hover {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
+#body div.box .content table tr td .hightlight {
+  background: transparent;
+}
 #body div.box .content table tr td a img {
   width: 40px;
   height: 40px;
   border: 1px solid #ccc;
-  -webkit-box-shadow: 1px 1px 5px -2px #000000;
-  -moz-box-shadow: 1px 1px 5px -2px #000000;
-  box-shadow: 1px 1px 5px -2px #000000;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
+}
+#body div.box .content .pagination {
+  font-size: 80%;
+  display: block;
+  text-align: center;
+}
+#body div.box .content .pagination a, #body div.box .content .pagination .current {
+  display: none;
+}
+#body div.box .content .pagination .next_page, #body div.box .content .pagination .prev_page {
+  display: inline;
+  padding: 5px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+}
+#body div.box .content .pagination .disabled {
+  color: #888;
+  background: #f0f0f0;
+}
+#body div.plain {
+  padding: 10px;
+  font-size: 80%;
+}
+#body div.plain h1 {
+  color: orange;
+  text-shadow: 1px 1px 1px #000000;
+  filter: dropshadow(color=#000000, offx=1, offy=1);
+}
+#body div.plain .checkinBox button {
+  width: 95%;
+  padding: 5px;
+  font-size: 120%;
+  font-weight: bold;
+}
+#body div.plain .restaurantStatus {
+  background: none repeat scroll 0 0 #F0F0F0;
+  display: block;
+  border: 1px solid #CCCCCC;
+  padding: 5px;
+  width: 95%;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#body div.plain .restaurantStatus .block {
+  float: left;
+  width: 32%;
+  text-align: center;
+}
+#body div.plain .restaurantStatus .block .label {
+  font-size: 80%;
+}
+#body div.plain .restaurantStatus .block .value {
+  font-size: 140%;
+  font-weight: bold;
+  font-family: "comic Sans MS";
+}
+#body div.plain .restaurantStatus .blockBorder {
+  border-right: 1px dotted #888;
+  padding-right: 5px;
 }
 #body div.noBorder {
   border: 0;

@@ -1,37 +1,47 @@
-<div class="grid_12">
-  <h1><%= t('header.login') %></h1>
-  <% form_tag session_path do -%>
-    <table>
-      <tbody>
-      <tr>
-        <td><%= label_tag 'login', t('fields.login') %></td>
-        <td><%= text_field_tag 'login', @login %></td>
-      </tr>
+<div class='space'></div>
+<div class="box">
+  <h1>
+    Login with us or
+    <fb:login-button perms="<%= FB_CONNECT_PERM %>" size='small'
+                     onlogin='window.location.reload()'>
+    </fb:login-button>
+  </h1>
 
-      <tr>
-        <td><%= label_tag 'password', t('fields.password') %></td>
-        <td><%= password_field_tag 'password', nil %></td>
-      </tr>
+  <div class='form'>
+    <% form_tag session_path do -%>
+      <table>
+        <tbody>
+        <tr>
+          <td><%= label_tag 'login' %></td>
+          <td><%= text_field_tag 'login', @login, :placeholder => 'Enter your username or email address' %></td>
+        </tr>
 
-      <tr>
-        <td><%= label_tag 'remember_me', t('fields.remember') %></td>
-        <td><%= check_box_tag 'remember_me', '1', @remember_me %></td>
-      </tr>
+        <tr>
+          <td><%= label_tag 'password' %></td>
+          <td><%= password_field_tag 'password', nil %></td>
+        </tr>
 
-      <tr>
-        <td colspan="2">
-          <%= submit_tag t('button.login') %>
-        </td>
-      </tr>
+        <tr>
+          <td><%= label_tag 'remember_me' %></td>
+          <td><%= check_box_tag 'remember_me', '1', @remember_me %></td>
+        </tr>
 
-      <tr>
-        <td colspan="2">
-          <%= link_to t('nav.did_you_forgot'), reset_password_url %><br/>
-          Or <%= link_to t('nav.are_you_new_user'), signup_url %>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  <% end -%>
+        <tr>
+          <td colspan="2" align="right">
+            <%= submit_tag t('button.login') %>
+          </td>
+        </tr>
 
+        <tr>
+          <td colspan="2" align="center">
+            <%= link_to t('nav.did_you_forgot'), reset_password_url %>
+            Or <%= link_to t('nav.are_you_new_user'), signup_url %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    <% end -%>
+    <div class='clear'></div>
+  </div>
+  <div class='clear'></div>
 </div>

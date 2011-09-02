@@ -1,0 +1,150 @@
+.add_box_format() {
+  div.box {
+    clear: both;
+    background: #fff;
+    margin: 0 10px 10px 10px;
+
+    .add_box_shadow();
+    .add_round_corner(10px, 10px, 10px, 10px);
+
+    .format_form();
+
+    h4, h1 {
+      padding: @c_pad;
+      margin: 0;
+      font-weight: normal;
+      font-size: 90%;
+      color: #888;
+      cursor: pointer;
+
+      .generate_box_header_background();
+      .add_round_corner(10px, 10px, 10px, 10px);
+    }
+
+    h1 {
+      font-size: 120%;
+    }
+
+    .iconHead {
+      padding-right: 30px;
+    }
+
+    .archiveButton {
+      font-size: 70%;
+      padding: 5px;
+      color: lightBlue;
+      font-weight: bold;
+    }
+
+    .content {
+      padding: @c_pad;
+
+      h5 {
+        color: #888;
+        border-bottom: 1px solid #ccc;
+        font-size: 70%;
+        font-weight: normal;
+      }
+
+      .navigation {
+        font-size: 70%;
+        background: @c_light_color;
+        padding: 5px;
+        text-align: center;
+        font-weight: bold;
+
+        a {
+          color: #888;
+        }
+      }
+
+      .list_of_activities();
+
+      .infoBox {
+        height: 100px;
+        display: inline;
+        margin-right: 5px;
+
+        .inner {
+          width: 100px;
+
+          a {
+            float: left;
+            width: 40px;
+          }
+
+          a img {
+            width: 40px;
+            .add_box_shadow();
+          }
+
+          .side {
+            margin: 0;
+            padding: 0 0 0 2px;
+            font-size: 70%;
+            width: 60px;
+            word-wrap: break-word;
+            vertical-align: top;
+            overflow: hidden;
+            float: left;
+          }
+        }
+
+        .outer {
+          width: 100px;
+
+          .ratings {
+            background: red;
+            font-size: 60%;
+          }
+        }
+      }
+
+      table {
+        width: 46%;
+        font-size: 60%;
+        float: left;
+        border: 1px solid #ccc;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        display: block;
+
+        .add_box_shadow();
+        .add_round_corner();
+
+        tr td .hightlight {
+          background: transparent;
+        }
+        tr td a img {
+          width: 40px;
+          height: 40px;
+          border: 1px solid #ccc;
+
+          .add_box_shadow();
+        }
+      }
+
+      .pagination {
+        font-size: 80%;
+        display: block;
+        text-align: center;
+
+        a, .current {
+          display: none;
+        }
+
+        .next_page, .prev_page {
+          display: inline;
+          padding: 5px;
+          margin-right: 5px;
+          border: 1px solid #ccc;
+        }
+
+        .disabled {
+          color: #888;
+          background: #f0f0f0;
+        }
+      }
+    }
+  }
+}

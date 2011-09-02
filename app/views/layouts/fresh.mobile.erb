@@ -1,116 +1,95 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale.to_s %>"
-xmlns:fb="http://www.facebook.com/2008/fbml"
-xmlns:og="http://ogp.me/ns#">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-		<title> <%= @topic.site_title %> <%= @site_title ? "&raquo; #{@site_title}" : '' %> </title>
-		<%= stylesheet_link_tag 'mobile/site.css' %>
+      xmlns:fb="http://www.facebook.com/2008/fbml"
+      xmlns:og="http://ogp.me/ns#">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title> <%= @topic.site_title %> <%= @site_title ? "&raquo; #{@site_title}" : '' %> </title>
+  <%= stylesheet_link_tag 'mobile/site.css' %>
 
-		<%= javascript_include_tag 'jquery.min', 'jquery.easing', 'fuzzy-string',
-		'application', 'jquery.timers.js', 'jquery.scrollTo-1.4.2-min',
-		'jquery.tagsearcher', 'modernizr.js', :cache => 'cache_mobile' %>
-		<meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
-		<meta NAME="Robots" content="index,follow"/>
-		<% if @meta_description %>
-		<meta content="<%= @meta_description %>" name="description">
-		<% else %>
-		<meta name="description" content="Bangladeshi restaurant, cafe & eat out place review mobile site"/>
-		<% end %>
+  <%= javascript_include_tag 'jquery.min', 'jquery.easing', 'fuzzy-string',
+                             'application', 'jquery.timers.js', 'jquery.scrollTo-1.4.2-min',
+                             'jquery.tagsearcher', 'modernizr.js', :cache => 'cache_mobile' %>
+  <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
+  <meta NAME="Robots" content="index,follow"/>
+  <% if @meta_description %>
+    <meta content="<%= @meta_description %>" name="description">
+  <% else %>
+    <meta name="description" content="Bangladeshi restaurant, cafe & eat out place review mobile site"/>
+  <% end %>
 
-		<% if @meta_keywords %>
-		<meta name="keywords" content="<%= @meta_keywords %>"/>
-		<% else %>
-		<meta name="keywords" content="Mobile Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
-		<% end %>
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-		<link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
-		<%= yield :head %>
-	</head>
-	<body>
-		<% if !embedded_view? %>
-		<div id='header'>
-			<div id='topNav'>
-				<% if @topic.banner_image_path %>
-				<%= link_to image_tag(@topic.banner_image_path), root_url %>
-				<% else %>
-				No banner SET!
-				<% end %>
-				<%
- # render :partial => 'layouts/fresh_parts/top_navigation'
-%>
-				<ul>
-					<li>
-						<a href='#'>Login</a>
-					</li>
-					<li>
-						<a href='#'>Menu</a>
-						<ul class='subNav'>
-							<li>
-								<a href='#'>Register</a>
-							</li>
-							<li>
-								<a href='#'>Login</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<div class='clear'></div>
-			</div>
-			<div class='clear'></div>
-			<div id='searchNav'>
-				<%= render :partial => 'restaurants/parts/recommend' %>				
-			</div>
-		</div>
-		<% end %>
-		<div id='body'>
-			<% flash_message = flash[:notice] || flash[:error] || flash[:success] || '' %>
-			<% if !flash_message.blank? %>
-				<div class="siteMessage">
-					<%= flash_message %>
-				</div>
-			<% else %> 
-				<div class="siteMessage" style="display:none"></div>
-			<% end %> 
-			<div class='clear'></div>
-			<%= yield %>
-		</div>
-		<div class='clear'></div>
-		<div id='footer'>
-			<div class='siteInfo'>
-				<%= @topic.description %>
-				<br/>
-				<%= link_to 'view in desktop version', root_url(:format => :html) %>
-			</div>
-			<div class='copyrights'>
-				<%= t('footer.copyrights') %>
-			</div>
-		</div>
-		<% if params[:no_script].nil? %>
-		<%= javascript_include_tag 'mobile/common.js'%>
-		<script type="text/javascript">
-			var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-			document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  <% if @meta_keywords %>
+    <meta name="keywords" content="<%= @meta_keywords %>"/>
+  <% else %>
+    <meta name="keywords" content="Mobile Reviews cuisines food chicken meat Bangladesh restaurant cafe eat out dating car parking lot dinner lunch fast food coffee "/>
+  <% end %>
+  <link rel="apple-touch-icon" href="/images/fresh/icon.png" />
+  <link rel="apple-touch-startup-image" href="/images/fresh/icon.png" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+  <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
+  <%= yield :head %>
+</head>
+<body>
+<% if !embedded_view? %>
+  <div id='header'>
+    <div id='topNav'>
+      <%= render :partial => 'layouts/fresh_parts/top_navigation' %>
+      <div class='clear'></div>
+    </div>
+    <div class='clear'></div>
+    <div id='searchNav'>
+      <%= render :partial => 'restaurants/parts/recommend' %>
+    </div>
+  </div>
+<% end %>
+<div id='body'>
+  <% flash_message = flash[:notice] || flash[:error] || flash[:success] || '' %>
+  <% if !flash_message.blank? %>
+    <div class="siteMessage">
+      <%= flash_message %>
+    </div>
+  <% else %>
+    <div class="siteMessage" style="display:none"></div>
+  <% end %>
+  <div class='clear'></div>
+  <%= yield %>
+</div>
+<div class='clear'></div>
+<div id='footer'>
+  <div class='siteInfo'>
+    <%= @topic.description %>
+    <br/>
+    <%= link_to 'view in desktop version', root_url(:format => :html) %>
+  </div>
+  <div class='copyrights'>
+    <%= t('footer.copyrights') %>
+  </div>
+</div>
+<% if params[:no_script].nil? %>
+  <%= javascript_include_tag 'mobile/common.js'%>
+  <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 
-		</script>
-		<script type="text/javascript">
-			try {
-				var pageTracker = _gat._getTracker("UA-12009085-1");
-				pageTracker._setDomainName(".welltreat.us");
-				pageTracker._trackPageview();
-			} catch(err) {
-			}
-		</script>
-		<script type="text/javascript" charset="utf-8">
-			var is_ssl = ("https:" == document.location.protocol);
-			var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
-			document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+    try {
+      var pageTracker = _gat._getTracker("UA-12009085-1");
+      pageTracker._setDomainName(".welltreat.us");
+      pageTracker._trackPageview();
+    } catch(err) {
+    }
+  </script>
+  <script type="text/javascript" charset="utf-8">
+    var is_ssl = ("https:" == document.location.protocol);
+    var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
+    document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
 
-		</script>
-		<% end %>
+  </script>
+<% end %>
 
-		<%= yield :bottom %>
-	</body>
+<%= yield :bottom %>
+</body>
 </html>

@@ -1,18 +1,40 @@
-<div class="grid_12">
+<div class='space'></div>
+<div class="box">
   <h1><%= t('subheader.signup_new_user') %></h1>
   <% @user.password = @user.password_confirmation = nil %>
 
-  <%= error_messages_for :user %>
-  <% form_for :user, :url => users_path do |f| -%>
-    <p><%= label_tag 'login', t('label.login') %><br/>
-    <%= f.text_field :login %></p>
+  <div class='form'>
+    <%= error_messages_for :user %>
+    <% form_for :user, :url => users_path do |f| -%>
+      <table>
+        <tbody>
+        <tr>
+          <td><%= f.label :login, 'Account Name' %></td>
+          <td><%= f.text_field :login, :placeholder => 'Enter Account Name' %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :email %></td>
+          <td>
+            <%= f.text_field :email, :type => 'email', :placeholder => 'Enter Email Address' %>
+          </td>
+        </tr>
 
-    <p><%= label_tag 'email', t('label.email') %><br/>
-    <input type="email" name="user[email]" id="user_email" value="<%= @user ? @user.email : '' %>"/>
+        <%= render :partial => 'users/parts/fields', :locals => {:f => f} %>
+        <tr>
+          <td colspan="2" align="center">
+            <div class='space'></div>
+            <%= submit_tag t('button.signup') %>
+          </td>
+        </tr>
 
-    <%= render :partial => 'users/parts/fields', :locals => {:f => f} %>
-
-  <p><%= submit_tag t('button.signup') %></p>
-  <% end -%>
+        <tr>
+          <td colspan="2" align="center">
+            <%= link_to 'Already have an account?', login_url %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    <% end -%>
+  </div>
 
 </div>

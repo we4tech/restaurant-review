@@ -1,14 +1,19 @@
 <script type="text/javascript">
   $(function() {
     setTimeout(function() {
-      window.location = '<%= logout_url %>';
+      window.location = '<%= logout_url(:format => params[:format]) %>';
     }, 10000);
 
     FB.logout(function() {
       $.get('<%= facebook_connect_update_url %>', {'sid': ''}, function() {
-        window.location = '<%= logout_url %>';
+        window.location = '<%= logout_url(:format => params[:format]) %>';
       });
     });
   });
 </script>
-<%= t('label.logout_in_progress') %>
+<div id='body'>
+  <div class='siteMessage '>
+    <%= t('label.logout_in_progress') %>
+  </div>
+  <div class='space'></div>
+</div>

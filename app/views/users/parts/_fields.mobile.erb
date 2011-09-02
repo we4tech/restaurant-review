@@ -1,5 +1,8 @@
-<p><%= label_tag 'password', t('fields.password') %><br/>
-<%= f.password_field :password %></p>
-
-<p><%= label_tag 'password_confirmation', t('fields.confirm_password') %><br/>
-<%= f.password_field :password_confirmation %></p>
+<tr>
+  <td><%= f.label :password %></td>
+  <td><%= f.password_field :password %></td>
+</tr>
+<tr>
+  <td><%= f.label :password_confirmation, 'Confirm' %></td>
+  <td><%= f.password_field :password_confirmation %></td>
+</tr>

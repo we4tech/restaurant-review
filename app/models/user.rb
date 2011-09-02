@@ -123,7 +123,7 @@ class User < ActiveRecord::Base
     #
     def authenticate(login, password)
       return nil if login.blank? || password.blank?
-      u = find_in_state :first, :active, :conditions => {:login => login.downcase} # need to get the salt
+      u = find_in_state :first, :active, :conditions => ['login = ? OR email = ?', login.downcase, login.downcase] # need to get the salt
       u && u.authenticated?(password) ? u : nil
     end
 

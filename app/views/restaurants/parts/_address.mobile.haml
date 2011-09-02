@@ -1,0 +1,12 @@
+.properties
+  %table
+    %tr
+      %td{:colspan => 2}
+        = link_to image_tag(map_url + "295x100"), full_map_url(:rid => restaurant.id),
+                :class => 'xopenUpinLightBox',
+                :title => link_to(t('fields.map'), details_link)
+    %tr
+      %td{:style => 'font-size: 80%'}
+        %b Address
+      %td{:style => 'font-size: 80%'}= restaurant.address
+
