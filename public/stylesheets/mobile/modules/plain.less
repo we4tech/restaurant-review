@@ -1,50 +1,86 @@
+.include-cell-num() {
+  .cellNum {
+    padding: 5px;
+    font-size: 110%;
+
+    .add_round_corner();
+
+    .key {
+      display: inline;
+      font-weight: bold;
+      margin-right: 10px;
+      background: #f0f0f0 url("/images/icons/dryicons/icon_phone.png") no-repeat scroll 5px center;
+      padding-left: 25px;
+    }
+
+    .value {
+      display: inline;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+}
+
+.include-heading() {
+  h1 {
+    color: orange;
+    .add_text_shadow();
+  }
+}
+
+.include-restaurant-status() {
+  .restaurantStatus {
+    background: none repeat scroll 0 0 #F0F0F0;
+    display: block;
+    padding: 5px;
+    width: 95%;
+
+    .block {
+       float: left;
+       padding: 5px;
+       background: #fff;
+       text-align: center;
+       margin-right: 5px;
+       .add_round_corner();
+       .add_box_shadow();
+
+       .label {
+         font-size: 80%;
+       }
+
+       .value {
+        font-size: 140%;
+        font-weight: bold;
+        font-family: "comic Sans MS";
+       }
+    }
+
+    .blockBorder {
+    }
+  }
+}
+
+.include-top-bar() {
+  .topBar {
+    width: 100%;
+
+    td {
+      vertical-align: top;
+      .include-common-image-style();
+    }
+  }
+}
+
 .add_plain_format() {
   div.plain {
+    background: #f0f0f0;
     padding: 10px;
     font-size: 80%;
 
-    h1 {
-      color: orange;
-      .add_text_shadow();
-    }
-
-    .checkinBox {
-      button {
-        width: 95%;
-        padding: 5px;
-        font-size: 120%;
-        font-weight: bold;
-      }
-    }
-
-    .restaurantStatus {
-      background: none repeat scroll 0 0 #F0F0F0;
-      display: block;
-      border: 1px solid #CCCCCC;
-      padding: 5px;
-      width: 95%;
-      .add_round_corner();
-
-      .block {
-         float: left;
-         width: 32%;
-         text-align: center;
-
-         .label {
-           font-size: 80%;
-         }
-
-         .value {
-          font-size: 140%;
-          font-weight: bold;
-          font-family: "comic Sans MS";
-         }
-      }
-
-      .blockBorder {
-        border-right: 1px dotted #888;
-        padding-right: 5px;
-      }
-    }
+    .include-heading();
+    .include-top-bar();
+    .include-checkin-box();
+    .include-cell-num();
+    .include-restaurant-status();
   }
 }

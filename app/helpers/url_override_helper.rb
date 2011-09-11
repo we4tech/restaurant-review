@@ -41,7 +41,7 @@ module UrlOverrideHelper
   end
 
   def user_display_picture(user, options = {})
-    link_to image_tag(user.display_picture), user_long_url(user)
+    link_to image_tag(user.display_picture, :width => '40px', :height => '40px'), user_long_url(user)
   end
 
   def restaurant_long_url(p_options, options2 = {})

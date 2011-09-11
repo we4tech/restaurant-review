@@ -1,15 +1,61 @@
-.space
 .plain
   %h1= @restaurant.name
-  = render_restaurant_status(@restaurant)
+  %address= @restaurant.address
   .space
-  %center
-    = render_checkin_box
+  %table{:class => 'topBar'}
+    %tr
+      - if @restaurant.image_attached?
+        %td{:width => '100px'}
+          - image = @restaurant.rand_image
+          = image_tag(image.c_gallery_public_filename)
+      %td
+        = render_restaurant_status(@restaurant)
+        - cellNum = render_properties(@restaurant, :only => ['phone'], :label => 'Call')
+        - if cellNum.present?
+          .cellNum
+            = cellNum
+        .clear
+    %tr
+      %td{:colspan => 2}
+        = render_checkin_box
+    %tr
+      %td{:colspan => 2}
+        = render_recently_checkedin_users(2.hours)
   .clear
 
 .box
-  = render_properties(@restaurant)
-  = render_address_in_map(@restaurant)
+  %h4= "#{@restaurant.reviews.count} REVIEWS"
+  .message Tap on each review to see detail review and comments
+  = render :partial => 'reviews/parts/restaurant_review',
+           :locals => {:restaurant => @restaurant}
 
+.box
+  %h4 Map
+  .message Tap on map to see nearby #{@topic.name.humanize.pluralize}
+  %center
+    = render_address_in_map(@restaurant, :just_map => true)
+    = render_properties(@restaurant, :except => ['phone'])
 
+.box
+  .content
+    .fullRowUserInfo
+      %table
+        %tr
+          %td= user_display_picture(@restaurant.user)
+          %td= "Explored by #{user_link(@restaurant.user)}"
+      .clear
 
+.box
+  %h4 Features
+  .content
+    - if not @restaurant.tags.empty?
+      .tags
+        = render_tags_by_group @restaurant.tags
+        .clear
+
+.box
+  %h4 Photos
+  .content
+    .album
+      - @restaurant.all_images.each do |image|
+        = link_to(image_tag(image.c_small_public_filename), image_path(image.id))

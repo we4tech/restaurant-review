@@ -56,8 +56,8 @@
   box-shadow: none;
 }
 
-.add_text_shadow(@shadow_color: #000) {
-  text-shadow: 1px 1px 1px @shadow_color;
+.add_text_shadow(@shadow_color: #000, @spread: 1px) {
+  text-shadow: 1px 1px @spread @shadow_color;
   filter: ~"dropshadow(color=@{shadow_color}, offx=1, offy=1)";
 }
 
@@ -89,4 +89,15 @@
   background: -ms-linear-gradient(top, rgba(124,124,124,0.69) 6%,rgba(124,124,124,0.78) 32%,rgba(124,124,124,0.86) 57%,rgba(124,124,124,0.88) 64%,rgba(244,244,244,0.96) 87%,rgba(244,244,244,1) 97%); /* IE10+ */
   filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr='#b07c7c7c', endColorstr='#f4f4f4',GradientType=0 )"; /* IE6-9 */
   background: linear-gradient(top, rgba(124,124,124,0.69) 6%,rgba(124,124,124,0.78) 32%,rgba(124,124,124,0.86) 57%,rgba(124,124,124,0.88) 64%,rgba(244,244,244,0.96) 87%,rgba(244,244,244,1) 97%); /* W3C */
+}
+
+.format-big-button() {
+  background: rgb(255,183,107); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(255,183,107,1) 0%, rgba(255,167,61,1) 50%, rgba(255,124,0,1) 51%, rgba(255,127,4,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,183,107,1)), color-stop(50%,rgba(255,167,61,1)), color-stop(51%,rgba(255,124,0,1)), color-stop(100%,rgba(255,127,4,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(255,183,107,1) 0%,rgba(255,167,61,1) 50%,rgba(255,124,0,1) 51%,rgba(255,127,4,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(255,183,107,1) 0%,rgba(255,167,61,1) 50%,rgba(255,124,0,1) 51%,rgba(255,127,4,1) 100%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, rgba(255,183,107,1) 0%,rgba(255,167,61,1) 50%,rgba(255,124,0,1) 51%,rgba(255,127,4,1) 100%); /* IE10+ */
+  filter: ~"progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb76b', endColorstr='#ff7f04',GradientType=0 )"; /* IE6-9 */
+  background: linear-gradient(top, rgba(255,183,107,1) 0%,rgba(255,167,61,1) 50%,rgba(255,124,0,1) 51%,rgba(255,127,4,1) 100%); /* W3C */
 }

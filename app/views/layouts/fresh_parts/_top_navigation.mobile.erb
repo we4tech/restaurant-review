@@ -1,6 +1,9 @@
 <div class='wrapper' style='display:none' id='wrapperSubNav'>
+  <div class='navigationToolbar'>
+    <a href='#header' onclick='$("#wrapperSubNav").fadeOut();'>Hide menu</a>
+  </div>
   <ul id='superParentNav'>
-
+    <li><%= link_to 'Home', root_path %></li>
     <% if not logged_in? %>
       <li><%= link_to tt('layout.links.login'), login_url %></li>
       <li>
@@ -23,25 +26,28 @@
       <li><%= link_to tt('layout.links.events'), events_url %></li>
       <% if current_user.facebook_session_exists? %>
         <li>
-              <span class='facebook_connect_control'>
-                <% form_tag facebook_account_status_update_url, :id => 'facebook_connect_control_form' do %>
-                  <% if current_user.facebook_connect_enabled? %>
-                    <input id='facebook_share_checkbox'
-                           type='checkbox' value="1"
-                           checked="checked"
-                           name='status'
-                           onclick="$('#facebook_connect_control_form').submit()"/>
-                  <% else %>
-                    <input id='facebook_share_checkbox'
-                           type='checkbox' value="1"
-                           name='status'
-                           onclick="$('#facebook_connect_control_form').submit()"/>
-                  <% end %>
-                  <label for="facebook_share_checkbox">
-                    Share on <acronym title="Facebook">FB</acronym>
-                  </label>
-                <% end %>
-              </span>
+          <span class='facebook_connect_control'>
+            <% form_tag facebook_account_status_update_url,
+                        :style => 'float: left;',
+                        :id => 'facebook_connect_control_form' do %>
+              <% if current_user.facebook_connect_enabled? %>
+                <input id='facebook_share_checkbox'
+                       type='checkbox' value="1"
+                       checked="checked"
+                       name='status'
+                       onclick="$('#facebook_connect_control_form').submit()"/>
+              <% else %>
+                <input id='facebook_share_checkbox'
+                       type='checkbox' value="1"
+                       name='status'
+                       onclick="$('#facebook_connect_control_form').submit()"/>
+              <% end %>
+              <label for="facebook_share_checkbox">
+                Share on <acronym title="Facebook">FB</acronym>
+              </label>
+            <% end %>
+          </span>
+          <div class='clear'></div>
         </li>
       <% else %>
         <li>

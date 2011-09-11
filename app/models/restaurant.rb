@@ -265,6 +265,21 @@ class Restaurant < ActiveRecord::Base
     end
   end
 
+  def sorted_reviews(conditions = {}, sorting_type = :by_most_comments)
+    case sorting_type
+      when :by_most_comments
+        self.reviews.all(
+            :select => 'reviews.*, count(review_comments.review_id) as comments_count',
+            :joins => [:review_comments],
+            :group => 'review_comments.review_id',
+            :order => 'comments_count DESC',
+            :conditions => conditions
+        )
+      else
+        self.reviews
+    end
+  end
+
   def rand_image
     (all_images || []).rand
   end

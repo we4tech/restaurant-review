@@ -116,11 +116,16 @@
           return $('#' + $(e.target).attr('toggleView')).toggle('slide');
         });
       });
+    },
+    setDefaultHook: function() {
+      return $(window).click(function(e) {
+        return $('.siteMessage').hide();
+      });
     }
   };
   HTML5Features.fixFieldsPlaceHolder();
   HTML5Features.fixWindowSize();
-  SiteFeatures.showNavigationOnScroll($('#wrapperSubNav'));
   SiteFeatures.removePlaceholderBeforeSubmittingForm();
   SiteFeatures.detectAutoShowHidePanel();
+  SiteFeatures.setDefaultHook();
 }).call(this);

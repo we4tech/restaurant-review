@@ -215,20 +215,6 @@ class HomeController < ApplicationController
     page_context :list_page
    	page_module :body, :render_news_feed, {:label => 'News Feed', :limit => 5, :filters => { :tag_id => tag.id }}
 
-    # Find out associated label
-=begin
-    selected_module = nil
-    @topic.modules.each do |m|
-      if m['label'].downcase.parameterize.gsub('-', ' ') == label
-        selected_module = m
-      end
-    end
-
-    if !selected_module
-      render :status => 404, :text => 'This url doesn\'t exists'
-      return
-    end
-=end
     if tag
       @restaurants = tag.restaurants.paginate :include => {:tags => [:tag_groups], :related_images => [:image]}, :page => params[:page]
       load_module_preferences

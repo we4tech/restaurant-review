@@ -12,6 +12,10 @@ namespace :welltreat do
             images = User.all.collect(&:image).compact
           when 'TopicEvent'
             images = TopicEvent.all.collect(&:all_images).compact.flatten.compact
+          when 'Restaurant'
+            images = Restaurant.all.collect(&:all_images).compact.flatten.compact
+          when 'SelectedRestaurant'
+            images = Restaurant.find(ENV['ID']).all_images
         end
 
       # Retrieve all existing parent images

@@ -116,9 +116,14 @@ SiteFeatures =
       self.click (e) ->
         $('#' + $(e.target).attr('toggleView')).toggle('slide')
 
+  setDefaultHook: ->
+    $(window).click (e) ->
+      $('.siteMessage').hide();
+
 HTML5Features.fixFieldsPlaceHolder()
 HTML5Features.fixWindowSize()
 
-SiteFeatures.showNavigationOnScroll($('#wrapperSubNav'))
+#SiteFeatures.showNavigationOnScroll($('#wrapperSubNav'))
 SiteFeatures.removePlaceholderBeforeSubmittingForm()
 SiteFeatures.detectAutoShowHidePanel()
+SiteFeatures.setDefaultHook();

@@ -1,6 +1,15 @@
 - if checkins.present?
-  %h5 Who else been here?
-  - checkins.each do |checkin|
-    %b= checkin.user.login
+  - if logged_in? && checkins.collect(&:user_id).include?(current_user.id)
+    - without_me_count = checkins.length - 1
+    - if without_me_count > 0
+      .messageBox
+        You and #{without_me_count} more people are here right now!
+        .space
+        .userList
+          - checkins.each do |checkin|
+            - if checkin.user_id != current_user.id
+              = user_display_picture(checkin.user)
+    - else
+      .messageBox Only you have checked in here!
 - else
   .highlight No one here right now!

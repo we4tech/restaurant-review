@@ -50,13 +50,36 @@ h6 {
   padding: 3px;
   color: #888;
   font-size: 70%;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.messageBox {
+  background: #fff;
+  border: 1px dashed #ccc;
+  padding: 5px;
+  color: #888;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.messageBox img {
+  margin-right: 5px;
+  margin-bottom: 5px;
 }
 .wrapper {
   margin-left: -5px;
   margin-right: -5px;
   margin-top: -5px;
   margin-bottom: 10px;
-  background: #fff;
   -webkit-box-shadow: 1px 1px 10px 1px #000000;
   -moz-box-shadow: 1px 1px 10px 1px #000000;
   box-shadow: 1px 1px 10px 1px #000000;
@@ -159,6 +182,16 @@ input.html5_search_field:hover {
 #header #topNav a.logo img {
   width: 80px;
 }
+#header #topNav .navigationToolbar {
+  padding: 5px;
+  text-align: right;
+  font-size: 70%;
+  background: #f0f0f0;
+  border-bottom: 2px solid #ccc;
+}
+#header #topNav .navigationToolbar a {
+  color: red;
+}
 #header #topNav #superParentNav {
   margin: 0;
   padding: 5px;
@@ -169,13 +202,16 @@ input.html5_search_field:hover {
 #header #topNav #superParentNav li {
   background: #f0f0f0;
   border: 1px solid #ccc;
-  display: inline;
-  font-size: 70%;
+  /*display: inline;*/
+
+  display: block;
+  font-size: 80%;
   height: 30px;
-  width: 25%;
+  /*width: 25%;*/
+
   margin: 5px;
   padding: 5px;
-  text-align: center;
+  text-align: left;
   font-weight: bold;
   -webkit-border-top-left-radius: 5px;
   -webkit-border-top-right-radius: 5px;
@@ -239,6 +275,9 @@ input.html5_search_field:hover {
 #header #searchNav input {
   width: 91%;
   height: 23px;
+}
+#body {
+  background: #f0f0f0;
 }
 #body .siteMessage {
   background: lightYellow;
@@ -336,6 +375,190 @@ input.html5_search_field:hover {
   padding: 5px;
   width: 46%;
 }
+#body div.box .properties {
+  font-size: 80%;
+}
+#body div.box .properties .phone {
+  background: url("/images/icons/dryicons/icon_phone.png") no-repeat scroll 0 center transparent;
+  padding: 5px;
+  padding-left: 20px;
+}
+#body div.box .properties .address {
+  background: url("/images/icons/dryicons/icon_address.png") no-repeat scroll 0 center transparent;
+  padding: 5px;
+  padding-left: 20px;
+}
+#body div.box .properties .key {
+  float: left;
+  width: 100px;
+}
+#body div.box .properties .value {
+  float: left;
+  padding: 5px;
+  font-weight: bold;
+}
+#body div.box .checkinBox button {
+  margin-top: 5px;
+  background: url(/images/icons/dryicons/accept.png) no-repeat 60px center;
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  font-size: 120%;
+  font-weight: bold;
+  border: 0;
+  color: #fff;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background: #ffb76b;
+  /* Old browsers */
+
+  background: -moz-linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* FF3.6+ */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffb76b), color-stop(50%, #ffa73d), color-stop(51%, #ff7c00), color-stop(100%, #ff7f04));
+  /* Chrome,Safari4+ */
+
+  background: -webkit-linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* Opera11.10+ */
+
+  background: -ms-linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* IE10+ */
+
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb76b', endColorstr='#ff7f04',GradientType=0 );
+  /* IE6-9 */
+
+  background: linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* W3C */
+
+  text-shadow: 1px 1px 10px #000000;
+  filter: dropshadow(color=#000000, offx=1, offy=1);
+}
+#body div.box .reviews {
+  padding: 5px;
+}
+#body div.box .reviews .reviewStats {
+  font-size: 80%;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+#body div.box .reviews .reviewStats .stat_item {
+  padding: 2px;
+  background: lightYellow;
+  margin-right: 5px;
+}
+#body div.box .reviews .tbl_reviews {
+  font-size: 90%;
+  width: 100%;
+}
+#body div.box .reviews .tbl_reviews p {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+#body div.box .reviews .tbl_reviews .avatar {
+  width: 40px;
+}
+#body div.box .reviews .tbl_reviews td {
+  vertical-align: top;
+}
+#body div.box .reviews .tbl_reviews td .image_small img {
+  padding: 2px;
+  background: #fff;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
+}
+#body div.box .reviews .tbl_reviews td .review {
+  margin-left: 5px;
+  color: #888;
+  border-bottom: 1px dotted #ccc;
+}
+#body div.box .reviews .tbl_reviews td .review .reviewer {
+  font-size: 70%;
+  display: block;
+  color: #BBB;
+}
+#body div.box .reviews .tbl_reviews td .review .reviewer a {
+  color: #888;
+  font-weight: bold;
+}
+#body div.box .reviews .tbl_reviews td .review .date {
+  font-size: 70%;
+  color: #BBB;
+}
+#body div.box .reviews .tbl_reviews td .review .review_comments .review_comment {
+  background: #EDEFF4;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#body div.box .reviews .tbl_reviews td .review .review_comments .review_comment td {
+  padding: 5px;
+  vertical-align: middle;
+}
+#body div.box .reviews .tbl_reviews td .review .review_comments .review_comment .review_comment_author {
+  font-size: 70%;
+  width: 20px;
+  display: block;
+}
+#body div.box .reviews .tbl_reviews td .review .review_comments .review_comment .review_comment_author img {
+  width: 20px;
+}
+#body div.box .reviews .tbl_reviews td .review .review_comments .review_content {
+  margin-bottom: 5px;
+  padding: 5px;
+  font-size: 80%;
+  vertical-align: middle;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#body div.box .navigation {
+  font-size: 70%;
+  background: #f0f0f0;
+  padding: 5px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  color: #888;
+}
+#body div.box .navigation a {
+  color: #888;
+}
+#body div.box .breadcrumbs div.crumb {
+  display: inline;
+}
 #body div.box h4, #body div.box h1 {
   padding: 5px;
   margin: 0;
@@ -404,6 +627,8 @@ input.html5_search_field:hover {
   padding: 5px;
   text-align: center;
   font-weight: bold;
+  cursor: pointer;
+  color: #888;
 }
 #body div.box .content .navigation a {
   color: #888;
@@ -535,9 +760,11 @@ input.html5_search_field:hover {
   margin-right: 5px;
   margin-bottom: 5px;
   display: block;
-  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
-  -moz-box-shadow: 1px 1px 5px 1px #ababab;
-  box-shadow: 1px 1px 5px 1px #ababab;
+  min-height: 70px;
+  display: block;
+  -webkit-box-shadow: 1px 1px 2px 1px #eeeeee;
+  -moz-box-shadow: 1px 1px 2px 1px #eeeeee;
+  box-shadow: 1px 1px 2px 1px #eeeeee;
   -webkit-border-top-left-radius: 5px;
   -webkit-border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
@@ -580,27 +807,12 @@ input.html5_search_field:hover {
   color: #888;
   background: #f0f0f0;
 }
-#body div.plain {
-  padding: 10px;
+#body div.box .content .tagGroup {
   font-size: 80%;
-}
-#body div.plain h1 {
-  color: orange;
-  text-shadow: 1px 1px 1px #000000;
-  filter: dropshadow(color=#000000, offx=1, offy=1);
-}
-#body div.plain .checkinBox button {
-  width: 95%;
+  background: #f0f0f0;
+  border: 1px dotted #ccc;
   padding: 5px;
-  font-size: 120%;
-  font-weight: bold;
-}
-#body div.plain .restaurantStatus {
-  background: none repeat scroll 0 0 #F0F0F0;
-  display: block;
-  border: 1px solid #CCCCCC;
-  padding: 5px;
-  width: 95%;
+  margin-bottom: 5px;
   -webkit-border-top-left-radius: 5px;
   -webkit-border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
@@ -614,10 +826,145 @@ input.html5_search_field:hover {
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
+#body div.box .content .tagGroup strong {
+  color: #888;
+}
+#body div.box .content .fullRowUserInfo table {
+  width: 100%;
+  min-height: inherit;
+  border: 0;
+  font-size: 100%;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+#body div.plain {
+  background: #f0f0f0;
+  padding: 10px;
+  font-size: 80%;
+}
+#body div.plain h1 {
+  color: orange;
+  text-shadow: 1px 1px 1px #000000;
+  filter: dropshadow(color=#000000, offx=1, offy=1);
+}
+#body div.plain .topBar {
+  width: 100%;
+}
+#body div.plain .topBar td {
+  vertical-align: top;
+}
+#body div.plain .topBar td img {
+  padding: 2px;
+  background: #fff;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
+}
+#body div.plain .checkinBox button {
+  margin-top: 5px;
+  background: url(/images/icons/dryicons/accept.png) no-repeat 60px center;
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  font-size: 120%;
+  font-weight: bold;
+  border: 0;
+  color: #fff;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background: #ffb76b;
+  /* Old browsers */
+
+  background: -moz-linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* FF3.6+ */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffb76b), color-stop(50%, #ffa73d), color-stop(51%, #ff7c00), color-stop(100%, #ff7f04));
+  /* Chrome,Safari4+ */
+
+  background: -webkit-linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* Opera11.10+ */
+
+  background: -ms-linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* IE10+ */
+
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb76b', endColorstr='#ff7f04',GradientType=0 );
+  /* IE6-9 */
+
+  background: linear-gradient(top, #ffb76b 0%, #ffa73d 50%, #ff7c00 51%, #ff7f04 100%);
+  /* W3C */
+
+  text-shadow: 1px 1px 10px #000000;
+  filter: dropshadow(color=#000000, offx=1, offy=1);
+}
+#body div.plain .cellNum {
+  padding: 5px;
+  font-size: 110%;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#body div.plain .cellNum .key {
+  display: inline;
+  font-weight: bold;
+  margin-right: 10px;
+  background: #f0f0f0 url("/images/icons/dryicons/icon_phone.png") no-repeat scroll 5px center;
+  padding-left: 25px;
+}
+#body div.plain .cellNum .value {
+  display: inline;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#body div.plain .restaurantStatus {
+  background: none repeat scroll 0 0 #F0F0F0;
+  display: block;
+  padding: 5px;
+  width: 95%;
+}
 #body div.plain .restaurantStatus .block {
   float: left;
-  width: 32%;
+  padding: 5px;
+  background: #fff;
   text-align: center;
+  margin-right: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
 }
 #body div.plain .restaurantStatus .block .label {
   font-size: 80%;
@@ -626,10 +973,6 @@ input.html5_search_field:hover {
   font-size: 140%;
   font-weight: bold;
   font-family: "comic Sans MS";
-}
-#body div.plain .restaurantStatus .blockBorder {
-  border-right: 1px dotted #888;
-  padding-right: 5px;
 }
 #body div.noBorder {
   border: 0;

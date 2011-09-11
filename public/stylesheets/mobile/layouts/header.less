@@ -11,6 +11,18 @@
       }
     }
 
+    .navigationToolbar {
+      padding: 5px;
+      text-align: right;
+      font-size: 70%;
+      background: #f0f0f0;
+      border-bottom: 2px solid #ccc;
+
+      a {
+        color: red;
+      }
+    }
+
     #superParentNav {
       margin: 0;
       padding: @c_pad;
@@ -21,13 +33,14 @@
       li {
         background: #f0f0f0;
         border: 1px solid #ccc;
-        display: inline;
-        font-size: 70%;
+        /*display: inline;*/
+        display: block;
+        font-size: 80%;
         height: 30px;
-        width: 25%;
+        /*width: 25%;*/
         margin: 5px;
         padding: 5px;
-        text-align: center;
+        text-align: left;
         font-weight: bold;
 
         .add_round_corner();

@@ -6,23 +6,24 @@
 %>
 <table class="tbl_reviews">
   <tr>
-    <td valign="top">
+    <td valign="top" class='avatar'>
       <%= link_to image_tag(review.user.display_picture,
                             :width => '40px', :alt => 'DP'),
                   user_long_url(review.user),
                   :class => 'image_small' %>
     </td>
-    <td>
+    <td valign='top'>
       <<%= tag_name %> class="review <%= grid_class %> hreview" valign='top'>
       <a name="review-<%= review.id %>"></a>
       <% if !review.comment.blank? %>
-  <span class="content">
+  <span class='reviewContent'>
       <%= simple_format auto_link(h(review.comment)) %> -
     </span>
       <% end %>
 
       <span class="reviewer">
     <%= link_to review.user.login, user_long_url(review.user) %>
+        <strong>
         <% if review.loved? %>
       <%= tt('label.loved') %>
     <% elsif review.hated? %>
@@ -30,10 +31,11 @@
     <% elsif review.wanna_go? %>
       <%= tt('label.wannago') %>
     <% end %>
+          </strong>
         <%= tt('label.this_place') %>
   </span>
 <span class="date" title="<%= review.updated_at.strftime('%d %b %Y') %>">
-    <%= t('label.updated') %> <%= distance_of_time_in_words(review.updated_at, Time.now) %> <%= t('label.ago') %>.
+    <%= distance_of_time_in_words(review.updated_at, Time.now) %> <%= t('label.ago') %>.
   <% if logged_in? %>
       [<a class="date add_comment_link" href='javascript: void(0)'
           rel='<%= review.id %>'
@@ -54,17 +56,17 @@
 
       <% comments = review.review_comments %>
       <% if !comments.empty? %>
-        <table class='review_comments' style="display:<%= hide_comment ? 'none' : 'block' %>">
+        <table class='review_comments' cellpadding="0" cellspacing="0" style="display:<%= hide_comment ? 'none' : 'block' %>">
           <tbody>
           <% comments.each do |comment| %>
             <tr class="review_comment">
               <td class="review_comment_author">
                 <%= link_to "#{image_tag(comment.user.display_picture,
-                                         :width => '40px', :alt => t('label.not_available'))} <br/> #{comment.user.login}",
+                                         :width => '40px', :alt => t('label.not_available'))}",
                             user_long_url(comment.user) %>
               </td>
-              <td class='review_comment'>
-                <em><%= auto_link(h(comment.content)) %></em>
+              <td class='review_content'>
+                <%= comment.user.login %> said <em><%= auto_link(h(comment.content)) %></em>
               <span class="date" title="<%= comment.updated_at.strftime('%d %b %Y') %>">
                 -
                 <%= distance_of_time_in_words(comment.updated_at, Time.now) %>
@@ -77,9 +79,9 @@
 
                 <% if comment.author?(current_user) && comment.can_delete? %>
                   [<%= link_to(t('nav.delete'), review_comment_url(:id => comment.id),
-                               :method  => 'DELETE',
+                               :method => 'DELETE',
                                :confirm => t('confirm.delete_comment'),
-                               :title   => t('title.image_delete_message')) %>
+                               :title => t('title.image_delete_message')) %>
                   ]
                 <% end %>
               </span>

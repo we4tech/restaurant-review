@@ -1,0 +1,47 @@
+:ruby
+  attached_options = attached_options || {}
+  model_instance = defined?(restaurant) ? restaurant : (defined?(topic_event) ? topic_event : nil)
+
+.reviews
+  :ruby
+    reviews = model_instance.respond_to?(:sorted_reviews) ?
+      model_instance.sorted_reviews(attached_options) :
+      model_instance.reviews.attached_with(attached_options)
+
+  - if !reviews.empty?
+    :ruby
+      total_reviews_count = model_instance.reviews.attached_with(attached_options).count
+      loved_count = model_instance.reviews.loved.attached_with(attached_options).count
+      wannago_count = model_instance.reviews.wanna_go.attached_with(attached_options).count
+      loved_percentage = (100 / total_reviews_count) * loved_count
+
+    .reviewStats
+      %b= t('label.review_stat')
+      %span{:class => "stat_item icon_review"}= t('label.reviews_count', :count => total_reviews_count)
+      %span{:class => "stat_item icon_loved"}= t('label.loves_count', :count => loved_count)
+      %span{:class => "stat_item icon_wannago"}= t('label.wanna_go', :count => wannago_count)
+
+    .clear
+    .space
+
+    - reviews[0..2].each do |review|
+      = render :partial => 'reviews/parts/review',
+                 :locals => {:review => review}
+      %div{:class => "clear space_5"}
+
+    - if reviews.length > 3
+      - rest_reviews_id = "rest_reviews_#{model_instance.id}"
+      %div{:id => rest_reviews_id, :style => 'display:none'}
+        - reviews[3..reviews.length].each do |review|
+          = render :partial => 'reviews/parts/review',
+                   :locals => {:review => review}
+          .clear
+          .space
+
+      .space
+      %div{:id => "#{rest_reviews_id}_nav", :class => 'navigation', :onclick => "$('##{rest_reviews_id}').toggle('fast')"}
+        See rest of #{reviews.count - 3} more reviews
+  - else
+    %h4= t('label.no_review_added')
+
+.clear
