@@ -92,4 +92,11 @@ module CommonModel
     end
   end
 
+  module CheckinModel
+
+    def already_checkedin?(user)
+      self.checkins.by_users([user.id]).with_in(2.hours).first
+    end
+  end
+
 end

@@ -13,8 +13,14 @@ module CheckinsHelper
     link = create_checkin_path(url_escape(@topic.name), @restaurant.id)
     html = content_tag 'div', :class => 'checkinBox' do
       content = ''
-      content << content_tag('button', 'Check In Here',
-                          :onclick => "window.location='#{link}'")
+
+      if logged_in? && @restaurant.already_checkedin?(current_user)
+        content << content_tag('button', 'You have checked in!', :class => 'gray_button')
+      else
+        content << content_tag('button', 'Check In Here',
+                               :onclick => "window.location='#{link}'")
+      end
+
       content
     end
 

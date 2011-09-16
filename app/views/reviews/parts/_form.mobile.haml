@@ -1,0 +1,27 @@
+- attached_options = attached_options || {}
+
+.review_form
+  - if not logged_in?
+    .messageBox
+      = t('label.login_required_to_review', :link => link_to(t('nav.login'), login_url, :class => 'login_button'))
+
+  - form_for Review.new, :html => {:method => :post} do |f|
+    %h6 Write your review
+    .space
+    = render :partial => 'reviews/parts/fields', :locals => {:f => f}
+
+    - if defined?(restaurant)
+      = f.hidden_field :restaurant_id, :value => restaurant.id
+    - elsif defined?(topic_event)
+      = f.hidden_field :topic_event_id, :value => topic_event.id
+
+    - if !attached_options.empty?
+      = f.hidden_field :attached_model, :value => attached_options[:attached_model]
+      = f.hidden_field :attached_id, :value => attached_options[:attached_id]
+
+    .space
+    = f.submit 'Save my review', :class => 'long_button'
+    .space
+    %input{:value => 'Close', :type => 'button', :class => 'long_button', :onclick => "$('#reviewEditor').toggle('slide');"}
+  .clear
+

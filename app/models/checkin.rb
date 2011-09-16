@@ -8,6 +8,11 @@ class Checkin < ActiveRecord::Base
   named_scope :by_topic, lambda { |topic_id| {:conditions => {:topic_id => topic_id}} }
   named_scope :by_week, lambda { |date| {:conditions => ['created_at >= ? AND created_at <= ?',
                                                          date.at_beginning_of_week, date.end_of_week]} }
+  named_scope :by_users, lambda{ |ids|
+    if ids && !ids.empty?
+      { :conditions => ['checkins.user_id IN (?)', ids]}
+    end
+  }
   named_scope :by_restaurant, lambda { |restaurant_id|
     { :conditions => {:restaurant_id => restaurant_id} }
   }

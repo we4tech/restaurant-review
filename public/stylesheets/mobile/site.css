@@ -75,6 +75,23 @@ h6 {
   margin-right: 5px;
   margin-bottom: 5px;
 }
+.date {
+  font-size: 70%;
+  color: #BBB;
+}
+.long_button {
+  padding: 6px;
+  width: 100%;
+  height: 30px;
+  font-size: 110%;
+}
+.fullLength {
+  width: 100%;
+}
+.expand {
+  color: #ccc;
+  float: right;
+}
 .wrapper {
   margin-left: -5px;
   margin-right: -5px;
@@ -83,6 +100,40 @@ h6 {
   -webkit-box-shadow: 1px 1px 10px 1px #000000;
   -moz-box-shadow: 1px 1px 10px 1px #000000;
   box-shadow: 1px 1px 10px 1px #000000;
+}
+.countBubble {
+  border: 1px solid #ccc;
+  background: red;
+  padding: 2px 5px;
+  font-size: 80%;
+  color: #fff;
+  position: relative;
+  top: -10px;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.countBubble:hover {
+  color: #888;
+}
+.album a img {
+  float: left;
+  margin-bottom: 5px;
+}
+.album a .countBubble {
+  float: left;
+  position: relative;
+  left: -25px;
+  top: 5px;
 }
 .errorExplanation {
   background: lightYellow;
@@ -338,9 +389,13 @@ input.html5_search_field:hover {
   padding: 6px;
   width: 100%;
   height: 30px;
+  font-size: 110%;
 }
 #body div.box form input[type="search"] {
   width: 90%;
+}
+#body div.box form select {
+  padding: 5px;
 }
 #body div.box form table {
   width: 100%;
@@ -360,9 +415,7 @@ input.html5_search_field:hover {
   padding: 6px;
   width: 100%;
   height: 30px;
-}
-#body div.box form table input.fullLength {
-  width: 100%;
+  font-size: 110%;
 }
 #body div.box form .tags {
   border-bottom: 1px solid #CCCCCC;
@@ -399,7 +452,6 @@ input.html5_search_field:hover {
 }
 #body div.box .checkinBox button {
   margin-top: 5px;
-  background: url(/images/icons/dryicons/accept.png) no-repeat 60px center;
   width: 100%;
   height: 40px;
   padding: 5px;
@@ -446,6 +498,29 @@ input.html5_search_field:hover {
   text-shadow: 1px 1px 10px #000000;
   filter: dropshadow(color=#000000, offx=1, offy=1);
 }
+#body div.box .checkinBox .gray_button {
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* FF3.6+ */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.65)), color-stop(100%, rgba(0, 0, 0, 0)));
+  /* Chrome,Safari4+ */
+
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* Opera11.10+ */
+
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* IE10+ */
+
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 );
+  /* IE6-9 */
+
+  background: linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* W3C */
+
+}
 #body div.box .reviews {
   padding: 5px;
 }
@@ -467,6 +542,7 @@ input.html5_search_field:hover {
   margin: 0;
   padding: 0;
   display: inline;
+  font-size: 90%;
 }
 #body div.box .reviews .tbl_reviews .avatar {
   width: 40px;
@@ -495,9 +571,38 @@ input.html5_search_field:hover {
   color: #888;
   font-weight: bold;
 }
-#body div.box .reviews .tbl_reviews td .review .date {
-  font-size: 70%;
-  color: #BBB;
+#body div.box .reviews .tbl_reviews td .review .add_comment_link {
+  font-size: 100%;
+  color: #000;
+  background: lightYellow;
+  font-weight: bold;
+}
+#body div.box .reviews .tbl_reviews td .review .review_comment_form {
+  position: absolute;
+  padding: 5px;
+  left: 10px;
+  width: 92%;
+  background: lightYellow;
+  border: 1px dotted #ccc;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#body div.box .reviews .tbl_reviews td .review .review_comment_form textarea {
+  width: 100%;
+  height: 40px;
 }
 #body div.box .reviews .tbl_reviews td .review .review_comments .review_comment {
   background: #EDEFF4;
@@ -559,6 +664,43 @@ input.html5_search_field:hover {
 #body div.box .breadcrumbs div.crumb {
   display: inline;
 }
+#body div.box .review_form {
+  position: absolute;
+  padding: 5px;
+  left: 10px;
+  width: 92%;
+  background: lightYellow;
+  border: 1px dotted #ccc;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#body div.box .review_form .reviewHeader {
+  font-size: 80%;
+}
+#body div.box .review_form select {
+  padding: 5px;
+}
+#body div.box .review_form textarea {
+  width: 100%;
+  height: 40px;
+}
+#body div.box .review_form button {
+  width: 100%;
+  border: 0;
+}
 #body div.box h4, #body div.box h1 {
   padding: 5px;
   margin: 0;
@@ -611,6 +753,10 @@ input.html5_search_field:hover {
   padding: 5px;
   color: lightBlue;
   font-weight: bold;
+}
+#body div.box .text {
+  color: #888;
+  font-size: 80%;
 }
 #body div.box .content {
   padding: 5px;
@@ -762,6 +908,7 @@ input.html5_search_field:hover {
   display: block;
   min-height: 70px;
   display: block;
+  background: #fff;
   -webkit-box-shadow: 1px 1px 2px 1px #eeeeee;
   -moz-box-shadow: 1px 1px 2px 1px #eeeeee;
   box-shadow: 1px 1px 2px 1px #eeeeee;
@@ -843,6 +990,118 @@ input.html5_search_field:hover {
   padding: 10px;
   font-size: 80%;
 }
+#body div.plain .imageContainer {
+  padding: 5px;
+  background: #f0f0f0;
+  text-align: center;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
+}
+#body div.plain .imageContainer a {
+  border: none;
+}
+#body div.plain .imageContainer h4 {
+  background: none repeat scroll 0 0 #CCCCCC;
+  font-size: 120%;
+  left: -5px;
+  margin-bottom: 5px;
+  padding: 5px;
+  position: relative;
+  text-align: left;
+  top: -5px;
+  width: 100%;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#body div.plain .imageContainer .description {
+  padding: 10px;
+  border: 1px dotted #ccc;
+  color: #888;
+  background: lightYellow;
+  text-align: left;
+}
+#body div.plain .mapContainer .tools {
+  background: lightYellow;
+  border-top: 1px dotted #ccc;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #888;
+  padding: 5px;
+}
+#body div.plain .mapContainer .tools a {
+  color: #0066cc;
+  border-right: 1px solid #ccc;
+  padding: 5px;
+}
+#body div.plain .mapContainer .tools select {
+  width: 100%;
+}
+#body div.plain .mapContainer .google_map_search_field {
+  width: 80%;
+}
+#body div.plain .mapContainer .icon_current_location {
+  float: right;
+}
+#body div.plain .review_form {
+  position: absolute;
+  padding: 5px;
+  left: 10px;
+  width: 92%;
+  background: lightYellow;
+  border: 1px dotted #ccc;
+  -webkit-box-shadow: 1px 1px 5px 1px #ababab;
+  -moz-box-shadow: 1px 1px 5px 1px #ababab;
+  box-shadow: 1px 1px 5px 1px #ababab;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+#body div.plain .review_form .reviewHeader {
+  font-size: 80%;
+}
+#body div.plain .review_form select {
+  padding: 5px;
+}
+#body div.plain .review_form textarea {
+  width: 100%;
+  height: 40px;
+}
+#body div.plain .review_form button {
+  width: 100%;
+  border: 0;
+}
 #body div.plain h1 {
   color: orange;
   text-shadow: 1px 1px 1px #000000;
@@ -863,7 +1122,6 @@ input.html5_search_field:hover {
 }
 #body div.plain .checkinBox button {
   margin-top: 5px;
-  background: url(/images/icons/dryicons/accept.png) no-repeat 60px center;
   width: 100%;
   height: 40px;
   padding: 5px;
@@ -909,6 +1167,55 @@ input.html5_search_field:hover {
 
   text-shadow: 1px 1px 10px #000000;
   filter: dropshadow(color=#000000, offx=1, offy=1);
+}
+#body div.plain .checkinBox .gray_button {
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* FF3.6+ */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0.65)), color-stop(100%, rgba(0, 0, 0, 0)));
+  /* Chrome,Safari4+ */
+
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* Opera11.10+ */
+
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* IE10+ */
+
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 );
+  /* IE6-9 */
+
+  background: linear-gradient(top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+  /* W3C */
+
+}
+#body div.plain .reviewButton button {
+  background: #a90329;
+  /* Old browsers */
+
+  background: -moz-linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%);
+  /* FF3.6+ */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a90329), color-stop(44%, #8f0222), color-stop(100%, #6d0019));
+  /* Chrome,Safari4+ */
+
+  background: -webkit-linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%);
+  /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%);
+  /* Opera11.10+ */
+
+  background: -ms-linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%);
+  /* IE10+ */
+
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 );
+  /* IE6-9 */
+
+  background: linear-gradient(top, #a90329 0%, #8f0222 44%, #6d0019 100%);
+  /* W3C */
+
 }
 #body div.plain .cellNum {
   padding: 5px;

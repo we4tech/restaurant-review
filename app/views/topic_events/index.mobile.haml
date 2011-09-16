@@ -1,0 +1,21 @@
+#site_center_list.box
+  = render_breadcrumbs()
+
+  .content
+    - if @topic_events.empty?
+      .highlight No available event found
+
+    - else
+      - @topic_events.each do |event_type, events|
+        %h5= event_type.to_s.humanize
+        .space
+        - if events.present?
+          - events.each do |event|
+            = render :partial => 'topic_events/parts/event', :locals => {:topic_event => event}
+        - else
+          .message
+            There is no #{event_type.to_s.humanize} events right this moment.<br/>
+            If you have one please #{link_to 'add here', new_event_path}
+          .space
+    .clear
+    .space

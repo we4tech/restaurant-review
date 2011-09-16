@@ -1,0 +1,5 @@
+.break
+.reviewHeader
+  = f.select :loved, [['I love this place', 1], ['I dislike this place', 0], ['I wanna go to this place', 2]], {}, :class => 'fullLength'
+.space
+= f.text_area :comment, :cols => 25, :rows => 6, :placeholder => 'Enter your review'

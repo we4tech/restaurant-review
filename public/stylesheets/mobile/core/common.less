@@ -32,6 +32,24 @@
   }
 }
 
+.date {
+  font-size: 70%;
+  color: #BBB;
+}
+
+.long_button {
+  .format-submit-field();
+}
+
+.fullLength {
+  width: 100%;
+}
+
+.expand {
+  color: #ccc;
+  float: right;
+}
+
 .wrapper {
   margin-left: -5px;
   margin-right: -5px;
@@ -39,6 +57,38 @@
   margin-bottom: 10px;
 
   .add_box_shadow(10px, #000);
+}
+
+.countBubble {
+  border: 1px solid #ccc;
+  background: red;
+  padding: 2px 5px;
+  font-size: 80%;
+  color: #fff;
+  position: relative;
+  top: -10px;
+
+  &:hover {
+    color: #888;
+  }
+
+  .add_round_corner(10px, 10px, 10px, 10px);
+}
+
+.album {
+  a {
+    img {
+      float: left;
+      margin-bottom: 5px;
+    }
+
+    .countBubble {
+      float: left;
+      position: relative;
+      left: -25px;
+      top: 5px;
+    }
+  }
 }
 
 .errorExplanation {
@@ -63,7 +113,6 @@
   .checkinBox {
     button {
       margin-top: 5px;
-      background: url(/images/icons/dryicons/accept.png) no-repeat 60px center;
       width: 100%;
       height: 40px;
       padding: 5px;
@@ -76,6 +125,18 @@
       .format-big-button();
       .add_text_shadow(#000, 10px);
     }
+
+    .gray_button {
+      .format-big-button-disabled();
+    }
+  }
+}
+
+.include-reviwe-button-color() {
+  .reviewButton {
+    button {
+      .format-big-button-highlight()
+    }
   }
 }
 
@@ -86,6 +147,17 @@
 
     .add_box_shadow();
   }
+}
+
+.include-absolute-panel() {
+  position: absolute;
+  padding: 5px;
+  left: 10px;
+  width: 92%;
+  background: lightYellow;
+  border: 1px dotted #ccc;
+  .add_box_shadow();
+  .add_round_corner();
 }
 
 .include-pagination() {
@@ -129,6 +201,7 @@
 }
 
 .include-reviews-box() {
+
   .reviews {
     padding: 5px;
 
@@ -151,6 +224,7 @@
       p {
         margin: 0; padding: 0;
         display: inline;
+        font-size: 90%;
       }
 
       .avatar {
@@ -179,9 +253,20 @@
              }
            }
 
-           .date {
-            font-size: 70%;
-            color: #BBB;
+           .add_comment_link {
+             font-size: 100%;
+             color: #000;
+             background: lightYellow;
+             font-weight: bold;
+           }
+
+           .review_comment_form {
+             .include-absolute-panel();
+
+             textarea {
+               width: 100%;
+               height: 40px;
+             }
            }
 
            .review_comments {

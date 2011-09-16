@@ -54,7 +54,7 @@ HTML5Features =
   # Generate place holder text if HTML 5 is not enabled
   fixFieldsPlaceHolder: ->
     if !Modernizr.input.placeholder
-      $('input[placeholder]').each ->
+      $('input[placeholder], textarea[placeholder]').each ->
         new PlaceholderTextField $(this)
 
     if !Modernizr.inputtypes.search
@@ -114,7 +114,7 @@ SiteFeatures =
     $('*[toggleView]').each ->
       self = $(this)
       self.click (e) ->
-        $('#' + $(e.target).attr('toggleView')).toggle('slide')
+        $('#' + $(e.target).attr('toggleView')).toggle(500, 'easeInOutBounce')
 
   setDefaultHook: ->
     $(window).click (e) ->

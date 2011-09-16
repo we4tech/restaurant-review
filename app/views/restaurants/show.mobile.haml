@@ -7,7 +7,7 @@
       - if @restaurant.image_attached?
         %td{:width => '100px'}
           - image = @restaurant.rand_image
-          = image_tag(image.c_gallery_public_filename)
+          = image_tag(image.c_gallery_public_filename, :alt => 'Image')
       %td
         = render_restaurant_status(@restaurant)
         - cellNum = render_properties(@restaurant, :only => ['phone'], :label => 'Call')
@@ -15,6 +15,12 @@
           .cellNum
             = cellNum
         .clear
+    %tr
+      %td{:colspan => 2}
+        .checkinBox.reviewButton
+          %button{:onclick => "$('#reviewEditor').toggle('slide');"} Review This #{@topic.name.singularize.humanize}
+          #reviewEditor{:style => 'display:none'}
+            = render :partial => 'reviews/parts/review_editor'
     %tr
       %td{:colspan => 2}
         = render_checkin_box
@@ -54,8 +60,23 @@
         .clear
 
 .box
-  %h4 Photos
-  .content
+  %h4{:toggleView => 'description'}
+    Description
+    %a{:class => 'expand', :toggleView => 'description'} &raquo;
+  #description.content.text{:style => 'display: none;'}
+    = sanitize(@restaurant.description)
+
+.box
+  %h4{:toggleView => 'photos'}
+    Photos
+    %a{:class => 'expand', :toggleView => 'photos'} &raquo;
+  #photos.content{:style => 'display: none'}
     .album
       - @restaurant.all_images.each do |image|
-        = link_to(image_tag(image.c_small_public_filename), image_path(image.id))
+        %a{:href => image_path(image.id)}
+          = image_tag(image.c_small_public_filename)
+          .countBubble
+            = image.photo_comments.count
+      .clear
+
+= render_related_restaurants(5, :label => "Similar #{@topic.name.pluralize}", :z_index => 1002)

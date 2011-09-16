@@ -2,6 +2,7 @@
   padding: @padding;
   width: @width;
   height: @height;
+  font-size: 110%;
 }
 
 .format_form() {
@@ -14,6 +15,10 @@
 
     input[type="search"] {
       width: 90%;
+    }
+
+    select {
+      padding: 5px;
     }
 
     table {
@@ -31,10 +36,6 @@
 
       input[type="submit"] {
         .format-submit-field();
-      }
-
-      input.fullLength {
-        width: 100%;
       }
     }
 

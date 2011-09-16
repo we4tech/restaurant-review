@@ -1,0 +1,11 @@
+%div{:id => "review_comment_form_#{review.id}", :class => 'review_comment_form'}
+  %h6 Add your comment
+  - form_for @review_comment || ReviewComment.new do |f|
+    = f.hidden_field :review_id, :value => review.id
+    = f.select :loved, [['Did you like this review?', 1], ['Did you dislike this review?', 0]], {}, {:class => 'fullLength'}
+    .space
+    = f.text_area :content, :rows => 5, :placeholder => 'Enter your comment'
+    .space
+    = f.submit 'Save comment'
+    .space
+    %input.long_button{:type => "button", :onclick => "$('#review_comment_form_#{review.id}').toggle('slide');window.location='#review-#{review.id}';", :value => 'Close'}

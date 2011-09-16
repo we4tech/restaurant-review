@@ -2,15 +2,14 @@
   <% element_id = url_escape(config[:label]) %>
   <div class='box'>
     <% if config[:label] %>
-      <h4 class="subHeaderWithIcon clickable topCornerHeader" onclick="$('#<%= element_id %>').toggle(500, 'easeInOutBounce')"> <%= config[:label] %>
+      <h4 class="subHeaderWithIcon clickable topCornerHeader" toggleView="<%= element_id %>"> <%= config[:label] %>
         <% if config[:count] %>
-          <div class="archiveButton">
-            <%= config[:count] %>
-          </div>
+          <a href='#' class="countBubble"><%= config[:count] %></a>
         <% end %>
-
         <% if config[:link_bar] %>
           <%= link_to tt('nav.more_places'), more_link, :class => 'archiveButton' %>
+        <% else %>
+          <a href='javascript:void(0)' class='expand' toggleView="<%= element_id %>">&raquo;</a>
         <% end %> </h4>
     <% end %>
     <div id="<%= element_id %>" class='content'
@@ -57,6 +56,8 @@
           <%= link_to tt('nav.more_places'), more_link %>
         </div>
       <% end %>
-      </div>
+      <div class='clear'></div>
+    </div>
+    <div class='clear'></div>
   </div>
 <% end %>

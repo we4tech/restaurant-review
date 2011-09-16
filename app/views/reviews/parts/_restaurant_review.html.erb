@@ -4,7 +4,9 @@
 %>
 
 <div class="reviews">
-  <% reviews = model_instance.reviews.attached_with(attached_options) %>
+  <% reviews = model_instance.respond_to?(:sorted_reviews) ?
+      model_instance.sorted_reviews(attached_options) :
+      model_instance.reviews.attached_with(attached_options) %>
 
   <% if !reviews.empty? %>
     <%

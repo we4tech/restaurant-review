@@ -131,6 +131,15 @@ class Topic < ActiveRecord::Base
     "http#{secure ? 's' : ''}://#{config[:subdomain]}.#{config[:host]}?l=#{config[:l]}"
   end
 
+  # Convert furniture_store to Furniture Stores
+  def friendly_name_pluralized
+    @friendly_name_pluralized ||= self.name.humanize.pluralize
+  end
+
+  def friendly_name_singularalized
+    @friendly_name_singularalized ||= self.name.humanize.pluralize
+  end
+
   #
   # Retrieve topic of specified name
   # +THIS METHOD handles with CACHED data+ due to overwhelmed use potential,

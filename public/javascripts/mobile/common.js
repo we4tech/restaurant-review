@@ -57,7 +57,7 @@
   HTML5Features = {
     fixFieldsPlaceHolder: function() {
       if (!Modernizr.input.placeholder) {
-        $('input[placeholder]').each(function() {
+        $('input[placeholder], textarea[placeholder]').each(function() {
           return new PlaceholderTextField($(this));
         });
       }
@@ -113,7 +113,7 @@
         var self;
         self = $(this);
         return self.click(function(e) {
-          return $('#' + $(e.target).attr('toggleView')).toggle('slide');
+          return $('#' + $(e.target).attr('toggleView')).toggle(500, 'easeInOutBounce');
         });
       });
     },

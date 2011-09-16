@@ -64,6 +64,7 @@ class Restaurant < ActiveRecord::Base
 
   include CommonModel::Common
   include CommonModel::LocationModel
+  include CommonModel::CheckinModel
 
   # Return the list of images of the specified *group* and specified *limit*
   def images_of(group, limit = 0)
@@ -268,17 +269,35 @@ class Restaurant < ActiveRecord::Base
   def sorted_reviews(conditions = {}, sorting_type = :by_most_comments)
     case sorting_type
       when :by_most_comments
-        self.reviews.all(
+        reviews = self.reviews.all(
             :select => 'reviews.*, count(review_comments.review_id) as comments_count',
-            :joins => [:review_comments],
-            :group => 'review_comments.review_id',
-            :order => 'comments_count DESC',
+            :include => [:review_comments],
+            :order => 'reviews.created_at DESC',
             :conditions => conditions
         )
+
+        sort_reviews_by_comments(reviews)
       else
         self.reviews
     end
   end
+
+  def sort_reviews_by_comments(reviews)
+    reviews.sort { |a, b|
+      a_count = a.review_comments.length
+      b_count = b.review_comments.length
+      a_comments = a.review_comments
+      b_comments = b.review_comments
+
+      if a_count > 0 && b_count > 0 && a_count == b_count
+        a_comments.last.created_at - b_comments.last.created_at
+      else
+        a_count - b_count
+      end
+    }.reverse
+  end
+
+  private :sort_reviews_by_comments
 
   def rand_image
     (all_images || []).rand

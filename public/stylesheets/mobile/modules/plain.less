@@ -71,15 +71,114 @@
   }
 }
 
+.include-review-form() {
+  .review_form {
+    .include-absolute-panel();
+
+    .reviewHeader {
+      font-size: 80%;
+    }
+
+    select {
+      padding: 5px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 40px;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+    }
+  }
+
+}
+
+.include-image-container() {
+  .imageContainer {
+    padding: 5px;
+    background: #f0f0f0;
+    text-align: center;
+
+    .add_round_corner();
+    .add_box_shadow();
+
+    a {
+      border: none;
+    }
+
+    h4 {
+      background: none repeat scroll 0 0 #CCCCCC;
+      font-size: 120%;
+      left: -5px;
+      margin-bottom: 5px;
+      padding: 5px;
+      position: relative;
+      text-align: left;
+      top: -5px;
+      width: 100%;
+
+      .add_round_corner(5px, 5px, 0, 0);
+    }
+
+    .description {
+      padding: 10px;
+      border: 1px dotted #ccc;
+      color: #888;
+      background: lightYellow;
+      text-align: left;
+    }
+  }
+}
+
+.include-map-container() {
+  .mapContainer {
+    .tools {
+      background: lightYellow;
+      border-top: 1px dotted #ccc;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      color: #888;
+      padding: 5px;
+
+      a {
+        color: #0066cc;
+        border-right: 1px solid #ccc;
+        padding: 5px;
+      }
+
+      select {
+        width: 100%;
+      }
+    }
+
+    .google_map_search_field {
+      width: 80%;
+    }
+
+    .icon_current_location {
+      float: right;
+    }
+  }
+
+}
+
 .add_plain_format() {
   div.plain {
     background: #f0f0f0;
     padding: 10px;
     font-size: 80%;
 
+
+    .include-image-container();
+    .include-map-container();
+    .include-review-form();
     .include-heading();
     .include-top-bar();
     .include-checkin-box();
+    .include-reviwe-button-color();
     .include-cell-num();
     .include-restaurant-status();
   }
