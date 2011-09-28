@@ -29,7 +29,7 @@ config.action_controller.asset_host = "http://asset%d.welltreat.us"
 
 MAP_API_KEY = 'ABQIAAAAFNm78CTt6Ba6XsBkWZHE3hQJ1P_wMECDecVRk5GZ-2b28we_rhTU3P-5VoseZAtTkUwgI6Dz1x_jVA'
 
-require 'smtp-tls'
+#require 'smtp-tls'
 
 config.action_mailer.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
