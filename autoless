@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+var sys = require('sys'),
+    fs = require('fs'),
+    exec = require('child_process').exec,
+    child;
+
+var script = '~/node_modules/less/bin/lessc';
+var lessFile = 'public/stylesheets/mobile/site.less';
+var cssFile = 'public/stylesheets/mobile/site.css';
+
+fs.watchFile(lessFile, function(c, p) {
+  process.nextTick(function() {
+    if (c.mtime.getTime() != p.mtime.getTime()) {
+	    exec(script + " " + lessFile + " " + cssFile, function(e) {
+	      if (e) {
+	        console.log(e.message);
+	      } else {
+	        console.log('Successfully css\'d');
+	      }
+	    });
+	  }
+  });	
+});
+
