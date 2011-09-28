@@ -1,0 +1,11 @@
+.plain
+  %h1= tt('header.restaurant_create')
+  .clear.space
+
+.box
+  - form_for @restaurant do |f|
+    = f.error_messages.gsub(/(restaurant)/, @topic.name.humanize)
+    = render :partial => 'restaurants/parts/form_attributes_based',
+             :locals => {:f => f}
+    .clear.space
+    = f.submit t('button.create'), :class => 'submit'

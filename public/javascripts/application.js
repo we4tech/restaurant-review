@@ -80,7 +80,7 @@
         var clickCallback = options['onclick'];
 
         var marker = new google.maps.Marker({
-          title: markerInfo.name + " (" + markerInfo.reviews_count + ' reviews, ' + markerInfo.reviews_loved + ' loves' + ')',
+          title: markerInfo.name,
           icon: markerInfo.marker_icon,
           visible: true,
           position: position,
@@ -118,20 +118,26 @@
               if (clear) {
                 //$this.clearMarkers();
               }
+
               var markers = [];
+              var itemsElement = $('<div/>');
 
               for (var i = 0; i < data.length; i++) {
                 if (data[i] && $this.getMarkerInfo(data[i].name) == null) {
                   markers.push($this.mapBuildMarker(data[i], {
                     onclick: function(marker, markerInfo) {
                       pHiddenDialogContent.html(markerInfo.marker_html).dialog({
-                        'title': markerInfo.name + " (" + markerInfo.reviews_count + ' reviews, ' + markerInfo.reviews_loved + ' loves' + ')',
-                        'width': '600px',
+                        'title': markerInfo.name,
+                        'width': '300px',
                         'modal': true,
                         'closeOnEscape': true})
                     }}));
+
+                  itemsElement.append($(data[i].marker_html));
                 }
               }
+
+              $('#nearby').html(itemsElement.html()).append('<div class="clear"></div>');
             }, 1000);
           }
         });

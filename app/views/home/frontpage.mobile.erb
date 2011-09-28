@@ -34,55 +34,6 @@
 
 <% content_for :bottom do %>
   <script type="text/javascript">
-    var currentLocationSearchingInProgress = false;
-    try {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var lat = position.coords.latitude;
-          var lng = position.coords.longitude;
-
-          if (!currentLocationSearchingInProgress) {
-            currentLocationSearchingInProgress = true;
-            try {
-              var url = "<%= search_path.gsub(/format=mobile/, 'format=json') %>";
-
-              $.ajax({
-                url: url,
-                data: {
-                  format: 'json', limit: 1,
-                  'fields[]': 'address', 'excepts[]': ['marker_html', 'description'],
-                  'meter': 1000, lat: lat, lng: lng
-                },
-                dataTypeString: 'json',
-                success: function(result) {
-                  if (result && result.length > 0) {
-                    $('.siteMessage').each(function() {
-                      var html = "Are you nearby '" + result[0].address +"' ?" +
-                          "<div class='quote'>Find your nearby <a href='<%= search_path %>&meter=1000&lat=" + lat + "&lng=" + lng + "'><%= @topic.name.humanize.pluralize.downcase %></a>.</div> <button type='button' onclick='$(this).parent().hide();'>Close</button>";
-                      var $this = $(this);
-                      $this.html(html);
-                      $this.show();
-                    });
-
-                    // update nearby restaurants search link
-                    var link = $('#nearby_places a');
-                    link.attr('href', link.attr('href') + "&lat=" + lat + '&lng=' + lng);
-                    link.html(link.html() + ' (' + result[0].address + ')');
-                    currentLocationSearchingInProgress = false;
-                  }
-                }
-              });
-            } catch(e) {
-              currentLocationSearchingInProgress = false;
-            }
-
-          }
-        }, function() {
-
-        });
-      }
-    } catch (e) {
-      alert(e);
-    }
+    window.GeoService.promptNearbySearch('<%= search_url(:format => 'json') %>');
   </script>
 <% end %>

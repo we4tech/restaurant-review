@@ -38,4 +38,10 @@ module TopicsHelper
     }
   end
 
+  #
+  # Return reference of either restaurant or event object
+  def any_ref
+    @restaurant || @event
+  end
+
 end

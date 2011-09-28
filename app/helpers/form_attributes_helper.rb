@@ -23,6 +23,7 @@ module FormAttributesHelper
     required        = options[:required]
     placeholder     = options[:placeholder]
     group_prefix    = options[:group_prefix] || ''
+    box_class       = options[:box_class] || 'tags'
     existing_value  = @restaurant.send(field_name) || []
     unsaved_options = []
 
@@ -67,7 +68,7 @@ module FormAttributesHelper
       end
 
       # Render option fields
-      box_html << content_tag('div', :class => 'tags', :id => "field_#{field_name}") do
+      box_html << content_tag('div', :class => box_class, :id => "field_#{field_name}") do
         options_html = ""
         parse_default_value(default_value, existing_value).sort.each do |option_name|
           option_name.strip!

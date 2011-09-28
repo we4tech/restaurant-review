@@ -216,8 +216,13 @@ module UrlOverrideHelper
   #
   # Return a HTML anchor tag either for the event or restaurant based
   # on the object type
-  def event_or_restaurant_link(model_instance)
-    link_to model_instance.name, event_or_restaurant_url(model_instance)
+  def event_or_restaurant_link(model_instance, options = {})
+    name = model_instance.name
+    if options[:length]
+      name = truncate(name, :length => options[:length])
+    end
+
+    link_to name, event_or_restaurant_url(model_instance)
   end
 
   #

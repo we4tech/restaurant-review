@@ -140,7 +140,7 @@
     <!-- Details part 3 (The review) -->
     <div class='details restaurantReviews'>
       <div id='restaurantReviewEditor'>
-        <%= render :partial => 'reviews/parts/review_editor' %>
+        <%= render :partial => 'reviews/parts/review_editor', :locals => {:topic_event => @event} %>
       </div>
       <div class='break'></div>
       <div class='clear space_10'></div>

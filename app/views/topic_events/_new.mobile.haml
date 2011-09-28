@@ -1,0 +1,23 @@
+.plain
+  %h1 Create New Event
+  .clear.space
+
+= render :partial => 'topic_events/parts/form'
+
+.clear.space
+
+- if !@event.new_record?
+  %h4 Upload pictures
+
+%script{:type => "text/javascript", :src => "http://maps.google.com/maps/api/js?libraries=places&sensor=true"}
+
+:javascript
+  $.executeSafe(function() {
+    App.MapWidget.createMap($('#event_map'), function(pPlacemark) {
+      $('#event_address').val(pPlacemark.address());
+      $('#event_lat').val(pPlacemark.lat());
+      $('#event_lng').val(pPlacemark.lng());
+    });
+  });
+
+  $('#addMoreImage').whenClicked({duplicate: $('#duplicable'), to: $('#duplicatedItems')});

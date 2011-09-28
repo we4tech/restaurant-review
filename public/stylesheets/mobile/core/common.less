@@ -77,6 +77,7 @@
 
 .album {
   a {
+    float: left;
     img {
       float: left;
       margin-bottom: 5px;
@@ -88,6 +89,7 @@
       left: -25px;
       top: 5px;
     }
+
   }
 }
 
@@ -109,6 +111,12 @@
   margin: 5px;
 }
 
+.locale_en {
+  form label {
+    text-transform: capitalize!important;
+  }
+}
+
 .include-checkin-box() {
   .checkinBox {
     button {
@@ -124,10 +132,26 @@
       .add_round_corner();
       .format-big-button();
       .add_text_shadow(#000, 10px);
+
+      b {
+        float: left;
+        margin-top: 5px;
+      }
+      img {
+        .no_box_shadow();
+        margin-top: -4px;
+        background: transparent;
+        float: right;
+        margin-right: -10px;
+      }
     }
 
     .gray_button {
       .format-big-button-disabled();
+    }
+
+    .iconButton {
+
     }
   }
 }
@@ -186,7 +210,7 @@
 
 .include-navigation() {
   .navigation {
-    font-size: 70%;
+    font-size: 12px;
     background: @c_light_color;
     padding: 5px;
     text-align: center;

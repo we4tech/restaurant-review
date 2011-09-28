@@ -1,0 +1,51 @@
+.box
+  %h4{:toggleView => 'images'}
+    Upload photos
+    %a{:class => 'expand', :toggleView => 'images'} &raquo;
+
+  #images{:style => 'display:none'}
+    - form_for MultiImage.new, :url => images_url, :html => {:method => :post, :multipart => true} do |f|
+      %table
+        %tr
+          %td
+            %input{:type => "hidden", :name => "restaurant_id", :value => @restaurant.id}
+            = f.label :uploaded_datum, 'Choose image file'
+            .space
+            = f.file_field :uploaded_datum, :index => ''
+        %tr
+          %td
+            .space
+            = f.text_field :captions, :index => '', :placeholder => 'Enter photo caption'
+        %tr
+          %td
+            .space
+            = f.text_area :descriptions, :index => '', :rows => 4, :placeholder => 'Enter photo description'
+        %tr
+          %td
+            .space
+            = f.submit t('button.upload'), :class => 'submit'
+      .clear.space
+
+- if @restaurant.images.present?
+  .box
+    %h4{:toggleView => 'photos'}
+      Remove your uploaded photos
+      %a{:class => 'expand', :toggleView => 'photos'} &raquo;
+    #photos.content{:style => 'display: none'}
+      .album
+        - @restaurant.images.each do |image|
+          = link_to image_tag(image.c_small_public_filename), image_url(image), :method => :delete, :confirm => t('confirm.delete_image')
+        .clear
+
+- if @restaurant.other_images.present?
+  .box
+    %h4{:toggleView => 'photos'}
+      Remove other's uploaded photos
+      %a{:class => 'expand', :toggleView => 'photos'} &raquo;
+    #photos.content{:style => 'display: none'}
+      .album
+        - @restaurant.otehr_images.each do |image|
+          %a{:href => image_path(image.id)}
+            = link_to image_tag(image.c_small_public_filename), image_url(image, :restaurant_id => @restaurant.id), :method => :delete, :confirm => t('confirm.delete_image')
+
+        .clear

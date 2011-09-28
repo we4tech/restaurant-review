@@ -8,7 +8,7 @@ class TopicEvent < ActiveRecord::Base
       'Musical event'           => 5,
       'Magic show'              => 6,
       'Comedy show'             => 7,
-      'Deal'                    => 8,
+      'Deal'                    => 8
   }
 
   IMAGE_GROUPS    = {
@@ -32,6 +32,7 @@ class TopicEvent < ActiveRecord::Base
   has_many :reviews
   has_many :review_comments
   has_many :checkins
+  has_many :photo_comments
 
   named_scope :by_topic, lambda { |topic_id| {:conditions => {:topic_id => topic_id}} }
   named_scope :open_events, lambda {
@@ -54,6 +55,7 @@ class TopicEvent < ActiveRecord::Base
   include CommonModel::Common
   include CommonModel::ReviewModel
   include CommonModel::LocationModel
+  include CommonModel::CheckinModel
 
   def tags
     []
@@ -77,6 +79,12 @@ class TopicEvent < ActiveRecord::Base
 
   def extra_notification_recipients
     []
+  end
+
+  def field(key)
+    if description_fields.present? && description_fields.include?(key)
+      description_fields[key]
+    end
   end
 
   #

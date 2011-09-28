@@ -113,7 +113,8 @@
         var self;
         self = $(this);
         return self.click(function(e) {
-          return $('#' + $(e.target).attr('toggleView')).toggle(500, 'easeInOutBounce');
+          $('#' + $(e.target).attr('toggleView')).toggle(500, 'easeInOutBounce');
+          return e.stopPropagation();
         });
       });
     },

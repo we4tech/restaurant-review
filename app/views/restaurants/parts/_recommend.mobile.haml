@@ -1,0 +1,8 @@
+%form{:action => search_url, :id => 'recommend_form'}
+	.space_10
+	%input{:type => 'hidden', :name => 'format', :value => params[:format]}
+	%input{:type => 'hidden', :name => '_models', :value => 'Restaurant'}
+	%input#search_field.textField.greyText{:placeholder => "Wanna eat different? (ie. brownie, gulshan, car parking fuska)",
+                    	:type => "search", :class => "top_radius",
+                    	:name => "name|short_array|long_array|description[]"}
+.clear

@@ -111,7 +111,7 @@ class FacebookConnectController < ApplicationController
   end
 
   def publish_story_of_review(p_bundle_id, p_facebook_session, p_review, shared = false)
-    restaurant = p_review.reload.restaurant
+    restaurant = p_review.reload.any
     link = restaurant_long_route_url(
         :topic_name => p_review.topic.subdomain,
         :name => restaurant.name.parameterize.to_s,

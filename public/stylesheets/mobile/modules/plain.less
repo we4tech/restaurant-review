@@ -28,6 +28,42 @@
   }
 }
 
+.include-user-status() {
+  .userStatusBox {
+    background: none repeat scroll 0 0 #F0F0F0;
+    display: block;
+    width: 95%;
+
+    .header {
+      color: #888;
+      margin-bottom: 3px;
+    }
+
+    .boxItem {
+       float: left;
+       padding: 5px;
+       background: #fff;
+       text-align: center;
+       margin-right: 5px;
+       .add_round_corner();
+       .add_box_shadow();
+
+       .label {
+         font-size: 80%;
+       }
+
+       .value {
+        font-size: 140%;
+        font-weight: bold;
+        font-family: "comic Sans MS";
+       }
+    }
+
+    .blockBorder {
+    }
+  }
+}
+
 .include-restaurant-status() {
   .restaurantStatus {
     background: none repeat scroll 0 0 #F0F0F0;
@@ -181,5 +217,40 @@
     .include-reviwe-button-color();
     .include-cell-num();
     .include-restaurant-status();
+    .include-user-status();
+
+    .form {
+      .format_form();
+
+      form {
+        padding: 0!important;
+        input[type="text"], input[type="password"], input[type="email"], input[type="url"] {
+          width: 90%!important;
+        }
+
+        input[type="search"] {
+          width: 40% !important;
+          height: 20px;
+        }
+
+        textarea {
+          width: 95%!important;
+        }
+
+        .fullRow {
+          padding: 5px;
+          background: #fff;
+          border: 1px solid #ccc;
+
+          .add_round_corner();
+        }
+      }
+    }
+  }
+
+  div.userProfile {
+    .topBar button {
+      margin-top: 0;
+    }
   }
 }

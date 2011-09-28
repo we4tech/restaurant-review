@@ -26,8 +26,8 @@
 
   .mapContainer
     .tools
-      = link_to 'See on device', map_url
-      = link_to 'See on google', details_link
+      = link_to 'See as image', map_url
+      = link_to 'See on device', details_link
 
       - selected_meter = params[:meter].to_i
       Nearby #{@topic.friendly_name_pluralized}
@@ -39,7 +39,7 @@
                  :markerMessage => "<h4>#{@model_instance.name}</h4><p>#{@model_instance.address}</p>",
                  :infoWindowMessagePrefix => "Your #{@topic.name.humanize} @",
                  :mapWidth => "100%",
-                 :mapHeight => "600px",
+                 :mapHeight => "300px",
                  :mapReadOnly => 'true',
                  :style => "width: 600px; height: 300px" }
       Loading map...

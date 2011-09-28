@@ -3,102 +3,121 @@
    location_included = false
 %>
 
-<% @form_fields.each do |field| %>
+<table>
+  <% @form_fields.each do |field| %>
+    <%
+       field_type = field['type']
+       text_field = field_type == 'text_field'
+       text_area = field_type == 'text_area'
+       combobox = field_type == 'combobox'
+       checkbox = field_type == 'checkbox'
+       options = field_type == 'options'
 
-  <%
-     field_type = field['type']
-     text_field = field_type == 'text_field'
-     text_area = field_type == 'text_area'
-     combobox = field_type == 'combobox'
-     checkbox = field_type == 'checkbox'
-     options = field_type == 'options'
-
-     field_name = field['field']
-     address_field = field_name == 'address'
-     required = field['required']
-     field_label = field['label']
-     default_value = field['default_value']
-  %>
-  <% if text_field && !address_field %>
-    <div class="form_field">
-      <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
-      <%= f.text_field field_name,
-                       :class => "#{field_type} full_field float_#{field_type}",
-                       "#{required ? 'required' : '_'}" => 'true',
-                       :placeholder => "Enter #{field_label}" %>
-      <%= f.error_message_on field_name %>
-    </div>
-  <% elsif text_area && !address_field %>
-    <div class="form_field">
-      <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
-      <%= f.text_area field_name, :class => "#{field_type} full_field float_#{field_type}", :placeholder => "Enter #{field_label}" %>
-      <%= f.error_message_on field_name %>
-      <% text_area_included = true %>
-    </div>
-  <% elsif text_field && address_field %>
-    <div class="form_field">
-      <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
-      <div class="grid_6">
-        <div>
-          <div id="google_map_canvas"
-               title="<%= @restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982" %>"
-               markerMessage="<h4>Where is your <%= @topic.name.humanize %>?</h4>"
-               infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
-               mapWidth='98.5%'
-               <%= @restaurant.lat.to_i > 0 ? '' : "detectCurrentPosition='true'" %>
-               style="width: 100%; height: 100%">
-            <div class="siteMessage">Loading map...</div></div>
-        </div>
-        <div>
+       field_name = field['field']
+       address_field = field_name == 'address'
+       required = field['required']
+       field_label = field['label']
+       default_value = field['default_value']
+    %>
+    <% if text_field && !address_field %>
+      <tr>
+        <td>
+          <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
+        </td>
+        <td>
           <%= f.text_field field_name,
-                           :class => "#{field_type} full_field bottom_radius readonly map_address_field",
-                           :onkeyup => 'App.MapWidget.displayOnKeyPress(this, \'google_map_canvas\')' %>
+                         :class => "#{field_type} full_field float_#{field_type}",
+                         "#{required ? 'required' : '_'}" => 'true',
+                         :placeholder => "Enter #{field_label}" %>
           <%= f.error_message_on field_name %>
-          <br/>
-          <%= f.hidden_field :lat %>
-          <%= f.hidden_field :lng %>
-        </div>
-      </div>
-    </div>
-    <% location_included = true %>
+        </td>
+      </tr>
+    <% elsif text_area && !address_field %>
+      <tr>
+        <td valign="top" colspan='2'>
+          <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
+          <div class='space'></div>
+          <%= f.text_area field_name,
+                          :rows => 5,
+                          :class => "#{field_type} full_field float_#{field_type}",
+                          :placeholder => "Enter #{field_label}" %>
+          <%= f.error_message_on field_name %>
+        </td>
+        <% text_area_included = true %>
+      </tr>
+    <% elsif text_field && address_field %>
+      <tr>
+        <td colspan='2'>
+          <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
+          <div class='space'></div>
+          <div class='mapContainer'>
+            <div id="google_map_canvas"
+                 title="<%= @restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982" %>"
+                 markerMessage="<h4>Where is your <%= @topic.name.humanize %>?</h4>"
+                 infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
+                 mapWidth='98.5%'
+                 <%= @restaurant.lat.to_i > 0 ? '' : "detectCurrentPosition='true'" %>
+                 style="width: 100%; height: 100%">
+              <div class="siteMessage">Loading map...</div></div>
+          </div>
+          <div>
+            <%= f.text_field field_name,
+                             :class => "#{field_type} full_field bottom_radius readonly map_address_field",
+                             :onkeyup => 'App.MapWidget.displayOnKeyPress(this, \'google_map_canvas\')' %>
+            <%= f.error_message_on field_name %>
+            <br/>
+            <%= f.hidden_field :lat %>
+            <%= f.hidden_field :lng %>
+          </div>
+        </td>
+      </tr>
+      <% location_included = true %>
 
-  <% elsif combobox %>
-    <div class="form_field">
-      <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
-      <%= f.select field_name, default_value.split('|'), {}, :class => "#{field_type} full_field float_#{field_type}" %>
-      <%= f.error_message_on field_name %>
-    </div>
+    <% elsif combobox %>
+      <tr>
+        <td><label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label></td>
+        <td>
+          <%= f.select field_name, default_value.split('|'), {}, :class => "#{field_type} full_field float_#{field_type}" %>
+          <%= f.error_message_on field_name %>
+        </td>
+      </tr>
 
-  <% elsif checkbox %>
-    <div class="form_field">
-      <label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
-      <%= f.check_box field_name, :class => "#{field_type} float_#{field_type}" %>
-      <%= f.error_message_on field_name %>
-    </div>
+    <% elsif checkbox %>
+      <tr>
+        <td valign="top"><label class="float_label"><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label></td>
+        <td>
+          <%= f.check_box field_name, :class => "#{field_type} float_#{field_type}" %>
+          <%= f.error_message_on field_name %>
+        </td>
+      </tr>
 
-  <% elsif options %>
-    <div class="form_field">
-      <label class="mobile_button_block">
-        <button type="button" id="<%= field_name %>_button"
-                onclick="$('#<%= field_name %>_options_box').toggle(500, 'easeInOutElastic', function() { var $this=$('#<%= field_name %>_button'); $this.html() == 'Add' ? $this.html('Hide') : $this.html('Add');});">Add</button>
-        <%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %>
-      </label>
-      <div id="<%= field_name %>_options_box" style="display:none">
-        <%= render_options_field :name => field_name, :label => false,
-                                 :group_prefix => 'Tag of ',
-                                 :type => field_type, :required => required,
-                                 :value => default_value, :placeholder => 'Search or add tags...' %>
-        <%= f.error_message_on field_name %>  
-      </div>
+    <% elsif options %>
+      <tr>
+        <td colspan="2" class='fullRow'>
+          <label class="mobile_button_block">
+            <%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %>
+          </label>
+          <div class='space'></div>
 
-      <%= f.error_message_on field_name %>
-    </div>
-    <div class='clear'></div>
-    <div class="space_10"></div>
-  <% else %>
-    <b style='color:red; background: lightYellow'><%= t('errors.no_matched_type') %></b><br/>
+          <div id="<%= field_name %>_options_box">
+            <%= render_options_field :name => field_name, :label => false,
+                                     :group_prefix => 'As ', :box_class => 'options',
+                                     :type => field_type, :required => required,
+                                     :value => default_value, :placeholder => 'Search or add tags...' %>
+            <%= f.error_message_on field_name %>
+          </div>
+
+          <%= f.error_message_on field_name %>
+
+        </td>
+      </tr>
+      <div class='clear'></div>
+      <div class="space_10"></div>
+    <% else %>
+      <b style='color:red; background: lightYellow'><%= t('errors.no_matched_type') %></b><br/>
+    <% end %>
   <% end %>
-<% end %>
+</table>
 
 
 <% if location_included && params[:no_script].nil? %>

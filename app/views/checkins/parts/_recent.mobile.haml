@@ -1,0 +1,36 @@
+- if !checkins.empty?
+  - element_id = url_escape(config[:label])
+  .box.noBorder
+    - if config[:label]
+      %h4.subHeaderWithIcon{:clickable => 'topCornerHeader', :onclick => "$('#<%= element_id %>').toggle(500, 'easeInOutBounce')"}
+        = config[:label]
+        - if config[:count]
+          .archiveButton= config[:count]
+
+        - if config[:link_bar]
+          = link_to tt('nav.more_places'), more_link, :class => 'archiveButton'
+
+    %div.content{:id => "#{element_id}", :style => "display: #{config[:label] && !config[:keep_open] ? 'none' : 'block'}; #{config[:z_index] ? "z-index: #{config[:z_index]}; position: relative;" : ''}"}
+      - checkins.each_with_index do |checkin, index|
+        %table
+          %tr
+            %td
+              = user_display_picture(checkin.user)
+            %td{:valign => "top"}
+              At
+              = link_to truncate(checkin.any.name, :length => 17),
+                        event_or_restaurant_url(checkin.any), :title => checkin.any.name
+              .space
+              .highlight
+                = user_link(checkin.user, :length => 5, :same_user_check => true)
+                checked in
+                %strong
+                  = distance_of_time_in_words(Time.now, checkin.created_at)
+                  ago
+
+      - if config[:link_bar].nil? && defined?(more_link)
+        .clear
+        .small
+          = link_to t('nav.more'), more_link
+    .clear
+    .space

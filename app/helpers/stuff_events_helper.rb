@@ -189,7 +189,7 @@ module StuffEventsHelper
     def prepare_story_for_photo_comment(event, message)
       c_small_image = event.image.thumbnails.of_thumbnail('c_small').first
 
-      message << "Commented on #{link_to event.restaurant.name, restaurant_long_url(event.restaurant)}'s picture</div>"
+      message << "Commented on #{link_to event.any.name, event_or_restaurant_url(event.any)}'s picture</div>"
       message << "<div class='storyDetails' style='display:none'>"
       message << "<div class='storyImage' onclick='window.location=\"#{image_path(event.image)}\";' style='width:#{c_small_image.width}px'><div class='storyCommentsCount'>#{event.image.photo_comments.count}</div>#{link_to image_tag(event.image.c_small_public_filename), image_path(event.image.id)}</div>"
 
@@ -236,7 +236,7 @@ module StuffEventsHelper
     end
 
     def prepare_story_for_review_comment(event, message)
-      message << "commented on #{user_link(event.review.user, :same_user_check => event.user)}'s review on #{restaurant_link(event.restaurant)}.</div>"
+      message << "commented on #{user_link(event.review.user, :same_user_check => event.user)}'s review on #{event_or_restaurant_link(event.any)}.</div>"
       if !event.review_comment.content.blank?
         message << "<div class='storyDetails' style='display:none'>"
         message << "<div class='storyReview'>#{truncate(strip_tags(event.review_comment.content), 200)}</div>"

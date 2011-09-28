@@ -297,7 +297,7 @@ class HomeController < ApplicationController
       	options[:only] = params[:fields].collect(&:to_sym) if params[:fields]
       	excepts = params[:excepts] ? params[:excepts] : []
       	image_versions = params[:image_versions] ? params[:image_versions] : []
-      	
+
       	@display_last_review = true
       	json_attributes = @restaurants.collect do |r| 
       	  attributes = {
@@ -310,10 +310,12 @@ class HomeController < ApplicationController
       		  :url => restaurant_long_url(r)
     		  }
       		  
+          params[:format] = :html  
       		['marker_html', 'description'].each do |field|
       		  if !excepts.include?(field)
+
       		    attributes[field.to_sym] = render_to_string(
-      		      :partial => 'restaurants/parts/restaurant.html.erb', 
+      		      :partial => "restaurants/parts/restaurant.mobile.erb",
       		      :locals => {:restaurant => r, :only_html => true})
       		  end
     		  end

@@ -88,6 +88,11 @@
 <% end %>
 
 <ul id='parentMenu'>
+  <li class='iconMenu'>
+    <%= link_to image_tag('icons/locate.png'), 'javascript:void(0)',
+                :title => "See Nearby #{@topic.friendly_name_pluralized}",
+                :onclick => "window.GeoService.promptNearbySearch('#{search_url(:format => 'json')}');" %>
+  </li>
   <% if not logged_in? %>
     <li><%= link_to 'Login', login_path %></li>
     <li><%= link_to 'Signup', register_path %></li>

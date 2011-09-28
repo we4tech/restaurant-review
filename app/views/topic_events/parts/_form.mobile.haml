@@ -1,0 +1,67 @@
+- parent_event_options = @parent_events.collect{|te| [te.name, te.id]}
+
+.box
+  %h4= @event.new_record? ? 'Add Event Info' : 'Update Event Info'
+
+  - form_for :event, @event,
+             :url => (@event.new_record? ? events_path : event_path(@event)),
+             :html => {:method => (@event.new_record? ? :post : :put)} do |f|
+    = f.label :event_type, nil, :class => 'grid_2'
+    = f.select :event_type, TopicEvent::EVENT_TYPES_MAP, {}, :class => 'grid_3'
+    .clear.space
+
+    = f.label :parent_event_id, nil, :class => 'grid_2'
+    = f.select :parent_event_id, parent_event_options,
+                {:include_blank => 'Select Parent Event'},
+                :class => 'grid_3'
+    .clear.space
+
+    = f.label :start_at, nil, :class => 'grid_2'
+    .grid_5= f.datetime_select :start_at
+    .clear.space
+
+    = f.label :end_at, nil, :class => 'grid_2'
+    .grid_5= f.datetime_select :end_at
+    .clear.space
+
+    = f.label :name, nil, :class => 'grid_2'
+    = f.text_field :name, :class => 'grid_6'
+    .clear.space
+
+    = f.label :description, nil, :class => 'grid_2'
+    .grid_6= f.text_area :description
+    .clear.space
+
+    = f.label :description_fields, 'Event attributes', :class => 'grid_2'
+    .grid_8= render_dynamic_fields_container :event, :description_fields
+    .clear.space
+
+    = f.label :address, nil, :class => 'grid_2'
+    .grid_6
+      #event_map{:title => @event.lat.to_i > 0 && @event.lng.to_i > 0 ? "#{@event.lat},#{@event.lng}" : '23.79,90.42',
+                 :markerMessage => "<h4>Where is the Venue?</h4><small><i style='color: #888; font-size: 10px;'>Set the event venue on the map.</i></small>",
+                 :infoWindowMessagePrefix => "Even will be arranged @"}
+      = f.text_field :address
+      = f.hidden_field :lat
+      = f.hidden_field :lng
+    .clear.space
+
+    = f.label :completed, nil, :class => 'grid_2'
+    = f.check_box :completed
+    .clear.space
+
+    = f.label :suspended, nil, :class => 'grid_2'
+    = f.check_box :suspended, :onclick => "$('#suspending_reason').toggle('slide')"
+    .clear.space
+
+    #suspending_reason{:style => "display: #{@event.suspending_reason.blank? ? 'none' : 'block'}"}
+      = f.label :suspending_reason, nil, :class => 'grid_2'
+      = f.text_area :suspending_reason, :class => 'grid_6', :rows => 5
+      .clear.space
+
+    - if current_user.admin?
+      = f.label :custom_css, nil, :class => 'grid_2'
+      = f.text_area :custom_css, :class => 'grid_6', :rows => 10
+
+    .grid_11{:style => 'text-align: right'}
+      = f.submit 'Save', :style => 'height: 30px; width: 100px;'

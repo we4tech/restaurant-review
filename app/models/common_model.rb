@@ -50,7 +50,7 @@ module CommonModel
 
     def ref_id_name
       [:restaurant_id, :topic_event_id].each do |field_name|
-        return field_name if self.respond_to?(field_name)
+        return field_name if self.respond_to?(field_name) && self.send(field_name).to_i > 0
       end
     end
   end

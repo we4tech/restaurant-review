@@ -31,6 +31,7 @@ class Restaurant < ActiveRecord::Base
   validates_presence_of :name, :topic_id
   validates_uniqueness_of :name
   validate :form_attributes_required_fields
+  validate :placeholder_was_not_placed_as_field_name
 
   # Full Text search integration
   is_indexed :fields  => ['created_at', 'name', 'description', 'address',
@@ -404,6 +405,16 @@ class Restaurant < ActiveRecord::Base
       if existing_record
         errors.add_to_base("Existing record found")
       end
+    end
+  end
+
+  def placeholder_was_not_placed_as_field_name
+    if name.match(/^enter/i)
+      errors.add_on_empty('name')
+    end
+
+    if description.match(/^enter/i)
+      errors.add_on_empty('description')
     end
   end
 

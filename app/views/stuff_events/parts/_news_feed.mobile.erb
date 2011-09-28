@@ -38,8 +38,10 @@
       <div class="navigation">
         <% if [:html, :mobile].include?(params[:format]) %>
           <%= will_paginate stuff_events %>
-        <% else %>
+        <% elsif more_link && more_link.present? %>
           <%= link_to 'More activities...', more_link %>
+        <% elsif defined?(pagination) && pagination %>
+          <%= will_paginate(stuff_events) %>
         <% end %>
       </div>
     <% else %>

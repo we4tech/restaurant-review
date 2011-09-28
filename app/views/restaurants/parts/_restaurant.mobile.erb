@@ -20,15 +20,13 @@
     <td valign="top">
       <%= link_to truncate(restaurant.name, :length => 20),
                   restaurant_long_url(restaurant), :title => restaurant.name %>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
-      <% if box_config[:show_contribution] %>
-        <%= render_restaurant_review_stats_by_user(@user, restaurant, box_config[:show_contribution]) %>
-      <% else %>
-        <%= render_restaurant_review_stats(restaurant) %>
-      <% end %>
+      <div class='clear'>
+        <% if box_config[:show_contribution] %>
+          <%= render_restaurant_review_stats_by_user(@user, restaurant, box_config[:show_contribution]) %>
+        <% else %>
+          <%= render_restaurant_review_stats(restaurant) %>
+        <% end %>
+      </div>
     </td>
   </tr>
 </table>

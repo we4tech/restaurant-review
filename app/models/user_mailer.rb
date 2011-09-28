@@ -8,6 +8,7 @@ class UserMailer < ActionMailer::Base
   helper :topic_based_translation
   helper :string
   helper :mail_supporting
+  helper :topic_events
 
   def signup_notification(user)
     setup_email(user, Topic.default)

@@ -16,7 +16,7 @@
     </h1>
     <h4 style="margin: 0">
       "<%= user_link @review_comment.user %>" commented on your review at
-      "<%= restaurant_link @review_comment.any %>"
+      "<%= event_or_restaurant_link @review_comment.any %>"
     </h4>
 
     <blockquote><%= h @review_comment.content %></blockquote>

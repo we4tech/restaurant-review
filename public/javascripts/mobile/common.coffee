@@ -115,6 +115,7 @@ SiteFeatures =
       self = $(this)
       self.click (e) ->
         $('#' + $(e.target).attr('toggleView')).toggle(500, 'easeInOutBounce')
+        e.stopPropagation();
 
   setDefaultHook: ->
     $(window).click (e) ->
@@ -127,3 +128,5 @@ HTML5Features.fixWindowSize()
 SiteFeatures.removePlaceholderBeforeSubmittingForm()
 SiteFeatures.detectAutoShowHidePanel()
 SiteFeatures.setDefaultHook();
+
+

@@ -25,17 +25,102 @@
       width: 100%;
 
       label {
-        font-size: 70%;
+        font-size: 80%;
         font-weight: bold;
       }
 
       input[type="text"], input[type="password"], input[type="email"], input[type="web"] {
-        width: 96%;
+        width: 95%;
         padding: 6px;
+        border: 1px solid #ccc;
+        .add_round_corner();
+
+        &:focus {
+          border-style: inset;
+        }
       }
 
       input[type="submit"] {
         .format-submit-field();
+      }
+
+      textarea {
+        width: 98%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        .add_round_corner();
+
+        &:focus {
+          border-style: inset;
+        }
+      }
+
+      .formError {
+        color: red;
+        font-size: 70%;
+      }
+
+      .fieldWithErrors {
+        input {
+          border: 1px solid red;
+        }
+
+        textarea {
+          border: 1px solid red;
+        }
+      }
+
+      .mapContainer {
+        .google_map_search_field {
+          border: 1px solid #ccc;
+          padding: 5px;
+          width: 80%;
+          margin-bottom: 5px;
+          .add_round_corner();
+        }
+
+        .icon_current_location {
+          padding: 5px;
+          margin-left: 5px;
+        }
+      }
+
+      .options_box {
+        .tagSearchField {
+          width: 50%;
+          height: 22px;
+          border-width: 1px 0 1px 1px;
+          .add_round_corner(5px, 0, 5px, 0);
+        }
+
+        .tagGroupName {
+          width: 40%;
+          border: 1px solid #ccc;
+          border-width: 1px 1px 1px 0;
+          background: #ccc;
+          color: #888;
+          .add_round_corner(0, 5px, 0, 5px);
+        }
+
+        .options {
+          max-height: 100px;
+          overflow-y: scroll;
+          background: #f0f0f0;
+          margin-top: 10px;
+          border: 1px solid #ccc;
+          .add_round_corner();
+
+          .option {
+            background: none repeat scroll 0 0 #FFFFFF;
+            border-bottom: 1px solid #CCCCCC;
+            margin-bottom: 2px;
+            padding-bottom: 2px;
+
+            label {
+              margin-left: 5px;
+            }
+          }
+        }
       }
     }
 

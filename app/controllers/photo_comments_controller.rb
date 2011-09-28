@@ -9,7 +9,7 @@ class PhotoCommentsController < ApplicationController
     if @photo_comment.save
       flash[:notice] = 'Successfully added your comment.'
 
-      if current_user.share_on_facebook? && @photo_comment.restaurant
+      if current_user.share_on_facebook? && @photo_comment.any
         redirect_to facebook_publish_url(
             'new_photo_comment', @photo_comment.id,
             :next_to => forward_to_image_view_page(@photo_comment, true))

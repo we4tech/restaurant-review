@@ -5,9 +5,9 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <title> <%= @topic.site_title %> <%= @site_title ? "&raquo; #{@site_title}" : '' %> </title>
-  <%= stylesheet_link_tag 'mobile/site.css' %>
+  <%= stylesheet_link_tag 'mobile/site.css', 'jquery-ui-fresh/jquery.css' %>
 
-  <%= javascript_include_tag 'jquery.min', 'jquery.easing', 'fuzzy-string',
+  <%= javascript_include_tag 'jquery-1.6.4.min', 'jquery.easing', 'fuzzy-string',
                              'application', 'jquery.timers.js', 'jquery.scrollTo-1.4.2-min',
                              'jquery.tagsearcher', 'modernizr.js', :cache => 'cache_mobile' %>
   <meta NAME="Abstract" content="Bangladeshi restaurant, cafe & eat out place review site"/>
@@ -31,7 +31,7 @@
   <link rel="shortcut icon" href="/images/fresh/favicon.gif" type="image/gif"/>
   <%= yield :head %>
 </head>
-<body>
+<body class="locale_<%= I18n.locale.to_s %>">
 <% if !embedded_view? %>
   <div id='header'>
     <div id='topNav'>
@@ -61,14 +61,14 @@
   <div class='siteInfo'>
     <%= @topic.description %>
     <br/>
-    <%= link_to 'view in desktop version', root_url(:format => :html) %>
+    <%= link_to 'view in desktop version', request.url.to_s.gsub(/format=mobile/, 'format=html') %>
   </div>
   <div class='copyrights'>
     <%= t('footer.copyrights') %>
   </div>
 </div>
 <% if params[:no_script].nil? %>
-  <%= javascript_include_tag 'mobile/common.js'%>
+  <%= javascript_include_tag 'mobile/common.js', 'mobile/geo_service.js' %>
   <script type="text/javascript">
     var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
     document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

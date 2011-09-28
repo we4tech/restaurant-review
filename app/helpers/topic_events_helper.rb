@@ -38,7 +38,7 @@ module TopicEventsHelper
 
   def render_upcoming_events(options = {})
     events = TopicEvent.exciting_events(@topic, {:limit => 5}.merge(options))
-    render :partial => 'topic_events/parts/upcoming.html.erb',
+    render :partial => 'topic_events/parts/upcoming.html.haml',
            :locals => {:events => events, :options => options}
   end
 end

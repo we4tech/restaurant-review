@@ -4,7 +4,7 @@
       <% if !attribute['label'].blank? && !attribute['value'].blank? %>
         <select class='attribute_type' name="<%= "#{name}[field_type]"%>">
           <% FormAttribute::DYNAMIC_ATTRIBUTE_TYPES.each do |attribute_type, attribute_id| %>
-            <option value='<%= attribute_id %>'<%= attribute_id == attribute['field_type'].to_i ? 'selected="selected"' : '' %>><%= attribute_type %></option>
+            <option value='<%= attribute_id %>'<%= attribute_id == attribute['field_type'].to_i ? 'selected="selected"' : '' %>><%= attribute_type.to_s.humanize %></option>
           <% end %>
         </select>
         <input type='text' name='<%= "#{name}[label]" %>' value="<%= attribute['label'] %>" />
@@ -31,7 +31,7 @@
   <div>
     <select class='attribute_type' name="<%= "#{name}[field_type]" %>">
       <% FormAttribute::DYNAMIC_ATTRIBUTE_TYPES.each do |attribute_type, attribute_id| %>
-        <option value='<%= attribute_id %>'><%= attribute_type %></option>
+        <option value='<%= attribute_id %>'><%= attribute_type.to_s.humanize %></option>
       <% end %>
     </select>
     <input type='text' name='<%= "#{name}[label]" %>'

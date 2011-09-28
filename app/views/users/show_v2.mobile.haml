@@ -1,0 +1,69 @@
+.plain.userProfile
+  %h1
+    #{@user.name_or_login}'s profile
+  %address
+    member since #{@user.created_at.year} (for #{distance_of_time_in_words(Time.now, @user.created_at)})
+    %fb:like{:href => user_long_url(@user), :send => "false", :layout => "button_count", :width => "100", :show_faces => "false", :font => ""}
+  .space
+
+  %table{:class => 'topBar'}
+    %tr
+      %td{:width => '100px'}
+        = image_tag(@user.display_picture(:c_gallery), :alt => 'Image')
+      %td
+        = render_user_status(@user)
+        .clear.space
+        .metaInfo
+          = render_last_activity(@user)
+          - if (most_explored_tags = @user.most_explored_tags(@topic, TagGroup.of(@topic, ['Cuisines', 'Cuisins', 'Food items']))).present?
+            %br
+            %strong
+              Most explored tags -
+            = most_explored_tags.collect { |t| link_to(t.name, section_url(t, true)) }.join(', ')
+
+    %tr
+      %td{:colspan => 2}
+        .checkinBox.reviewButton.iconButton
+          %button
+            %b Send message
+            = image_tag 'icons/dryicons/mail.png'
+            .clear
+
+    %tr
+      %td{:colspan => 2}
+        .checkinBox.reviewButton.iconButton
+          %button
+            %b Offer a treat
+            = image_tag 'icons/dryicons/back.png'
+            .clear
+
+    %tr
+      %td{:colspan => 2}
+        .checkinBox.reviewButton.iconButton
+          %button
+            %b Follow
+            = image_tag 'icons/dryicons/star.png'
+            .clear
+
+  .clear
+
+.box
+  %h4{:toggleView => 'photos'}
+    Photos
+    %a{:class => 'expand', :toggleView => 'photos'} &raquo;
+  #photos.content{:style => 'display: none'}
+    .album
+      = render_user_uploaded_pictures(@user, :thumb => :c_small)
+
+      .clear
+
+= render_news_feed(:label => 'Recent activities', :filters => {:user_id => [@user.id]})
+= render_most_checkined_places({:filters => {:users => [@user]},
+                                        :label => "Mostly Visits",
+                                        :show_contribution => :checkins})
+= render_most_lovable_places({:filters => {:users => [@user]},
+                                      :show_contribution => :loves,
+                                      :label => "Most Favorites"})
+
+
+

@@ -4,8 +4,12 @@
   .break.space
   .content
     - @restaurants.each_with_index do |restaurant, index|
-      = render :partial => 'restaurants/parts/restaurant', 
-               :locals => {:restaurant => restaurant, :index => index}
+      - if restaurant.is_a?(Restaurant)
+        = render :partial => 'restaurants/parts/restaurant', 
+                 :locals => {:restaurant => restaurant, :index => index}
+      - elsif restaurant.is_a?(TopicEvent)
+        = render :partial => 'topic_events/parts/event', 
+                 :locals => {:topic_event => restaurant, :index => index}           
     .clear
     .space
     .pagination= will_paginate @restaurants

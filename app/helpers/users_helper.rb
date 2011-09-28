@@ -251,8 +251,10 @@ module UsersHelper
 
     #
     # Render user uploaded pictures in a slide
-  def render_user_uploaded_pictures(user)
+  def render_user_uploaded_pictures(user, options = {})
     images = user.images.recent.all(:limit => 5)
+    thumb = options.include?(:thumb) ? options[:thumb] : :large
+    show_count = options[:show_count]
 
     if not images.empty?
       container = content_tag('div', :class => 'userImagesContainer') do
@@ -261,7 +263,10 @@ module UsersHelper
         images.each do |image|
           html << %{
             <div class='image'>
-              #{link_to(image_tag(image.large_public_filename), image_url(image))}
+              <a href="#{image_url(image)}">
+                #{image_tag(image.public_filename(thumb))}
+                <div class='countBubble'>#{image.photo_comments.count}</div>
+              </a>
             </div>
           }
         end

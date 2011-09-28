@@ -7,7 +7,8 @@
 
     - else
       - @topic_events.each do |event_type, events|
-        %h5= event_type.to_s.humanize
+        %h5
+          = event_type.to_s.humanize
         .space
         - if events.present?
           - events.each do |event|

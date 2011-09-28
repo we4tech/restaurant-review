@@ -1,0 +1,23 @@
+:ruby
+  options = defined?(config) ? config : {}
+  se = stuff_event
+  first_grid_class = first_grid_class || 'small'
+  first_grid_style = first_grid_style || ''
+  grid_class = grid_class || options[:grid_class] || 'grid_3'
+  grid_style = grid_style || options[:grid_style] || ''
+  _id = _id || "_se_#{rand.to_s.gsub(/\./, '')}"
+
+%div{:class => "updates_item #{(@user_log && se.created_at > @user_log.updated_at) ? 'highlight' : ''}", :onclick => "$('##{_id} .storyDetails').toggle('slide');"}
+  %div{:class => first_grid_class, :style => first_grid_style}
+    = link_to image_tag(render_activity_icon(se)), 'javascript:void(0)', :class => 'image_small no_border'
+
+  %div{:class => grid_class, :style => grid_style, :id => _id}
+    .eventContent
+      = render_activity_story(se)
+      %a.expand{:href => 'javascript:void(0)', :onclick => 'return true;'}
+        &raquo;
+      %acronym.date{:title => se.created_at}
+        = distance_of_time_in_words(Time.now, se.created_at)
+        ago
+  .clear
+.clear

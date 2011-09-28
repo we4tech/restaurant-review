@@ -20,15 +20,13 @@
     <td valign="top">
       <%= link_to truncate(topic_event.name, :length => 20),
                   event_long_url(topic_event), :title => topic_event.name %>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2">
-      <% if box_config[:show_contribution] %>
-        <%= render_restaurant_review_stats_by_user(@user, topic_event, box_config[:show_contribution]) %>
-      <% else %>
-        <%= render_restaurant_review_stats(topic_event) %>
-      <% end %>
+      <div class='clear'>
+        <% if box_config[:show_contribution] %>
+          <%= render_restaurant_review_stats_by_user(@user, topic_event, box_config[:show_contribution]) %>
+        <% else %>
+          <%= render_restaurant_review_stats(topic_event) %>
+        <% end %>
+      </div>
     </td>
   </tr>
 </table>

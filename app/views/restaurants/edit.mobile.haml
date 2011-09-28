@@ -1,0 +1,22 @@
+.plain
+  %h1
+    Edit #{@restaurant.name}
+  %address
+    = link_to @restaurant.name, restaurant_long_url(@restaurant)
+  .clear.space
+
+.box
+  %h4{:toggleView => 'info'}
+    Update information
+    %a{:class => 'expand', :toggleView => 'info'} &raquo;
+
+  #info{:style => 'display: none'}
+    - form_for @restaurant do |f|
+      = f.error_messages.gsub(/(restaurant)/, @topic.name.humanize)
+      = render :partial => 'restaurants/parts/form_attributes_based',
+               :locals => {:f => f}
+      .clear.space
+      = f.submit t('button.update'), :class => 'submit'
+
+- if @allow_image_upload
+  = render :partial => 'restaurants/parts/image_manager'

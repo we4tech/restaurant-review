@@ -1,0 +1,31 @@
+- options = defined?(options) ? options : {}
+
+- if !events.empty?
+  .site_simple_box
+    - upcoming = events[:upcoming] || []
+    - if not upcoming.empty?
+      %h5.subHeaderWithIcon Upcoming
+      - upcoming.each do |topic_event|
+        = render :partial => 'topic_events/parts/event',
+                 :locals => {:topic_event => topic_event}.merge(options)
+
+    - ongoing = events[:ongoing] || []
+    - if not ongoing.empty?
+      %h5.subHeaderWithIcon On going
+      - ongoing.each do |topic_event|
+        = render :partial => 'topic_events/parts/event',
+                 :locals => {:topic_event => topic_event}.merge(options)
+
+    - recent = events[:recent] || []
+    - if not recent.empty?
+      %h5.subHeaderWithIcon Recent
+      - recent.each do |topic_event|
+        = render :partial => 'topic_events/parts/event',
+                 :locals => {:topic_event => topic_event}.merge(options)
+
+    .clear
+- else
+  There is no upcoming events.
+  .space
+  .navigation
+    = link_to 'Add your event', new_event_path

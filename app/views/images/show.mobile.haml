@@ -49,10 +49,14 @@
 
           - if @related_object && @related_object.is_a?(Restaurant)
             = f.hidden_field :restaurant_id, :value => @related_object.id
-            .space
-            = f.submit 'Save Comment'
-            .space
-            %input.long_button{:type => 'button', :toggleView => 'photoReviewForm', :value => 'Close'}
+
+          - elsif @related_object && @related_object.is_a?(TopicEvent)
+            = f.hidden_field :topic_event_id, :value => @related_object.id
+
+          .space
+          = f.submit 'Save Comment'
+          .space
+          %input.long_button{:type => 'button', :toggleView => 'photoReviewForm', :value => 'Close'}
     - else
       You need to #{link_to t('nav.login'), login_url} to post your comment
     .clear

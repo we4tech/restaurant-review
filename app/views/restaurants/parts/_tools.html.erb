@@ -23,6 +23,7 @@
        links << link_to("Manage extra recipients#{!extra_rcpts.blank? ? "(#{extra_rcpts})" : ''}",
                         add_recipient_restaurant_path(restaurant.id))
 
+       links << link_to('Delete', restaurant_path(restaurant.id), :method => :delete, :confirm => 'Do you really want to remove this?')
      end
    end
 %>
@@ -30,7 +31,11 @@
   <% if !links.empty? %>
     <div class='tags'>
       <div class='tagGroup'>
-        <strong>Admin:</strong>
+        <% if logged_in? && restaurant.author?(current_user) %>
+          <strong>Admin:</strong>
+        <% else %>
+          <strong>Links</strong>
+        <% end %>
 
         <div>
           <%= links.join(', ') %>
