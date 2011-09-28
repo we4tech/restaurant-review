@@ -1,36 +1,34 @@
-# Extend cookie store
-ActionController::Session::CookieStore.class_eval do
-  alias_method :__build_cookie, :build_cookie
-  @@override_domain = nil
-  cattr_accessor :override_domain
+# Adjust sessions so they work across subdomains
+# This also will work if your app runs on different TLDs
 
-  def build_cookie(key, value)
-    if @@override_domain
-      value[:domain] = @@override_domain
+# from: http://szeryf.wordpress.com/2008/01/21/cookie-handling-in-multi-domain-applications-in-ruby-on-rails/
+# modified to work with Rails 2.3.0
+
+module ActionControllerExtensions
+  def self.included(base)
+    base::Dispatcher.send :include, DispatcherExtensions
+  end
+
+  module DispatcherExtensions
+    def self.included(base)
+      base.send :before_dispatch, :set_session_domain
     end
 
-    __build_cookie(key, value)
-  end
-end
+    def set_session_domain
+      if @env['HTTP_HOST']
+        # remove the port if there is one
+        domain = @env['HTTP_HOST'].gsub(/:\d+$/, '')
 
-ActionController::Session::AbstractStore.class_eval do
-  alias_method :__call, :call
-  @@override_domain = nil
-  cattr_accessor :override_domain
+        # turn "brendan.app.com" to ".app.com"
+        # and turn "app.com" to ".app.com"
+        if domain.match(/([^.]+\.[^.]+)$/)
+          domain = '.' + $1
+        end
 
-  def call(env)
-    response = __call(env)
-    headers = response[1]
-    override_cookie_header(headers)
-
-    response
-  end
-
-  def override_cookie_header(headers)
-    existing_cookie_header = headers[ActionController::Session::AbstractStore::SET_COOKIE]
-    if existing_cookie_header && @@override_domain
-      headers[ActionController::Session::AbstractStore::SET_COOKIE] =
-          existing_cookie_header.gsub(/domain=([\.\w]+);/, 'domain=' + @@override_domain + ';')
+        @env['rack.session.options'] = @env['rack.session.options'].merge(:domain => domain)
+      end
     end
   end
 end
+
+ActionController.send :include, ActionControllerExtensions
