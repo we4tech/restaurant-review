@@ -64,8 +64,8 @@ Capistrano::Configuration.instance.load do
     end
   end
 
-  after "deploy:setup",           "shared_directories:setup"
-  after "deploy:update", "shared_directories:symlink", "configuration:mongrel", "service:mongrel_restart", "configuration:ultrasphinx"
+  after "deploy:setup", "shared_directories:setup"
+  after "deploy:update", "shared_directories:symlink", "configuration:ultrasphinx" #"configuration:mongrel", "service:mongrel_restart",
   #after "deploy:web:disable", "shared_directories:web_disable"
   #after "deploy:web:enable", "shared_directories:web_enable"
 
