@@ -1,0 +1,2 @@
+#!/bin/bash
+unicorn_rails -E production -c config/unicorn.ru -D

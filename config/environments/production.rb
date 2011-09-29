@@ -51,3 +51,5 @@ if defined?(ActionController)
     :domain      => '.welltreat.us'
   }
 end
+
+MAINTENANCE_IN_PROGRESS = true
