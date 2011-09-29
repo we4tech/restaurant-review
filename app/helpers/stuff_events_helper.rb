@@ -245,26 +245,30 @@ module StuffEventsHelper
     end
 
     def prepare_story_for_review_add(event, message)
-      message << (event.review.loved? ? 'loved ' : (event.review.wanna_go? ? 'wants to go ' : 'disliked '))
+      if event.review
+        message << (event.review.loved? ? 'loved ' : (event.review.wanna_go? ? 'wants to go ' : 'disliked '))
 
-      if !event.review.comment.blank?
-        if event.review.wanna_go?
-          message << ' and left note on '
+        if !event.review.comment.blank?
+          if event.review.wanna_go?
+            message << ' and left note on '
+          else
+            message << ' and commented on '
+          end
         else
-          message << ' and commented on '
+          if event.review.wanna_go?
+            message << 'to '
+          end
+        end
+
+        message << "#{link_to truncate(event.review.any.name, 30), "#{event_or_restaurant_url(event.review.any)}#review-#{event.review.id}"}.</div>"
+
+        if !event.review.comment.blank?
+          message << "<div class='storyDetails' style='display:none'>"
+          message << "<div class='storyReview'>#{truncate(strip_tags(event.review.comment), 200)}</div>"
+          message << "</div>"
         end
       else
-        if event.review.wanna_go?
-          message << 'to '
-        end
-      end
-
-      message << "#{link_to truncate(event.review.any.name, 30), "#{event_or_restaurant_url(event.review.any)}#review-#{event.review.id}"}.</div>"
-
-      if !event.review.comment.blank?
-        message << "<div class='storyDetails' style='display:none'>"
-        message << "<div class='storyReview'>#{truncate(strip_tags(event.review.comment), 200)}</div>"
-        message << "</div>"
+        message << '</div>'
       end
     end
 
