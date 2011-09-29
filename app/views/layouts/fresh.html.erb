@@ -227,5 +227,25 @@
 
 <%= yield :bottom %>
 
+<% if defined?(MAINTENANCE_IN_PROGRESS) && MAINTENANCE_IN_PROGRESS %>
+  <div id='newVersionNotice'>
+    <p>
+      Hi, We are still deploying our newer version :)
+      Let us know if you have any feedback.
+    </p>
+    <small style='font-size: 10px'>
+      Mail us <a href='biz@welltreat.us'>Biz At WellTreat.Us</a>
+    </small>
+  </div>
+  <script type="text/javascript">
+    $('#newVersionNotice').dialog({
+      'title': 'Service notice',
+      'modal': true,
+      'closeOnEscape': true,
+      'width': '300px'
+    });
+  </script>
+<% end %>
+
 </body>
 </html>

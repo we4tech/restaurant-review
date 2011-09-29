@@ -29,6 +29,7 @@ namespace :welltreat do
 
         # Fix previously broken image
         if !File.exist?(orig_file_path) && File.exists?(temp_file_path)
+          puts "Fixing broken image - #{image.id}"
           FileUtils.mv(temp_file_path, orig_file_path)
         end
 
