@@ -11,5 +11,12 @@
               = user_display_picture(checkin.user)
     - else
       .messageBox Only you have checked in here!
+  - else
+    .messageBox
+      #{checkins.length} people are here right now!
+      .space
+      .userList
+        - checkins.each do |checkin|
+          = user_display_picture(checkin.user)
 - else
   .highlight No one here right now!

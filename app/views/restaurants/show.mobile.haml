@@ -8,7 +8,7 @@
   %table{:class => 'topBar'}
     %tr
       - if @restaurant.image_attached?
-        %td{:width => '100px'}
+        %td{:width => '80px'}
           - image = @restaurant.rand_image
           = image_tag(image.c_gallery_public_filename, :alt => 'Image')
       %td

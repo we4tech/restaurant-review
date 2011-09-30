@@ -88,7 +88,11 @@ class ImagesController < ApplicationController
 
     if @image
       @related_object = @image.discover_relation_with_any
-      @site_title = @image.caption.present? ? "#{@related_object.name} - #{@image.caption[0..20]}" : "#{@related_object.name} - picture"
+      if @related_object
+        @site_title = @image.caption.present? ? "#{@related_object.name} - #{@image.caption[0..20]}" : "#{@related_object.name} - picture"
+      else
+        @site_title = @image.caption.present? ? @image.caption : 'Image'
+      end
       #render_view('images/show', :inner => true)
     else
       flash[:notice] = 'Image not found'

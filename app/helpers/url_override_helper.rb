@@ -195,8 +195,11 @@ module UrlOverrideHelper
   end
 
   def section_url(section, tag = false)
-    group_name = section.tag_groups.empty? ? (tag ? 'tag' : 'sections') : section.tag_groups.first.name
-    tag_details_url(url_escape(group_name), :tag => url_escape(section.name))
+    group_name = 'tag'
+    if section.is_a?(Tag)
+      group_name = section.tag_groups.empty? ? (tag ? 'tag' : 'sections') : section.tag_groups.first.name
+    end
+    tag_details_url(url_escape(group_name), :tag => url_escape(section.is_a?(Tag) ? section.name : section))
   end
 
   #

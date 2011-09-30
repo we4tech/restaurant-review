@@ -285,7 +285,7 @@ module StuffEventsHelper
 
       message << "added new image to the #{link_to event.restaurant.name, restaurant_long_url(event.restaurant)}.</div>"
       message << "<div class='storyDetails' style='display:none'>"
-      message << "<div class='storyImage' onclick='window.location=\"#{image_path(event.image)}\";' style='width:#{c_small_image.width}px'><div class='storyCommentsCount'>#{event.image.photo_comments.count}</div>#{link_to image_tag(event.image.c_small_public_filename), image_path(event.image.id)}"
+      message << "<div class='storyImage' onclick='window.location=\"#{image_path(event.image)}\";' style='width:#{c_small_image ? c_small_image.width : 100}px'><div class='storyCommentsCount'>#{event.image.photo_comments.count}</div>#{link_to image_tag(event.image.c_small_public_filename), image_path(event.image.id)}"
 
       if !event.image.caption.blank?
         message << "<div class='storyCaption'>#{event.image.caption}</div>"
