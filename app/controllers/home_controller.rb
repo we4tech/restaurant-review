@@ -207,15 +207,16 @@ class HomeController < ApplicationController
   end
 
   def tag_details
-    label = params[:label]
+    label = params[:label] || ''
     label = label.gsub('-', ' ').downcase
-    tag_string = (URI.unescape(params[:tag]) || '').gsub('-', ' ').downcase
+    tag_string = (URI.unescape(params[:tag] || '') || '').gsub('-', ' ').downcase
     tag = Tag.find_by_name_and_topic_id(tag_string, @topic.id)
-    session[:last_tag_id] = tag.id
-    page_context :list_page
-   	page_module :body, :render_news_feed, {:label => 'News Feed', :limit => 5, :filters => { :tag_id => tag.id }}
-
+    
     if tag
+      session[:last_tag_id] = tag.id
+      page_context :list_page
+      page_module :body, :render_news_feed, {:label => 'News Feed', :limit => 5, :filters => { :tag_id => tag.id }}
+
       @restaurants = tag.restaurants.paginate :include => {:tags => [:tag_groups], :related_images => [:image]}, :page => params[:page]
       load_module_preferences
 

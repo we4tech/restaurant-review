@@ -1,6 +1,8 @@
 module LocaleHelper
 
-  SUPPORTED_LOCALES = ['en', 'bn', 'ar'].freeze
+  SUPPORTED_LOCALES = [
+      'en', 'bn', 'ar'
+  ].freeze
 
   def detect_locale
     locale = params[:l]
