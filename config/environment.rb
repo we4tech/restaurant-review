@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   config.gem "will_paginate", :version => '2.3.11'
   config.gem 'super_exception_notifier', :lib => "exception_notification"
   config.gem "mail_style"
-  config.gem "i18n", :version => '0.4.2'
+  config.gem "i18n"
   config.gem "RedCloth"
   config.gem 'rest-client'
   config.gem 'haml'
