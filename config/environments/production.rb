@@ -52,4 +52,4 @@ if defined?(ActionController)
   }
 end
 
-MAINTENANCE_IN_PROGRESS = true
+MAINTENANCE_IN_PROGRESS = false

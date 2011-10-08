@@ -320,8 +320,8 @@ input.html5_search_field:hover {
   list-style-type: none;
 }
 #header #topNav #parentMenu li a {
-  margin-left: 5px;
   padding: 5px;
+  font-size: 90%;
   color: #ffffff;
   text-decoration: none;
 }

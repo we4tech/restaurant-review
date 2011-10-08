@@ -4,7 +4,7 @@
 module DataAnalysisService
 
   class Analysis
-    extend DataAnalysisService::RelevantRestaurantExplorationHelper
+    extend DataUtil::RelevantFinder
   end
 
 end

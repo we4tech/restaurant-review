@@ -161,6 +161,13 @@
   <%= javascript_include_tag 'test.js' %>
 <% end %>
 
+<!-- Prevent all forms from being submitted,
+     first load authenticity token then allow submission -->
+<script type='text/javascript'>
+  $('form').each(function() {
+    $(this).allowSubmissionIfAuthTokenInit();
+  });
+</script>
 <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'notice', :d => Time.now.to_i) %>
 <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'top_menu', :d => Time.now.to_i) %>
 <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>

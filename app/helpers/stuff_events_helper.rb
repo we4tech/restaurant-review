@@ -260,11 +260,11 @@ module StuffEventsHelper
           end
         end
 
-        message << "#{link_to truncate(event.review.any.name, 30), "#{event_or_restaurant_url(event.review.any)}#review-#{event.review.id}"}.</div>"
+        message << "#{link_to truncate(event.review.any.name, :length => 30), "#{event_or_restaurant_url(event.review.any)}#review-#{event.review.id}"}.</div>"
 
         if !event.review.comment.blank?
           message << "<div class='storyDetails' style='display:none'>"
-          message << "<div class='storyReview'>#{truncate(strip_tags(event.review.comment), 200)}</div>"
+          message << "<div class='storyReview'>#{truncate(strip_tags(event.review.comment), :length => 200)}</div>"
           message << "</div>"
         end
       else

@@ -6,12 +6,12 @@ en: !map:HashWithIndifferentAccess
     updated: updated
     located_at: Located at
     contributors: Contributors
-    loves_count: "{{count}} loves"
+    loves_count: "%{count} loves"
     already_added: Already added
     wannago: wanna go to
     disliked: disliked
     back: back
-    message_meta_info: "{{type}} was added by {{link}} about {{days}} ago"
+    message_meta_info: "%{type} was added by %{link} about %{days} ago"
     password_change_error: Set your new password, if you find any problem let us know at
     hated: disliked
     fb_connected: You have connected your account with your facebook account!
@@ -30,7 +30,7 @@ en: !map:HashWithIndifferentAccess
     logged_in_as: Logged in as
     i_love: i love
     loved: loved
-    existing_review_edit: You have reviewed {{place}} before!,           do you think {{place}} is no longer cOoL ?? why don't you change it right here!           say your strong opinion :)_) <br/> -
+    existing_review_edit: You have reviewed %{place} before!,           do you think %{place} is no longer cOoL ?? why don't you change it right here!           say your strong opinion :)_) <br/> -
     parent_menu: Parent menu
     already_showed_interest: Already showed interest
     added_by: added by
@@ -59,9 +59,9 @@ en: !map:HashWithIndifferentAccess
     select_file: Select file
     fb_not_connected: You haven't yet connected your account with your facebook account.     please click on 'Auto share on Facebook' button on the top of the page
     delete_comment: Do you want to DELETE this comment ?
-    no_review: Hola! you haven't reviewed any {{name}} yet!
+    no_review: Hola! you haven't reviewed any %{name} yet!
     make_as_featured: Make as featured
-    login_required_to_review: Please {{link}} to review this place!
+    login_required_to_review: Please %{link} to review this place!
     filter_by: Filter results by -
     user_contributed_on: has contributed to
     image_caption: Write image caption....
@@ -71,11 +71,11 @@ en: !map:HashWithIndifferentAccess
     ago: ago
     already_reviewed: Already reviewed
     caption: Caption
-    reviews_count: "{{count}} reviews"
+    reviews_count: "%{count} reviews"
     i_dislike: i dislike
-    wanna_go: "{{count}} wanna go"
+    wanna_go: "%{count} wanna go"
     review_stat: Review status -
-    review_of: commented a review of {{link}}
+    review_of: commented a review of %{link}
     added: added
     sync_tags: Sync tags!
   button: !map:HashWithIndifferentAccess
@@ -113,7 +113,7 @@ en: !map:HashWithIndifferentAccess
       share_on_facebook: share on facebook
   featurebox: !map:HashWithIndifferentAccess
     readmore: read more...
-    rating: "{{loves_count}} people <span class='icon_loved'>loved</span> it!"
+    rating: "%{loves_count} people <span class='icon_loved'>loved</span> it!"
     address: "address:"
   confirm: !map:HashWithIndifferentAccess
     delete_comment: Do you want to remove this comment?
@@ -137,7 +137,7 @@ en: !map:HashWithIndifferentAccess
     delete: Delete
     more_places: "more places \xC2\xBB"
     more_tags: More tags
-    updates: notification ({{count}})
+    updates: notification (%{count})
     reply: reply!
     edit_existing_review: edit your existing review!
     manage_news: Manage News
@@ -158,7 +158,7 @@ en: !map:HashWithIndifferentAccess
     read_more_reviews: check rest of the reviews...
     next: "Next \xC2\xBB"
     login: login
-    add_image: Add image ({{count}})
+    add_image: Add image (%{count})
     more: Read more
   module: !map:HashWithIndifferentAccess
     Most loved places!: Most loved places!
@@ -176,21 +176,21 @@ en: !map:HashWithIndifferentAccess
     recommend: Where do you wanna eat TODAY ?
   header: !map:HashWithIndifferentAccess
     search_results: Search results!
-    wannago: Who else wanna visit {{place}}!
+    wannago: Who else wanna visit %{place}!
     reviewed_places: Recently reviewed places!
     all_events: All Events
     best_for: Find out which restaurants are best for what!
     photos: Restaurants pictures!
-    edit_tags: "Edit tags \xC2\xBB {{name}}"
+    edit_tags: "Edit tags \xC2\xBB %{name}"
     loved_places: Most loved places!
-    tag_details: "Selected tag \xC2\xBB {{tag}}"
+    tag_details: "Selected tag \xC2\xBB %{tag}"
     recent_restaurants: Recently added restaurants!
     restaurant_create: Create new restaurant
-    restaurant_show_page: "{{link}}  \xC2\xBB Edit"
+    restaurant_show_page: "%{link}  \xC2\xBB Edit"
     recommend: Recommend restaurants!
     login: Log in
   errors: !map:HashWithIndifferentAccess
-    invalid_tag: Invalid tag label - {{tag}}
+    invalid_tag: Invalid tag label - %{tag}
     user_creation_failed: Please revise your registration form, we have found some errors
     authorization: You are not authorized
     no_matched_type: Not matched type!
@@ -206,7 +206,7 @@ en: !map:HashWithIndifferentAccess
     Branches Located at: Branches Located at
     cuisine & tags: cuisine & tags
     description: description
-    comments_count: Comments ({{count}})
+    comments_count: Comments (%{count})
     password: password
     login: login
   subheader: !map:HashWithIndifferentAccess

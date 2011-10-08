@@ -1,4 +1,5 @@
 #!/bin/bash
 source "/usr/local/rvm/scripts/rvm"
+export PATH=$PATH:/usr/local/bin
 cd /home/restaurantreview/current
 /usr/bin/env rake ultrasphinx:index:delta RAILS_ENV=production

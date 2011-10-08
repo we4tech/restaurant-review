@@ -20,8 +20,7 @@
               At
               = link_to truncate(checkin.any.name, :length => 17),
                         event_or_restaurant_url(checkin.any), :title => checkin.any.name
-              .space
-              .highlight
+              .highlight{:style => 'font-size: 80%'}
                 = user_link(checkin.user, :length => 5, :same_user_check => true)
                 checked in
                 %strong

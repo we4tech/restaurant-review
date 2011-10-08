@@ -11,12 +11,12 @@ furniture_store_en: !map:HashWithIndifferentAccess
     updated: updated
     located_at: Located at
     contributors: Contributors
-    loves_count: "{{count}} loves"
+    loves_count: "%{count} loves"
     already_added: Already added
     wannago: wanna buy
     disliked: disliked
     back: back
-    message_meta_info: "{{type}} was added by {{link}} about {{days}} ago"
+    message_meta_info: "%{type} was added by %{link} about %{days} ago"
     password_change_error: Set your new password, if you find any problem let us know at
     fb_connected: You have connected your account with your facebook account!
     confirm_password: Confirm password
@@ -34,7 +34,7 @@ furniture_store_en: !map:HashWithIndifferentAccess
     logged_in_as: Logged in as
     i_love: i'm using
     loved: already using
-    existing_review_edit: You have reviewed {{place}} before!,           do you think {{place}} is no longer cOoL ?? why don't you change it right here!           say your strong opinion :)_) <br/> -
+    existing_review_edit: You have reviewed %{place} before!,           do you think %{place} is no longer cOoL ?? why don't you change it right here!           say your strong opinion :)_) <br/> -
     parent_menu: Parent menu
     already_showed_interest: Already showed interest
     added_by: added by
@@ -63,8 +63,8 @@ furniture_store_en: !map:HashWithIndifferentAccess
     select_file: Select file
     fb_not_connected: You haven't yet connected your account with your facebook account.     please click on 'Auto share on Facebook' button on the top of the page
     delete_comment: Do you want to DELETE this comment ?
-    no_review: Hola! you haven't reviewed any {{name}} yet!
-    login_required_to_review: Please {{link}} to review this Store!
+    no_review: Hola! you haven't reviewed any %{name} yet!
+    login_required_to_review: Please %{link} to review this Store!
     filter_by: Filter results by -
     user_contributed_on: has contributed to
     image_caption: Write image caption....
@@ -75,11 +75,11 @@ furniture_store_en: !map:HashWithIndifferentAccess
     ago: ago
     already_reviewed: Already reviewed
     caption: Caption
-    reviews_count: "{{count}} reviews"
+    reviews_count: "%{count} reviews"
     i_dislike: i dislike
-    wanna_go: "{{count}} wanna buy"
+    wanna_go: "%{count} wanna buy"
     review_stat: Review status -
-    review_of: commented a review of {{link}}
+    review_of: commented a review of %{link}
     added: added
     sync_tags: Sync tags!
   button: !map:HashWithIndifferentAccess
@@ -117,7 +117,7 @@ furniture_store_en: !map:HashWithIndifferentAccess
       share_on_facebook: Share on facebook
   featurebox: !map:HashWithIndifferentAccess
     readmore: read more...
-    rating: "{{loves_count}} people <span class='icon_loved'>bought</span> it!"
+    rating: "%{loves_count} people <span class='icon_loved'>bought</span> it!"
     address: "Address:"
   confirm: !map:HashWithIndifferentAccess
     delete_comment: Do you want to remove this comment?
@@ -142,7 +142,7 @@ furniture_store_en: !map:HashWithIndifferentAccess
     delete: Delete
     more_places: "more furniture stores \xC2\xBB"
     more_tags: More tags
-    updates: Notification ({{count}})
+    updates: Notification (%{count})
     reply: reply!
     edit_existing_review: edit your existing review!
     manage_news: Manage Store News
@@ -161,7 +161,7 @@ furniture_store_en: !map:HashWithIndifferentAccess
     read_more_reviews: check rest of the reviews...
     next: "Next \xC2\xBB"
     login: login
-    add_image: Add image ({{count}})
+    add_image: Add image (%{count})
     more: Read more
     add_event: "Add Event"
     share_on_fb: "Share on facebook"
@@ -182,17 +182,17 @@ furniture_store_en: !map:HashWithIndifferentAccess
     reviewed_places: Reviewed furniture stores
     best_for: Find out which stores are the best for what!
     photos: Furniture store's pictures
-    edit_tags: "Edit tags \xC2\xBB {{name}}"
+    edit_tags: "Edit tags \xC2\xBB %{name}"
     loved_places: Top furniture stores
-    tag_details: "Selected tag \xC2\xBB {{tag}}"
+    tag_details: "Selected tag \xC2\xBB %{tag}"
     recent_restaurants: Recently added furniture stores
     restaurant_create: Create Furniture Store Profile
-    restaurant_show_page: "{{link}}  \xC2\xBB Edit"
+    restaurant_show_page: "%{link}  \xC2\xBB Edit"
     recommend: Recommend Furniture Store!
     login: Log in
     all_events: All Events
   errors: !map:HashWithIndifferentAccess
-    invalid_tag: Invalid tag label - {{tag}}
+    invalid_tag: Invalid tag label - %{tag}
     authorization: You are not authorized
     no_matched_type: Not matched type!
   fields:
@@ -212,7 +212,7 @@ furniture_store_en: !map:HashWithIndifferentAccess
     Branches Located at: Branches Located at
     cuisine & tags: "Furniture store's tags"
     description: description
-    comments_count: Comments ({{count}})
+    comments_count: Comments (%{count})
     password: password
     login: login
     web_site_url: Web site link
@@ -335,37 +335,37 @@ furniture_store_en: !map:HashWithIndifferentAccess
       half_a_minute: "half a minute"
       less_than_x_seconds:
         one:   "less than 1 second"
-        other: "less than {{count}} seconds"
+        other: "less than %{count} seconds"
       x_seconds:
         one:   "1 second"
-        other: "{{count}} seconds"
+        other: "%{count} seconds"
       less_than_x_minutes:
         one:   "less than a minute"
-        other: "less than {{count}} minutes"
+        other: "less than %{count} minutes"
       x_minutes:
         one:   "1 minute"
-        other: "{{count}} minutes"
+        other: "%{count} minutes"
       about_x_hours:
         one:   "about 1 hour"
-        other: "about {{count}} hours"
+        other: "about %{count} hours"
       x_days:
         one:   "1 day"
-        other: "{{count}} days"
+        other: "%{count} days"
       about_x_months:
         one:   "about 1 month"
-        other: "about {{count}} months"
+        other: "about %{count} months"
       x_months:
         one:   "1 month"
-        other: "{{count}} months"
+        other: "%{count} months"
       about_x_years:
         one:   "about 1 year"
-        other: "about {{count}} years"
+        other: "about %{count} years"
       over_x_years:
         one:   "over 1 year"
-        other: "over {{count}} years"
+        other: "over %{count} years"
       almost_x_years:
         one:   "almost 1 year"
-        other: "almost {{count}} years"
+        other: "almost %{count} years"
     prompts:
       year:   "Year"
       month:  "Month"
@@ -379,12 +379,12 @@ furniture_store_en: !map:HashWithIndifferentAccess
       prompt: "Please select"
 
     submit:
-      create: 'Create {{model}}'
-      update: 'Update {{model}}'
-      submit: 'Save {{model}}'
+      create: 'Create %{model}'
+      update: 'Update %{model}'
+      submit: 'Save %{model}'
 
   errors:
-    format: "{{attribute}} {{message}}"
+    format: "%{attribute} %{message}"
 
     messages: &errors_messages
       inclusion: "is not included in the list"
@@ -394,16 +394,16 @@ furniture_store_en: !map:HashWithIndifferentAccess
       accepted: "must be accepted"
       empty: "can't be empty"
       blank: "can't be blank"
-      too_long: "is too long (maximum is {{count}} characters)"
-      too_short: "is too short (minimum is {{count}} characters)"
-      wrong_length: "is the wrong length (should be {{count}} characters)"
+      too_long: "is too long (maximum is %{count} characters)"
+      too_short: "is too short (minimum is %{count} characters)"
+      wrong_length: "is the wrong length (should be %{count} characters)"
       not_a_number: "is not a number"
       not_an_integer: "must be an integer"
-      greater_than: "must be greater than {{count}}"
-      greater_than_or_equal_to: "must be greater than or equal to {{count}}"
-      equal_to: "must be equal to {{count}}"
-      less_than: "must be less than {{count}}"
-      less_than_or_equal_to: "must be less than or equal to {{count}}"
+      greater_than: "must be greater than %{count}"
+      greater_than_or_equal_to: "must be greater than or equal to %{count}"
+      equal_to: "must be equal to %{count}"
+      less_than: "must be less than %{count}"
+      less_than_or_equal_to: "must be less than or equal to %{count}"
       odd: "must be odd"
       even: "must be even"
 
@@ -411,14 +411,14 @@ furniture_store_en: !map:HashWithIndifferentAccess
     errors:
       template:
         header:
-          one:    "1 error prohibited this {{model}} from being saved"
-          other:  "{{count}} errors prohibited this {{model}} from being saved"
+          one:    "1 error prohibited this %{model} from being saved"
+          other:  "%{count} errors prohibited this %{model} from being saved"
         body: "There were problems with the following fields:"
 
       messages:
         taken: "has already been taken"
-        record_invalid: "Validation failed: {{errors}}"
+        record_invalid: "Validation failed: %{errors}"
         <<: *errors_messages
 
       full_messages:
-        format: "{{attribute}}{{message}}"
+        format: "%{attribute}%{message}"

@@ -102,9 +102,10 @@ class AjaxFragmentController < ApplicationController
       $('form input').each(function() {
         if ($(this).attr('name') == 'authenticity_token') {
           var token = "#{form_authenticity_token}";
-          $(this).val(token);
+          $(this).attr('renewed', 'true').val(token);
         }
       });
+
       $('input[type=submit]').each(function() {
         var $this = $(this);
         $this.removeClass('readyToClick').addClass('readyToClick');
