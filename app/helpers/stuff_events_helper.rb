@@ -64,6 +64,8 @@ module StuffEventsHelper
         prefix + 'add.png'
       when StuffEvent::TYPE_REVIEW
         prefix + 'comment.png'
+      when StuffEvent::TYPE_REVIEW_UPDATE
+        prefix + 'comment.png'
       when StuffEvent::TYPE_REVIEW_COMMENT
         prefix + 'comments.png'
       when StuffEvent::TYPE_RESTAURANT
