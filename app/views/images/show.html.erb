@@ -66,10 +66,12 @@
           <div class="space_10"></div>
         <% end %>
 
-        <h4 class="subHeaderWithIcon topBothCornerHeader clickable yellowish">
-          Image uploaded by<br/>
-          <%= user_link(@image.user) %>
-        </h4>
+        <% if @image.user.present? %>
+          <h4 class="subHeaderWithIcon topBothCornerHeader clickable yellowish">
+            Image uploaded by<br/>
+            <%= user_link(@image.user) %>
+          </h4>
+        <% end %>
 
         <h4 class="subHeaderWithIcon clickable yellowish">
           <%= link_to 'Write your comment', '#new_photo_comment', :onclick => "$('#photo_comment_content').focus();" %>
