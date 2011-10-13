@@ -14,7 +14,7 @@
           <% end %>
         </h1>
         <div class="clear"></div>
-        <% if @related_object && !@related_object.tags.empty? %>
+        <% if @related_object && @related_object.respond_to?(:tags) && !@related_object.tags.empty? %>
           <div class="tags">
             <%= render_tags_by_group @related_object.tags %>
             <div class="clear"></div>

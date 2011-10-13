@@ -219,9 +219,9 @@ module RestaurantBoxesHelper
   end
 
   def render_restaurant_status(restaurant)
-    checkins_count = restaurant.checkins.count
-    reviews_count  = restaurant.reviews.count
-    loves_count    = restaurant.reviews.loved.count
+    checkins_count = restaurant.checkins.count rescue 0
+    reviews_count  = restaurant.reviews.count rescue 0
+    loves_count    = restaurant.reviews.loved.count rescue 0
 
     %{
     <div class='restaurantStatus'>
@@ -243,9 +243,9 @@ module RestaurantBoxesHelper
   end
 
   def render_restaurant_status_in_graph(restaurant)
-    checkins_count = restaurant.checkins.count
-    reviews_count  = restaurant.reviews.count
-    loves_count    = restaurant.reviews.loved.count
+    checkins_count = restaurant.checkins.count rescue 0
+    reviews_count  = restaurant.reviews.count rescue 0
+    loves_count    = restaurant.reviews.loved.count rescue 0
     total          = (checkins_count + reviews_count + loves_count).to_f
     values         = [reviews_count.to_f, loves_count.to_f, checkins_count.to_f].join(',')
     link           = "http://chart.apis.google.com/chart?chs=150x145&cht=p&chco=80C65A|FF3366|76A4FB&chds=a&chd=t0:#{values}&chdl=Reviews|Loves|Check-ins&chdlp=t&chp=20&chma=2|0,14"
