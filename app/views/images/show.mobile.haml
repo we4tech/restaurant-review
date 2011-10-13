@@ -12,14 +12,15 @@
     - if @image.description.present?
       .description= @image.description
 
-.box
-  .content
-    .fullRowUserInfo
-      %table
-        %tr
-          %td= user_display_picture(@image.user)
-          %td= "Added by #{user_link(@image.user)}"
-      .clear
+- if @image.user.present?
+  .box
+    .content
+      .fullRowUserInfo
+        %table
+          %tr
+            %td= user_display_picture(@image.user)
+            %td= "Added by #{user_link(@image.user)}"
+        .clear
 
 - if @related_object.respond_to?(:image_attached?) && @related_object.image_attached? && @related_object.all_images.length > 0
   .box

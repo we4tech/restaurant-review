@@ -10,7 +10,7 @@ class Review < ActiveRecord::Base
   belongs_to :topic
   belongs_to :topic_event
 
-  has_many :review_comments
+  has_many :review_comments, :dependent => :destroy
   has_many :stuff_events, :dependent => :destroy
 
   validates_presence_of :user_id
