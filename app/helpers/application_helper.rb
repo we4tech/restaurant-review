@@ -206,7 +206,9 @@ module ApplicationHelper
       page_context (page_context || '').split(',')
     end
 
-    page_context.collect{|pc| "context_#{pc}"}.join(' ')
+    contexts = page_context
+    contexts = [contexts] if not contexts.is_a?(Array)
+    contexts.collect{|pc| "context_#{pc}"}.join(' ')
   end
 
   # Add module renderer helper for the specified position
