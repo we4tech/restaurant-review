@@ -1,10 +1,9 @@
 module FacebookConnectHelper
 
   FACEBOOK_CONNECT_COOKIE_PREFIX = "fbs_"
-  FACEBOOK_CONNECT_SESSION_ID = :fb_connect_user
+  FACEBOOK_CONNECT_SESSION_ID = :fb_connect_user2
 
   def check_facebook_connect_session
-
     if !fb_connect_session # not exists
       # Try to load facebook connect cookies
       # Create new facebook session and store on session
