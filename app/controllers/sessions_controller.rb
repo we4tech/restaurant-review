@@ -82,16 +82,21 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
-  def destroy
+  def auth_destroy
     logout_killing_session!
-    flash[:notice] = "You have been logged out."
-    cookies.delete("#{FacebookConnectHelper::FACEBOOK_CONNECT_COOKIE_PREFIX}#{@topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key}")
-    redirect_back_or_default(root_path(:format => params[:format]))
+    if fb_cookies.present?
+      flash[:notice] = 'You are logging out from facebook...'
+      redirect_to fb_logout_path
+    else
+      flash[:notice] = "You have been logged out."
+      redirect_back_or_default(root_path(:format => params[:format]))
+    end
   end
 
-  def fb_destroy
+  def fb_auth_destroy
     session[FacebookConnectHelper::FACEBOOK_CONNECT_SESSION_ID] = nil    
-    cookies.delete("#{FacebookConnectHelper::FACEBOOK_CONNECT_COOKIE_PREFIX}#{@topic.fb_connect_key.blank? ? Facebooker.api_key : @topic.fb_connect_key}")
+    cookies.delete(fb_cookies_key)
+    logout_killing_session!
   end
 
 protected

@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_cookie_domain
   before_filter :detect_premium_site_or_topic_or_forward_to_default_one
-  before_filter :check_facebook_connect_session
+  before_filter :check_facebook_connect_session, :except => [:auth_destroy, :fb_auth_destroy]
   before_filter :detect_mobile_view
   before_filter :detect_locale
   before_filter :detect_fake_email

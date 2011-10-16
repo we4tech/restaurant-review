@@ -1,0 +1,19 @@
+<script type="text/javascript">
+  (function() {
+    setTimeout(function() {
+      window.location = '<%= root_url %>';
+    }, 10000);
+
+    FB.logout(function() {
+      $.get('<%= facebook_connect_update_url %>', {'sid': ''}, function() {
+        window.location = '<%= root_url %>';
+      });
+    });
+  })();
+</script>
+
+<div class="centerContent grid_8" id="site_center_list">
+  <div class='content'>
+    <%= t('label.logout_in_progress') %>
+  </div>
+</div>

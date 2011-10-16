@@ -37,17 +37,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site_message {
-  background: none repeat scroll 0 0 lightYellow;
-  color: red;
+  background: none repeat scroll 0 0 lightGoldenRodYellow;
+  border-color: #CCCCCC;
+  border-style: solid solid dashed;
+  border-width: 1px;
+  color: olive;
   font-family: trebuchet MS;
-  font-size: 140%;
+  font-size: 100%;
   font-weight: bold;
-  padding: 10px;
+  margin: 0 auto 0 10px;
+  padding: 5px;
   position: fixed;
-  top: 49px;
-  width: 935px;
-  z-index: 2000;
   text-align: center;
+  top: 195px;
+  width: 608px;
+  z-index: 2000;
 }
 
 /* Top style starts */

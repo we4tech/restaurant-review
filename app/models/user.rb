@@ -240,16 +240,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  def share_on_facebook?
-    reloaded_me = self.reload
-    reloaded_me.facebook_connect_enabled == User::FACEBOOK_CONNECT_ENABLED &&
-      reloaded_me.facebook_sid.to_i > 0 &&
-      reloaded_me.facebook_uid.to_i > 0
-  end
-
   def facebook_session_exists?
     reloaded_me = self.reload
-    reloaded_me.facebook_sid.to_i > 0 && reloaded_me.facebook_uid.to_i > 0
+    reloaded_me.facebook_sid.present? && reloaded_me.facebook_uid.to_i > 0
+  end
+
+  def share_on_facebook?
+    reloaded_me = self.reload
+    reloaded_me.facebook_connect_enabled == User::FACEBOOK_CONNECT_ENABLED && facebook_session_exists?
   end
 
   def generate_remember_token

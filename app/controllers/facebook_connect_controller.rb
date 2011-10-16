@@ -11,7 +11,7 @@ class FacebookConnectController < ApplicationController
   # TODO: Add flag on restaurant object, marking this was shared on FB
   def publish_story
     begin
-      if current_user.facebook_sid.to_i > 0 && current_user.facebook_uid.to_i > 0
+      if current_user.facebook_session_exists?
         story_type = params[:story]
         facebook_session = build_facebook_session
         status = false
@@ -309,7 +309,7 @@ class FacebookConnectController < ApplicationController
                                          @topic.fb_connect_secret.blank? ? Facebooker.secret_key : @topic.fb_connect_secret)
     sid = current_user.facebook_sid
     uid = current_user.facebook_uid
-    if sid.to_i > 0 && uid.to_i > 0
+    if sid.present? && uid.present?
       begin
         session.secure_with!(sid, uid)
       rescue

@@ -80,8 +80,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :form_attributes
 
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.fb_logout '/fb_logout', :controller => 'sessions', :action => 'fb_destroy'
+  map.logout '/logout', :controller => 'sessions', :action => 'auth_destroy'
+  map.fb_logout '/fb_logout', :controller => 'sessions', :action => 'fb_auth_destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.login_as '/login_as/:user', :controller => 'sessions', :action => 'login_as'
   map.register '/register', :controller => 'users', :action => 'new'
