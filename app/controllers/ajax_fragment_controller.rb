@@ -36,7 +36,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_top_menu
-    cache_fragment("render_top_menu_#{@topic.name}_#{logged_in? ? current_user.id : 'default'}") do
+    cache_fragment("render_top_menu_#{@topic.name}_#{I18n.locale.to_s}_#{logged_in? ? current_user.id : 'default'}") do
       @content_file = 'layouts/fresh_parts/top_navigation_v3'
       @effect = "slideDown({easing: \"jswing\"}).removeClass('menuLoadingIndicator')"
       @element = '#topNavigationBar'
@@ -118,7 +118,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_best_for_box
-    cache_fragment("best_for_box_#{@topic.name}") do
+    cache_fragment("best_for_box_#{@topic.name}_#{I18n.locale.to_s}") do
       @content_file = 'restaurants/parts/best_for'
       @effect = "appear().removeClass('loadingIndicator')"
       @element = '#categoryHitRestaurantBox'
@@ -147,7 +147,7 @@ class AjaxFragmentController < ApplicationController
 
   def render_page_side_modules
     if not logged_in?
-      cache_fragment "render_page_side_modules" do
+      cache_fragment "render_page_side_modules_#{I18n.locale.to_s}" do
         @content_file = 'layouts/fresh_parts/modules'
         @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
         @element = '#right_side_boxes'
@@ -162,7 +162,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_leader_board
-    cache_fragment("leader_board_#{@topic.name}") do
+    cache_fragment("leader_board_#{@topic.name}_#{I18n.locale.to_s}") do
       @content_file = 'layouts/fresh_parts/leader_board'
       @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
       @element = '#leader_board_box'
@@ -185,7 +185,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_news_feed
-    cache_fragment("render_news_feed_#{@topic.name}") do
+    cache_fragment("render_news_feed_#{@topic.name}_#{I18n.locale.to_s}") do
       @content_file = 'layouts/fresh_parts/news_feed'
       @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
       @element = '#news_feed_box'

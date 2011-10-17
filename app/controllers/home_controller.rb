@@ -363,7 +363,7 @@ class HomeController < ApplicationController
 
     load_module_preferences
 
-    @title = 'Restaurants picture'
+    @title = 'Restaurant\'s Pictures'
     @site_title = @title
     @left_modules = [:render_tagcloud, :render_most_lovable_places,
                      :render_recently_reviewed_places]
