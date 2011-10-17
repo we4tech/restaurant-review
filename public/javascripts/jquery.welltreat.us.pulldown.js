@@ -3,7 +3,7 @@
  * This is been designed on jQuery framework.
  */
 
-if (WellTreatUs == undefined) {
+if (typeof(WellTreatUs) == 'undefined') {
   var WellTreatUs = {};
 }
 
@@ -12,11 +12,13 @@ if (WellTreatUs == undefined) {
  * @param menuLink a jQuery object instance
  * @param menuItems a jQuery object instance
  */
-WellTreatUs.PullDownMenu = function(menuLink, menuItems) {
+WellTreatUs.PullDownMenu = function(menuLink, menuItems, options) {
   var mTimer = null;
   var MENU_PARENT_CLASS = 'wtsPullDownHover';
   var MENU_CLASS = 'wtsPullDownMenu';
   var SUB_MENU_CLASS = 'wtsPullDownSubMenu';
+
+  var mAfterLoadedCallback = null;
 
   this.startTimer = function() {
     this.stopTimer();
@@ -38,6 +40,12 @@ WellTreatUs.PullDownMenu = function(menuLink, menuItems) {
   this.setupEvents = function() {
     var $this = this;
 
+    if (typeof(options) != 'undefined') {
+      if (options.after) {
+        mAfterLoadedCallback = options.after;
+      }
+    }
+
     // Set CSS classes
     menuLink.removeClass(MENU_CLASS).addClass(MENU_CLASS);
     menuItems.removeClass(SUB_MENU_CLASS).addClass(SUB_MENU_CLASS);
@@ -50,6 +58,9 @@ WellTreatUs.PullDownMenu = function(menuLink, menuItems) {
           menuLink.parent().addClass(MENU_PARENT_CLASS);
         }
         menuItems.slideDown({easing: 'jswing'});
+        if (mAfterLoadedCallback) {
+          mAfterLoadedCallback();
+        }
       }
     });
 
@@ -81,7 +92,7 @@ WellTreatUs.PullDownMenu = function(menuLink, menuItems) {
    *
    * @param menuItems a jquery object
    */
-  $.fn.wtsPullDown = function(menuItems) {
-    new WellTreatUs.PullDownMenu(this, menuItems);
+  $.fn.wtsPullDown = function(menuItems, options) {
+    new WellTreatUs.PullDownMenu(this, menuItems, options);
   };
 })(jQuery);

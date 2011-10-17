@@ -12,7 +12,7 @@ a {
 }
 
 a:hover {
-  color: red !important;
+  color: red;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -37,20 +37,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .site_message {
+  -webkit-box-shadow: 1px 1px 30px #000000;
+  -moz-box-shadow: 1px 1px 30px #000000;
+  box-shadow: 1px 1px 30px #000000;
   background: none repeat scroll 0 0 lightGoldenRodYellow;
-  border-color: #CCCCCC;
-  border-style: solid solid dashed;
-  border-width: 1px;
-  color: olive;
+  bottom: 0;
   font-family: trebuchet MS;
-  font-size: 100%;
+  font-size: 120%;
   font-weight: bold;
+  left: -10px;
   margin: 0 auto 0 10px;
+  opacity: 0.8;
   padding: 5px;
   position: fixed;
   text-align: center;
-  top: 195px;
-  width: 608px;
+  width: 100%;
   z-index: 2000;
 }
 
@@ -555,6 +556,10 @@ h1, h2, h3, h4, h5, h6 {
 .icon_checkin_big a, .icon_review_big a {
   color: #fff;
   padding-left: 5px;
+}
+
+.icon_checkin_big a:hover, .icon_review_big a:hover {
+  color: yellow;
 }
 
 .icon_hated {
