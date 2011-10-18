@@ -126,19 +126,19 @@ module UsersHelper
     content_tag('div', :class => 'userStatusBox') do
       html = ''
 
-      html << '<div class="header">Your status</div>' if options[:heading].nil? || options[:heading]
+      #html << '<div class="header">Your status</div>' if options[:heading].nil? || options[:heading]
 
       html << content_tag('div', :class => 'checkins boxItem') do
-        "<b>Checkins</b>#{content_tag('div', checkins_count, :class => 'checkinsCount')}"
+        "<label>CHECK-INS</label>#{content_tag('div', checkins_count, :class => 'checkinsCount value')}"
       end
 
       html << content_tag('div', :class => 'reviews boxItem') do
-        "<b>Reviews</b>#{content_tag('div', reviews_count, :class => 'reviewsCount')}"
+        "<label>REVIEWS</label>#{content_tag('div', reviews_count, :class => 'reviewsCount value')}"
       end
 
 
       html << content_tag('div', :class => 'explores boxItem') do
-        "<b>Explores</b>#{content_tag('div', explores_count, :class => 'exploresCount')}"
+        "<label>EXPLORED</label>#{content_tag('div', explores_count, :class => 'exploresCount value')}"
       end
 
       html << "<div class='clear'></div>"
