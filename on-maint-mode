@@ -1,1 +1,2 @@
-maintenance-page -m public/down-site/
+killall apache2
+/home/hasan/node_modules/.bin/maintenance-page -m /home/restaurantreview/current/public/down-site
