@@ -1,2 +1,3 @@
+#!/usr/bin/env bash
 killall apache2
 /home/hasan/node_modules/.bin/maintenance-page -m /home/restaurantreview/current/public/down-site
