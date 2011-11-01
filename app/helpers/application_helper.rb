@@ -278,4 +278,8 @@ module ApplicationHelper
     end
   end
 
+  def redirectable?
+    request.headers["Referer"]
+  end
+
 end

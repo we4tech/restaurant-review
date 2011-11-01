@@ -48,9 +48,7 @@ class HomeController < ApplicationController
       format.mobile { render }
       format.mobile_touch { render }
       format.xml {
-        options = {}
-        options[:only] = params[:fields].collect(&:to_sym) if params[:fields]
-        render :xml => @restaurants.to_xml(options)
+        render :xml => {:error => 'Not supported'}.to_xml()
       }
     end
   end

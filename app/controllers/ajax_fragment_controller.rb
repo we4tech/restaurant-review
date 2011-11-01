@@ -162,7 +162,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_leader_board
-    cache_fragment("leader_board_#{@topic.name}_#{I18n.locale.to_s}") do
+    cache_fragment("leader_board_#{@topic.name}_#{I18n.locale.to_s}_#{logged_in? ? current_user.id : '_'}") do
       @content_file = 'layouts/fresh_parts/leader_board'
       @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
       @element = '#leader_board_box'

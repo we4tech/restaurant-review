@@ -14,7 +14,13 @@ class MapController < ApplicationController
       @model_instance = TopicEvent.find(params[:eid])
     else
       flash[:notice] = 'Invalid parameter'
-      redirect_to :back
+
+      if redirectable?
+        redirect_to :back
+      else
+        redirect_to root_path
+      end
+
       return
     end
 
