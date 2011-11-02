@@ -341,29 +341,17 @@ input.html5_search_field:hover {
   background: #f0f0f0;
 }
 #body .siteMessage {
-  background: lightYellow;
-  padding: 5px;
-  margin: auto 0 30% 5%;
-  border: 1px solid #000;
-  position: fixed;
-  width: 89%;
+  background: none repeat scroll 0 0 lightYellow;
   bottom: 0;
   cursor: pointer;
-  -webkit-box-shadow: 1px 1px 10px 1px #000000;
-  -moz-box-shadow: 1px 1px 10px 1px #000000;
-  box-shadow: 1px 1px 10px 1px #000000;
-  -webkit-border-top-left-radius: 10px;
-  -webkit-border-top-right-radius: 10px;
-  -webkit-border-bottom-right-radius: 10px;
-  -webkit-border-bottom-left-radius: 10px;
-  -moz-border-radius-topleft: 10px;
-  -moz-border-radius-topright: 10px;
-  -moz-border-radius-bottomright: 10px;
-  -moz-border-radius-bottomleft: 10px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
+  font-weight: bold;
+  padding: 5px;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  -webkit-box-shadow: 1px 1px 10px 2px orange;
+  -moz-box-shadow: 1px 1px 10px 2px orange;
+  box-shadow: 1px 1px 10px 2px orange;
 }
 #body .siteMessage .quote {
   font-weight: bold;

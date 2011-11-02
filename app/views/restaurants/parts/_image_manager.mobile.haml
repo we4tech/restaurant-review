@@ -44,7 +44,7 @@
       %a{:class => 'expand', :toggleView => 'photos'} &raquo;
     #photos.content{:style => 'display: none'}
       .album
-        - @restaurant.otehr_images.each do |image|
+        - @restaurant.other_images.each do |image|
           %a{:href => image_path(image.id)}
             = link_to image_tag(image.c_small_public_filename), image_url(image, :restaurant_id => @restaurant.id), :method => :delete, :confirm => t('confirm.delete_image')
 

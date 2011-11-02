@@ -44,10 +44,10 @@
   border-bottom-left-radius: @bottom_left;
 }
 
-.add_box_shadow(@spread: 5px, @color: #ABABAB) {
-  -webkit-box-shadow: 1px 1px @spread 1px @color;
-  -moz-box-shadow: 1px 1px @spread 1px @color;
-  box-shadow: 1px 1px @spread 1px @color;
+.add_box_shadow(@spread: 5px, @color: #ABABAB, @length: 1px) {
+  -webkit-box-shadow: 1px 1px @spread @length @color;
+  -moz-box-shadow: 1px 1px @spread @length @color;
+  box-shadow: 1px 1px @spread @length @color;
 }
 
 .no_box_shadow() {
