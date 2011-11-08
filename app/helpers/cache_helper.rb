@@ -7,7 +7,7 @@ module CacheHelper
     value_string = param_keys.collect{|pk| controller.send(:params)[pk]}.compact.join('_')
 
     "#{@topic.id}/#{(request.env['HTTP_X_FORWARDED_HOST'] || controller.request.host)}/#{controller.send(:controller_name)}/" +
-    "#{controller.send(:action_name)}_#{params[:l] || I18n.locale.to_s}#{value_string.blank? ? '' : "_#{value_string}"}"
+    "#{controller.send(:action_name)}_#{controller.send(:params)[:l] || I18n.locale.to_s}#{value_string.blank? ? '' : "_#{value_string}"}"
   end
 
   def cache_fragment(fragment_key, &block)
