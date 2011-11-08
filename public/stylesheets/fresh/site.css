@@ -1838,24 +1838,37 @@ h5.subHeaderWithIcon {
 }
 
 .userSmallBox .status {
-  color: #FFFFFF;
-  font-size: 100%;
-  line-height: 10px;
+  background: none repeat scroll 0 0 #F0F0F0;
+  border-bottom: 1px solid #CCCCCC;
+  color: #000000;
+  font-size: 80%;
+  font-weight: bold;
   margin-bottom: 5px;
-  margin-right: 5px;
-  padding: 5px;
-  text-align: center;
-  word-wrap: break-word;
-
-  /*text-shadow: 1px 1px 3px #000000;*/
-  filter: dropshadow(color = #000000, offx = 1, offy = 1);
+  padding: 2px;
+  text-align: left;
 }
 
 .userSmallBox .avatar img {
-  height: 40px;
+  height: 30px;
 }
 
-.userSmallBox .avatar {
+.userSmallBox .avatar a {
+  float: left;
+}
+
+.userSmallBox .avatar div {
+  float: left;
+  width: 20px;
+  margin-left: 5px;
+  color: #888;
+  font-size: 80%;
+}
+
+.leaderBoard .blockView .header {
+  display: none;
+}
+
+.userSmallBox .aXvatar {
   -webkit-box-shadow: 1px 1px 1px 0px #cccccc;
   -moz-box-shadow: 1px 1px 1px 0px #cccccc;
   box-shadow: 1px 1px 1px 0px #cccccc;
@@ -2406,6 +2419,10 @@ box-shadow: 1px 1px 1px 0 #000000;
   display: none;
 }
 
+.leaderBoard  .boxItem {
+  font-size: 80%;
+}
+
 .leaderBoard .userAdminBox {
   background: none repeat scroll 0 0 lightYellow;
   border: 1px solid orange;
@@ -2542,6 +2559,7 @@ box-shadow: 1px 1px 1px 0 #000000;
   background: transparent;
   padding: 0;
   padding-top: 5px;
+  font-size: 80%;
 }
 
 .context_details_page #right_module_panel h4 {

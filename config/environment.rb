@@ -19,20 +19,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
-  config.gem "chronic"
-  config.gem "rubyist-aasm", :version => '2.1.1', :lib => 'aasm'
-  config.gem "will_paginate", :version => '2.3.11'
-  config.gem 'super_exception_notifier', :lib => "exception_notification"
-  config.gem "mail_style"
-  config.gem "i18n"
-  config.gem "RedCloth"
-  config.gem 'rest-client'
-  config.gem 'haml'
-  config.gem 'sass'
-  config.gem 'coffee-script'
-  config.gem 'uglifier'
-  config.gem 'yui-compressor', :lib => 'yui/compressor'
-  config.gem 'jammit'
+
   #config.gem 'rack-cache'
 
 

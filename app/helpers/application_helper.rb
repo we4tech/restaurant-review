@@ -3,7 +3,7 @@ module ApplicationHelper
   def detect_premium_site_or_topic_or_forward_to_default_one
     if @premium_template = PremiumTemplate.match_host(request.host)
       @restaurant = @premium_template.restaurant
-      @topic      = @restaurant.topic
+      @topic = @restaurant.topic
       store_last_premium_site_host
       set_premium_session
       @premium = true
@@ -48,13 +48,13 @@ module ApplicationHelper
   end
 
   def default_topic_selected
-    @topic      = Topic.default
+    @topic = Topic.default
     if @topic
       path_prefix = (request.path || '')
       path_prefix = path_prefix[1..path_prefix.length]
       redirect_to "#{root_url(:subdomain => @topic.subdomain)}#{path_prefix}"
     end
-    
+
     @topic
   end
 
@@ -144,7 +144,7 @@ module ApplicationHelper
 
   def render_restaurant_based_template(partial_template, options = {})
     @premium_template = @restaurant.selected_premium_template
-    @context          = :inner_page
+    @context = :inner_page
 
     if !params[:d] && @premium_template
       @inner_page = partial_template
@@ -192,7 +192,7 @@ module ApplicationHelper
 
     if context
       if context.is_a?(Array)
-        context.each{|c| @context << c}
+        context.each { |c| @context << c }
       else
         @context << context
       end
@@ -208,7 +208,7 @@ module ApplicationHelper
 
     contexts = page_context
     contexts = [contexts] if not contexts.is_a?(Array)
-    contexts.collect{|pc| "context_#{pc}"}.join(' ')
+    contexts.collect { |pc| "context_#{pc}" }.join(' ')
   end
 
   # Add module renderer helper for the specified position
@@ -282,4 +282,78 @@ module ApplicationHelper
     request.headers["Referer"]
   end
 
+  def log_last_visiting_time
+    if current_user
+      @user_log = current_user.user_logs.by_topic(@topic.id).first
+      if @user_log
+        @user_log.update_attribute(:updated_at, Time.now)
+      else
+        @user_log = UserLog.create(:user_id => current_user.id, :topic_id => @topic.id)
+      end
+    end
+  end
+
+  def log_new_feature_visiting_status
+    @dont_show_new_features = []
+    host_parts = request.host.split(/\./)
+    host = host_parts[(host_parts.length - 2)..host_parts.length].join('.')
+
+    if defined?(NEW_FEATURES)
+      cookie = cookies[:new_feature]
+
+      if cookie.nil?
+        cookies[:new_feature] = {
+            :domain => host,
+            :value => '',
+            :expires => 1.year.from_now
+        }
+      else
+        key = "#{params[:controller]}_#{params[:action]}"
+        NEW_FEATURES.each do |feature_name, feature|
+          if !cookie.include?(feature_name.to_s) && feature[:unless_visited_on].include?(key)
+            cookies[:new_feature] = {
+                :domain => host,
+                :value => "#{cookie}|#{feature_name.to_s}",
+                :expires => 1.year.from_now
+            }
+            @dont_show_new_features << feature_name
+          elsif cookie.include?(feature_name.to_s)
+            @dont_show_new_features << feature_name
+          end
+        end
+      end
+    end
+  end
+
+  def remove_html_entities(p_str)
+    (p_str || '').gsub(/<[\/\w\d\s="\/\/\.:'@#;\-]+>/, '')
+  end
+
+  #
+  # Generate flash message based on given types (success or failure)
+  # and/or redirect to *redirect* url
+  def notify(type, redirect, options = {})
+    case type
+      when :success
+        flash[:success] = options[:success_message] || 'Successfully completed!'
+        redirect_to redirect
+
+      when :failure
+        flash[:notice] = options[:failure_message] || 'Failed to complete!'
+        if redirect.is_a?(Symbol) && redirect != :back
+          render :action => redirect
+        else
+          redirect_to redirect
+        end
+    end
+  end
+
+  #
+  # Check whether the current user is authorized or not
+  def authorize
+    if !current_user || !current_user.admin?
+      flash[:notice] = 'You are not authorized to access this url.'
+      redirect_to root_url
+    end
+  end
 end

@@ -4,17 +4,30 @@
 
 class ApplicationController < ActionController::Base
 
+  #
+  # Monitor banned ip profile
   include UserActivityMonitoringService
   policy :keep_away_ip_banned_visitors
 
+  #
+  # Include exception notifier
   include ExceptionNotification::ExceptionNotifiable
 
+  #
+  # Render errors on the page for dev, test and staging environment
   if !['test', 'staging', 'development'].include?(Rails.env)
     alias :rescue_action_locally :rescue_action_in_public
   end
 
+  #
+  # Specially handle bad authentication token exception
   rescue_from ActionController::InvalidAuthenticityToken, :with => :bad_auth_token
 
+  #
+  # Specially handle 404 error
+  rescue_from ActionController::RoutingError, :with => :four_o_four
+
+  #
   # Be sure to include AuthenticationSystem in Application Controller instead
   include CacheHelper
   include AuthenticatedSystem
@@ -33,15 +46,25 @@ class ApplicationController < ActionController::Base
   include TemplateServiceHelper
   include StuffEventsHelper
 
-  helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  #
+  # Load all application helpers
+  helper :all
 
+  #
+  # Forgery protection is turned on
+  protect_from_forgery
+
+  #
+  # Default layout
   layout 'fresh'
 
+  #
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   filter_parameter_logging :fb_sig_friends, :password
 
+  #
+  # Set before filters
   before_filter :set_cookie_domain
   before_filter :detect_premium_site_or_topic_or_forward_to_default_one
   before_filter :check_facebook_connect_session, :except => [:auth_destroy, :fb_auth_destroy]
@@ -52,16 +75,26 @@ class ApplicationController < ActionController::Base
 
   protected
 
+    #
+    # Handle bad auth token exception
     def bad_auth_token
       logger.warn('Caught invalid authenticity request')
       flash[:notice] = 'Invalid authenticity token, please try again'
       redirect_to request.referer.present? ? request.referer : root_url
     end
 
+    #
+    # Handle file not found exception since it generates lotta log into server.
+    def four_o_four
+      render :text => 'File not found', :status => 404
+    end
+
+    #
+    # Override default url option ie. add locale params etc.
     def default_url_options(options = {})
+
       # Force for url locale
       options[:l] = I18n.locale if !options.keys.include?(:l)
-
       determine_host! options
 
       # Force Content Format
@@ -94,6 +127,9 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    #
+    # Check whether the current user is authored (or allowed)
+    # to perform action on the specific object
     def if_permits? (object)
       if object && object.author?(current_user)
         yield
@@ -103,9 +139,15 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    #
+    # Since we have allowed fake email address for those who has logged in through facebook.
+    # Not allowing us to retrieve his email address. thus we don't know what's his email address is.
+    # We use this *before filter* to detect such user and take them to their edit page so that they
+    # can enter their valid email address.
     def detect_fake_email
       if logged_in?
         if current_user.fake_email?
+          # Don't f**k with system urls ie. edit_user itself and user, logout and fb_logout
           if request.url != edit_user_url(current_user) &&
               request.url != user_url(current_user) &&
               request.url != logout_url &&
@@ -134,6 +176,9 @@ class ApplicationController < ActionController::Base
       @background_image = @@background_images["hour_#{Time.now.hour}"] || @@background_images[:default]
     end
 
+    #
+    # Load list of available background images from bg-pictures directory
+    # based on their naming convention.
     def load_background_images
       hourly_image_files = {}
 
@@ -164,104 +209,6 @@ class ApplicationController < ActionController::Base
       end
 
       hourly_image_files
-    end
-
-    def authorize
-      if !current_user || !current_user.admin?
-        flash[:notice] = 'You are not authorized to access this url.'
-        redirect_to root_url
-      end
-    end
-
-    def notify(type, redirect, options = {})
-      case type
-        when :success
-          flash[:success] = options[:success_message] || 'Successfully completed!'
-          redirect_to redirect
-
-        when :failure
-          flash[:notice] = options[:failure_message] || 'Failed to complete!'
-          if redirect.is_a?(Symbol) && redirect != :back
-            render :action => redirect
-          else
-            redirect_to redirect
-          end
-      end
-    end
-
-    def restaurant_review_title(p_review, shared = false)
-      if !shared
-        if p_review.loved?
-          '&hearts; Loved and reviewed this place!'
-        elsif p_review.hated?
-          'Hated and reviewed this place! '
-        elsif p_review.wanna_go?
-          'Wanna go to '
-        end
-      else
-        'Shared review from'
-      end
-    end
-
-    def restaurant_review_stat(p_review)
-      restaurant = nil
-
-      if p_review.is_a?(Review)
-        restaurant = p_review.any
-      elsif p_review.is_a?(Restaurant)
-        restaurant = p_review
-      end
-
-      total_reviews_count = restaurant.reviews.count
-      loved_count = restaurant.reviews.loved.count
-      "#{restaurant.checkins_count.to_i} check ins, #{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}, #{restaurant.rating_out_of(5).round} out of 5 ratings!"
-    end
-
-    def remove_html_entities(p_str)
-      (p_str || '').gsub(/<[\/\w\d\s="\/\/\.:'@#;\-]+>/, '')
-    end
-
-    def log_last_visiting_time
-      if current_user
-        @user_log = current_user.user_logs.by_topic(@topic.id).first
-        if @user_log
-          @user_log.update_attribute(:updated_at, Time.now)
-        else
-          @user_log = UserLog.create(:user_id => current_user.id, :topic_id => @topic.id)
-        end
-      end
-    end
-
-    def log_new_feature_visiting_status
-      @dont_show_new_features = []
-      host_parts = request.host.split(/\./)
-      host = host_parts[(host_parts.length - 2)..host_parts.length].join('.')
-
-      if defined?(NEW_FEATURES)
-        cookie = cookies[:new_feature]
-
-        if cookie.nil?
-          cookies[:new_feature] = {
-            :domain => host,
-            :value => '',
-            :expires => 1.year.from_now
-          }
-        else
-          key = "#{params[:controller]}_#{params[:action]}"
-          NEW_FEATURES.each do |feature_name, feature|
-            if !cookie.include?(feature_name.to_s) && feature[:unless_visited_on].include?(key)
-              cookies[:new_feature] = {
-                :domain => host,
-                :value => "#{cookie}|#{feature_name.to_s}",
-                :expires => 1.year.from_now
-              }
-              @dont_show_new_features << feature_name
-            elsif cookie.include?(feature_name.to_s)
-              @dont_show_new_features << feature_name
-            end
-          end
-        end
-      end
     end
 
 end

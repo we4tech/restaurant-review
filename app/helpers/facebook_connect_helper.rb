@@ -4,7 +4,9 @@ module FacebookConnectHelper
   FACEBOOK_CONNECT_SESSION_ID = :fb_connect_user2
 
   def check_facebook_connect_session
-    if !fb_connect_session # not exists
+
+    if fb_connect_session.nil? # not exists
+
       # Try to load facebook connect cookies
       # Create new facebook session and store on session
       fb_session = build_fb_session
@@ -28,7 +30,7 @@ module FacebookConnectHelper
 
         self.current_user = User.find_by_facebook_uid(fb_uid)
         create_fb_connect_session(fb_session)
-        flash[:notice] = 'You are logged in through your facebook account'
+        flash[:notice] = 'You are logged in through your facebook'
       end
     end
   end
@@ -39,6 +41,34 @@ module FacebookConnectHelper
 
   def fb_cookies
     cookies[fb_cookies_key]
+  end
+
+  def restaurant_review_title(p_review, shared = false)
+    if !shared
+      if p_review.loved?
+        '&hearts; Loved and reviewed this place!'
+      elsif p_review.hated?
+        'Hated and reviewed this place! '
+      elsif p_review.wanna_go?
+        'Wanna go to '
+      end
+    else
+      'Shared review from'
+    end
+  end
+
+  def restaurant_review_stat(p_review)
+    restaurant = nil
+
+    if p_review.is_a?(Review)
+      restaurant = p_review.any
+    elsif p_review.is_a?(Restaurant)
+      restaurant = p_review
+    end
+
+    total_reviews_count = restaurant.reviews.count
+    loved_count = restaurant.reviews.loved.count
+    "#{restaurant.checkins_count.to_i} check ins, #{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}, #{restaurant.rating_out_of(5).round} out of 5 ratings!"
   end
 
   private

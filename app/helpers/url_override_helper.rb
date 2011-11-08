@@ -191,7 +191,7 @@ module UrlOverrideHelper
 
   def event_link(event, options = {})
     length = options.delete(:length)
-    link_to (length ? truncate(event.name, length) : event.name), event_long_url(event, options)
+    link_to (length ? truncate(event.name, :length => length) : event.name), event_long_url(event, options)
   end
 
   def section_url(section, tag = false)

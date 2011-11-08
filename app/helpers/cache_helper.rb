@@ -5,6 +5,7 @@ module CacheHelper
     param_keys << :page
     param_keys << :format
     value_string = param_keys.collect{|pk| controller.send(:params)[pk]}.compact.join('_')
+
     "#{controller.request.host}/#{controller.send(:controller_name)}/" +
     "#{controller.send(:action_name)}_#{params[:l] || I18n.locale.to_s}#{value_string.blank? ? '' : "_#{value_string}"}"
   end

@@ -27,7 +27,7 @@
       <div class="item">
         <% if !images.empty? %>
           <%= link_to(image_tag(
-                          images.rand.public_filename(:small), :alt => 'N/A'),
+                          images.sample.public_filename(:small), :alt => 'N/A'),
                       images.first.public_filename(:large), :class => 'image_small') %>
         <% else %>
           <%= link_to(image_tag('/images/fresh/no-dp.png'), '#', :class => 'image_small') %>

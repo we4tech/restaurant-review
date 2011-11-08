@@ -132,7 +132,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_featured_box
-    cache_fragment("featured_box_#{@topic.name}") do
+    cache_fragment("featured_box_#{@topic.name}_#{I18n.locale.to_s}") do
       @content_file = 'restaurants/parts/top_rated_slider'
       @effect = 'appear()'
       @element = '#featureBox'
@@ -185,7 +185,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_news_feed
-    cache_fragment("render_news_feed_#{@topic.name}_#{I18n.locale.to_s}") do
+    cache_fragment("render_news_feed_#{@topic.name}_#{I18n.locale.to_s}_#{logged_in? ? current_user.id : '_'}") do
       @content_file = 'layouts/fresh_parts/news_feed'
       @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
       @element = '#news_feed_box'
