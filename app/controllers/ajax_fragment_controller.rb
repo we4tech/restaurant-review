@@ -40,6 +40,9 @@ class AjaxFragmentController < ApplicationController
       @content_file = 'layouts/fresh_parts/top_navigation_v3'
       @effect = "slideDown({easing: \"jswing\"}).removeClass('menuLoadingIndicator')"
       @element = '#topNavigationBar'
+      @after_effects = %{
+        $(document.body).css('background', "url('#{@background_image}') no-repeat fixed");
+      }
       render :action => 'render_fragment', :layout => false
     end
   end

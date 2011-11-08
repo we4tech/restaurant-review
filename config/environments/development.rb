@@ -12,9 +12,9 @@ config.whiny_nils = true
 config.action_controller.consider_all_requests_local = true
 config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = false
-config.action_controller.asset_host = "http://ajax%d.hadok.com"
+config.action_controller.asset_host = "http://ajax%d.hadok.com:3000"
 
-config.action_controller.cache_store = :file_store, RAILS_ROOT+"/tmp/cache/"
+config.action_controller.cache_store = :file_store, RAILS_ROOT + "/tmp/cache/"
 
 
 # Don't care if the mailer can't send
@@ -28,5 +28,5 @@ MAP_API_KEY = 'ABQIAAAAFNm78CTt6Ba6XsBkWZHE3hRXwWGis4ehQYwFPWsPJASMY_J0qBTSdP47_
 ActionController::Base.session = {
   :key         => '_welltreat_us_dev_v2',
   :secret      => 'f11cf195514c9f70d208c7860c97b77b2f2fa19cc1b7291d00e26c89530a75077146bc9f0ec4076af5c5fe9b74ec1a9a3de6158a1840712d801103022417cf67',
-  :domain      => '.Badok.com'
+  :domain      => '.khadok.com'
 }

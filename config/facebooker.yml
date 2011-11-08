@@ -9,10 +9,10 @@
 # This should only be necessary until the final version of the new profile is released.
 
 development:
-  api_key: 15b8a8040af0fe31fc46da4867ab6488
+  api_key: "175810268976"
   secret_key: 9dc7287adbe8c57630c38e6b6e6b8c31
   canvas_page_name: wt-games-test
-  callback_url: http://hadok.com/
+  callback_url: http://www.hadok.com:3000
   pretty_errors: true
   set_asset_host_to_callback_url: true
   tunnel:
@@ -33,7 +33,7 @@ test:
   tunnel:
 
 production:
-  api_key: be437507fb7096f8faf2d9d9cda1607f
+  api_key: 188534968205
   secret_key: af4c511f8d8d41aa940a3226c95eb236
   canvas_page_name: well_treat_us
   callback_url: http://www.welltreat.us/games/
