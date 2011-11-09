@@ -6,8 +6,8 @@ module CacheHelper
     param_keys << :format
     value_string = param_keys.collect{|pk| controller.send(:params)[pk]}.compact.join('_')
 
-    "#{@topic.id}/#{(request.env['HTTP_X_FORWARDED_HOST'] || controller.request.host)}/#{controller.send(:controller_name)}/" +
-    "#{controller.send(:action_name)}_#{params[:l]}#{value_string.blank? ? '' : "_#{value_string}"}"
+    "#{(request.env['HTTP_X_FORWARDED_HOST'] || controller.request.host)}/#{controller.send(:controller_name)}/" +
+    "#{controller.send(:action_name)}_#{@topic.id}_#{params[:l]}#{value_string.blank? ? '' : "_#{value_string}"}"
   end
 
   def cache_fragment(fragment_key, &block)
