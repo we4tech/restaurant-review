@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+ <head>
+  <title>jGoogleBarV3</title>
+  <style type="text/css">
+   html, body{
+    height:100%;
+    margin:0;
+   }
+   #map_canvas{
+    height:100%;
+    width:75%;
+   }
+   #resultsCanvas{
+    height:100%;
+    width:25%;
+    float:left;
+   }
+  </style>
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+   google.load('maps','3',{other_params:'sensor=false'}); // load the maps api
+   function init(){
+    var mapOptions={ // set up some map options
+     center : new google.maps.LatLng(44, -93),
+     mapTypeId : google.maps.MapTypeId.ROADMAP,
+     zoom : 9
+    },
+    gbarOptions={
+     resultList : document.getElementById('resultsCanvas')
+    };
+    var map=new google.maps.Map(document.getElementById('map_canvas'),mapOptions);
+    map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push((window.gbar=new window.jeremy.jGoogleBar(map,gbarOptions)).container);
+   }
+   google.setOnLoadCallback(init);
+  </script>
+  <script type="text/javascript" src="jGoogleBarV3.min.js"></script>
+ </head>
+ <body>
+  <div id="resultsCanvas"></div>
+  <div id="map_canvas"></div>
+ </body>
+</html>
