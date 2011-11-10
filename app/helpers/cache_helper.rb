@@ -27,11 +27,15 @@ module CacheHelper
     class << self
       def expire_caches(path, match)
         files = Dir.glob(File.join(RAILS_ROOT, 'tmp', 'cache', 'views', '*', path, '*'))
+        count = 0
         files.each do |file|
           if file.match(/#{match}/)
             FileUtils.rm_rf(file)
+            count += 1
           end
         end
+
+        count
       end
     end
   end

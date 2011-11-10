@@ -10,9 +10,12 @@ namespace :welltreat do
 
   desc 'Clear static cache'
   task :clear_all_caches => :environment do
-    ['home', 'restaurants'].each do |dir|
-      CacheHelper::Util.expire_caches(dir, '.+')
+    total_cache_cleaned_count = 0
+    ['home', 'restaurants', 'images'].each do |dir|
+      total_cache_cleaned_count  += CacheHelper::Util.expire_caches(dir, '.+')
     end
+
+    puts "Total #{total_cache_cleaned_count} cache files are cleared!"
 
     # clean static caches
     Dir.glob(File.join(RAILS_ROOT, 'public', 'javascripts') + '/cache*').each do |file|
