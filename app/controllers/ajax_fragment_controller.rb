@@ -11,11 +11,12 @@ class AjaxFragmentController < ApplicationController
   after_filter :no_cache
 
   def fragment_for
-    fragment_name = (params[:name] || '').downcase.to_sym
+    fragment_name = (params[:name] || '')
     if !fragment_name.blank?
+      fragment_name = fragment_name.downcase.to_sym
       parse_fragment_for(fragment_name)
     else
-      render :text => ''
+      render :text => 'Not supported fragment'
     end
   end
 
