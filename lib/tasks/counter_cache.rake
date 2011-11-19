@@ -15,6 +15,8 @@ namespace :welltreat do
       total_cache_cleaned_count  += CacheHelper::Util.expire_caches(dir, '.+')
     end
 
+    total_cache_cleaned_count  += CacheHelper::Util.expire_caches('*')
+
     puts "Total #{total_cache_cleaned_count} cache files are cleared!"
 
     # clean static caches

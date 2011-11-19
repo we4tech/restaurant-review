@@ -133,7 +133,7 @@ module Ultrasphinx
       section.gsub!(/^\s*(.*?)\s*(?:#.*)?$/, '\1')
 
       # Convert to a hash
-      returning({}) do |options|
+      {}.tap do |options|
         lines = section.split(/\n+/)
         while line = lines.shift
           if line =~ /(.*?)\s*=\s*(.*)/

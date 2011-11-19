@@ -25,11 +25,22 @@ module CacheHelper
 
   class Util
     class << self
-      def expire_caches(path, match)
-        files = Dir.glob(File.join(RAILS_ROOT, 'tmp', 'cache', 'views', '*', path, '*'))
+      def expire_caches(path, match = nil)
+        full_path_parts = [].tap do |array|
+          array << [RAILS_ROOT, 'tmp', 'cache', 'views', '*', path]
+          array << (match ? ['*'] : [])
+        end.flatten
+
+        files = Dir.glob(File.join(full_path_parts))
+
         count = 0
         files.each do |file|
-          if file.match(/#{match}/)
+          if match
+            if file.match(/#{match}/)
+              FileUtils.rm_rf(file)
+              count += 1
+            end
+          else
             FileUtils.rm_rf(file)
             count += 1
           end

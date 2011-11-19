@@ -4,6 +4,7 @@ source "http://gemcutter.org"
 gem 'rails', '2.3.12'
 gem 'rake', '0.9.2'
 gem 'mysql', '2.8.1'
+gem 'dalli', '1.0.4'
 
 gem 'haml', '3.1.3'
 gem "chronic", '0.6.4'
@@ -27,7 +28,7 @@ gem 'jammit', '0.6.3'
 gem 'rdoc', '3.9.4'
 #gem 'sprockets', :git => 'git://github.com/sstephenson/sprockets.git', :ref => '308a889ba496c1526cab'
 
-group :development, :test, :staging do
+group :development, :test, :staging, :ci do
   gem 'propel', '0.4.2'
   # colorize && nice outputs for console.
   gem 'capistrano'
@@ -35,12 +36,17 @@ group :development, :test, :staging do
   gem 'rvm', '1.2.6'
   gem 'hirb', '0.3.5'
   gem 'wirble', '0.1.3'
+  gem "rspec-rails", "1.2.0"
+  #gem "rspec-expectations "
+  gem 'spork', '~> 0.8'
+  gem 'guard-rspec'
+  gem 'rb-fsevent'
+
 end
 
 group :test do
+  gem 'capybara', :git => 'https://github.com/jnicklas/capybara.git', :tag => '1.1.0.rc1'
+  #gem "shoulda-matchers"
+  gem 'factory_girl'
   #gem 'webrat'
-  #gem 'spork', '0.8.5'
-  #gem "rspec-rails"
-  #gem "shoulda"
-  #gem 'factory_girl_rails'
 end

@@ -197,4 +197,13 @@ class AjaxFragmentController < ApplicationController
     end
   end
 
+  def render_cache_debugger
+    if defined?(CACHE_DEBUGGING_LOG_KEEPER)
+      request.format = :js
+      render :action => 'cache_debugger', :layout => false
+    else
+      render :text => '// Not enabled'
+    end
+  end
+
 end
