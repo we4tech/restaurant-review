@@ -141,7 +141,7 @@ class Restaurant < ActiveRecord::Base
           :conditions => ['checkins.user_id IN (?)', users.collect(&:id)],
           :offset  => offset,
           :limit   => limit)
-      checkins.collect(&:restaurant)
+      checkins.collect(&:restaurant).compact
     end
 
     def count_checkined_by_users(topic, users)
