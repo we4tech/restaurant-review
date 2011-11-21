@@ -37,15 +37,13 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_top_menu
-    cache_fragment("render_top_menu_#{@topic.name}_#{I18n.locale.to_s}_#{logged_in? ? current_user.id : 'default'}") do
-      @content_file = 'layouts/fresh_parts/top_navigation_v3'
-      @effect = "slideDown({easing: \"jswing\"}).removeClass('menuLoadingIndicator')"
-      @element = '#topNavigationBar'
-      @after_effects = %{
-        $(document.body).css('background', "url('#{@background_image}') no-repeat fixed");
-      }
-      render :action => 'render_fragment', :layout => false
-    end
+    @content_file = 'layouts/fresh_parts/top_navigation_v3'
+    @effect = "slideDown({easing: \"jswing\"}).removeClass('menuLoadingIndicator')"
+    @element = '#topNavigationBar'
+    @after_effects = %{
+      $(document.body).css('background', "url('#{@background_image}') no-repeat fixed");
+    }
+    render :action => 'render_fragment', :layout => false
   end
 
   def render_notice
