@@ -1,57 +1,71 @@
 <div id="right_module_panel">
-    <div class="leaderBoardBox">
-        <div class='leaderBoard'>
-            <h4 class="headerWithIcon newsFeedHeader">Leader board</h4>
+  <div class="leaderBoardBox">
+    <div class='leaderBoard'>
+      <h4 class="headerWithIcon newsFeedHeader">Leader board</h4>
 
-            <div class="break space_5"></div>
-            <%= render_leader_board(:leaders_list => :hide) %>
-            <div class="clear"></div>
-        </div>
-        <div class="clear space_10"></div>
+      <div class="break space_5"></div>
+      <%= render_leader_board(:leaders_list => :hide) %>
+      <div class="clear"></div>
     </div>
+    <div class="clear space_10"></div>
+  </div>
 
-    <div class='contentBox'>
-        <h4 class='subHeaderWithIcon'>Like our initiative</h4>
+  <div class='contentBox'>
+    <h4 class='subHeaderWithIcon'>Like our initiative</h4>
 
-        <div class="site_simple_box">
-            <fb:like href="<%= request.url %>" width='260'></fb:like>
-            <br/>
-            <a class="addthis_button"
-               href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech">
-                <img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif"
-                     width="125" height="16" alt="Bookmark and Share"
-                     style="border:0"/>
-            </a>
-            <script type="text/javascript"
-                    src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech">
-            </script>
-        </div>
-        <div class="clear"></div>
+    <div class="site_simple_box">
+      <div id='fb_like_frame'></div>
+
+      <br/>
+      <a class="addthis_button"
+         href="http://www.addthis.com/bookmark.php?v=250&amp;pub=we4tech">
+        <img src="http://s7.addthis.com/static/btn/v2/lg-bookmark-en.gif"
+             width="125" height="16" alt="Bookmark and Share"
+             style="border:0"/>
+      </a>
+      <script type="text/javascript"
+              src="http://s7.addthis.com/js/250/addthis_widget.js#pub=we4tech">
+      </script>
     </div>
-    <div class='space_10'></div>
+    <div class="clear"></div>
+  </div>
+  <div class='space_10'></div>
 
-    <%= render_most_lovable_places({:label => 'Most Eaters Love', :link_bar => true}) %>
-    <div class='clear space_10'></div>
+  <%= render_most_lovable_places({:label => 'Most Eaters Love', :link_bar => true}) %>
+  <div class='clear space_10'></div>
 
-    <%= render_most_checkined_places({:label => 'Most Eaters Go', :link_bar => true}) %>
-    <div class='clear space_10'></div>
+  <%= render_most_checkined_places({:label => 'Most Eaters Go', :link_bar => true}) %>
+  <div class='clear space_10'></div>
 
-    <%= render_recently_reviewed_places({:label => 'Recent Reviews', :link_bar => true}, 5) %>
-    <div class='clear space_10'></div>
+  <%= render_recently_reviewed_places({:label => 'Recent Reviews', :link_bar => true}, 5) %>
+  <div class='clear space_10'></div>
 
-    <%= render_recently_added_places({:label => "New #{@topic.name.pluralize.capitalize}", :link_bar => true}, 5) %>
-    <div class='clear space_10'></div>
+  <%= render_recently_added_places({:label => "New #{@topic.name.pluralize.capitalize}", :link_bar => true}, 5) %>
+  <div class='clear space_10'></div>
 
-    <% upcoming_events = render_upcoming_events(:grid_class => 'grid_3') %>
-    <% if !upcoming_events.blank? %>
-        <div class='upcomingEventsBox'>
-            <h4 class='subHeaderWithIcon'>
-                Upcoming Events
-                <%= link_to 'Archive', events_path, :class => 'archiveButton' %>
-            </h4>
+  <% upcoming_events = render_upcoming_events(:grid_class => 'grid_3') %>
+  <% if !upcoming_events.blank? %>
+    <div class='upcomingEventsBox'>
+      <h4 class='subHeaderWithIcon'>
+        Upcoming Events
+        <%= link_to 'Archive', events_path, :class => 'archiveButton' %>
+      </h4>
 
-            <%= upcoming_events %>
-            <div class='clear'></div>
-        </div>
-    <% end %>
+      <%= upcoming_events %>
+      <div class='clear'></div>
+    </div>
+  <% end %>
 </div>
+<script type="text/javascript">
+  var link = document.location.href;
+
+  if (link.match(/tags|restaurants|events/i)) {
+    var parts = link.split('?');
+    link = parts[0];
+  }
+
+  $('#fb_like_frame').html("<iframe id='fb_like_frame' " +
+      " src='https://www.facebook.com/plugins/like.php?href=" + link + "'" +
+      " scrolling='no' frameborder='0'" +
+      " style='border:none; width:100%; height:30px'></iframe>");
+</script>

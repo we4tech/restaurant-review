@@ -9,7 +9,7 @@ module HomeController::PageUtils
     def configure_cache
       caches_action :frontpage, :index, :most_loved_places,
                     :most_checkedin_places, :recently_reviewed_places,
-                    :recent_places, :photos, :cache_path => Proc.new {|c|
+                    :recent_places, :cache_path => Proc.new {|c|
         c.cache_path(c)
       }, :if => Proc.new {|c| !c.send(:mobile?)}
     end

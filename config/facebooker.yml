@@ -12,7 +12,7 @@ development:
   api_key: "175810268976"
   secret_key: 9dc7287adbe8c57630c38e6b6e6b8c31
   canvas_page_name: wt-games-test
-  callback_url: http://www.hadok.com:3000
+  callback_url: http://khadok.dev
   pretty_errors: true
   set_asset_host_to_callback_url: true
   tunnel:
