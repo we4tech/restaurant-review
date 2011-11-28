@@ -19,7 +19,7 @@
 		<% if @cached %>
 			<div class='loadingIndicator' id='news_feed_box'>
 				<%= image_tag 'loader.gif' %><br/>
-				Loading commuity news feed...
+				Loading community news feed...
 			</div>
 		<% else %>
 			<%= render_news_feed(:label => 'News Feed') %>
@@ -39,7 +39,7 @@
 		<div class='clear space_10'></div>
 		<%= render_most_checkined_places({:label => 'Most Eaters Go'}) %>
 		<div class='clear space_10'></div>
-		<%= render_recently_reviewed_places({:label => 'Recent Reviews'}, 5) %>
+		<%= render_recently_reviewed_places({:label => 'Recent Reviews', :keep_open => true}, 5) %>
 		<div class='clear space_10'></div>
 		<%= render_recently_added_places({:label => "New #{@topic.name.pluralize.capitalize}"}, 5) %>	
 		<div class='clear space_10'></div>
@@ -63,15 +63,28 @@
 		  	Loading leader board...
 		  </div>
 	  <% else %>
-	  	  <div class='leaderBoard'>
-			<h4 class="headerWithIcon newsFeedHeader">Leader board</h4>
-			<div class="break space_5"></div> 	
+      <div class='leaderBoard'>
+			  <h4 class="headerWithIcon newsFeedHeader">Leader board</h4>
+			  <div class="break space_5"></div>
 		  	<%= render_leader_board %>
 		  	<div class='clear'></div>
 		  </div>
 	  <% end %>
-	  
 	  <div class='clear space_10'></div>
+    <div class='videos'>
+      <h4 class="subHeaderWithIcon clickable">
+        Our Promotional Videos
+      </h4>
+      <div class='site_simple_box'>
+        <% videos = ['8qykYa-4HtI', 'x_qcYb0FHMw', 'bfdJzHmUqBQ', 'QYRby9qX4s4'] %>
+        <% videos.each do |video| %>
+          <iframe width="260" height="100"
+                  src="http://www.youtube.com/embed/<%= video %>?autohide=1"
+                  frameborder="0" allowfullscreen></iframe>
+          <div class='clear space'></div>
+        <% end %>
+      </div>
+    </div>
 	  
 	</div> 
 	<div class='clear'></div>

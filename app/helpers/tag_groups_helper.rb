@@ -16,7 +16,7 @@ module TagGroupsHelper
     content_tag('div', :class => 'groupedTags') do
       html = ''
       grouped_tags.each do |group, _tags|
-        group_name = group != :none ? "#{group.name}: " : ''
+        group_name = group != :none ? "#{group.name}: " : 'Others'
         html << content_tag('div', :class => 'tagGroup') do
           tag_html = content_tag('strong', group_name)
           tag_html << content_tag('div', _tags.collect{|t| link_to(t.name, section_url(t, true))}.join(', '))

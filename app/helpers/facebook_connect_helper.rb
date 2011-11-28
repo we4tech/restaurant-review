@@ -30,7 +30,7 @@ module FacebookConnectHelper
 
         self.current_user = User.find_by_facebook_uid(fb_uid)
         create_fb_connect_session(fb_session)
-        flash[:notice] = 'You are logged in through your facebook'
+        flash[:notice] = 'You are connected through facebook'
       end
     end
   end
