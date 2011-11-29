@@ -26,6 +26,7 @@ gem 'uglifier', '1.0.3'
 gem 'yui-compressor', '0.9.6', :require => 'yui/compressor'
 gem 'jammit', '0.6.3'
 gem 'rdoc', '3.9.4'
+gem 'rmagick', '2.13.1'
 #gem 'sprockets', :git => 'git://github.com/sstephenson/sprockets.git', :ref => '308a889ba496c1526cab'
 
 group :development, :test, :staging, :ci do

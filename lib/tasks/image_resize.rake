@@ -5,6 +5,7 @@ module ImageResize
         images.each do |image|
           orig_file_path = File.join(RAILS_ROOT, 'public', image.public_filename)
           temp_file_path = File.join(RAILS_ROOT, 'public', "#{image.public_filename}.tmp")
+          puts "Original file - #{orig_file_path}"
 
           # Fix previously broken image
           if !File.exist?(orig_file_path) && File.exists?(temp_file_path)
@@ -44,6 +45,11 @@ namespace :welltreat do
       images = nil
       cores = ENV['CORES'].to_i
       cores = cores == 0 ? 1 : cores
+
+      if ENV['MODEL'].blank?
+        puts 'USAGES: rake welltreat:images:reimage MODEL=<User|TopicEvent|Restaurant|SelectedRestaurant> ID=<Selected Restaurant Id>'
+        exit(0)
+      end
 
       # If model is defined retrieve image from model
       if ENV['MODEL']
