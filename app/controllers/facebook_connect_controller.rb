@@ -348,7 +348,7 @@ class FacebookConnectController < ApplicationController
       end
     end
 
-    return session
+    session
   end
 
 end
