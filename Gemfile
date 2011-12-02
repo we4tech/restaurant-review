@@ -46,7 +46,7 @@ group :development, :test, :staging, :ci do
 end
 
 group :test do
-  gem 'capybara', :git => 'https://github.com/jnicklas/capybara.git', :tag => '1.1.0.rc1'
+  #gem 'capybara', :git => 'https://github.com/jnicklas/capybara.git', :tag => '1.1.0.rc1'
   #gem "shoulda-matchers"
   gem 'factory_girl'
   #gem 'webrat'
