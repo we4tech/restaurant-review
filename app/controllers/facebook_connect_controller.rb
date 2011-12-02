@@ -68,13 +68,13 @@ class FacebookConnectController < ApplicationController
     api = FacebookGraphApi.new(session.session_key, session.user.id)
     link = event_or_restaurant_url(event_or_restaurant)
 
-    publish_through_fb_checkin(api, event_or_restaurant, checkin, link) ||
+    publish_through_fb_checkin(api, session, event_or_restaurant, checkin, link) ||
         publish_story_of_checkin(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, session, event_or_restaurant, link)
   end
 
   private
 
-  def publish_through_fb_checkin(api, restaurant, checkin, link)
+  def publish_through_fb_checkin(api, session, restaurant, checkin, link)
     begin
       # Find nearby location
       nearby_places = api.find_nearby_places(
@@ -87,12 +87,11 @@ class FacebookConnectController < ApplicationController
       if nearby_place
         case restaurant
           when Restaurant
-            return create_fb_checkin(api, restaurant, checkin, nearby_place, link)
+            return create_fb_checkin(api, session, restaurant, checkin, nearby_place, link)
           when TopicEvent
-            return create_fb_checkin(api, restaurant, checkin, nearby_place, link)
+            return create_fb_checkin(api, session, restaurant, checkin, nearby_place, link)
           else
-            flash[:notice] = 'Not allowed check in type'
-            return false
+            flash[:notice] = 'Not allowed to check in this type'
         end
       end
     rescue => e
@@ -102,7 +101,7 @@ class FacebookConnectController < ApplicationController
     false
   end
 
-  def create_fb_checkin(api, restaurant, checkin, nearby_place, link)
+  def create_fb_checkin(api, session, restaurant, checkin, nearby_place, link)
     begin
       checkin_id = api.check_in(api.uid, {
           :message => "Just checked in \"#{restaurant.name}\" nearby",
@@ -119,7 +118,7 @@ class FacebookConnectController < ApplicationController
         # Publish khadok.com's url using comment
         api.create_comment(session.user.id, {
             :checkin_id => checkin_id,
-            :message => "www.khadok.com source - #{link}"
+            :message => "www.khadok.com link - #{link}"
         })
 
         return true
