@@ -42,6 +42,7 @@ class FacebookConnectController < ApplicationController
           when 'checkedin'
             restaurant_or_event = Restaurant.find(params[:id]) || TopicEvent.find(params[:id])
             checkin = Checkin.find(params[:checkin_id])
+            logger.debug('Publishing checkin')
             status = publish_checkin(facebook_session, restaurant_or_event, checkin)
         end
 
@@ -66,6 +67,9 @@ class FacebookConnectController < ApplicationController
 
   def publish_checkin(session, event_or_restaurant, checkin)
     api = FacebookGraphApi.new(session.session_key, session.user.id)
+    logger.debug('Created api')
+    logger.debug({:api => api})
+
     link = event_or_restaurant_url(event_or_restaurant)
 
     publish_through_fb_checkin(api, session, event_or_restaurant, checkin, link) ||
@@ -75,25 +79,38 @@ class FacebookConnectController < ApplicationController
   private
 
   def publish_through_fb_checkin(api, session, restaurant, checkin, link)
+    logger.debug('Publish through facebook checkin')
+    logger.debug({:api => api, :session => session,
+                  :restaurant => restaurant, :checkin => checkin,
+                  :link => link})
     begin
+      logger.debug('Find nearby places')
+
       # Find nearby location
       nearby_places = api.find_nearby_places(
           :center => [restaurant.lat, restaurant.lng].join(','),
           :distance => 1000,
           :limit => 1)
       nearby_place = nearby_places.present? ? nearby_places.first : nil
+      logger.debug("Found nearby place - #{nearby_place.inspect}")
 
       # Publish through facebook
       if nearby_place
         case restaurant
           when Restaurant
+            logger.debug('Found restaurant')
             return create_fb_checkin(api, session, restaurant, checkin, nearby_place, link)
           when TopicEvent
+            logger.debug('Found topic event')
             return create_fb_checkin(api, session, restaurant, checkin, nearby_place, link)
           else
             flash[:notice] = 'Not allowed to check in this type'
         end
       end
+    rescue RestClient::BadRequest
+      # Facebook session has expired.
+      # Renew new facebook session
+      raise 'Renew fb session'
     rescue => e
       raise e if 'development' == RAILS_ENV
     end
@@ -102,28 +119,37 @@ class FacebookConnectController < ApplicationController
   end
 
   def create_fb_checkin(api, session, restaurant, checkin, nearby_place, link)
+    logger.debug('Create facebook checkin')
+    logger.debug({:api => api, :session => session, :restaurant => restaurant,
+                  :checkin => checkin, :nearby_place => nearby_place,
+                  :link => link})
     begin
+      logger.debug('Creating check in object')
       checkin_id = api.check_in(api.uid, {
           :message => "Just checked in \"#{restaurant.name}\" nearby",
           :place => nearby_place['id'],
           :coordinates => {:latitude => restaurant.lat, :longitude => restaurant.lng}
       })
 
+      logger.debug('Created check in id - ' + checkin_id.inspect)
+
       # If check in is successful on server
       if checkin_id
         # Update fb reference on original check in object
         checkin.update_attributes(
             :fb_checkin_id => checkin_id, :fb_checkin => true)
+        logger.debug('Updating check in reference')
 
         # Publish khadok.com's url using comment
         api.create_comment(session.user.id, {
             :checkin_id => checkin_id,
             :message => "www.khadok.com link - #{link}"
         })
-
+        logger.debug('Publishing comment on just created checkin')
         return true
       end
     rescue => e
+      logger.error(e)
       raise e if 'development' == RAILS_ENV
       return false
     end
@@ -186,6 +212,7 @@ class FacebookConnectController < ApplicationController
   end
 
   def publish_story_of_checkin(p_bundle_id, p_facebook_session, restaurant, link, shared = false)
+    logger.debug('Publishing story through facebook stream')
     attached_images = []
     images = restaurant.images
     images = restaurant.other_images if images.empty?
@@ -352,3 +379,4 @@ class FacebookConnectController < ApplicationController
   end
 
 end
+

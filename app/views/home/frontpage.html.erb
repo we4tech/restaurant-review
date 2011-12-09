@@ -2,9 +2,6 @@
 
   <% if params[:page].to_i < 2 %>
     <div class='grid_12' id='featureBox'>
-      <%
-          #render :partial => 'restaurants/parts/top_rated_slider'
-      %>
       <%= render_section_heads_with_selected_item(:frontpage) %>
     </div>
     <div class='clear'></div>    
