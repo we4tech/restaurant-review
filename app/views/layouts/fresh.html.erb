@@ -68,7 +68,7 @@
 
 <body<%= @edit_mode ? ' onbeforeunload="return (mFormContentChanged) ? \'- Your unsaved changes will be lost.\' : null"' : '' %>
      class="locale_<%= I18n.locale.to_s %> <%= page_context_as_classes %>"
-     style="background: url('<%= @background_image %>') no-repeat fixed">
+     style="">
 <a href="#" style="display:none" id="siteTopLink">Top</a>
 
 <div class="navigation" id='topNavigationBar'>
