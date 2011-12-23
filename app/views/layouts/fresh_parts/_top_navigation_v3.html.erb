@@ -25,7 +25,7 @@
         <%= render_pull_down_menu('Login/Sign up') do
           %{
                 <li>
-                  <fb:login-button perms="#{FB_CONNECT_PERM}">
+                  <fb:login-button scope="#{FB_CONNECT_PERM}">
                     Login with Facebook
                   </fb:login-button>
                 </li>

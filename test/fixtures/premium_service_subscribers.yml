@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  email: MyString
-  restaurant_id: 1
-
-two:
-  email: MyString
-  restaurant_id: 1

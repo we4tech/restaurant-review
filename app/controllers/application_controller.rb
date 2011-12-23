@@ -41,7 +41,6 @@ class ApplicationController < ActionController::Base
   include PremiumHelper
   include PremiumTemplatesHelper
   include SearchHelper
-  include MultidomainCookieHelper
   include PartialViewHelperHelper
   include TemplateServiceHelper
   include StuffEventsHelper
@@ -65,7 +64,6 @@ class ApplicationController < ActionController::Base
 
   #
   # Set before filters
-  before_filter :set_cookie_domain
   before_filter :detect_premium_site_or_topic_or_forward_to_default_one
   before_filter :check_facebook_connect_session, :except => [:auth_destroy, :fb_auth_destroy]
   before_filter :detect_mobile_view
@@ -119,7 +117,7 @@ class ApplicationController < ActionController::Base
           else
             options[:subdomain] = @topic ? @topic.subdomain : nil
           end
-        elsif @topic.user_subdomain?
+        elsif @topic && @topic.user_subdomain?
           options[:subdomain] = 'www'
         elsif @topic
           options[:host] = @topic.public_host

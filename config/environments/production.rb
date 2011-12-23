@@ -51,5 +51,6 @@ if defined?(ActionController)
     :domain      => '.welltreat.us'
   }
 end
+config.middleware.use "SetCookieDomain", ".khadok.com"
 
 MAINTENANCE_IN_PROGRESS = false

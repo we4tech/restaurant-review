@@ -52,7 +52,9 @@ module ApplicationHelper
     if @topic
       path_prefix = (request.path || '')
       path_prefix = path_prefix[1..path_prefix.length]
-      redirect_to "#{root_url(:subdomain => @topic.subdomain)}#{path_prefix}"
+      full_path = "#{root_url(:subdomain => @topic.subdomain)}"
+      full_path.insert(full_path.index('?'), CGI.unescape(path_prefix))
+      redirect_to full_path
     end
 
     @topic

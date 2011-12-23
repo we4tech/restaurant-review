@@ -27,3 +27,5 @@ config.action_mailer.default_url_options = {:host => 'servicedev1.net'}
 # This is necessary if your schema can't be completely dumped by the schema dumper,
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
+
+config.gem 'rspec-rails', :version => '>= 1.3.4', :lib => false unless File.directory?(File.join(Rails.root, 'vendor/plugins/rspec-rails'))

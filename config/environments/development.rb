@@ -30,3 +30,5 @@ ActionController::Base.session = {
   :secret      => 'f11cf195514c9f70d208c7860c97b77b2f2fa19cc1b7291d00e26c89530a75077146bc9f0ec4076af5c5fe9b74ec1a9a3de6158a1840712d801103022417cf67',
   :domain      => '.khadok.com'
 }
+
+config.middleware.use "SetCookieDomain", ".khadok.dev"

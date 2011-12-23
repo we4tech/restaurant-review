@@ -27,27 +27,22 @@ gem 'yui-compressor', '0.9.6', :require => 'yui/compressor'
 gem 'jammit', '0.6.3'
 gem 'rdoc', '3.9.4'
 gem 'rmagick', '2.13.1'
-#gem 'sprockets', :git => 'git://github.com/sstephenson/sprockets.git', :ref => '308a889ba496c1526cab'
 
 group :development, :test, :staging, :ci do
   gem 'propel', '0.4.2'
-  # colorize && nice outputs for console.
   gem 'capistrano'
   gem 'capistrano-ext', '~> 1.2.1'
   gem 'rvm', '1.2.6'
   gem 'hirb', '0.3.5'
   gem 'wirble', '0.1.3'
-  gem "rspec-rails", "1.2.0"
-  #gem "rspec-expectations "
+  gem "rspec-rails", "~> 1.3"
   gem 'spork', '~> 0.8'
-  gem 'guard-rspec'
+  gem 'guard', '~> 0.8'
+  gem 'guard-rspec', '~> 0.5'
   gem 'rb-fsevent'
 
 end
 
 group :test do
-  gem 'capybara', :git => 'https://github.com/jnicklas/capybara.git', :tag => '1.1.0.rc1'
-  #gem "shoulda-matchers"
   gem 'factory_girl'
-  #gem 'webrat'
 end
