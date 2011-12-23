@@ -18,7 +18,7 @@
 
     <div class="space_10"></div>
 
-    <% reviews.each_with_index do |review, index| %>
+    <% reviews.select(&:user).each_with_index do |review, index| %>
       <%= link_to image_tag(review.user.display_picture,
                             :width => '40px', :alt => 'n/a'),
                   user_long_url(review.user),
