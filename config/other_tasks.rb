@@ -18,6 +18,9 @@ unless Capistrano::Configuration.respond_to?(:instance)
   abort "This extension requires Capistrano 2"
 end
 
+_RVM_ENV = 'source /usr/local/rvm/environments/ruby-1.8.7-p352@welltreatus'
+_MONGREL_CMD_PREFIX = lambda {|s| "cd #{s.current_path} && #{_RVM_ENV} && '/usr/local/rvm/gems/ruby-1.8.7-p352@welltreatus/bin/mongrel_rails'" }
+
 Capistrano::Configuration.instance.load do
 
   namespace :shared_directories do
@@ -48,24 +51,58 @@ Capistrano::Configuration.instance.load do
   namespace :configuration do
     desc 'Create database configuration'
     task :mongrel do
-      run "cd #{current_path} && /usr/local/rvm/gems/ruby-1.8.7-p352@rails2312/bin/mongrel_rails cluster::configure -c #{current_path} -e production -p 8000 -N 2"
+      run "#{_MONGREL_CMD_PREFIX.call(self)} cluster::configure -c #{current_path} -e production -p 8000 -N 2"
     end
 
     desc 'Configure ultrasphinx'
     task :ultrasphinx do
-      run "cd #{current_path} && rake ultrasphinx:configure RAILS_ENV=production"
+      run "cd #{current_path} && #{_RVM_ENV} && rake ultrasphinx:configure RAILS_ENV=production"
     end
   end
 
   namespace :service do
     desc 'Mongrel cluster restart'
     task :mongrel_restart do
-      run "/usr/local/rvm/gems/ruby-1.8.7-p352@rails2312/bin/mongrel_rails cluster::restart -C #{release_path}/config/mongrel_cluster.yml"
+      run "#{_MONGREL_CMD_PREFIX.call(self)} cluster::restart -C #{current_path}/config/mongrel_cluster.yml"
+    end
+
+    desc 'Stop mongrel process'
+    task :mongrel_stop do
+      run "#{_MONGREL_CMD_PREFIX.call(self)} cluster::stop -C #{current_path}/config/mongrel_cluster.yml"
+    end
+
+    desc 'Restart sphinx server'
+    task :ultrasphinx_restart do
+      run "cd #{current_path} && #{_RVM_ENV} && rake ultrasphinx:daemon:restart RAILS_ENV=production"
+    end
+
+    desc 'Stop sphinx server'
+    task :ultrasphinx_stop do
+      run "cd #{current_path} && #{_RVM_ENV} && rake ultrasphinx:daemon:stop RAILS_ENV=production"
+    end
+
+    desc 'Index all'
+    task :ultrasphinx_index do
+      run "cd #{current_path} && #{_RVM_ENV} && rake ultrasphinx:index RAILS_ENV=production"
+    end
+
+    desc 'Turn on maintenance page'
+    task :maint_on do
+      run "/home/hasan/node_modules/.bin//maintenance-page -P 8000 -m #{release_path}/public/down-site/"
     end
   end
 
+  namespace :bundle do
+    desc 'Install bundle'
+    task :install do
+      run "cd #{current_path} && bundle install"
+    end
+  end
+
+  before 'deploy:setup', 'service:mongrel_stop', 'service:ultrasphinx_stop'
   after "deploy:setup", "shared_directories:setup"
-  after "deploy:update", "shared_directories:symlink", "configuration:ultrasphinx", "configuration:mongrel", "service:mongrel_restart"
+  after "deploy:update", "shared_directories:symlink", "configuration:ultrasphinx", "configuration:mongrel"
+  after 'deploy:update', "service:mongrel_restart", 'service:ultrasphinx_restart'
   #after "deploy:web:disable", "shared_directories:web_disable"
   #after "deploy:web:enable", "shared_directories:web_enable"
 
