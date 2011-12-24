@@ -27,6 +27,8 @@ gem 'yui-compressor', '0.9.6', :require => 'yui/compressor'
 gem 'jammit', '0.6.3'
 gem 'rdoc', '3.9.4'
 gem 'rmagick', '2.13.1'
+gem 'mongrel', '1.1.5'
+gem 'mongrel_cluster', '1.0.5'
 
 group :development, :test, :staging, :ci do
   gem 'propel', '0.4.2'

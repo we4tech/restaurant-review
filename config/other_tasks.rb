@@ -48,7 +48,7 @@ Capistrano::Configuration.instance.load do
   namespace :configuration do
     desc 'Create database configuration'
     task :mongrel do
-      run "cd #{current_path} && /usr/local/bin/mongrel_rails cluster::configure -c #{current_path} -e production -p 8000 -N 2"
+      run "cd #{current_path} && /usr/local/rvm/gems/ruby-1.8.7-p352@rails2312/bin/mongrel_rails cluster::configure -c #{current_path} -e production -p 8000 -N 2"
     end
 
     desc 'Configure ultrasphinx'
@@ -60,12 +60,12 @@ Capistrano::Configuration.instance.load do
   namespace :service do
     desc 'Mongrel cluster restart'
     task :mongrel_restart do
-      run "/usr/local/bin/mongrel_rails cluster::restart -C #{release_path}/config/mongrel_cluster.yml"
+      run "/usr/local/rvm/gems/ruby-1.8.7-p352@rails2312/bin/mongrel_rails cluster::restart -C #{release_path}/config/mongrel_cluster.yml"
     end
   end
 
   after "deploy:setup", "shared_directories:setup"
-  after "deploy:update", "shared_directories:symlink", "configuration:ultrasphinx" #"configuration:mongrel", "service:mongrel_restart",
+  after "deploy:update", "shared_directories:symlink", "configuration:ultrasphinx", "configuration:mongrel", "service:mongrel_restart"
   #after "deploy:web:disable", "shared_directories:web_disable"
   #after "deploy:web:enable", "shared_directories:web_enable"
 
