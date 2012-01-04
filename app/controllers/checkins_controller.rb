@@ -11,21 +11,22 @@ class CheckinsController < ApplicationController
 
     saved = false
     o = nil
+    checkin = nil
 
     case params[:topic_name]
       when 'restaurant'
         o = Restaurant.find(params[:id])
-        saved = create_check_in({:restaurant_id => o.id})
+        saved, checkin = create_check_in({:restaurant_id => o.id})
 
       when 'topic-event'
         o = TopicEvent.find(params[:id])
-        saved = create_check_in({:topic_event_id => o.id})
+        saved, checkin = create_check_in({:topic_event_id => o.id})
     end
 
     if saved
       flash[:notice] = "Great! you have just checked in - #{o.name}"
       if current_user.share_on_facebook?
-        redirect_to facebook_publish_url('checkedin', o.id, :next_to => event_or_restaurant_url(o))
+        redirect_to facebook_publish_url('checkedin', o.id, :checkin_id => checkin.id, :next_to => event_or_restaurant_url(o))
         return
       end
     else
@@ -82,6 +83,6 @@ class CheckinsController < ApplicationController
           }.merge(attrbutes)
       )
 
-      checkin && checkin.id > 0
+      [checkin && checkin.id > 0, checkin]
     end
 end

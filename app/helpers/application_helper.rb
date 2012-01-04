@@ -97,6 +97,7 @@ module ApplicationHelper
   def handle_subdomain_content_mapping
     if @topic.user_subdomain?
       domain_name = (request.subdomains || []).join('')
+
       if !domain_name.blank? && !domain_name.match(/ajax|asset|www/) && (request.path || '').length < 2
         @user = User.by_domain_name(domain_name)
         if @user

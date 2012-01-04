@@ -12,7 +12,7 @@ config.whiny_nils = true
 config.action_controller.consider_all_requests_local = true
 config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = false
-config.action_controller.asset_host = "http://ajax%d.hadok.com:3000"
+config.action_controller.asset_host = "http://ajax%d.khadok.dev"
 
 config.action_controller.cache_store = :file_store, RAILS_ROOT + "/tmp/cache/"
 

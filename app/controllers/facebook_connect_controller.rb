@@ -18,15 +18,15 @@ class FacebookConnectController < ApplicationController
 
         case story_type
           when 'new_restaurant'
-            restaurant = Restaurant.find(params[:id].to_i)
-            status = publish_story_of_restaurant(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
+            restaurant_or_event = Restaurant.find(params[:id].to_i)
+            status = publish_story_of_restaurant(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant_or_event)
           when 'updated_restaurant'
-            restaurant = Restaurant.find(params[:id].to_i)
-            status = publish_story_of_restaurant(RESTAURANT_UPDATED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
+            restaurant_or_event = Restaurant.find(params[:id].to_i)
+            status = publish_story_of_restaurant(RESTAURANT_UPDATED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant_or_event)
           when 'new_image'
             image = Image.find(params[:id].to_i)
-            restaurant = Restaurant.find(params[:restaurant_id].to_i)
-            status = publish_story_on_image_added(IMAGE_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant, image)
+            restaurant_or_event = Restaurant.find(params[:restaurant_id].to_i)
+            status = publish_story_on_image_added(IMAGE_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant_or_event, image)
           when 'new_review'
             review = Review.find(params[:id].to_i)
             status = publish_story_of_review(REVIEW_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, review)
@@ -40,8 +40,9 @@ class FacebookConnectController < ApplicationController
             photo_comment = PhotoComment.find(params[:id].to_i)
             status = publish_story_of_photo_comment(facebook_session, photo_comment)
           when 'checkedin'
-            restaurant = Restaurant.find(params[:id].to_i)
-            status = publish_story_of_checkin(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, facebook_session, restaurant)
+            restaurant_or_event = Restaurant.find(params[:id]) || TopicEvent.find(params[:id])
+            checkin = Checkin.find(params[:checkin_id])
+            status = publish_checkin(facebook_session, restaurant_or_event, checkin)
         end
 
         if status
@@ -63,36 +64,72 @@ class FacebookConnectController < ApplicationController
     end
   end
 
-  def checkin
-    if current_user.facebook_sid.to_i > 0 && current_user.facebook_uid.to_i > 0
-      begin
-        model_name = params[:model_name]
-        model_id = params[:id]
-        session = build_facebook_session
+  def publish_checkin(session, event_or_restaurant, checkin)
+    api = FacebookGraphApi.new(session.session_key, session.user.id)
+    link = event_or_restaurant_url(event_or_restaurant)
 
-        api = FacebookGraphApi.new(session.session_key, session.user.id)
-
-        case model_name
-          when 'restaurant'
-            restaurant = Restaurant.find(model_id)
-            api.check_in('me', {
-                :message => 'Just checked in',
-                :place => 19292868552,
-                :coordinates => {:latitude => restaurant.lat, :longitude => restaurant.lng}
-            })
-
-          when 'event'
-            event = Restaurant.find(model_id)
-        end
-      rescue => e
-        handle_fb_connect_error(e)
-      end
-    else
-      flash[:notice] = 'No active facebook session found'
-    end
+    publish_through_fb_checkin(api, session, event_or_restaurant, checkin, link) ||
+        publish_story_of_checkin(RESTAURANT_ADDED_TEMPLATE_BUNDLE_ID, session, event_or_restaurant, link)
   end
 
   private
+
+  def publish_through_fb_checkin(api, session, restaurant, checkin, link)
+    begin
+      # Find nearby location
+      nearby_places = api.find_nearby_places(
+          :center => [restaurant.lat, restaurant.lng].join(','),
+          :distance => 1000,
+          :limit => 1)
+      nearby_place = nearby_places.present? ? nearby_places.first : nil
+
+      # Publish through facebook
+      if nearby_place
+        case restaurant
+          when Restaurant
+            return create_fb_checkin(api, session, restaurant, checkin, nearby_place, link)
+          when TopicEvent
+            return create_fb_checkin(api, session, restaurant, checkin, nearby_place, link)
+          else
+            flash[:notice] = 'Not allowed to check in this type'
+        end
+      end
+    rescue => e
+      raise e if 'development' == RAILS_ENV
+    end
+
+    false
+  end
+
+  def create_fb_checkin(api, session, restaurant, checkin, nearby_place, link)
+    begin
+      checkin_id = api.check_in(api.uid, {
+          :message => "Just checked in \"#{restaurant.name}\" nearby",
+          :place => nearby_place['id'],
+          :coordinates => {:latitude => restaurant.lat, :longitude => restaurant.lng}
+      })
+
+      # If check in is successful on server
+      if checkin_id
+        # Update fb reference on original check in object
+        checkin.update_attributes(
+            :fb_checkin_id => checkin_id, :fb_checkin => true)
+
+        # Publish khadok.com's url using comment
+        api.create_comment(session.user.id, {
+            :checkin_id => checkin_id,
+            :message => "www.khadok.com link - #{link}"
+        })
+
+        return true
+      end
+    rescue => e
+      raise e if 'development' == RAILS_ENV
+      return false
+    end
+
+    false
+  end
 
   def handle_fb_connect_error(e)
     if e.is_a?(Facebooker::Session::PermissionError)
@@ -148,14 +185,7 @@ class FacebookConnectController < ApplicationController
                 'href' => link}});
   end
 
-  def publish_story_of_checkin(p_bundle_id, p_facebook_session, restaurant, shared = false)
-    link = restaurant_long_route_url(
-        :topic_name => restaurant.topic.subdomain,
-        :name => restaurant.name.parameterize.to_s,
-        :id => restaurant.id,
-        :format => :html
-    )
-
+  def publish_story_of_checkin(p_bundle_id, p_facebook_session, restaurant, link, shared = false)
     attached_images = []
     images = restaurant.images
     images = restaurant.other_images if images.empty?
@@ -182,7 +212,7 @@ class FacebookConnectController < ApplicationController
                 :media => attached_images},
             :action_links => {
                 'text' => 'Add your review!',
-                'href' => link}});
+                'href' => link}})
   end
 
   def restaurant_review_content(review, shared = false)
@@ -318,7 +348,7 @@ class FacebookConnectController < ApplicationController
       end
     end
 
-    return session
+    session
   end
 
 end

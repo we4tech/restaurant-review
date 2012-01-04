@@ -3,7 +3,7 @@ SubdomainFu.tld_sizes = {
 }
 
 SERVER_DOMAIN = {
-    :development => 'servicedev1.net',
+    :development => 'khadok.dev',
     :production => 'welltreat.us',
     :staging => 'welltreat.us',
     :test => 'testdomain.tld'

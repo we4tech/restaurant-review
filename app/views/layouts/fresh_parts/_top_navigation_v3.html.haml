@@ -1,0 +1,103 @@
+:ruby
+  login_signup_sub_navigation = capture_haml do
+    content_tag('li') do
+      content_tag('div', 'Login with Facebook',
+                  :class => 'fb-login-button',
+                  'data-scope' => FB_CONNECT_PERM)
+    end
+  end
+
+  login_signup_sub_navigation << content_tag('li',
+    link_to('Login with us', login_url, :class => 'login_button'))
+
+  login_signup_sub_navigation << content_tag('li',
+    link_to('Sign up', signup_url, :class => 'register_button'))
+
+#site_top
+  .grid_2.site_quote{:style => 'display: none'}
+    = tt('layout.passionate_food_lovers_community')
+
+  #site_top_navigation
+    .navButton.navSelectionField= render_topics_selection_box
+
+    .navButton= link_to 'Home', root_url
+
+    - if not logged_in?
+      .navButton= link_to 'Photos', photos_url
+      .navButton= link_to 'Events', events_url
+      .navButton= render_pull_down_menu('Login/Sign up') { login_signup_sub_navigation }
+
+    - else
+      .navButton
+        - if !@record_already_added
+          = link_to tt('layout.links.add'), new_restaurant_url,
+                    :style => "font-weight: bold; color:yellow;"
+        - else
+          = link_to tt('layout.links.update_record'), update_your_record_url
+
+      .navButton= render_user_activities_pull_down_menu
+      .navButton= link_to 'Photos', photos_url
+      .navButton= link_to 'Events', events_url
+      .navButton= render_logged_in_user_links
+
+    .navButton
+      %select{:onchange => "window.location='#{current_url_template}'.replace(/:V:/, this.value)"}
+        - if I18n.locale.to_s.match(/en$/i)
+          %option{:value => "#{@topic.default? ? 'en' : "#{@topic.name}_en"}", :selected => 'selected'} English
+        - else
+          %option{:value => "#{@topic.default? ? 'en' : "#{@topic.name}_en"}"} English
+
+        - if I18n.locale.to_s.match(/bn$/i)
+          %option{:value => "#{@topic.default? ? 'bn' : "#{@topic.name}_bn"}", :selected => 'selected'} বাংলা
+        - else
+          %option{:value => "#{@topic.default? ? 'bn' : "#{@topic.name}_bn"}"} বাংলা
+
+- if !logged_in?
+  - @user = @user || User.new
+
+  #login_form{:style => 'display: none'}= render :partial => 'sessions/new'
+  #registration_form{:style => 'display: none'}= render :partial => 'users/new'
+
+:javascript
+  App.Tasks.executeTasks();
+
+- if !logged_in?
+  :javascript
+    $('.login_button').click(function() {
+      $('#login_form').dialog({
+        modal: true, title: "<%= t('title.login')%>", width: 550, height: 410});
+      return false;
+    });
+
+    $('.register_button').click(function() {
+      $.getScript("<%= ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>");
+      $('#registration_form').dialog({
+        modal: true, title: "<%= t('layout.links.register') %>",
+        width: 550
+      });
+      return false;
+    });
+    $('#login_form, #registration_form').ajaxify({urlRef: false});
+
+:javascript
+  $('form input').each(function() {
+    var $field = $(this);
+    if ($field.attr('name') == 'authenticity_token') {
+      $field.val("<%= form_authenticity_token %>");
+    }
+  });
+
+  var cachedActivities = null;
+
+  $('#activities_link').mouseenter(function() {
+    if (cachedActivities) {
+      $('#activities_submenu').html(cachedActivities);
+    } else {
+      $.get("<%= updates_path(:format => :ajax) %>", function(data) {
+        cachedActivities = data;
+        $('#activities_submenu').html(cachedActivities);
+      });
+    }
+    return false;
+  });
+

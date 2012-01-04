@@ -34,6 +34,9 @@
 
 <% content_for :bottom do %>
   <script type="text/javascript">
-    window.GeoService.promptNearbySearch('<%= search_url(:format => 'json') %>');
+    $.executeWhenAvailable('window.GeoService', function() {
+      window.GeoService.promptNearbySearch('<%= search_url(:format => 'json') %>');
+    });
   </script>
 <% end %>
+

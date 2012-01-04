@@ -1,0 +1,20 @@
+- if @story_type.present?
+  - if @story_type == 'checkedin'
+    .restaurantContainer
+      .grid_12
+        .details.rightCornerOff
+          .space
+          .bestForBox.grid_10.loadingIndicator
+            = image_tag 'loader.gif'
+            %br
+            %b{:style => 'color:#627AAD'} Facebook
+            %b CHECK-IN
+            in progress...
+          .clear
+          .space
+
+          :javascript
+            FB.api('/me/checkins', function(response) {
+              alert('Your name is ' + response.name);
+            });
+

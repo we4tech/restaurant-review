@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
   # Strip all symbols, ie - _, -, @, . etc..
   # Only characters are allowed.
   def convert_to_subdomain
-    self.login.gsub(/\-/, '')
+    self.login.gsub(/[-.@]/, '')
   end
 
   #

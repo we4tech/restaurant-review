@@ -3,10 +3,6 @@ class ImagesController < ApplicationController
   before_filter :login_required, :except => [:show, :mobile_upload]
   skip_before_filter :verify_authenticity_token, :only => [:mobile_upload]
 
-  caches_action :show, :cache_path => Proc.new { |c|
-    c.cache_path(c, [:id])
-  }, :if => Proc.new { |c| !c.send(:mobile?) }
-
   def create
     page_context :list_page
     @multi_images = prepare_image_object

@@ -19,7 +19,7 @@
     <li><%= link_to tt('layout.links.login'), login_path(:dialog => true),
                     :'data-rel' => 'dialog', :'data-transition' => 'slideup' %></li>
     <li>
-      <fb:login-button perms="<%= FB_CONNECT_PERM %>">
+      <fb:login-button scope="<%= FB_CONNECT_PERM %>">
         <%= t('layout.links.fb_login') %>
       </fb:login-button>
     </li>
@@ -42,7 +42,7 @@
       </li>
     <% else %>
       <li>
-        <fb:login-button perms="<%= FB_CONNECT_PERM %>"
+        <fb:login-button scope="<%= FB_CONNECT_PERM %>"
                          onlogin='window.location.reload()'>
           <%= t('layout.links.auto_share_on_facebook') %>
         </fb:login-button>

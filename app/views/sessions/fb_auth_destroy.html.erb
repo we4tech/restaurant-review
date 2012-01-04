@@ -1,16 +1,32 @@
-<script type="text/javascript">
-  (function() {
-    setTimeout(function() {
-      window.location = '<%= root_url %>';
-    }, 20000);
+<% content_for :before_fb_init do %>
+  <script type="text/javascript">
+    window.fbDontInvokeCallback = true;
+  </script>
+<% end %>
 
-    FB.logout(function() {
-      $.get('<%= facebook_connect_update_url %>', {'sid': ''}, function() {
+<% content_for :after_fb_init do %>
+  <script type="text/javascript">
+    (function() {
+      setTimeout(function() {
         window.location = '<%= root_url %>';
+      }, 20000);
+
+      $.executeWhenAvailable('FB', function() {
+        FB.Event.subscribe('auth.statusChange', function(r) {
+          if (r.status == 'connected') {
+            FB.logout(function(resp) {
+              $.get('<%= facebook_connect_update_url %>', {'sid': ''}, function() {
+                window.location = '<%= root_url %>';
+              });
+            });
+          } else {
+            window.location = '<%= root_url %>';
+          }
+        });
       });
-    });
-  })();
-</script>
+    })();
+  </script>
+<% end %>
 
 <div class="centerContent grid_8" id="site_center_list">
   <div class='content'>

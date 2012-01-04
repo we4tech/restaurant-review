@@ -1,10 +1,9 @@
 module FacebookConnectHelper
 
-  FACEBOOK_CONNECT_COOKIE_PREFIX = "fbs_"
-  FACEBOOK_CONNECT_SESSION_ID = :fb_connect_user2
+  FACEBOOK_CONNECT_COOKIE_PREFIX = "fbsr_"
+  FACEBOOK_CONNECT_SESSION_ID    = :fb_connect_user2
 
   def check_facebook_connect_session
-
     if fb_connect_session.nil? # not exists
 
       # Try to load facebook connect cookies
@@ -30,7 +29,7 @@ module FacebookConnectHelper
 
         self.current_user = User.find_by_facebook_uid(fb_uid)
         create_fb_connect_session(fb_session)
-        flash[:notice] = 'You are logged in through your facebook'
+        flash[:notice] = 'You are connected through facebook'
       end
     end
   end
@@ -67,31 +66,32 @@ module FacebookConnectHelper
     end
 
     total_reviews_count = restaurant.reviews.count
-    loved_count = restaurant.reviews.loved.count
+    loved_count         = restaurant.reviews.loved.count
     "#{restaurant.checkins_count.to_i} check ins, #{total_reviews_count} review#{total_reviews_count > 1 ? 's' : ''}, #{loved_count} love#{total_reviews_count > 1 ? 's' : ''}, #{restaurant.rating_out_of(5).round} out of 5 ratings!"
   end
 
-  private
+  def fb_connect_key
+    @topic && @topic.fb_connect_key.present? ?
+        @topic.fb_connect_key :
+        Facebooker.api_key
+  end
 
+  private
     def fb_connect_session
       session[FACEBOOK_CONNECT_SESSION_ID]
     end
 
     def build_fb_session
-      fb_cookie = fb_cookies
-      parsed = {}
+      parsed = { }
 
-      if fb_cookie && !fb_cookie.blank?
-        parsed = parse_fb_cookie(fb_cookie)
-
-      elsif params[:fskey] && params[:fuid]
+      if params[:fskey] && params[:fuid]
         parsed = {
-            'session_key' => params[:fskey],
-            'uid' => params[:fuid],
-            'expires' => params[:fexpires],
-            'secret' => params[:fsecret],
+            'session_key'  => params[:fskey],
+            'uid'          => params[:fuid],
+            'expires'      => params[:fexpires],
+            'secret'       => params[:fsecret],
             'access_token' => params[:fat]
-            }
+        }
       end
 
       if parsed && !parsed.empty?
@@ -113,7 +113,7 @@ module FacebookConnectHelper
     end
 
     def parse_fb_cookie(fb_cookie)
-      map = {}
+      map       = { }
       fb_cookie = fb_cookie.gsub(/"/, '')
       fb_cookie.split('&').collect do |part|
         parts = part.split('=');

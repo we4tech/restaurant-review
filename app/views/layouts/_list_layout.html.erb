@@ -25,11 +25,11 @@
 
 <% if @cached %>
   <% if @restaurants.present? %>
-    <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_tools', :restaurant_ids => @restaurants.collect(&:id)), :defer => 'defer' %>
+    <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'restaurant_tools', :restaurant_ids => @restaurants.map(&:id)), :defer => 'defer' %>
   <% end %>
 
   <% if @topic_events.present? %>
-    <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'event_tools', :event_ids => @topic_events.collect(&:id)), :defer => 'defer' %>
+    <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'event_tools', :event_ids => @topic_events.values.flatten.map(&:id)), :defer => 'defer' %>
   <% end %>
 
   <%= javascript_include_tag ajaxified_url_wrap(:fragment_for_url, :name => 'page_side_modules'), :defer => 'defer' %>
