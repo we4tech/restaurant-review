@@ -1,6 +1,6 @@
 module UrlOverrideHelper
 
-  include PremiumHelper 
+  include PremiumHelper
 
   def user_long_url(p_options)
     if p_options.is_a?(User)
@@ -10,7 +10,7 @@ module UrlOverrideHelper
         root_url :subdomain => user.domain_name
       else
         user_long_route_url(:login => url_escape(user.login && !user.login.blank? ? user.login : 'fb_user'),
-                            :id => user.id)
+                            :id    => user.id)
       end
     else
       p_options[:login] = p_options[:login] && !p_options[:login].blank? ? p_options[:login] : 'fb_user'
@@ -21,9 +21,9 @@ module UrlOverrideHelper
   alias :user_long_path :user_long_url
 
 
-  def user_link(user, options = {})
+  def user_link(user, options = { })
     same_user_check = options[:same_user_check]
-    length = options[:length] || -1
+    length          = options[:length] || -1
 
     user_name = user.login.humanize
 
@@ -40,21 +40,21 @@ module UrlOverrideHelper
     link_to user_name, user_long_url(user)
   end
 
-  def user_display_picture(user, options = {})
+  def user_display_picture(user, options = { })
     link_to image_tag(user.display_picture, :width => '40px', :height => '40px'), user_long_url(user)
   end
 
-  def restaurant_long_url(p_options, options2 = {})
+  def restaurant_long_url(p_options, options2 = { })
     topic = options2.delete(:topic)
     topic = @topic if topic.nil?
     topic = (p_options.is_a?(Restaurant) ? p_options.topic : nil) if topic.nil?
     topic = Topic.default if topic.nil?
 
-    options = p_options.is_a?(Restaurant) ? {} : p_options
+    options              = p_options.is_a?(Restaurant) ? { } : p_options
     options[:topic_name] = topic.name.pluralize
 
     restaurant_id = p_options.is_a?(Restaurant) ? p_options.id : p_options[:id]
-    restaurant = p_options.is_a?(Restaurant) ? p_options : Restaurant.find(restaurant_id)
+    restaurant    = p_options.is_a?(Restaurant) ? p_options : Restaurant.find(restaurant_id)
 
     if p_options.is_a?(Restaurant)
       options[:id] = restaurant.id
@@ -74,13 +74,13 @@ module UrlOverrideHelper
     end
   end
 
-  def restaurant_link(restaurant, options = {})
+  def restaurant_link(restaurant, options = { })
     length = options.delete(:length)
     link_to length ? truncate(restaurant.name, length) : restaurant.name, restaurant_long_url(restaurant)
   end
 
   def discover_url(object)
-    
+
   end
 
   def site_products_url(restaurant)
@@ -139,7 +139,7 @@ module UrlOverrideHelper
   #   - fragment_key - this is used for handling the specific fragmented response
   #   - options -      {:dynamic_ajax_host => true | [false]}
   #
-  def _fragment_for_path(fragment_key, options = {})
+  def _fragment_for_path(fragment_key, options = { })
     host = request.host
 
     if options[:dynamic_ajax_host].nil? || options[:dynamic_ajax_host]
@@ -168,12 +168,12 @@ module UrlOverrideHelper
   #   - max_subdomains - (default 3) override number of sub domain factor
   #     through the options map
   #
-  def ajaxified_url_wrap(route, route_options = {})
-    options = DEFAULT_OPTIONS.merge(route_options)
-    host = determine_dynamic_ajax_host(
+  def ajaxified_url_wrap(route, route_options = { })
+    options          = DEFAULT_OPTIONS.merge(route_options)
+    host             = determine_dynamic_ajax_host(
         request.host, options.delete(:max_subdomains),
         options.delete(:subdomain_name))
-    required_options = {:host => host, :__topic_id => @topic.id}
+    required_options = { :host => host, :__topic_id => @topic.id }
 
     # Force user defined host if specified through route_options
     required_options[:host] = route_options[:host] if route_options[:host]
@@ -182,14 +182,14 @@ module UrlOverrideHelper
 
   def tag_search_url(tag)
     search_url('name|short_array|long_array|description' => tag.name,
-               '_models' => 'Restaurant')
+               '_models'                                 => 'Restaurant')
   end
 
-  def event_long_url(event, options = {})
-    event_long_route_url({:name => URI.escape(url_escape(event.name)), :id => event.id}.merge(options))
+  def event_long_url(event, options = { })
+    event_long_route_url({ :name => URI.escape(url_escape(event.name)), :id => event.id }.merge(options))
   end
 
-  def event_link(event, options = {})
+  def event_link(event, options = { })
     length = options.delete(:length)
     link_to (length ? truncate(event.name, :length => length) : event.name), event_long_url(event, options)
   end
@@ -205,7 +205,7 @@ module UrlOverrideHelper
   #
   # Return url for either event home page or restaurant home page based
   # on specified model type
-  def event_or_restaurant_url(model_instance, options = {})
+  def event_or_restaurant_url(model_instance, options = { })
     case model_instance
       when Restaurant
         restaurant_long_url(model_instance, options)
@@ -219,7 +219,7 @@ module UrlOverrideHelper
   #
   # Return a HTML anchor tag either for the event or restaurant based
   # on the object type
-  def event_or_restaurant_link(model_instance, options = {})
+  def event_or_restaurant_link(model_instance, options = { })
     name = model_instance.name
     if options[:length]
       name = truncate(name, :length => options[:length])
@@ -240,15 +240,37 @@ module UrlOverrideHelper
     end
   end
 
-  private
-    @@current_ajaxified_url_index = 0
+  #
+  # Build current url replaceable placeholder ie. l=:V:
+  # So using javascript we can replace placeholder to place dynamic data.
+  def current_url_template
+    current_url = request.headers['referer'] || request.host
 
-    def determine_dynamic_ajax_host(host, max_hosts, subdomain_name = 'ajax')
-      ajax_host = "#{subdomain_name}#{@@current_ajaxified_url_index}"
-      @@current_ajaxified_url_index += 1
-      @@current_ajaxified_url_index = 0 if @@current_ajaxified_url_index > max_hosts
-      host_parts = host.split('.')
-      "#{ajax_host}.#{host_parts[host_parts.length - 2, host_parts.length].join('.')}#{request.port != 80 ? ":#{request.port}" : ''}"
+    # Replace ajax subdomain
+    current_url.gsub!(/(ajax\d+)/, @topic.subdomain)
+
+    if current_url.match(/l=(\w+)/)
+      current_url = current_url.gsub(/l=(\w+)/, 'l=:V:')
+    else
+      if current_url.match(/\?/)
+        current_url = current_url << '&l=:V:'
+      else
+        current_url = current_url << '?l=:V:'
+      end
     end
+
+    current_url
+  end
+
+  private
+  @@current_ajaxified_url_index = 0
+
+  def determine_dynamic_ajax_host(host, max_hosts, subdomain_name = 'ajax')
+    ajax_host                     = "#{subdomain_name}#{@@current_ajaxified_url_index}"
+    @@current_ajaxified_url_index += 1
+    @@current_ajaxified_url_index = 0 if @@current_ajaxified_url_index > max_hosts
+    host_parts = host.split('.')
+    "#{ajax_host}.#{host_parts[host_parts.length - 2, host_parts.length].join('.')}#{request.port != 80 ? ":#{request.port}" : ''}"
+  end
 
 end

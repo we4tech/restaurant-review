@@ -2,9 +2,9 @@
 <div class="box">
   <h1>
     Login with us or
-    <fb:login-button perms="<%= FB_CONNECT_PERM %>" size='small'
-                     onlogin='window.location.reload()'>
-    </fb:login-button>
+    <div style='display:inline' class="fb-login-button" data-scope="<%= FB_CONNECT_PERM %>">
+      Login with Facebook
+    </div>
   </h1>
 
   <div class='form'>

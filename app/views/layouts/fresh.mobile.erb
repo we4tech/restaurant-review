@@ -68,29 +68,23 @@
   </div>
 </div>
 <% if params[:no_script].nil? %>
+
   <%= javascript_include_tag 'mobile/common.js', 'mobile/geo_service.js' %>
-  <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  <%= yield :before_fb_init %>
+  <%= render :partial => 'layouts/fresh_parts/fb_session_integration.html.haml' %>
+  <%= yield :after_fb_init %>
 
-  </script>
-  <script type="text/javascript">
-    try {
-      var pageTracker = _gat._getTracker("UA-12009085-1");
-      pageTracker._setDomainName(".welltreat.us");
-      pageTracker._trackPageview();
-    } catch(err) {
-    }
-  </script>
-  <script type="text/javascript" charset="utf-8">
-    var is_ssl = ("https:" == document.location.protocol);
-    var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
-    document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=true"></script>
+  <%= yield :after_map_init %>
 
+  <script type="text/javascript">
+    App.Tasks.executeTasks();
   </script>
+
+  <%= render :partial => 'layouts/fresh_parts/google_analytics.html.haml' %>
+  <%= render :partial => 'layouts/fresh_parts/get_satisfaction.html.haml'%>
 <% end %>
 
-<%= render :partial => 'layouts/fresh_parts/fb_session_integration.html.haml' %>
 <%= yield :bottom %>
 </body>
 </html>
