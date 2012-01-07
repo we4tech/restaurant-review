@@ -1,11 +1,8 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-# Be sure to include AuthenticatedTestHelper in spec/spec_helper.rb instead
-# Then, you can remove it from this and the units test.
-include AuthenticatedTestHelper
-
 describe SessionsController do
-  let!(:topic) { Factory(:topic, :default => true) }
+  let!(:topic) { Factory.create(:topic, :default => true) }
+  before { @request.host = "#{topic.subdomain}.test.host" }
 
   describe '#new' do
     before { get :new }
@@ -15,10 +12,12 @@ describe SessionsController do
     end
 
     it 'should set :return_to to session' do
-      raise session.inspect
+      session[:return_to].should == "http://www.test.host/?l=en"
     end
 
-    it 'should render new view'
+    it 'should render new view' do
+      response.should render_template('sessions/_new')
+    end
   end
 
   describe '#create'

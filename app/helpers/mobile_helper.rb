@@ -8,6 +8,7 @@ module MobileHelper
     if format_type = params[:format].to_s.downcase =~ /#{MOBILE_FORMAT}|#{MOBILE_TOUCH_FORMAT}/
       @mobile = true
       session[:mobile_format] = format_type
+      request.format = :mobile
     elsif NON_MOBILE_FORMATS.include? params[:format].to_s.downcase
       session[:mobile_format] = nil
       @mobile = false
@@ -17,6 +18,8 @@ module MobileHelper
     elsif mobile_device?
       @mobile = true
       session[:mobile_format] = params[:format] = MOBILE_DEFAULT_FORMAT
+    elsif params[:format] && !NON_MOBILE_FORMATS.include?(params[:format].to_s.downcase)
+      request.format = :html
     end
   end
 
