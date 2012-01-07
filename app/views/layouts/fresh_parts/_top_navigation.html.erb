@@ -24,7 +24,7 @@
     <span> <%= link_to t('layout.links.home'), root_url %> | </span>
     <% if not logged_in? %>
       <%= link_to tt('layout.links.login'), login_url %> OR
-      <fb:login-button perms="<%= FB_CONNECT_PERM %>">
+      <fb:login-button scope="<%= FB_CONNECT_PERM %>">
         <%= t('layout.links.fb_login') %>
       </fb:login-button> |
       <%= link_to tt('layout.links.register'), signup_url %> |
@@ -59,7 +59,7 @@
           <% end %>
         </span> |
       <% else %>
-        <fb:login-button perms="<%= FB_CONNECT_PERM %>"
+        <fb:login-button scope="<%= FB_CONNECT_PERM %>"
                          onlogin='window.location.reload()'>
           <%= t('layout.links.auto_share_on_facebook') %>
         </fb:login-button> |
