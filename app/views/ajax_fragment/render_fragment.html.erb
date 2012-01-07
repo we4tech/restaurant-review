@@ -1,4 +1,4 @@
-<% if !@content_text.to_s.match(/You\sare\slogged\sin\sthrough\syour\sfacebook/i) %>
+<% if !@content_text.to_s.match(/You\sare\sconnected\sthrough\sfacebook/i) %>
   <%
      content = @content_file ? escape_javascript(render(:partial => @content_file)) : @content_text
   %>
