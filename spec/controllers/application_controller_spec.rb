@@ -17,7 +17,7 @@ describe ApplicationController do
 
     it 'should redirect to topic url' do
       get '/'
-      response.should redirect_to("http://#{topic.hosts}")
+      response.should redirect_to("http://#{topic.subdomain}.test.host/application//?l=en")
     end
   end
 

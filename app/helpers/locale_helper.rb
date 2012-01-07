@@ -5,7 +5,9 @@ module LocaleHelper
   ].freeze
 
   def detect_locale
-    locale = params[:l]
+    # Remove .js format
+    locale = params[:l].to_s.split('.').first
+
     @locale = valid_locale?(locale)
 
     if @locale.nil?
@@ -22,24 +24,10 @@ module LocaleHelper
 
     I18n.locale = @locale
 
-    # Set fall backs
-#    if @locale
-#      if @locale.to_s.match(/_(en|bn)$/)
-#        case $1
-#          when 'en'
-#            I18n.fallbacks.map(@locale.to_sym => [:en, 'en-US'])
-#          when 'bn'
-#            I18n.fallbacks.map(@locale.to_sym => [:bn, 'en-US'])
-#        end
-#      end
-#    end
   end
 
   def valid_locale?(locale)
     if locale && !locale.blank?
-      # Remove .js format
-      locale = locale.to_s.split('.').first
-
       if SUPPORTED_LOCALES.include?(locale.to_s) || topic_wise_valid?(locale.to_s)
         locale
       else

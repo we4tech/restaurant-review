@@ -9,10 +9,11 @@ class AjaxFragmentController < ApplicationController
                        :event_view_tools, :image_view_tools, :image_tools]
   include RestaurantsHelper
   after_filter :no_cache
+  after_filter :set_content_type_js
 
   def fragment_for
-    fragment_name = (params[:name] || '')
-    if !fragment_name.blank?
+    fragment_name = params[:name].to_s
+    if fragment_name.present?
       fragment_name = fragment_name.downcase.to_sym
       parse_fragment_for(fragment_name)
     else
@@ -43,6 +44,7 @@ class AjaxFragmentController < ApplicationController
     @after_effects = %{
       $(document.body).css('background', "url('#{@background_image}') no-repeat fixed");
     }
+    request.format = :html
     render :action => 'render_fragment', :layout => false
   end
 
@@ -55,6 +57,7 @@ class AjaxFragmentController < ApplicationController
           $('#{@element}').fadeOut();
         }, 5000);
       }
+    request.format = :html
     render :action => 'render_fragment', :layout => false
   end
 
@@ -134,6 +137,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_featured_box
+    request.format = :html
     cache_fragment("featured_box_#{@topic.name}_#{I18n.locale.to_s}") do
       @content_file = 'restaurants/parts/top_rated_slider'
       @effect = 'appear()'
@@ -148,6 +152,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_page_side_modules
+    request.format = :html
     if not logged_in?
       cache_fragment "render_page_side_modules_#{I18n.locale.to_s}" do
         @content_file = 'layouts/fresh_parts/modules'
@@ -164,6 +169,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_leader_board
+    request.format = :html
     cache_fragment("leader_board_#{@topic.name}_#{I18n.locale.to_s}_#{logged_in? ? current_user.id : '_'}") do
       @content_file = 'layouts/fresh_parts/leader_board'
       @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
@@ -187,6 +193,7 @@ class AjaxFragmentController < ApplicationController
   end
 
   def render_news_feed
+    request.format = :html
     cache_fragment("render_news_feed_#{@topic.name}_#{I18n.locale.to_s}_#{logged_in? ? current_user.id : '_'}") do
       @content_file = 'layouts/fresh_parts/news_feed'
       @effect = "slideDown({easing: \"jswing\"}).removeClass('loadingIndicator')"
@@ -202,6 +209,10 @@ class AjaxFragmentController < ApplicationController
     else
       render :text => '// Not enabled'
     end
+  end
+
+  def set_content_type_js
+    response.headers['Content-Type'] = 'text/javascript; charset=UTF-8'
   end
 
 end
