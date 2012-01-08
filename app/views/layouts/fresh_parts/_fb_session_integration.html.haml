@@ -33,69 +33,70 @@
        d.getElementsByTagName('head')[0].appendChild(js);
      }(document));
 
-  - if !logged_in?
-    :javascript
-      window.fbBindAfterInit(function () {
-        FB.Event.subscribe('auth.statusChange', function(response) {
-          if (response.status == 'connected' && response.authResponse) {
-            var session = response.authResponse;
-            var locationParts = location.href.split('#');
-            if (!locationParts[0].match(/.+_logout/i)) {
-              var uriPrefix = locationParts[0];
-              if (uriPrefix.match(/login/i)) {
-                urlPrefix = '#{root_url}';
-              }
+  :javascript
+    var fbLoggedIn = function() {
+      App.Facebook = {
+        UID: null,
+        SID: null,
+        API: null,
+        SESSION: null
+      }
 
-              window.location = uriPrefix +
-                (uriPrefix.match(/\?/) ? '&' : '?') + "fskey=" +
-                  session.accessToken + "&fuid=" +
-                  session.userID + '&fexpires=' +
-                  session.expiresIn + '&fsecret=' +
-                  session.signedRequest + '&fat=' +
-                  session.accessToken;
-            }
+      App.Facebook.Events = {
+        onloggedin: function(session) {
+          if (session) {
+            var uid = App.Facebook.UID = session.userID;
+            $.get('#{facebook_connect_update_url}&t=' + new Date().getTime(), {
+            'uid': uid, 'sid': session.accessToken });
           }
-        });
+        },
+
+        onloggedout: function() {
+          $.get('#{facebook_connect_update_url}', {'sid': ''});
+        }
+      }
+
+      FB.getLoginStatus(function(r) {
+        if (r && r.status == 'connected') {
+          App.Facebook.Events.onloggedin(r.authResponse);
+        } else {
+          App.Facebook.Events.onloggedout();
+        }
       });
 
-  - else
-    :javascript
-      window.fbBindAfterInit(function() {
-        App.Facebook = {
-          UID: null,
-          SID: null,
-          API: null,
-          SESSION: null
+      FB.Event.subscribe('auth.statusChange', function(response) {
+        if (response && response.status == 'connected') {
+          App.Facebook.Events.onloggedin(response.authResponse);
+        } else {
+          App.Facebook.Events.onloggedout();
         }
-
-        App.Facebook.Events = {
-          onloggedin: function(session) {
-            if (session) {
-              var uid = App.Facebook.UID = session.userID;
-              $.get('#{facebook_connect_update_url}&t=' + new Date().getTime(), {
-              'uid': uid, 'sid': session.accessToken });
-            }
-          },
-
-          onloggedout: function() {
-            $.get('#{facebook_connect_update_url}', {'sid': ''});
-          }
-        }
-
-        FB.getLoginStatus(function(r) {
-          if (r && r.status == 'connected') {
-            App.Facebook.Events.onloggedin(r.authResponse);
-          } else {
-            App.Facebook.Events.onloggedout();
-          }
-        });
-
-        FB.Event.subscribe('auth.statusChange', function(response) {
-          if (response && response.status == 'connected') {
-            App.Facebook.Events.onloggedin(response.authResponse);
-          } else {
-            App.Facebook.Events.onloggedout();
-          }
-        });
       });
+    };
+
+    var fbLoggedOut = function () {
+      FB.Event.subscribe('auth.statusChange', function(response) {
+        if (response.status == 'connected' && response.authResponse) {
+          var session = response.authResponse;
+          var locationParts = location.href.split('#');
+          if (!locationParts[0].match(/.+_logout/i)) {
+            var uriPrefix = locationParts[0];
+            if (uriPrefix.match(/login/i)) {
+              urlPrefix = '#{root_url}';
+            }
+
+            window.location = uriPrefix +
+              (uriPrefix.match(/\?/) ? '&' : '?') + "fskey=" +
+                session.accessToken + "&fuid=" +
+                session.userID + '&fexpires=' +
+                session.expiresIn + '&fsecret=' +
+                session.signedRequest + '&fat=' +
+                session.accessToken;
+          }
+        }
+      });
+    };
+
+
+    $('#site_top_navigation .navButton a[href*="records/new"]').
+      whenElementAvailable( fbLoggedIn, fbLoggedOut );
 
