@@ -1,0 +1,13 @@
+*.log
+data
+.DS_Store
+*~
+*stripped.css
+tmp
+*.tmproj
+log/*.log
+.idea
+.project
+Booting
+Ctrl-C
+*.sqlite3
