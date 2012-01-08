@@ -86,6 +86,12 @@ Capistrano::Configuration.instance.load do
       run "cd #{current_path} && #{_RVM_ENV} && rake ultrasphinx:index RAILS_ENV=production"
     end
 
+    desc 'Clean cache'
+    task :clear_cache do
+      run "cd #{current_path} && #{_RVM_ENV} && rake welltreat:clear_all_caches RAILS_ENV=production"
+      run "cd #{current_path} && #{_RVM_ENV} && rm -rf tmp/cache"
+    end
+
     desc 'Turn on maintenance page'
     task :maint_on do
       run "/home/hasan/node_modules/.bin//maintenance-page -P 8000 -m #{release_path}/public/down-site/"
@@ -102,7 +108,7 @@ Capistrano::Configuration.instance.load do
   before 'deploy:setup', 'service:mongrel_stop', 'service:ultrasphinx_stop'
   after "deploy:setup", "shared_directories:setup"
   after "deploy:update", "shared_directories:symlink", "configuration:ultrasphinx", "configuration:mongrel"
-  after 'deploy:update', "service:mongrel_restart", 'service:ultrasphinx_restart'
+  after 'deploy:update', "service:mongrel_restart", 'service:ultrasphinx_restart', "service:clear_cache"
   #after "deploy:web:disable", "shared_directories:web_disable"
   #after "deploy:web:enable", "shared_directories:web_enable"
 
