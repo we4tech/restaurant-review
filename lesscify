@@ -1,1 +1,1 @@
-/Users/hasan/node_modules/less/bin/lessc public/stylesheets/mobile/site.less public/stylesheets/mobile/site.css
+lessc public/stylesheets/mobile/site.less public/stylesheets/mobile/site.css
