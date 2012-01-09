@@ -65,14 +65,14 @@
   :javascript
     $('.login_button').click(function() {
       $('#login_form').dialog({
-        modal: true, title: "<%= t('title.login')%>", width: 550, height: 410});
+        modal: true, title: "#{t('title.login')}", width: 550, height: 410});
       return false;
     });
 
     $('.register_button').click(function() {
-      $.getScript("<%= ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token') %>");
+      $.getScript("#{ajaxified_url_wrap(:fragment_for_url, :name => 'authenticity_token')}");
       $('#registration_form').dialog({
-        modal: true, title: "<%= t('layout.links.register') %>",
+        modal: true, title: "#{t('layout.links.register')}",
         width: 550
       });
       return false;
@@ -83,7 +83,7 @@
   $('form input').each(function() {
     var $field = $(this);
     if ($field.attr('name') == 'authenticity_token') {
-      $field.val("<%= form_authenticity_token %>");
+      $field.val("#{form_authenticity_token}");
     }
   });
 
@@ -93,7 +93,7 @@
     if (cachedActivities) {
       $('#activities_submenu').html(cachedActivities);
     } else {
-      $.get("<%= updates_path(:format => :ajax) %>", function(data) {
+      $.get("#{updates_path(:format => :ajax)}", function(data) {
         cachedActivities = data;
         $('#activities_submenu').html(cachedActivities);
       });
