@@ -349,15 +349,14 @@ input.html5_search_field:hover {
   position: fixed;
   text-align: center;
   width: 100%;
-  -webkit-box-shadow: 1px 1px 10px 2px orange;
-  -moz-box-shadow: 1px 1px 10px 2px orange;
-  box-shadow: 1px 1px 10px 2px orange;
+  -webkit-box-shadow: 1px 1px 10px 2px #000000;
+  -moz-box-shadow: 1px 1px 10px 2px #000000;
+  box-shadow: 1px 1px 10px 2px #000000;
 }
 #body .siteMessage .quote {
   font-weight: bold;
 }
 #body .weeklyHot .content, #body .upcomingEventsBox .content {
-  font-size: 70%;
   color: #888;
 }
 #body div.box {
@@ -1729,7 +1728,7 @@ input.html5_search_field:hover {
   filter: dropshadow(color=#000000, offx=1, offy=1);
 }
 #footer a {
-  color: yellow;
+  color: #ffff00;
   text-decoration: none;
 }
 #footer a:hover {

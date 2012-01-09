@@ -75,6 +75,17 @@
         <%= sanitize @event.description %>
         <div class="clear"></div>
         <div class="space_10"></div>
+
+        <% if @event.description_fields.present? %>
+          <table>
+            <% @event.description_fields.each do |field_map| %>
+              <tr>
+                <td><strong><%= h field_map['label'] %></strong></td>
+                <td><%= auto_link (h(field_map['value'])) %></td>
+              </tr>
+            <% end %>
+          </table>
+        <% end %>
       </div>
 
       <div class="grid_3 restaurantContentMiddle">

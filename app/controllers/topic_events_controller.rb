@@ -5,7 +5,7 @@ class TopicEventsController < ApplicationController
     c.cache_path(c, [:id])
   }, :if => Proc.new { |c| !c.send(:mobile?) }
 
-  # TODO: It doesn't support pagination
+  # FIXME: It doesn't support pagination
   def index
     @topic_events = TopicEvent.exciting_events(@topic, :limit => 50)
     @breadcrumbs = [[t('layout.links.home'), root_url], ['Events']]
