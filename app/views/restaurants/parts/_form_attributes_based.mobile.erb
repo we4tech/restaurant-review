@@ -1,6 +1,5 @@
 <%
    text_area_included = false
-   location_included = false
 %>
 
 <table>
@@ -46,32 +45,7 @@
         <% text_area_included = true %>
       </tr>
     <% elsif text_field && address_field %>
-      <tr>
-        <td colspan='2'>
-          <label><%= tt("fields.#{field_label}") %><%= required ? ' (*)' : '' %></label>
-          <div class='space'></div>
-          <div class='mapContainer'>
-            <div id="google_map_canvas"
-                 title="<%= @restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982" %>"
-                 markerMessage="<h4>Where is your <%= @topic.name.humanize %>?</h4>"
-                 infoWindowMessagePrefix="Your <%= @topic.name.humanize %> @"
-                 mapWidth='98.5%'
-                 <%= @restaurant.lat.to_i > 0 ? '' : "detectCurrentPosition='true'" %>
-                 style="width: 100%; height: 100%">
-              <div class="siteMessage">Loading map...</div></div>
-          </div>
-          <div>
-            <%= f.text_field field_name,
-                             :class => "#{field_type} full_field bottom_radius readonly map_address_field",
-                             :onkeyup => 'App.MapWidget.displayOnKeyPress(this, \'google_map_canvas\')' %>
-            <%= f.error_message_on field_name %>
-            <br/>
-            <%= f.hidden_field :lat %>
-            <%= f.hidden_field :lng %>
-          </div>
-        </td>
-      </tr>
-      <% location_included = true %>
+
 
     <% elsif combobox %>
       <tr>
@@ -119,19 +93,6 @@
   <% end %>
 </table>
 
-
-<% if location_included && params[:no_script].nil? %>
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=true"></script>
-  <script type="text/javascript">
-    $.executeLater(function() {
-      App.MapWidget.createMap($('#google_map_canvas'), function(pPlacemark) {
-        $('#restaurant_address').val(pPlacemark.address());
-        $('#restaurant_lat').val(pPlacemark.lat());
-        $('#restaurant_lng').val(pPlacemark.lng());
-      });
-    });
-  </script>
-<% end %>
 
 <script type="text/javascript">
   $('input, textarea, .nicEdit-main').bind('keypress', function(pEvent) {

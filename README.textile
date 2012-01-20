@@ -1,5 +1,29 @@
 h2. WellTreat.US release change logs.
 
+h4. Release - 0.24 - Mobile optimized.
+
+* Implemented Facebook auto login should be ajaxified
+* Implemented On mobile "login" should slide down menu panel
+* Implemented "Add recipient" option should be available over mobile version
+* implemented Keep map under another according in mobile restaurant edit page
+* implemented Make mobile map body movable
+* implemented Facebook id should be autorenewed
+
+h4. Release - 0.23 - Bug fixed new UI.
+
+* Fixed broken mobile event
+* Fixed event module
+* Fixed upcoming event logic
+* Fixed notification popup link
+* Fixed user profile
+* Integrated facebook checkin module
+* Fixed new facebook API related changes
+* Fixed multi cookies and domain related issue
+* Moved from unicorn to mongrel
+* Removed cache from few more home pages
+* Improved displaying background image
+* Fixed recurring facebook connecting issue
+
 h4. Release - 0.22 - New look and ad.
 
 * 350. FIX sudden tag lost bug (it is due to add new recipient feature)

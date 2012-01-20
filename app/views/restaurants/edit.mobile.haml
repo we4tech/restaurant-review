@@ -8,7 +8,7 @@
 .box
   %h4{:toggleView => 'info'}
     Update information
-    %a{:class => 'expand', :toggleView => 'info'} &raquo;
+    %a.expand{:toggleView => 'info'} &raquo;
 
   #info{:style => 'display: none'}
     - form_for @restaurant do |f|
@@ -17,6 +17,23 @@
                :locals => {:f => f}
       .clear.space
       = f.submit t('button.update'), :class => 'submit'
+
+.box
+  %h4{:toggleView => 'map'}
+    Update on map
+    %a.expand{:toggleView => 'map'} &raquo;
+
+  #map{:style => 'display:none'}
+    = render 'restaurants/parts/map'
+.clear
+
+.box
+  %h4{:toggleView => 'recipients'}
+    Manage extra recipients
+    %a.expand{:toggleView => 'recipients'} &raquo;
+
+  #recipients{:style => 'display:none'}
+    = render 'restaurants/parts/recipients'
 
 - if @allow_image_upload
   = render :partial => 'restaurants/parts/image_manager'

@@ -12,6 +12,12 @@ class SessionsController < ApplicationController
     render_view('sessions/new')
   end
 
+  def fb_create
+    respond_to do |format|
+      format.json { render :nothing => true }
+    end
+  end
+
   def create
     logout_keeping_session!
     user = User.authenticate(params[:login], params[:password])

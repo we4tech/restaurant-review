@@ -83,6 +83,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => 'sessions', :action => 'auth_destroy'
   map.fb_logout '/fb_logout', :controller => 'sessions', :action => 'fb_auth_destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
+  map.fb_login '/fb_login', :controller => 'ajax_fragment', :action => 'fb_auto_login'
   map.login_as '/login_as/:user', :controller => 'sessions', :action => 'login_as'
   map.register '/register', :controller => 'users', :action => 'new'
   map.signup '/signup', :controller => 'users', :action => 'new'

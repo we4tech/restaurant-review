@@ -1,0 +1,51 @@
+:ruby
+  address_field = @form_fields.select {|m| m if m['field'] == 'address'}.first
+  required = address_field.present? && address_field['required'] == '1'
+
+  attrs = {
+    :title => "#{@restaurant.lat.to_i > 0 ? "#{@restaurant.lat},#{@restaurant.lng}" : "23.7272119,90.4094982"}",
+    :markerMessage => "<h4>Where is your #{@topic.name.humanize}?</h4>",
+    :infoWindowMessagePrefix => "Your #{@topic.name.humanize} @",
+    :mapWidth => '98.5%',
+    :style => "width: 100%; height: 100%"
+  }
+
+  if @restaurant.lat.to_i == 0
+    attrs[:detectCurrentPosition] = true
+  end
+
+- if address_field.present?
+  - form_for @restaurant do |f|
+    %label
+      = address_field['label']
+      = required ? ' (*)' : ''
+    .space
+    .mapContainer
+      #google_map_canvas
+        .siteMessage Loading map...
+    %table
+      %tr
+        %td
+          = f.text_field :address,
+                :class => "#{address_field['type']} full_field bottom_radius readonly map_address_field",
+                :onkeyup => 'App.MapWidget.displayOnKeyPress(this, \'google_map_canvas\')'
+      %tr
+        %td= f.error_message_on :address
+      %tr
+        %td= f.submit "Update #{address_field['label']}"
+    %br/
+    = f.hidden_field :lat
+    = f.hidden_field :lng
+  .clear
+
+  %script{:type => "text/javascript",
+          :src => "http://maps.google.com/maps/api/js?libraries=places&sensor=true"}
+- content_for :after_map_init do
+  :javascript
+    $('#google_map_canvas').attr(#{attrs.to_json});
+
+    App.MapWidget.createMap($('#google_map_canvas'), function(pPlacemark) {
+      $('#restaurant_address').val(pPlacemark.address());
+      $('#restaurant_lat').val(pPlacemark.lat());
+      $('#restaurant_lng').val(pPlacemark.lng());
+    });
