@@ -21,6 +21,13 @@ class AjaxFragmentController < ApplicationController
     end
   end
 
+  def fb_auto_login
+    respond_to do |format|
+      format.mobile { render_mobile_top_menu }
+      format.any { render_top_menu }
+    end
+  end
+
   protected
   def no_cache
     response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
@@ -46,6 +53,14 @@ class AjaxFragmentController < ApplicationController
     }
     request.format = :html
     render :action => 'render_fragment', :layout => false
+  end
+
+  def render_mobile_top_menu
+    @content_file = 'layouts/fresh_parts/top_navigation.mobile.erb'
+    @effect = "slideDown({easing: \"jswing\"}).removeClass('menuLoadingIndicator')"
+    @element = '#topNav'
+    request.format = :mobile
+    render :template => 'ajax_fragment/render_fragment.html.erb', :layout => false
   end
 
   def render_notice

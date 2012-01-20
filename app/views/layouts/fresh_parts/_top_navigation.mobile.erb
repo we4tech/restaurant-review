@@ -94,7 +94,7 @@
                 :onclick => "window.GeoService.promptNearbySearch('#{search_url(:format => 'json')}');" %>
   </li>
   <% if not logged_in? %>
-    <li><%= link_to 'Login', login_path %></li>
+    <li><%= link_to 'Login', '#', :onclick => "$('#wrapperSubNav').toggle('slide');$('#menuLink').removeClass('on').addClass('on');" %></li>
     <li><%= link_to 'Signup', register_path %></li>
   <% else %>
     <% if current_user.facebook_session_exists? %>

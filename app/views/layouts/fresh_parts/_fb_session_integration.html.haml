@@ -73,24 +73,19 @@
       });
     };
 
-    var fbLoggedOut = function () {
+    var fbNotLoggedIn = function () {
       FB.Event.subscribe('auth.statusChange', function(response) {
         if (response.status == 'connected' && response.authResponse) {
           var session = response.authResponse;
           var locationParts = location.href.split('#');
           if (!locationParts[0].match(/.+_logout/i)) {
-            var uriPrefix = locationParts[0];
-            if (uriPrefix.match(/login/i)) {
-              urlPrefix = '#{root_url}';
-            }
-
-            window.location = uriPrefix +
-              (uriPrefix.match(/\?/) ? '&' : '?') + "fskey=" +
-                session.accessToken + "&fuid=" +
-                session.userID + '&fexpires=' +
-                session.expiresIn + '&fsecret=' +
-                session.signedRequest + '&fat=' +
-                session.accessToken;
+            $.get("#{fb_login_path}?t=" + new Date().getTime(), {
+              fskey: session.accessToken,
+              fuid: session.userID,
+              fexpires: session.expiresIn,
+              fsecret: session.signedRequest,
+              fat: session.accessToken
+            });
           }
         }
       });
@@ -98,5 +93,5 @@
 
 
     $('#site_top_navigation .navButton a[href*="records/new"]').
-      whenElementAvailable( fbLoggedIn, fbLoggedOut );
+      whenElementAvailable( fbLoggedIn, fbNotLoggedIn );
 
