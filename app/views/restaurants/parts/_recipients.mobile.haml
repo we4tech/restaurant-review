@@ -1,0 +1,57 @@
+- form_for @restaurant do |f|
+  %input{:type => 'hidden', :name => 'fb_share', :value => 'false'}
+  %input{:type => 'hidden', :name => 'filters[check_empty_array_element]',
+         :value => 'extra_notification_recipients'}
+  %input{:type => 'hidden', :name => 'return_to',
+         :value => edit_restaurant_path(@restaurant)}
+
+  - (@restaurant.extra_notification_recipients || []).each do |email|
+    .newRecipient
+      %table
+        %tr
+          %td
+            %label Email
+          %td
+            %input{:type => 'text',
+                   :name => 'restaurant[extra_notification_recipients][]',
+                   :value => email}
+          %td
+            %input.delButton{:type => 'button', :value => 'X'}
+      .space_10
+
+  .newRecipient
+    %table
+      %tr
+        %td
+          %label Email
+        %td
+          %input{:type => 'text',
+                 :name => 'restaurant[extra_notification_recipients][]'}
+        %td
+          %input.delButton{:type => 'button', :value => 'X', :style => 'display:none'}
+
+  #buttonBreak.space_10
+  .break
+  .space_10
+
+  %input.addButton{:type => 'button', :value => 'Add another email'}
+  %input#submitButton{:type => 'submit', :value => 'Update recipients'}
+
+:javascript
+  $('.addButton').click(function() {
+    var newId = "rand" + (Math.random() + "").replace(/\./, '');
+    $('#buttonBreak').before('<div style="display:none" class=\'newRecipient\' id=\'' + newId + '\'>' +
+        $('.newRecipient:first').html() + '</div>');
+    $('#' + newId).show();
+    $('.delButton').show().click(function() {
+      $(this).parent().fadeOut(function() {
+        $(this).remove();
+      })
+    });
+  });
+
+  $('.delButton').show().click(function() {
+    $(this).parent().parent().parent().fadeOut(function() {
+      $(this).remove();
+    })
+  });
