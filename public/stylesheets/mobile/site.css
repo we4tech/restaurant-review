@@ -1249,6 +1249,7 @@ input.html5_search_field:hover {
 }
 #body div.plain h1 {
   color: orange;
+  font-size: 160%;
   text-shadow: 1px 1px 1px #000000;
   filter: dropshadow(color=#000000, offx=1, offy=1);
 }

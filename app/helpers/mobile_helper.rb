@@ -1,22 +1,22 @@
 module MobileHelper
 
-  NON_MOBILE_FORMATS = ['html', 'ajax', 'json']
+  NON_MOBILE_FORMATS    = ['html', 'ajax', 'json']
   MOBILE_DEFAULT_FORMAT = MOBILE_FORMAT = 'mobile'
-  MOBILE_TOUCH_FORMAT = 'mobile_touch'
+  MOBILE_TOUCH_FORMAT   = 'mobile_touch'
 
   def detect_mobile_view
     if format_type = params[:format].to_s.downcase =~ /#{MOBILE_FORMAT}|#{MOBILE_TOUCH_FORMAT}/
-      @mobile = true
+      @mobile                 = true
       session[:mobile_format] = format_type
-      request.format = :mobile
+      request.format          = :mobile
     elsif NON_MOBILE_FORMATS.include? params[:format].to_s.downcase
       session[:mobile_format] = nil
-      @mobile = false
+      @mobile                 = false
     elsif backward_compatible session[:mobile_format]
-      @mobile = true
+      @mobile         = true
       params[:format] = backward_compatible session[:mobile_format]
     elsif mobile_device?
-      @mobile = true
+      @mobile                 = true
       session[:mobile_format] = params[:format] = MOBILE_DEFAULT_FORMAT
     elsif params[:format] && !NON_MOBILE_FORMATS.include?(params[:format].to_s.downcase)
       request.format = :html
@@ -35,14 +35,20 @@ module MobileHelper
     session[:mobile_format]
   end
 
-  def mobile_device?
-    mobile_user_agent = 'palm|palmos|palmsource|iphone|blackberry|nokia|phone|midp|mobi|pda|' +
-        'wap|java|nokia|hand|symbian|chtml|wml|ericsson|lg|audiovox|motorola|' +
-        'samsung|sanyo|sharp|telit|tsm|mobile|mini|windows ce|smartphone|' +
-        '240x320|320x320|mobileexplorer|j2me|sgh|portable|sprint|vodafone|' +
-        'docomo|kddi|softbank|pdxgw|j-phone|astel|minimo|plucker|netfront|' +
-        'xiino|mot-v|mot-e|portalmmm|sagem|sie-s|sie-m|android|ipod'
+  MOBILE_USER_AGENT = 'palm|palmos|palmsource|iphone|ipad|blackberry|nokia|phone|midp|mobi|pda|' +
+      'wap|java|nokia|hand|symbian|chtml|wml|ericsson|lg|audiovox|motorola|' +
+      'samsung|sanyo|sharp|telit|tsm|mobile|mini|windows ce|smartphone|' +
+      '240x320|320x320|mobileexplorer|j2me|sgh|portable|sprint|vodafone|' +
+      'docomo|kddi|softbank|pdxgw|j-phone|astel|minimo|plucker|netfront|' +
+      'xiino|mot-v|mot-e|portalmmm|sagem|sie-s|sie-m|android|ipod'
 
-    request.user_agent.to_s.downcase =~ Regexp.new(mobile_user_agent)
+  def mobile_device?
+    request.user_agent.to_s.downcase =~ Regexp.new(MOBILE_USER_AGENT)
+  end
+
+  IOS_USER_AGENT = 'iphone|ipod|ipad'
+
+  def ios_devise?
+    request.user_agent.to_s.downcase =~ Regexp.new(IOS_USER_AGENT)
   end
 end
