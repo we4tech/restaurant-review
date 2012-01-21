@@ -7,7 +7,8 @@ h4. Release - 0.24 - Mobile optimized.
 * Implemented "Add recipient" option should be available over mobile version
 * implemented Keep map under another according in mobile restaurant edit page
 * implemented Make mobile map body movable
-* implemented Facebook id should be autorenewed
+* implemented Facebook id should be auto renewed
+* implemented special logo and splash screen for ios version
 
 h4. Release - 0.23 - Bug fixed new UI.
 

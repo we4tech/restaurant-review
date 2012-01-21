@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), 'other_tasks')
 
 set :application, "restaurant-review"
 set :repository,  "git://github.com/we4tech/restaurant-review.git"
-set :branch, 'fix_events'
+set :branch, 'mobile-improved-2'
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
