@@ -96,6 +96,15 @@ Capistrano::Configuration.instance.load do
     task :maint_on do
       run "/home/hasan/node_modules/.bin//maintenance-page -P 8000 -m #{release_path}/public/down-site/"
     end
+
+    desc 'Automatically tag on git'
+    task :auto_tag do
+      tag_name = "release_#{Time.now.to_i}"
+      last_heading = File.readlines('README.textile').
+          select{|l| l if l.match(/^h4\./)}.
+          first.gsub(/h4\.\s*/, '')
+      `git tag #{tag_name} -m "#{last_heading}" && git push --tags`
+    end
   end
 
   namespace :bundle do
@@ -106,10 +115,13 @@ Capistrano::Configuration.instance.load do
   end
 
   before 'deploy:setup', 'service:mongrel_stop', 'service:ultrasphinx_stop'
-  after "deploy:setup", "shared_directories:setup"
-  after "deploy:update", "shared_directories:symlink", "configuration:ultrasphinx", "configuration:mongrel"
-  after 'deploy:update', "service:mongrel_restart", 'service:ultrasphinx_restart', "service:clear_cache"
-  #after "deploy:web:disable", "shared_directories:web_disable"
-  #after "deploy:web:enable", "shared_directories:web_enable"
+  after 'deploy:setup', 'shared_directories:setup'
+  after 'deploy:update', 'shared_directories:symlink',
+                         'configuration:ultrasphinx',
+                         'configuration:mongrel'
+  after 'deploy:update', 'service:mongrel_restart',
+                         'service:ultrasphinx_restart',
+                         'service:clear_cache'
+  after 'deploy:update', 'service:auto_tag'
 
 end
