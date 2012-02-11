@@ -8,4 +8,8 @@
     = render :partial => 'restaurants/parts/form_attributes_based',
              :locals => {:f => f}
     .clear.space
+    #map
+      = render 'restaurants/parts/map', :f => f
+
+    .clear.space
     = f.submit t('button.create'), :class => 'submit'

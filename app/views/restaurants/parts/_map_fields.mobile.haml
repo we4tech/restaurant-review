@@ -1,0 +1,23 @@
+%label
+  = address_field['label']
+  = required ? ' (*)' : ''
+.space
+.mapContainer
+  #google_map_canvas
+    .siteMessage Loading map...
+%table
+  %tr
+    %td
+      = f.text_field :address,
+            :class => "#{address_field['type']} full_field bottom_radius readonly map_address_field",
+            :onkeyup => 'App.MapWidget.displayOnKeyPress(this, \'google_map_canvas\')'
+  %tr
+    %td= f.error_message_on :address
+
+  - if !f.object.new_record?
+    %tr
+      %td= f.submit "Update #{address_field['label']}"
+%br/
+= f.hidden_field :lat
+= f.hidden_field :lng
+.clear
