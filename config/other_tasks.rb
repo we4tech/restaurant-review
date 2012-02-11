@@ -71,6 +71,11 @@ Capistrano::Configuration.instance.load do
       run "#{_MONGREL_CMD_PREFIX.call(self)} cluster::stop -C #{current_path}/config/mongrel_cluster.yml"
     end
 
+    desc 'Start mongrel process'
+    task :mongrel_start do
+      run "#{_MONGREL_CMD_PREFIX.call(self)} cluster::start -C #{current_path}/config/mongrel_cluster.yml"
+    end
+
     desc 'Restart sphinx server'
     task :ultrasphinx_restart do
       run "cd #{current_path} && #{_RVM_ENV} && rake ultrasphinx:daemon:restart RAILS_ENV=production"
@@ -94,7 +99,20 @@ Capistrano::Configuration.instance.load do
 
     desc 'Turn on maintenance page'
     task :maint_on do
-      run "/home/hasan/node_modules/.bin//maintenance-page -P 8000 -m #{release_path}/public/down-site/"
+      run "#{_MONGREL_CMD_PREFIX.call(self)} cluster::stop -C #{current_path}/config/mongrel_cluster.yml"
+      run "/usr/local/bin/maintenance-page -P 8000 -m #{release_path}/public/down-site/ &"
+      run "/usr/local/bin/maintenance-page -P 8001 -m #{release_path}/public/down-site/ &"
+    end
+
+    desc 'Turn on maintenance page'
+    task :maint_off do
+      run "killall maintenance-page"
+      run "#{_MONGREL_CMD_PREFIX.call(self)} cluster::start -C #{current_path}/config/mongrel_cluster.yml"
+    end
+
+    desc 'Clear pids'
+    task :clear_pids do
+      run "cd #{current_path} && rm -rf tmp/pids/*.pid"
     end
 
     desc 'Automatically tag on git'
@@ -104,6 +122,13 @@ Capistrano::Configuration.instance.load do
           select{|l| l if l.match(/^h4\./)}.
           first.gsub(/h4\.\s*/, '')
       `git tag #{tag_name} -m "#{last_heading}" && git push --tags`
+    end
+
+    desc 'Start server'
+    task :start_server do
+      [:clear_cache, :clear_pids, :ultrasphinx_restart, :mongrel_start].each do |task|
+        execute_task tasks[task]
+      end
     end
   end
 
