@@ -35,19 +35,42 @@
       <% index += 1 %>
     <% end %>
 
-    <div class="section lastInRow advertisement">
-      <div class="title">
-        Advertisement
-      </div>
+    <div class="section lastInRow advertisement" id='adv_with_us'
+         style="background: url('/images/ads/advertise-section-head.png'); cursor: pointer;">
+
     </div>
     <div class="clear"></div>
   </div>
 </div>
 
+<div id='advertise_window' style='display:none'>
+  <table>
+    <tr>
+      <th colspan="2">For advertisement please contact</th>
+    </tr>
+    <tr>
+      <th>E-mail</th>
+      <td><a href='mailto:biz@welltreat.us?subject=Advertisement'>biz@welltreat.us</a></td>
+    </tr>
+    <tr>
+      <th>Mobile</th>
+      <td>+8801713090511</td>
+    </tr>
+  </table>
+</div>
+
 <script type="text/javascript">
   $('.sections .section').each(function() {
     $(this).click(function(e) {
-      window.location = $(this).attr('targetLink');
+      if ($(this).attr('targetLink')) {
+        window.location = $(this).attr('targetLink');
+      }
     });
+  });
+
+  $('#adv_with_us').click(function() {
+    $('#advertise_window').dialog({
+        modal: true, title: 'Advertise with us', width: 350, height: 210});
+
   });
 </script>
