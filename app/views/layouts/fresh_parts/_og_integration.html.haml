@@ -1,0 +1,29 @@
+- if @restaurant && !@restaurant.new_record?
+  = render_meta_tags({'fb:app_id' => @topic.fb_id, 'fb:admins' => @topic.fb_admins})
+  = render_meta_tags({'og:type' => @topic.og_type || 'well_treat_us:restaurant',
+                      'og:title' => @restaurant.name,
+                      'og:description' => @meta_description || strip_tags(truncate(@restaurant.description.to_s.strip.gsub(/\n/, ' '), 200, "...")),
+                      'og:url' => event_or_restaurant_url(@restaurant),
+                      'well_treat_us:rating' => "#{@restaurant.rating_out_of(5).round_with_precision(1)} out of 5 ratings!"})
+
+  - if first_image = @restaurant.rand_image
+    = render_meta_tags({'og:image' => "http://#{request.host}#{request.port != 80 ? ":#{request.port}" : ''}#{first_image.public_filename(:large)}"})
+  - else
+    = render_meta_tags({'og:image' => "http://#{request.host}#{request.port != 80 ? ":#{request.port}" : ''}#{@topic.banner_image_path}"})
+
+  - if @restaurant.located_in_map?
+    = render_meta_tags({'well_treat_us:location:latitude' => @restaurant.lat,
+                        'well_treat_us:location:longitude' => @restaurant.lng,
+                        'well_treat_us:contact:street_address' => @restaurant.address,
+                        'well_treat_us:contact:country_name' => @restaurant.country})
+
+  - if @restaurant.respond_to?(:string1) && @restaurant.string1.present?
+    = render_meta_tags({'well_treat_us:contact:phone_number' => @restaurant.string1})
+
+- else
+  = render_meta_tags({'og:title' => "#{@topic ? (@site_title ? "#{@site_title} - " : '') : ''}#{@topic.site_title}",
+                      'og:description' => @meta_description || 'Bangladeshi Restaurant, cafe & eat out place review site',
+                      'og:url' => request.url,
+                      'og:type' =>'website',
+                      'og:image' => "http://#{request.host}#{request.port != 80 ? ":#{request.port}" : ''}#{@topic.banner_image_path}"})
+

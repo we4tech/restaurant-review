@@ -7,7 +7,7 @@ module OpenGraphHelper
           'property' => property,
           'content' => value
       }
-      html << tag('meta', options, false, true) if value.present?
+      html << "#{tag('meta', options, false, true)}\n" if value.present?
     end
 
     html
