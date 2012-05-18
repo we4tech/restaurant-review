@@ -81,7 +81,7 @@
         <div class="clear"></div>
         <div class="space_10"></div>
 
-        <%= render_related_restaurants(5, :label => "Similar #{@topic.name.pluralize}", :z_index => 1002) %>
+        <%= render_related_restaurants(5, :label => "Similar #{@topic.name.pluralize}", :z_index => 1002) rescue 'Indexing server turned off' %>
         <div class="clear"></div>
         <div class="space_10"></div>
 
