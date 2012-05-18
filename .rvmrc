@@ -1,1 +1,1 @@
-rvm --create use "ruby-1.8.7-p352@welltreatus"
+rvm --create use "ruby-1.8.7@welltreatus"
