@@ -32,8 +32,8 @@ class SessionsController < ApplicationController
       self.current_user = user
       user.log_it!(request.env["HTTP_X_FORWARDED_FOR"] || request.remote_addr)
 
-      new_cookie_flag = (params[:remember_me] == "1")
-      handle_remember_cookie! new_cookie_flag
+      # Always remember current login
+      handle_remember_cookie! true
 
       if user.image
         flash[:notice] = "Logged in successfully"

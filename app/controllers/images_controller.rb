@@ -114,7 +114,7 @@ class ImagesController < ApplicationController
       if related_item && related_item.is_a?(Restaurant)
 
         # Add this restaurant as editor picked
-        tag.update_attribute :section_data, [related_item.id]
+        tag.update_attribute :section_data, {:sec_thumb => [image.id]}
 
         # Flag this image as 'section'
         image.update_relations related_item, :group => 'section'
@@ -150,6 +150,7 @@ class ImagesController < ApplicationController
   end
 
   private
+
   def my_restaurant_and_user_contributed_image(restaurant, image)
     if restaurant.user_id == current_user.id
       contribution_map = restaurant.contributed_images.find(:first, :conditions => {:image_id => image.id})

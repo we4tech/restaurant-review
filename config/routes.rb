@@ -65,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
                               :food_items, :reviews,
                               :products, :checkins]
 
-  map.resources :images, :member => {:show_or_hide => :get, :set_for_section => :get, :unsection => :get}
+  map.resources :images, :member => {:show_or_hide => :get, :set_for_section => :get}
 
   map.resources :reviews
 

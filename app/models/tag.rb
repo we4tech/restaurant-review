@@ -1,5 +1,6 @@
 class Tag < ActiveRecord::Base
 
+  SECTION_DATA_KEYS = [:sec_thumb]
   serialize :section_data
 
   belongs_to :topic
@@ -34,35 +35,42 @@ class Tag < ActiveRecord::Base
   # it means these tags are used as a section
   named_scope :sections, :conditions => {:as_section => true}
 
-  # Return the list of editor selected restaurants from the specific
+  # Generate dynamic setter and getter methods for section data properties
+  SECTION_DATA_KEYS.each do |key|
+    self.class_eval <<-RUBY, __FILE__, __LINE__ + 1
+      def set_#{key.to_s}=(value)
+        data = self.section_data || {}
+        data[:#{key.to_s}] = value.is_a?(Array) ? value : [value]
+        self.update_attribute :section_data, data
+      end
+
+      def get_#{key.to_s}
+        (self.section_data || {})[:#{key.to_s}]
+      end
+    RUBY
+  end
+
+  # Return the list of editor selected images from the specific
   # tag with the defined *limit*
   def editor_selected(limit = 1)
-    ids = nil
-
-    if section_data
-      case section_data
-        when Array
-          ids = section_data[0..(limit - 1)]
-        when String
-          ids = section_data.split('|')[0..(limit - 1)]
+    if self.section_data.present? && self.section_data[:sec_thumb].present?
+      ids = self.section_data[:sec_thumb]
+      if ids.present?
+        return Image.find(ids)
       end
     end
 
-    if ids && !ids.empty?
-      Restaurant.find(ids)
-    else
-      []
-    end
+    []
   end
 
   # Return the list of editor selected restaurants if found otherwise
   # Return the list sorted by the top ratings.
   def editor_selected_or_top_rated(limit = 1)
     items = editor_selected(limit)
-    if items && !items.empty?
+    if items.present?
       items
     else
-      most_loved_restaurants(limit)
+      most_loved_restaurants(limit).map(&:rand_image)
     end
   end
 

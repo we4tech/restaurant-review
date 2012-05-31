@@ -28,7 +28,7 @@
    end
 %>
 <% if grouped %>
-  <% if !links.empty? %>
+  <% if links.present? %>
     <div class='tags'>
       <div class='tagGroup'>
         <% if logged_in? && restaurant.author?(current_user) %>
