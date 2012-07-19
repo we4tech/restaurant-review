@@ -317,9 +317,9 @@ class Restaurant < ActiveRecord::Base
     total_reviews = self.reviews.count.to_f
     rate = (total_loves / total_reviews) * p_scale
     if rate.to_s == 'NaN'
-      0
+      0.0
     else
-      rate
+      rate.to_f
     end
   end
 

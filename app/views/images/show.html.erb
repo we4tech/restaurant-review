@@ -87,7 +87,7 @@
         <% end %>
 
         <% if @related_object && @related_object.is_a?(Restaurant) %>
-          <%= render_related_restaurants(5, :restaurant => @related_object, :label => "Similar #{@topic.name.pluralize}") %>
+          <%= render_related_restaurants(5, :restaurant => @related_object, :label => "Similar #{@topic.name.pluralize}") rescue 'Indexing server is currently down.' %>
           <div class="clear"></div>
           <div class="space_10"></div>
         <% end %>

@@ -28,29 +28,17 @@ module TagsHelper
   # if restaurant has image with *:section* group
   # Otherwise render nothing
   def render_section_editor_selected_item_image(section, inline_css = false)
-    restaurant = section.editor_selected_or_top_rated(1).first
-    path = nil
-    image = nil
+    image = section.editor_selected_or_top_rated(1).first
 
-    if restaurant
-      images = restaurant.images_of('section')
-      if images && !images.empty?
-        image = images.first.image
-        path = image.large_public_filename
-      else
-        image = restaurant.all_images.first
-        if image
-          path = image.large_public_filename
-        end
-      end
-    end
-
-    if path
+    if image
+      path = image.large_public_filename
       if inline_css
-        "background: url(#{path})"
+        "background: url(#{path_to_image(path)})"
       else
-        tag('img', :src => path, :atl => image.caption)
+        tag('img', :src => path_to_image(path), :atl => image.caption)
       end
+    else
+      nil
     end
   end
 

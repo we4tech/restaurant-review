@@ -11,3 +11,10 @@ log/*.log
 Booting
 Ctrl-C
 *.sqlite3
+public/uploaded_images
+public/stylesheets/cache_*
+public/javascripts/cache_*
+public/javascripts/*cache*
+public/uploaded_images_old
+sphinx
+*.smultronProject

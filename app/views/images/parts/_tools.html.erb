@@ -11,10 +11,6 @@
        if last_selected_tag
          links << link_to('Set for section', set_for_section_image_path(image, :tag_id => last_selected_tag.id))
        end
-
-       if image.sectioned?
-         links << link_to('Unsection', unsection_image_path(image))
-       end
      end
    end
 %>

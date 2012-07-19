@@ -88,7 +88,7 @@ module CommonModel
     def rating_out_of(p_scale = 5.0)
       total_loves   = self.reviews.loved.count.to_f
       total_reviews = self.reviews.count.to_f
-      (total_loves / total_reviews) * p_scale
+      ((total_loves / total_reviews) * p_scale).to_f
     end
   end
 

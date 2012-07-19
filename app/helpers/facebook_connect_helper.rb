@@ -56,13 +56,13 @@ module FacebookConnectHelper
     end
   end
 
-  def restaurant_review_stat(p_review)
+  def restaurant_review_stat(p_review_or_restaurant)
     restaurant = nil
 
-    if p_review.is_a?(Review)
-      restaurant = p_review.any
-    elsif p_review.is_a?(Restaurant)
-      restaurant = p_review
+    if p_review_or_restaurant.is_a?(Review)
+      restaurant = p_review_or_restaurant.any
+    elsif p_review_or_restaurant.is_a?(Restaurant)
+      restaurant = p_review_or_restaurant
     end
 
     total_reviews_count = restaurant.reviews.count
