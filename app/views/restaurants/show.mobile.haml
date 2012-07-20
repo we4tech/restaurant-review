@@ -82,4 +82,4 @@
             = image.photo_comments.count
       .clear
 
-= render_related_restaurants(5, :label => "Similar #{@topic.name.pluralize}", :z_index => 1002)
+= render_related_restaurants(5, :label => "Similar #{@topic.name.pluralize}", :z_index => 1002) rescue 'Indexing server turned off'
