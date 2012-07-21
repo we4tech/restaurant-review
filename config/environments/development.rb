@@ -20,7 +20,7 @@ config.action_controller.cache_store = :file_store, RAILS_ROOT + "/tmp/cache/"
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 config.action_mailer.delivery_method = :sendmail
-config.action_mailer.default_url_options = {:host => 'hadok.com'}
+config.action_mailer.default_url_options = {:host => 'khadok.com'}
 
 # google map API key
 MAP_API_KEY = 'ABQIAAAAFNm78CTt6Ba6XsBkWZHE3hRXwWGis4ehQYwFPWsPJASMY_J0qBTSdP47_yO6GocUwBOmC-5rdxE2Bw'

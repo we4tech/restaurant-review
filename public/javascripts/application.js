@@ -2,13 +2,13 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 // JQuery utility extension
-(function($) {
+(function ($) {
 
   /**
    * Check whether the specific attribute is empty
    * @param attributeKey attribute key
    */
-  $.fn.isEmptyAttr = function(attributeKey) {
+  $.fn.isEmptyAttr = function (attributeKey) {
     return (!this.attr(attributeKey) || this.attr(attributeKey).length == 0)
   };
 
@@ -17,7 +17,7 @@
    * ++ Warning the passed options will be modified
    * @param attributeKeys List of optionalize keys
    */
-  $.fn.extractOptions = function(attributeKeys, options) {
+  $.fn.extractOptions = function (attributeKeys, options) {
 
     for (var i = 0; i < attributeKeys.length; i++) {
       var attributeKey = attributeKeys[i];
@@ -29,7 +29,7 @@
     return options;
   };
 
-  $.executeSafe = function(callback) {
+  $.executeSafe = function (callback) {
     try {
       return callback();
     } catch (exception) {
@@ -37,8 +37,8 @@
     }
   };
 
-  $.executeWhenAvailable = function(variableName, callback) {
-    $.__ewaTimeout = setTimeout(function() {
+  $.executeWhenAvailable = function (variableName, callback) {
+    $.__ewaTimeout = setTimeout(function () {
       try {
         eval(variableName);
         $.executeSafe(callback);
@@ -48,11 +48,11 @@
     }, 200)
   };
 
-  $.fn.whenElementAvailable = function(successCallback, failureCallback) {
+  $.fn.whenElementAvailable = function (successCallback, failureCallback) {
     var self = this;
     self.found = false;
     self.attempts = 0;
-    self.timeOutCallback = function() {
+    self.timeOutCallback = function () {
       self.attempts += 1;
       self.found = $(self).length > 0;
       if (!self.found) {
@@ -75,7 +75,7 @@
   /**
    * Find existing map instance
    */
-  $.fn.mapInstance = function() {
+  $.fn.mapInstance = function () {
     return App.MapWidget.mInitiatedMaps[this.attr('id')];
   };
 
@@ -83,15 +83,15 @@
   $.fn.markersInfo = {};
   $.fn.mMarkers = [];
 
-  $.fn.storeMarkerInfo = function(markerInfo) {
+  $.fn.storeMarkerInfo = function (markerInfo) {
     this.markersInfo[markerInfo.name] = markerInfo;
   };
 
-  $.fn.getMarkerInfo = function(markerName) {
+  $.fn.getMarkerInfo = function (markerName) {
     return this.markersInfo[markerName];
   };
 
-  $.fn.mapBuildMarker = function(markerInfo, options) {
+  $.fn.mapBuildMarker = function (markerInfo, options) {
     this.storeMarkerInfo(markerInfo);
 
     var position = new google.maps.LatLng(markerInfo.lat, markerInfo.lng);
@@ -116,29 +116,29 @@
     marker.markerInfo = markerInfo;
 
     if (clickCallback) {
-      google.maps.event.addListener(marker, 'click', function() {
+      google.maps.event.addListener(marker, 'click', function () {
         clickCallback(marker, markerInfo);
       });
     }
     return marker;
   };
 
-  $.fn.clearMarkers = function() {
+  $.fn.clearMarkers = function () {
     for (var i = 0; i < this.mMarkers.length; i++) {
       this.mMarkers[i].setMap(null);
     }
   };
 
-  $.executeLater = function(callback, duration) {
+  $.executeLater = function (callback, duration) {
     duration = duration ? duration : 5000;
     setTimeout(callback, duration);
   };
 
-  $.fn.loadNearbyRestaurants = function(pSearchUrl, pHiddenDialogContent, clear) {
+  $.fn.loadNearbyRestaurants = function (pSearchUrl, pHiddenDialogContent, clear) {
     var $this = this;
-    $.getJSON(pSearchUrl, function(data) {
+    $.getJSON(pSearchUrl, function (data) {
       if (data) {
-        $.executeLater(function() {
+        $.executeLater(function () {
           if (clear) {
             //$this.clearMarkers();
           }
@@ -149,7 +149,7 @@
           for (var i = 0; i < data.length; i++) {
             if (data[i] && $this.getMarkerInfo(data[i].name) == null) {
               markers.push($this.mapBuildMarker(data[i], {
-                onclick: function(marker, markerInfo) {
+                onclick: function (marker, markerInfo) {
                   pHiddenDialogContent.html(markerInfo.marker_html).dialog({
                     'title': markerInfo.name,
                     'width': '300px',
@@ -192,7 +192,7 @@
 //  #    * DNA analysis
 //  #    * Plagiarism detection
 //  #
-  $.calculateDistance = function(firstText, secondText, returnMatrix) {
+  $.calculateDistance = function (firstText, secondText, returnMatrix) {
     firstText = firstText.toLowerCase();
     secondText = secondText.toLowerCase();
 
@@ -276,7 +276,7 @@
     }
   };
 
-  $.debug = function(message) {
+  $.debug = function (message) {
     if (typeof(console) != 'undefined') {
       console.debug(message);
     }
@@ -284,7 +284,7 @@
 
   $.D = $.debug;
 
-  $.visualizeMatrix = function(firstText, secondText) {
+  $.visualizeMatrix = function (firstText, secondText) {
     var matrix = $.calculateDistance(firstText, secondText, true);
     var text = "";
     for (var i = 0; i < matrix.length; i++) {
@@ -300,7 +300,7 @@
   /**
    * Iterate through the elements and match more relevant text.
    */
-  $.searchRelevantItem = function(text, itemsArray) {
+  $.searchRelevantItem = function (text, itemsArray) {
     var mostRelevant = null;
 
     for (var i = 0; i < itemsArray.length; i++) {
@@ -324,7 +324,7 @@
     return mostRelevant;
   },
 
-      $.fuzzySearch = function(text, itemsArray) {
+      $.fuzzySearch = function (text, itemsArray) {
         var mostRelevant = null;
 
         for (var i = 0; i < itemsArray.length; i++) {
@@ -352,13 +352,13 @@
    *    to:           - Set duplicated elements container - jquery object expected
    *
    */
-  $.fn.whenClicked = function(options) {
+  $.fn.whenClicked = function (options) {
     var $duplicable = options['duplicate'];
     var $container = options['to'];
     var addedCallback = options['added'];
 
     if ($duplicable && $container) {
-      $(this).bind('click', function() {
+      $(this).bind('click', function () {
         $container.append($duplicable.html());
         if (addedCallback) {
           addedCallback($container);
@@ -373,9 +373,9 @@
    * Allow form submission if authentication token is initiated
    * Since our authentication token is loaded through jsonp
    */
-  $.fn.allowSubmissionIfAuthTokenInit = function() {
+  $.fn.allowSubmissionIfAuthTokenInit = function () {
     var form = $(this);
-    form.bind('submit', function(e) {
+    form.bind('submit', function (e) {
       var field = $(this).find('input[name="authenticity_token"]');
       $.D(field.attr('inProg'));
       if (field.attr('inProg') != 'true') {
@@ -384,7 +384,7 @@
           if (field.attr('renewed') != 'true') {
             $.D('Not renewed');
             var interval;
-            interval = setInterval(function() {
+            interval = setInterval(function () {
               if (field.attr('renewed') == 'true') {
                 $.D('Renewed - ' + field.val());
                 clearInterval(interval);
@@ -403,17 +403,17 @@
 })(jQuery);
 
 App = {
-  mTimer : null
+  mTimer: null
 };
 
 
 App.UI = {
 
-  detectFieldWithDefaultValue: function(pDefaultText, pClass, pPasswordField) {
+  detectFieldWithDefaultValue: function (pDefaultText, pClass, pPasswordField) {
     var defaultText = pDefaultText;
     var lClass = pClass == null ? 'fieldWithDefaultValue' : pClass;
 
-    $('input.' + lClass).each(function() {
+    $('input.' + lClass).each(function () {
 
       if (pPasswordField) {
         $(this)[0].type = 'text';
@@ -423,7 +423,7 @@ App.UI = {
         $(this).val(defaultText);
       }
 
-      $(this).bind('focus', function() {
+      $(this).bind('focus', function () {
         var $self = $(this);
         if ($self.val() == defaultText) {
           $self.val('');
@@ -434,7 +434,7 @@ App.UI = {
         }
       });
 
-      $(this).bind('blur', function() {
+      $(this).bind('blur', function () {
         var $self = $(this);
         if ($self.val() == '') {
           $self.val(defaultText);
@@ -456,7 +456,7 @@ App.UI = {
  * it will match all links which has the same class name and link if not
  * visible it will be appeared visible.
  */
-$(function() {
+$(function () {
   var currentLocation = window.location.href;
   var adminPortionVisible = false;
   var dialog = null;
@@ -473,7 +473,7 @@ $(function() {
           'modal': true,
           'closeOnEscape': true,
           'width': 'auto',
-          'close': function() {
+          'close': function () {
             $('.' + parts[1] + 'ActivationLink').toggle();
             window.location = window.location.href.split('#')[0] + '#';
           }
@@ -487,7 +487,7 @@ $(function() {
       window.location.href = "http://" + window.location.host + parts[1];
     }
 
-    $('.adminPortionActivationLink').click(function() {
+    $('.adminPortionActivationLink').click(function () {
       $('.' + $(this).attr('class')).toggle();
 
       if (dialog == null) {
@@ -496,7 +496,7 @@ $(function() {
           'modal': true,
           'closeOnEscape': true,
           'width': 'auto',
-          'close': function() {
+          'close': function () {
             $('.' + $(this).attr('class')).toggle();
             window.location = window.location.href.split('#')[0] + '#';
           }
@@ -514,13 +514,13 @@ $(function() {
  * more flexible image sliding experience.
  */
 var SliderCacheUtil = {
-  _CACHES : {},
+  _CACHES: {},
 
-  addCache: function(key, value) {
+  addCache: function (key, value) {
     SliderCacheUtil._CACHES[key] = value;
   },
 
-  addItemsToCache: function(key, items) {
+  addItemsToCache: function (key, items) {
     var cachedItems = SliderCacheUtil.getCache(key);
     if (cachedItems != null) {
       for (var i = 0; i < items.length; i++) {
@@ -529,20 +529,20 @@ var SliderCacheUtil = {
     }
   },
 
-  getCache: function(key) {
+  getCache: function (key) {
     return SliderCacheUtil._CACHES[key];
   },
 
-  getCachedItemsAt: function(index, key) {
+  getCachedItemsAt: function (index, key) {
     var items = SliderCacheUtil.getCache(key);
     return items[index];
   },
 
-  removeCache: function(key) {
+  removeCache: function (key) {
     SliderCacheUtil._CACHES[key] = null;
   },
 
-  syncCache: function(key, current_position, url) {
+  syncCache: function (key, current_position, url) {
     var items = SliderCacheUtil.getCache(key);
     if (items != null && items.length > 0) {
       if ((items.length - current_position) < 3) {
@@ -552,16 +552,16 @@ var SliderCacheUtil = {
   }
 };
 
-$(function() {
-  $('.message').css('cursor', 'pointer').click(function() {
+$(function () {
+  $('.message').css('cursor', 'pointer').click(function () {
     $(this).fadeOut().remove();
   });
 
-  $('.pagination a').each(function() {
+  $('.pagination a').each(function () {
     $(this).attr('href', $(this).attr('href') + '#adminPortion');
   });
 
-  $('.submenu').click(function() {
+  $('.submenu').click(function () {
     var $menuPanel = $($(this).attr('rev'));
     var $self = $(this);
     var x = $self.offset().left;
@@ -576,21 +576,34 @@ $(function() {
     }
   });
 
-  $('.siteMessage').click(function(e) {
+  $('.siteMessage').click(function (e) {
     $(this).hide();
   });
 });
 
 App.Tasks = {
-  tasks : [],
+  tasks: [],
 
-  addTask: function(closure) {
+  addTask: function (closure) {
     App.Tasks.tasks.push(closure)
   },
 
-  executeTasks : function() {
+  executeTasks: function () {
     for (var i = 0; i < App.Tasks.tasks.length; i++) {
       App.Tasks.tasks[i].call();
     }
   }
 };
+
+// #data-toggle-group and #data-toggle-show
+
+$(function () {
+  $('a[data-toggle-show]').click(function () {
+    var self = $(this);
+    var group = $(self.attr('data-toggle-group'));
+    var target = $(self.attr('data-toggle-show'));
+
+    group.hide();
+    target.show();
+  });
+});

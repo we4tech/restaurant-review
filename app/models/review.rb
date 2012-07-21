@@ -13,6 +13,8 @@ class Review < ActiveRecord::Base
   has_many :review_comments, :dependent => :destroy
   has_many :stuff_events, :dependent => :destroy
 
+  accepts_nested_attributes_for :user, :reject_if => :all_blank
+
   validates_presence_of :user_id
 
   named_scope :of_restaurant, lambda { |restaurant, and_other|
@@ -82,6 +84,14 @@ class Review < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  def session
+    @session ||= Session.new
+  end
+
+  def session=(o)
+    @session = o
   end
 
   class << self
