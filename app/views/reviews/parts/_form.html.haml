@@ -1,0 +1,39 @@
+- attached_options = attached_options || {}
+
+.review_form
+  - form_for Review.new, :html => {:method => :post} do |f|
+    %h4 Write your review
+
+    - unless logged_in?
+      .embed-form
+        %a{:href => '#embedded-signup-form',
+           'data-toggle-group' => '.embedded-form-item',
+           'data-toggle-show' => '#embedded-signup-form'}
+          New User ?
+        Or
+        %a{:href => '#embedded-signin-form',
+           'data-toggle-group' => '.embedded-form-item',
+           'data-toggle-show' => '#embedded-signin-form'}
+          Existing User ?
+
+      #embedded-signup-form.embedded-form-item{:style => 'display:none'}
+        = render :partial => 'users/parts/signup_fields', :locals => {:f => f}
+
+      #embedded-signin-form.embedded-form-item{:style => 'display:none'}
+        = render :partial => 'sessions/parts/signin_fields', :locals => {:f => f}
+
+    = render :partial => 'reviews/parts/fields', :locals => {:f => f}
+
+    - if defined?(restaurant)
+      = f.hidden_field :restaurant_id, :value => restaurant.id
+
+    - elsif defined?(topic_event)
+      = f.hidden_field :topic_event_id, :value => topic_event.id
+
+    - if !attached_options.empty?
+      = f.hidden_field :attached_model, :value => attached_options[:attached_model]
+      = f.hidden_field :attached_id, :value => attached_options[:attached_id]
+
+    %button#review_submit= image_tag('/images/fresh/add_your_review_small.png')
+
+  .clear

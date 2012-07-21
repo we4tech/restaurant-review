@@ -439,8 +439,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .review_form {
-  padding: 5px;
-
+  padding: 10px;
+  background: lightYellow;
+  border-bottom: 2px solid #ccc;
 }
 
 .reviewOptions {
@@ -2757,4 +2758,33 @@ box-shadow: 1px 1px 1px 0 #000000;
 
 .no_bottom_border {
   border-bottom: 0!important;
+}
+
+.embed-form {
+  padding: 10px;
+}
+
+.embed-form h5 {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 5px;
+  font-size: 80%;
+}
+
+.embed-form label {
+  float: left;
+  clear: left;
+  width: 35%;
+  text-align: right;
+  margin-right: 5px;
+  font-size: 80%;
+}
+
+.embed-form input {
+  float: left;
+  clear: right;
+  width: 40%;
+}
+
+.clear_all {
+  clear: both;
 }

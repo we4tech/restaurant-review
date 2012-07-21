@@ -1,0 +1,16 @@
+.embed-form.form-signup
+  %h5 Create new Account
+  - f.fields_for User.new do |uf|
+    = uf.label :login, 'User name'
+    = uf.text_field :login
+
+    = uf.label :email
+    = uf.text_field :email, :type => 'email'
+
+    = uf.label :password
+    = uf.password_field :password
+
+    = uf.label :password_confirmation
+    = uf.password_field :password_confirmation
+
+  .clear_all

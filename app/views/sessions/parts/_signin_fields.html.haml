@@ -1,0 +1,10 @@
+.embed-form.form-signin
+  %h5 Sign in
+  - f.fields_for Session.new do |sf|
+    = sf.label :login, 'User name'
+    = sf.text_field :login
+
+    = sf.label :password
+    = sf.password_field :password
+
+  .clear_all
