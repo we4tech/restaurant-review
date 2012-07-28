@@ -61,8 +61,8 @@ module ApplicationHelper
   end
 
   def match_topic_by_topic_id
-    if @topic.nil? && params[:__topic_id]
-      @topic = Topic.find(params[:__topic_id])
+    if @topic.nil? && params[:__topic_id].to_i > 0
+      @topic = Topic.find(params[:__topic_id].to_i)
     end
 
     @topic

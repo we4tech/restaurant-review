@@ -76,7 +76,7 @@ class ReviewsController < ApplicationController
         flash[:notice] = 'Failed to create review.'
       end
 
-      redirect_to :back
+      redirect_to_back_or_root!
     end
 
     def after_user_signed_in(context, user)
