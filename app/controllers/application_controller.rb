@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
     def bad_auth_token
       logger.warn('Caught invalid authenticity request')
       flash[:notice] = 'Invalid authenticity token, please try again'
-      redirect_to request.referer.present? ? request.referer : root_url
+      redirect_to_back_or_root!
     end
 
     #
@@ -207,6 +207,10 @@ class ApplicationController < ActionController::Base
       end
 
       hourly_image_files
+    end
+
+    def redirect_to_back_or_root!
+      redirect_to request.referer.present? ? request.referer : root_url
     end
 
 end

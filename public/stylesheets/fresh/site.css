@@ -2770,6 +2770,10 @@ box-shadow: 1px 1px 1px 0 #000000;
   font-size: 80%;
 }
 
+.locale_en .embed-form h5 {
+  text-transform: uppercase;
+}
+
 .embed-form label {
   float: left;
   clear: left;
@@ -2777,12 +2781,14 @@ box-shadow: 1px 1px 1px 0 #000000;
   text-align: right;
   margin-right: 5px;
   font-size: 80%;
+  margin-bottom: 5px;
 }
 
 .embed-form input {
   float: left;
   clear: right;
   width: 40%;
+  margin-bottom: 5px;
 }
 
 .clear_all {
