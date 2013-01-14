@@ -1,7 +1,7 @@
 source "http://gemcutter.org"
 
 
-gem 'rails', '2.3.12'
+gem 'rails', '2.3.15'
 gem 'rake', '0.9.2'
 gem 'mysql', '2.8.1'
 gem 'dalli', '1.0.4'
